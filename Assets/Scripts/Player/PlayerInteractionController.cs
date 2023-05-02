@@ -22,7 +22,6 @@ public class PlayerInteractionController : MonoBehaviour
     {
         RaycastHit pickupHitInfo;
 
-        Debug.DrawRay(_playerMainCamera.position, _playerMainCamera.forward*10, Color.white, 5);
         if (!Physics.Raycast(_playerMainCamera.position, _playerMainCamera.forward, out pickupHitInfo, _pickupDistance, _pickupMask)) return;
 
         pickupHitInfo.transform.GetComponent<IPickupableInterface>()?.Pickup();

@@ -37,6 +37,9 @@ public class PlayerInputController : MonoBehaviour
         SetJump();
         SetCrouch();
         SetInteraction();
+        SetEquipWeapon();
+        SetHideWeapon();
+        SetDropWeapon();
     }
     private void Update()
     {
@@ -80,6 +83,19 @@ public class PlayerInputController : MonoBehaviour
         _playerInputs.Player.Interact.performed += ctx => _stateMachine.InteractionController.Interaction();
     }
 
+
+    private void SetEquipWeapon()
+    {
+        _playerInputs.Player.ChooseWeapon.performed += ctx => _stateMachine.CombatController.Equip((int)ctx.ReadValue<float>());
+    }
+    private void SetHideWeapon()
+    {
+        _playerInputs.Player.HideWeapon.performed += ctx => _stateMachine.CombatController.HideWeapon();
+    }
+    private void SetDropWeapon()
+    {
+        _playerInputs.Player.DropWeapon.performed += ctx => _stateMachine.CombatController.DropWeapon();
+    }
 
 
 

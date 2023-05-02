@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    [Header("====References====")]
+    [SerializeField] Transform _playerMainCamera;
+    [SerializeField] Transform[] _weaponsHolders = new Transform[5];
+
+
+
+    [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] List<GameObject> _weapons = new List<GameObject>(3);
     [SerializeField] List<WeaponData> _weaponsData = new List<WeaponData>(3);
-    [SerializeField] Transform[] _weaponsHolders = new Transform[5];
 
 
 
@@ -47,5 +53,25 @@ public class PlayerInventory : MonoBehaviour
         weapon.transform.parent = _weaponsHolders[(int)weaponData.WeaponHolder];
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.Euler(Vector3.zero);
+    }
+
+    public void DropWeapon(int weaponToDropIndex)
+    {
+        _weapons[weaponToDropIndex].transform.parent = null;
+        _weapons[weaponToDropIndex].transform.position = _playerMainCamera.position;
+        _weapons[weaponToDropIndex].GetComponent<RangeWeaponStateMachine>().SwitchController.SwitchTo.Ground();
+        _weapons[weaponToDropIndex].GetComponent<Rigidbody>().AddForce(_playerMainCamera.forward * 10);
+
+        _weapons[weaponToDropIndex] = null;
+        _weaponsData[weaponToDropIndex] = null;
+    }
+
+    public GameObject GetWeapon(int index)
+    {
+        return _weapons[index];
+    }
+    public WeaponData GetWeaponData(int index)
+    {
+        return _weaponsData[index];
     }
 }

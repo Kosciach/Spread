@@ -16,6 +16,7 @@ public class RangeWeaponStateMachine : MonoBehaviour
     [Header("====References====")]
     [SerializeField] BoxCollider _collider; public BoxCollider Collider { get { return _collider; } }
     [SerializeField] Rigidbody _rigidbody; public Rigidbody Rigidbody { get { return _rigidbody; } }
+    [SerializeField] Outline _outline; public Outline Outline { get { return _outline; } }
     private RangeWeaponSwitchController _switchController; public RangeWeaponSwitchController SwitchController { get { return _switchController; } }
 
 

@@ -18,6 +18,7 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("====PlayerScripts====")]
 
     [SerializeField] PlayerInputController _inputController; public PlayerInputController InputController { get { return _inputController; } }
+    [SerializeField] PlayerCombatController _combatController; public PlayerCombatController CombatController { get { return _combatController; } }
     [SerializeField] PlayerMainCameraController _cameraController; public PlayerMainCameraController CameraController { get { return _cameraController; } }
     [SerializeField] PlayerMovementController _movementController; public PlayerMovementController MovementController { get { return _movementController; } }
     [SerializeField] PlayerGravityController _gravityController; public PlayerGravityController GravityController { get { return _gravityController; } }

@@ -13,6 +13,7 @@ public class RangeWeaponEquipedState : RangeWeaponBaseState
     {
         _ctx.Collider.enabled = false;
         _ctx.Rigidbody.isKinematic = true;
+        _ctx.Outline.OutlineWidth = 0;
     }
     public override void StateUpdate()
     {
@@ -25,6 +26,7 @@ public class RangeWeaponEquipedState : RangeWeaponBaseState
     public override void StateCheckChange()
     {
         if (_ctx.SwitchController.IsStateSwitch(RangeWeaponStateMachine.StateSwitchEnum.Inventory)) StateChange(_factory.Inventory());
+        else if (_ctx.SwitchController.IsStateSwitch(RangeWeaponStateMachine.StateSwitchEnum.Ground)) StateChange(_factory.Ground());
     }
     public override void StateExit()
     {
