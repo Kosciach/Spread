@@ -9,6 +9,8 @@ public class PlayerInAirClimbState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.CameraRotateController.SetHandsCameraRotation(PlayerCameraRotateController.HandsCameraRotationsEnum.Climb, 5);
+
         _ctx.GravityController.ToggleApplyGravity(false);
         _ctx.ColliderController.ToggleCollider(false);
         _ctx.CameraController.ToggleLockCamera(true);

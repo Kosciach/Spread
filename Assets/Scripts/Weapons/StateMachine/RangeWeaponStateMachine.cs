@@ -36,6 +36,7 @@ public class RangeWeaponStateMachine : MonoBehaviour
     {
         SetUpStartingState();
         _switchController = new RangeWeaponSwitchController(this);
+        Debug.Log(gameObject.layer);
     }
     private void SetUpStartingState()
     {
@@ -57,6 +58,13 @@ public class RangeWeaponStateMachine : MonoBehaviour
     }
 
 
+
+    public void SetLayer(int layer)
+    {
+        gameObject.layer = layer;
+        foreach (Transform child in transform)
+            child.gameObject.layer = layer;
+    }
 }
 
 

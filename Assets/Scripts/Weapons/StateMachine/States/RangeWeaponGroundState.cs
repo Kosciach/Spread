@@ -13,6 +13,8 @@ public class RangeWeaponGroundState : RangeWeaponBaseState
     {
         _ctx.Collider.enabled = true;
         _ctx.Rigidbody.isKinematic = false;
+
+        _ctx.SetLayer(7);
     }
     public override void StateUpdate()
     {

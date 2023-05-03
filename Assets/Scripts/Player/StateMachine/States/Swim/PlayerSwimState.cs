@@ -13,7 +13,7 @@ public class PlayerSwimState : PlayerBaseState
         _ctx.AnimatorController.SetBool("Swim", true);
         _ctx.GravityController.ToggleApplyGravity(false);
 
-        _ctx.CameraMoveController.SetPosition(new Vector3(0, 0, -0.4f), 5);
+        //_ctx.CameraMoveController.SetHandsCameraPosition();
 
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 5);
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, true, 5);
@@ -59,7 +59,7 @@ public class PlayerSwimState : PlayerBaseState
         _ctx.AnimatorController.SetBool("Swim", false);
         _ctx.GravityController.ToggleApplyGravity(true);
 
-        _ctx.CameraMoveController.SetPosition(new Vector3(0, 0, 0), 5);
+        //_ctx.CameraMoveController.SetMainCameraPosition(PlayerCameraMoveController.MainCameraPositionsEnum.Base, 5);
 
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 5);
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, false, 5);

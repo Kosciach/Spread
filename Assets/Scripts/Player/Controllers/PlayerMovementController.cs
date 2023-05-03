@@ -80,8 +80,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         _animatorMovementVector = _inputController.MovementInputVector * _animatorMovementSpeed;
 
-        _animatorController.SetFloat("MovementX", _animatorMovementVector.x, 0.2f);
-        _animatorController.SetFloat("MovementZ", _animatorMovementVector.z, 0.2f);
+        _animatorController.SetFloat("MovementX", _animatorMovementVector.x, 0.1f);
+        _animatorController.SetFloat("MovementZ", _animatorMovementVector.z, 0.1f);
     }
 
 
@@ -163,7 +163,7 @@ public class PlayerMovementController : MonoBehaviour
     public void SetWalkSpeed()
     {
         _speed = _walkSpeed;
-        _animatorMovementSpeed = 2;
+        _animatorMovementSpeed = 3;
     }
     public void SetRunSpeed()
     {

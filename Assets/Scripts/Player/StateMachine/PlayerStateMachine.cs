@@ -37,6 +37,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     [SerializeField] PlayerCameraFovController _cameraFovController; public PlayerCameraFovController CameraFovController { get { return _cameraFovController; } }
     [SerializeField] PlayerCameraMoveController _cameraMoveController; public PlayerCameraMoveController CameraMoveController { get { return _cameraMoveController; } }
+    [SerializeField] PlayerCameraRotateController _cameraRotateController; public PlayerCameraRotateController CameraRotateController { get { return _cameraRotateController; } }
+    [SerializeField] PlayerHandsCameraEnableController _handsCameraEnableController; public PlayerHandsCameraEnableController HandsCameraEnableController { get { return _handsCameraEnableController; } }
 
     private PlayerSwitchController _switchController; public PlayerSwitchController SwitchController { get { return _switchController; } }
 

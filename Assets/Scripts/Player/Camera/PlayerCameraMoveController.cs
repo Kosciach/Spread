@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,23 +6,33 @@ using UnityEngine;
 public class PlayerCameraMoveController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] Transform _mainCameraHolder;
+    [SerializeField] Camera _handsCamera;
+    [SerializeField] PlayerStateMachine _stateMachine;
 
 
 
     [Space(20)]
     [Header("====Debugs====")]
+    [SerializeField] HandsCameraPositionsEnum _handsCameraPositionType;
     [SerializeField] Vector3 _desiredPosition;
     [SerializeField] Vector3 _currentPosition;
-    [SerializeField] float _lerpSpeed;
+    [SerializeField] float _moveSpeed;
 
 
 
     [Space(20)]
     [Header("====Settings====")]
-    [SerializeField] Vector3 _basePosition;
-    [Range(0, 1)]
-    [SerializeField] int _lockCameraMove;
+    [SerializeField] Vector3[] _handsCameraPositions;
+    [SerializeField] bool _poseMode;
+
+    public enum HandsCameraPositionsEnum
+    {
+        Idle, Walk, Run, Combat, Swim
+    }
+
+
+
+
 
 
     private void Update()
@@ -32,14 +43,19 @@ public class PlayerCameraMoveController : MonoBehaviour
 
     private void Move()
     {
-        _currentPosition = Vector3.Lerp(_currentPosition, _desiredPosition, _lerpSpeed * _lockCameraMove * Time.deltaTime);
-        _mainCameraHolder.localPosition = _currentPosition;
+        if (_poseMode) return;
+
+        _currentPosition = Vector3.Lerp(_currentPosition, _desiredPosition, _moveSpeed * Time.deltaTime);
+        _handsCamera.transform.localPosition = _currentPosition;
     }
 
-
-    public void SetPosition(Vector3 offset, float lerpSpeed)
+    public void SetHandsCameraPosition(HandsCameraPositionsEnum cameraPosition, float moveSpeed)
     {
-        _desiredPosition = _basePosition + offset;
-        _lerpSpeed = lerpSpeed;
+        if (!_stateMachine.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
+
+        _desiredPosition = _handsCameraPositions[(int)cameraPosition];
+        _moveSpeed = moveSpeed;
+
+        _handsCameraPositionType = cameraPosition;
     }
 }

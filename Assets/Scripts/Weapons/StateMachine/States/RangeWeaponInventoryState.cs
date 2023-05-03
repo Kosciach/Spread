@@ -14,6 +14,8 @@ public class RangeWeaponInventoryState : RangeWeaponBaseState
         _ctx.Collider.enabled = false;
         _ctx.Rigidbody.isKinematic = true;
         _ctx.Outline.OutlineWidth = 0;
+
+        _ctx.SetLayer(7);
     }
     public override void StateUpdate()
     {

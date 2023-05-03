@@ -9,6 +9,8 @@ public class PlayerClimbState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.CameraRotateController.SetHandsCameraRotation(PlayerCameraRotateController.HandsCameraRotationsEnum.Climb, 5);
+
         _ctx.GravityController.ToggleApplyGravity(false);
         _ctx.ColliderController.ToggleCollider(false);
 
@@ -29,6 +31,7 @@ public class PlayerClimbState : PlayerBaseState
     }
     public override void StateExit()
     {
+        _ctx.CameraRotateController.SetHandsCameraRotation(PlayerCameraRotateController.HandsCameraRotationsEnum.Base, 5);
         _ctx.AnimatorController.SetBool("Climb", false);
         _ctx.ColliderController.ToggleCollider(true);
         _ctx.GravityController.ToggleApplyGravity(true);

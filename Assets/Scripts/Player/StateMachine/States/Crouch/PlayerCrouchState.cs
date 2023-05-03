@@ -10,6 +10,8 @@ public class PlayerCrouchState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.CameraRotateController.SetHandsCameraRotation(PlayerCameraRotateController.HandsCameraRotationsEnum.Crouch, 5);
+
         _ctx.AnimatorController.SetBool("Crouch", true);
         _ctx.MovementController.SetCrouchSpeed();
     }
@@ -34,6 +36,7 @@ public class PlayerCrouchState : PlayerBaseState
     }
     public override void StateExit()
     {
+        _ctx.CameraRotateController.SetHandsCameraRotation(PlayerCameraRotateController.HandsCameraRotationsEnum.Base, 5);
         _ctx.AnimatorController.SetBool("Crouch", false);
     }
 }

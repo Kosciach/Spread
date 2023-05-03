@@ -33,14 +33,7 @@ public class PlayerInventory : MonoBehaviour
         _weapons[smallestEmptyIndex] = newWeapon;
         _weaponsData[smallestEmptyIndex] = newWeaponData;
 
-
-
-        RangeWeaponStateMachine newWeaponStateMachine = newWeapon.GetComponent<RangeWeaponStateMachine>();
-        newWeaponStateMachine.SwitchController.SwitchTo.Inventory();
-
-
-
-        HandleNewWeaponVisual(newWeapon, newWeaponData);
+        HolsterWeapon(newWeapon, newWeaponData);
     }
     private int FindSmallestEmptyIndex()
     {
@@ -48,11 +41,14 @@ public class PlayerInventory : MonoBehaviour
             if (_weapons[i] == null) return i;
         return -1;
     }
-    private void HandleNewWeaponVisual(GameObject weapon, WeaponData weaponData)
+    public void HolsterWeapon(GameObject weapon, WeaponData weaponData)
     {
         weapon.transform.parent = _weaponsHolders[(int)weaponData.WeaponHolder];
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+        RangeWeaponStateMachine newWeaponStateMachine = weapon.GetComponent<RangeWeaponStateMachine>();
+        newWeaponStateMachine.SwitchController.SwitchTo.Inventory();
     }
 
     public void DropWeapon(int weaponToDropIndex)

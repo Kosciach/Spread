@@ -10,6 +10,8 @@ public class PlayerIdleState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.CameraFovController.SetFov(0, 2);
+        _ctx.CameraMoveController.SetHandsCameraPosition(PlayerCameraMoveController.HandsCameraPositionsEnum.Idle, 5);
+
         _ctx.JumpController.ToggleJumpReloaded(true);
         _ctx.ColliderController.SetColliderRadius(0.5f);
         _ctx.MovementController.SetAccelaration(0.9f);
