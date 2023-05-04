@@ -10,6 +10,10 @@ public class PlayerLandState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 6);
+
         _ctx.ColliderController.SetColliderRadius(0.2f);
         _ctx.SlopeController.ToggleSlopeAngle(true);
 
@@ -24,7 +28,7 @@ public class PlayerLandState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-        _ctx.CameraController.RotatePlayerToCamera();
+        _ctx.CineCameraController.RotatePlayerToCamera();
     }
     public override void StateFixedUpdate()
     {
@@ -41,6 +45,10 @@ public class PlayerLandState : PlayerBaseState
     }
     public override void StateExit()
     {
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 6);
+
         _ctx.AnimatorController.SetBool("Land", false);
     }
 

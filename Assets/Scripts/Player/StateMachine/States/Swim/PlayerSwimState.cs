@@ -13,7 +13,7 @@ public class PlayerSwimState : PlayerBaseState
         _ctx.AnimatorController.SetBool("Swim", true);
         _ctx.GravityController.ToggleApplyGravity(false);
 
-        //_ctx.CameraMoveController.SetHandsCameraPosition();
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
 
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 5);
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, true, 5);
@@ -22,7 +22,7 @@ public class PlayerSwimState : PlayerBaseState
     public override void StateUpdate()
     {
         _ctx.MovementController.SwimMovement();
-        _ctx.CameraController.RotatePlayerToCamera();
+        _ctx.CineCameraController.RotatePlayerToCamera();
 
         if (_ctx.SwimController.CheckIsOnSurface() && _ctx.GravityController.GetIsGrounded() && _ctx.SwimController.CheckObjectInFront()) _ctx.SwitchController.SwitchTo.Walk();
         else if(!_ctx.SwimController.CheckIsOnSurface()) _ctx.SwitchController.SwitchTo.UnderWater();
@@ -59,7 +59,7 @@ public class PlayerSwimState : PlayerBaseState
         _ctx.AnimatorController.SetBool("Swim", false);
         _ctx.GravityController.ToggleApplyGravity(true);
 
-        //_ctx.CameraMoveController.SetMainCameraPosition(PlayerCameraMoveController.MainCameraPositionsEnum.Base, 5);
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
 
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 5);
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, false, 5);

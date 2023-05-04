@@ -36,7 +36,6 @@ public class RangeWeaponStateMachine : MonoBehaviour
     {
         SetUpStartingState();
         _switchController = new RangeWeaponSwitchController(this);
-        Debug.Log(gameObject.layer);
     }
     private void SetUpStartingState()
     {

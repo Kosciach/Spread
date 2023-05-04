@@ -17,7 +17,7 @@ public class PlayerUnderWaterState : PlayerBaseState
     public override void StateUpdate()
     {
         _ctx.MovementController.SwimMovement();
-        _ctx.CameraController.RotatePlayerToCamera();
+        _ctx.CineCameraController.RotatePlayerToCamera();
 
         if (_ctx.SwimController.CheckIsOnSurface()) _ctx.SwitchController.SwitchTo.Swim();
     }

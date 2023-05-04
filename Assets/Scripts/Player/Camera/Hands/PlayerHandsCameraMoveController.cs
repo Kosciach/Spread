@@ -3,12 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCameraMoveController : MonoBehaviour
+public class PlayerHandsCameraMoveController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] Camera _handsCamera;
-    [SerializeField] PlayerStateMachine _stateMachine;
-
+    [SerializeField] PlayerHandsCameraController _cameraController;
 
 
     [Space(20)]
@@ -46,12 +44,12 @@ public class PlayerCameraMoveController : MonoBehaviour
         if (_poseMode) return;
 
         _currentPosition = Vector3.Lerp(_currentPosition, _desiredPosition, _moveSpeed * Time.deltaTime);
-        _handsCamera.transform.localPosition = _currentPosition;
+        _cameraController.HandsCamera.transform.localPosition = _currentPosition;
     }
 
     public void SetHandsCameraPosition(HandsCameraPositionsEnum cameraPosition, float moveSpeed)
     {
-        if (!_stateMachine.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
+        if (!_cameraController.PlayerStateMachine.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
 
         _desiredPosition = _handsCameraPositions[(int)cameraPosition];
         _moveSpeed = moveSpeed;

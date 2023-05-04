@@ -12,9 +12,9 @@ public class PlayerLadderState : PlayerBaseState
     {
         _ctx.LadderController.ResetBools();
 
-        _ctx.HandsCameraEnableController.ToggleHandsCamera(false);
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 5);
-        _ctx.AnimatorController.ToggleLayer(false, 5, PlayerAnimatorController.LayersEnum.TopBodyStabilizer);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 5);
 
         if (_ctx.LadderController.GetLadderType() == PlayerLadderController.LadderEnum.LowerEnter) _ctx.LadderController.LowerLadderEnter();
         else if (_ctx.LadderController.GetLadderType() == PlayerLadderController.LadderEnum.HigherEnter) _ctx.LadderController.HigherLadderEnter();
@@ -35,8 +35,8 @@ public class PlayerLadderState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.HandsCameraEnableController.ToggleHandsCamera(true);
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 5);
-        _ctx.AnimatorController.ToggleLayer(true, 5, PlayerAnimatorController.LayersEnum.TopBodyStabilizer);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 5);
     }
 }

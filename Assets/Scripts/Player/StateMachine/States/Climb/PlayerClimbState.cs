@@ -9,7 +9,8 @@ public class PlayerClimbState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CameraRotateController.SetHandsCameraRotation(PlayerCameraRotateController.HandsCameraRotationsEnum.Climb, 5);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 6);
 
         _ctx.GravityController.ToggleApplyGravity(false);
         _ctx.ColliderController.ToggleCollider(false);
@@ -31,11 +32,14 @@ public class PlayerClimbState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.CameraRotateController.SetHandsCameraRotation(PlayerCameraRotateController.HandsCameraRotationsEnum.Base, 5);
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 6);
+
         _ctx.AnimatorController.SetBool("Climb", false);
         _ctx.ColliderController.ToggleCollider(true);
         _ctx.GravityController.ToggleApplyGravity(true);
-        _ctx.CameraController.ToggleLockCamera(false);
+        _ctx.CineCameraController.ToggleCineInput(true);
     }
 
 
@@ -47,23 +51,30 @@ public class PlayerClimbState : PlayerBaseState
         bool isVault = _ctx.ClimbController.GetIsVault();
         if(isVault)
         {
+            _ctx.CineCameraController.ToggleCineInput(false);
+            _ctx.CineCameraController.VerticalController.RotateToAngle(0, 0.3f);
             Vault(_ctx.ClimbController.GetFinalClimbPosition(), _ctx.ClimbController.GetStartClimbPosition());
             return;
         }
 
         if (climbHeight >= 0.2f && climbHeight <= 1.1f)
         {
-            _ctx.CameraController.ToggleLockCamera(true);
+            _ctx.CineCameraController.ToggleCineInput(false);
+            _ctx.CineCameraController.VerticalController.RotateToAngle(0, 0.3f);
             ClimbSmall(_ctx.ClimbController.GetFinalClimbPosition(), _ctx.ClimbController.GetStartClimbPosition());
         }
         else if (climbHeight > 1.1f && climbHeight <= 2)
         {
-            _ctx.CameraController.ToggleLockCamera(true);
+            _ctx.CineCameraController.ToggleCineInput(false);
+            _ctx.CineCameraController.VerticalController.RotateToAngle(0, 0.3f);
+            _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
             ClimbMid(_ctx.ClimbController.GetFinalClimbPosition(), _ctx.ClimbController.GetStartClimbPosition());
         }
         else if (climbHeight > 2 && climbHeight <= 3.5f)
         {
-            _ctx.CameraController.ToggleLockCamera(true);
+            _ctx.CineCameraController.ToggleCineInput(false);
+            _ctx.CineCameraController.VerticalController.RotateToAngle(0, 0.3f);
+            _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
             ClimbHigh(_ctx.ClimbController.GetFinalClimbPosition(), _ctx.ClimbController.GetStartClimbPosition());
         }
         else

@@ -78,7 +78,7 @@ public class PlayerAnimatorController : MonoBehaviour
             _animator.SetLayerWeight(i + 1, _currentLayerWeights[i]);
         }    
     }
-    public void ToggleLayer(bool enable, float lerpSpeed, LayersEnum layer)
+    public void ToggleLayer(LayersEnum layer, bool enable, float lerpSpeed)
     {
         float weight = enable ? 1.1f : -0.1f;
         int index = (int)layer;

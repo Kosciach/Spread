@@ -36,7 +36,7 @@ public class PlayerLadderController : MonoBehaviour
 
     public void LowerLadderEnter()
     {
-        _stateMachine.CameraController.SetLadderCamera(_currentLadder, true);
+        SetLadderCamera();
         _stateMachine.GravityController.ToggleApplyGravity(false);
 
         _stateMachine.AnimatorController.SetBool("LadderLowerEnter", true);
@@ -45,7 +45,7 @@ public class PlayerLadderController : MonoBehaviour
     }
     public void LowerLadderExit()
     {
-        _stateMachine.CameraController.SetLadderCamera(null, false);
+        ResetCamera();
         _stateMachine.GravityController.ToggleApplyGravity(true);
 
         _stateMachine.AnimatorController.SetBool("LadderLowerExit", true);
@@ -58,7 +58,7 @@ public class PlayerLadderController : MonoBehaviour
 
     public void HigherLadderEnter()
     {
-        _stateMachine.CameraController.SetLadderCamera(_currentLadder, true);
+        SetLadderCamera();
         _stateMachine.GravityController.ToggleApplyGravity(false);
 
 
@@ -92,7 +92,7 @@ public class PlayerLadderController : MonoBehaviour
             {
                 _stateMachine.ColliderController.ToggleCollider(true);
                 _stateMachine.GravityController.ToggleApplyGravity(true);
-                _stateMachine.CameraController.SetLadderCamera(null, false);
+                ResetCamera();
                 _stateMachine.MovementController.TogglePlayerMovement(true);
                 _stateMachine.SwitchController.SwitchTo.Idle();
             });
@@ -114,6 +114,9 @@ public class PlayerLadderController : MonoBehaviour
     {
         return _ladderType;
     }
+
+
+
 
 
 
@@ -153,5 +156,25 @@ public class PlayerLadderController : MonoBehaviour
         _currentLadder = ladder.parent;
         _stateMachine.SwitchController.SwitchTo.Ladder();
         _ladderType = enterType;
+    }
+    private void SetLadderCamera()
+    {
+        float angle = 0;
+        float minAngle = 0; float maxAngle = 0;
+
+        if (_currentLadder == null) return;
+
+        angle = _currentLadder.rotation.eulerAngles.y + 90;
+        minAngle = angle - 50;
+        maxAngle = angle + 50;
+
+        _stateMachine.CineCameraController.HorizontalController.ToggleWrap(false);
+        _stateMachine.CineCameraController.HorizontalController.RotateToAngle(angle, 0.2f);
+        _stateMachine.CineCameraController.HorizontalController.SetBorderValues(minAngle, maxAngle);
+    }
+    private void ResetCamera()
+    {
+        _stateMachine.CineCameraController.HorizontalController.SetBorderValues(-180, 180);
+        _stateMachine.CineCameraController.HorizontalController.ToggleWrap(true);
     }
 }

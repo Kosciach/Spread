@@ -19,7 +19,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     [SerializeField] PlayerInputController _inputController; public PlayerInputController InputController { get { return _inputController; } }
     [SerializeField] PlayerCombatController _combatController; public PlayerCombatController CombatController { get { return _combatController; } }
-    [SerializeField] PlayerMainCameraController _cameraController; public PlayerMainCameraController CameraController { get { return _cameraController; } }
     [SerializeField] PlayerMovementController _movementController; public PlayerMovementController MovementController { get { return _movementController; } }
     [SerializeField] PlayerGravityController _gravityController; public PlayerGravityController GravityController { get { return _gravityController; } }
     [SerializeField] PlayerJumpController _jumpController; public PlayerJumpController JumpController { get { return _jumpController; } }
@@ -35,10 +34,8 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] PlayerFootStepAudioController _footStepAudioController; public PlayerFootStepAudioController FootStepAudioController { get { return _footStepAudioController; } }
     [SerializeField] PlayerInventory _inventory; public PlayerInventory Inventory { get { return _inventory; } }
 
-    [SerializeField] PlayerCameraFovController _cameraFovController; public PlayerCameraFovController CameraFovController { get { return _cameraFovController; } }
-    [SerializeField] PlayerCameraMoveController _cameraMoveController; public PlayerCameraMoveController CameraMoveController { get { return _cameraMoveController; } }
-    [SerializeField] PlayerCameraRotateController _cameraRotateController; public PlayerCameraRotateController CameraRotateController { get { return _cameraRotateController; } }
-    [SerializeField] PlayerHandsCameraEnableController _handsCameraEnableController; public PlayerHandsCameraEnableController HandsCameraEnableController { get { return _handsCameraEnableController; } }
+    [SerializeField] PlayerCineCameraController _cineCameraController; public PlayerCineCameraController CineCameraController { get { return _cineCameraController; } }
+    [SerializeField] PlayerHandsCameraController _handsCameraController; public PlayerHandsCameraController HandsCameraController { get { return _handsCameraController; } }
 
     private PlayerSwitchController _switchController; public PlayerSwitchController SwitchController { get { return _switchController; } }
 

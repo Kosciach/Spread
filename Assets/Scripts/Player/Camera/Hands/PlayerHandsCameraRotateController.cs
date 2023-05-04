@@ -1,13 +1,12 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCameraRotateController : MonoBehaviour
+public class PlayerHandsCameraRotateController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] Transform _handsCamera;
-    [SerializeField] PlayerStateMachine _stateMachine;
-
+    [SerializeField] PlayerHandsCameraController _cameraController;
 
 
     [Space(20)]
@@ -24,10 +23,15 @@ public class PlayerCameraRotateController : MonoBehaviour
     [SerializeField] Vector3[] _handsCameraRotations = new Vector3[4];
     [SerializeField] bool _poseMode;
 
+
     public enum HandsCameraRotationsEnum
     {
-        Base, Crouch, Climb, Combat
+        Base, Crouch, Climb, Combat, Swim
     }
+
+
+
+
 
 
     private void Update()
@@ -41,12 +45,13 @@ public class PlayerCameraRotateController : MonoBehaviour
         if (_poseMode) return;
 
         _currentRotation = Vector3.Lerp(_currentRotation, _desiredRotation, _rotateSpeed * Time.deltaTime);
-        _handsCamera.localRotation = Quaternion.Euler(_currentRotation);
+        _cameraController.HandsCamera.transform.localRotation = Quaternion.Euler(_currentRotation);
     }
+
 
     public void SetHandsCameraRotation(HandsCameraRotationsEnum cameraRotation, float rotateSpeed)
     {
-        if (!_stateMachine.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
+        if (!_cameraController.PlayerStateMachine.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
 
         _desiredRotation = _handsCameraRotations[(int)cameraRotation];
         _rotateSpeed = rotateSpeed;

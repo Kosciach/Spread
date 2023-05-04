@@ -17,7 +17,7 @@ public class PlayerFallState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-        _ctx.CameraController.RotatePlayerToCamera();
+        _ctx.CineCameraController.RotatePlayerToCamera();
         _ctx.MovementController.InAirMovement();
 
         CheckClimb();

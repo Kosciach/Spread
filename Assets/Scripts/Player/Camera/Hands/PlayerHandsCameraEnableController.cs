@@ -32,7 +32,7 @@ public class PlayerHandsCameraEnableController : MonoBehaviour
     {
         _handsCameraModeMethod[0] = EnableHandsCamera;//True
         _handsCameraModeMethod[1] = DisableHandsCamera;//False
-        ToggleHandsCamera(false);
+        ToggleHandsCamera(true);
     }
 
 
@@ -44,8 +44,9 @@ public class PlayerHandsCameraEnableController : MonoBehaviour
 
         int index = enable ? 0 : 1;
 
-        _handsCamera.transform.parent = _handsCameraParents[index];
+        //_handsCamera.transform.parent = _handsCameraParents[index];
         _handsCamera.enabled = enable;
+        _enableHandsCamera = enable;
         _handsCameraModeMethod[index]();
     }
 

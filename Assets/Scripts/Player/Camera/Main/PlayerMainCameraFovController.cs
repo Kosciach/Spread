@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCameraFovController : MonoBehaviour
+public class PlayerMainCameraFovController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] CinemachineVirtualCamera _cineCamera;
+    [SerializeField] PlayerCineCameraController _cineCameraController;
 
 
 
@@ -31,7 +31,7 @@ public class PlayerCameraFovController : MonoBehaviour
     private void LerpFov()
     {
         _currentFov = Mathf.Lerp(_currentFov, _desiredFov, _lerpSpeed * Time.deltaTime);
-        _cineCamera.m_Lens.FieldOfView = _currentFov;
+        _cineCameraController.CineCamera.m_Lens.FieldOfView = _currentFov;
     }
 
 
