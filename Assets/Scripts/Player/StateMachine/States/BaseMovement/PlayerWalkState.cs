@@ -14,18 +14,17 @@ public class PlayerWalkState : PlayerBaseState
 
         _ctx.JumpController.ToggleJumpReloaded(true);
         _ctx.ColliderController.SetColliderRadius(0.5f);
-        _ctx.MovementController.SetAccelaration(1);
         _ctx.AnimatorController.SetBool("Walk", true);
         _ctx.AnimatorController.SetBool("Land", true);
         _ctx.AnimatorController.SetInt("JumpType", 1);
-        _ctx.MovementController.SetWalkSpeed();
+        _ctx.MovementController.OnGround.SetWalkSpeed();
     }
     public override void StateUpdate()
     {
         _ctx.CineCameraController.RotatePlayerToCamera();
-        _ctx.MovementController.OnGroundMovement();
+        _ctx.MovementController.OnGround.Movement();
+        _ctx.MovementController.OnGround.CheckMovementType();
 
-        _ctx.SwitchController.SetBaseMovementSwitch();
         if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
         if (!_ctx.GravityController.GetIsGrounded()) _ctx.SwitchController.SwitchTo.Fall();
     }

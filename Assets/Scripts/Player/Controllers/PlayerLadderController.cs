@@ -82,7 +82,7 @@ public class PlayerLadderController : MonoBehaviour
     }
     public void HigherLadderExit()
     {
-        _stateMachine.MovementController.TogglePlayerMovement(false);
+        _stateMachine.MovementController.Ladder.ToggleMovement(false);
         _stateMachine.AnimatorController.SetBool("LadderHigherExit", true);
         _stateMachine.ColliderController.ToggleCollider(false);
 
@@ -93,7 +93,7 @@ public class PlayerLadderController : MonoBehaviour
                 _stateMachine.ColliderController.ToggleCollider(true);
                 _stateMachine.GravityController.ToggleApplyGravity(true);
                 ResetCamera();
-                _stateMachine.MovementController.TogglePlayerMovement(true);
+                _stateMachine.MovementController.Ladder.ToggleMovement(true);
                 _stateMachine.SwitchController.SwitchTo.Idle();
             });
         });

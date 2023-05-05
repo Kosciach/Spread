@@ -14,8 +14,8 @@ public class PlayerInputController : MonoBehaviour
     [Header("====Debugs====")]
     [SerializeField] Vector3 _movementInputVector; public Vector3 MovementInputVector { get { return _movementInputVector; } }
     [SerializeField] Vector3 _movementInputVectorNormalized; public Vector3 MovementInputVectorNormalized { get { return _movementInputVectorNormalized; } }
-    [SerializeField] bool _isMoving; public bool IsMoving { get { return _isMoving; } }
-    [SerializeField] bool _isRunning; public bool IsRunning { get { return _isRunning; } }
+    [SerializeField] bool _isMoveInput; public bool IsMoveInput { get { return _isMoveInput; } }
+    [SerializeField] bool _isRunInput; public bool IsRunInput { get { return _isRunInput; } }
 
 
 
@@ -62,13 +62,13 @@ public class PlayerInputController : MonoBehaviour
 
     private void SetMoving()
     {
-        _playerInputs.Player.Move.started += ctx => { _isMoving = true; };
-        _playerInputs.Player.Move.canceled += ctx => { _isMoving = false; _isRunning = false; };
+        _playerInputs.Player.Move.started += ctx => { _isMoveInput = true; };
+        _playerInputs.Player.Move.canceled += ctx => { _isMoveInput = false;};
     }
     private void SetRunning()
     {
-        _playerInputs.Player.Run.started += ctx => { if (_isMoving) { _isRunning = true; } };
-        _playerInputs.Player.Run.canceled += ctx => { _isRunning = false; };
+        _playerInputs.Player.Run.started += ctx => { _isRunInput = true; };
+        _playerInputs.Player.Run.canceled += ctx => { _isRunInput = false; };
     }
     private void SetJump()
     {
@@ -95,17 +95,6 @@ public class PlayerInputController : MonoBehaviour
     private void SetDropWeapon()
     {
         _playerInputs.Player.DropWeapon.performed += ctx => _stateMachine.CombatController.DropWeapon();
-    }
-
-
-
-    public PlayerStateMachine.SwitchEnum GetPlayerBaseMovementType()
-    {
-        if (!_isMoving) return PlayerStateMachine.SwitchEnum.Idle;
-
-        if (!_isRunning) return PlayerStateMachine.SwitchEnum.Walk;
-
-        return PlayerStateMachine.SwitchEnum.Run;
     }
 
 

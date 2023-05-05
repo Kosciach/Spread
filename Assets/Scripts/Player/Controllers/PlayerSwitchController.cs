@@ -31,11 +31,6 @@ public class PlayerSwitchController
     {
         return _stateMachine.StateSwitch == stateSwitch;
     }
-    public void SetBaseMovementSwitch()
-    {
-        if (IsSwitch(PlayerStateMachine.SwitchEnum.Idle) || IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || IsSwitch(PlayerStateMachine.SwitchEnum.Run))
-            _stateMachine.StateSwitch = _inputController.GetPlayerBaseMovementType();
-    }
 
 
 
@@ -111,7 +106,7 @@ public class PlayerSwitchController
         {
             if (!_gravityController.GetIsGrounded()) return;
 
-            if (_stateMachine.StateSwitch == PlayerStateMachine.SwitchEnum.Crouch) _stateMachine.StateSwitch = _inputController.GetPlayerBaseMovementType();
+            if (_stateMachine.StateSwitch == PlayerStateMachine.SwitchEnum.Crouch) _stateMachine.SwitchController.SwitchTo.Idle();
             else _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Crouch;
         }
 

@@ -14,7 +14,6 @@ public class PlayerIdleState : PlayerBaseState
 
         _ctx.JumpController.ToggleJumpReloaded(true);
         _ctx.ColliderController.SetColliderRadius(0.5f);
-        _ctx.MovementController.SetAccelaration(0.9f);
         _ctx.AnimatorController.SetBool("Idle", true);
         _ctx.AnimatorController.SetBool("Land", true);
         _ctx.AnimatorController.SetInt("JumpType", 0);
@@ -22,9 +21,9 @@ public class PlayerIdleState : PlayerBaseState
     public override void StateUpdate()
     {
         _ctx.CineCameraController.RotatePlayerToCamera();
-        _ctx.MovementController.OnGroundMovement();
+        _ctx.MovementController.OnGround.Movement();
+        _ctx.MovementController.OnGround.CheckMovementType();
 
-        _ctx.SwitchController.SetBaseMovementSwitch();
         if (!_ctx.GravityController.GetIsGrounded()) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
@@ -42,6 +41,6 @@ public class PlayerIdleState : PlayerBaseState
     public override void StateExit()
     {
         _ctx.AnimatorController.SetBool("Idle", false);
-        _ctx.MovementController.SetAccelaration(1);
+        //_ctx.MovementController.SetAccelaration(1);
     }
 }

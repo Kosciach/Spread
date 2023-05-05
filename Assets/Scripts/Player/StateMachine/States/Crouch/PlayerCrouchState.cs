@@ -13,12 +13,12 @@ public class PlayerCrouchState : PlayerBaseState
         _ctx.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Crouch, 5);
 
         _ctx.AnimatorController.SetBool("Crouch", true);
-        _ctx.MovementController.SetCrouchSpeed();
+        _ctx.MovementController.OnGround.SetCrouchSpeed();
     }
     public override void StateUpdate()
     {
         _ctx.CineCameraController.RotatePlayerToCamera();
-        _ctx.MovementController.OnGroundMovement();
+        _ctx.MovementController.OnGround.Movement();
 
         if (!_ctx.GravityController.GetIsGrounded()) _ctx.SwitchController.SwitchTo.Fall();
     }

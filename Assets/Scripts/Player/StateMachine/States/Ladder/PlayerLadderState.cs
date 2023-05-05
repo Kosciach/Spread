@@ -23,7 +23,7 @@ public class PlayerLadderState : PlayerBaseState
     {
         _ctx.LadderController.CheckLadderLowerExit();
 
-        _ctx.MovementController.LadderMovement();
+        _ctx.MovementController.Ladder.Movement();
     }
     public override void StateFixedUpdate()
     {

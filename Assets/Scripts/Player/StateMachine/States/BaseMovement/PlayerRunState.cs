@@ -14,18 +14,17 @@ public class PlayerRunState : PlayerBaseState
 
         _ctx.JumpController.ToggleJumpReloaded(true);
         _ctx.ColliderController.SetColliderRadius(0.5f);
-        _ctx.MovementController.SetAccelaration(1);
         _ctx.AnimatorController.SetBool("Run", true);
         _ctx.AnimatorController.SetBool("Land", true);
         _ctx.AnimatorController.SetInt("JumpType", 2);
-        _ctx.MovementController.SetRunSpeed();
+        _ctx.MovementController.OnGround.SetRunSpeed();
     }
     public override void StateUpdate()
     {
         _ctx.CineCameraController.RotatePlayerToCamera();
-        _ctx.MovementController.OnGroundMovement();
+        _ctx.MovementController.OnGround.Movement();
+        _ctx.MovementController.OnGround.CheckMovementType();
 
-        _ctx.SwitchController.SetBaseMovementSwitch();
         if (!_ctx.GravityController.GetIsGrounded()) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()

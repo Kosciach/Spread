@@ -96,6 +96,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void RecoverFromLanding()
     {
-        _stateSwitch = _inputController.GetPlayerBaseMovementType();
+        _switchController.SwitchTo.Idle();
     }
 }

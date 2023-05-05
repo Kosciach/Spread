@@ -10,7 +10,6 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.MovementController.SetAccelaration(2);
         _ctx.ColliderController.SetColliderRadius(0.2f);
 
         PrepareAnimatorBools();
@@ -22,7 +21,7 @@ public class PlayerJumpState : PlayerBaseState
     public override void StateUpdate()
     {
         _ctx.CineCameraController.RotatePlayerToCamera();
-        _ctx.MovementController.InAirMovement();
+        _ctx.MovementController.InAir.Movement();
 
         if (_ctx.GravityController.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
     }

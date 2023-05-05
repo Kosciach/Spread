@@ -14,9 +14,8 @@ public class PlayerDashState : PlayerBaseState
         _ctx.AnimatorController.SetFloat("DashZ", _ctx.InputController.MovementInputVector.z);
         _ctx.AnimatorController.SetBool("Dash", true);
 
-        _ctx.DashController.DashStart(_ctx.MovementController.GetOnGrroundMovementDirection());
+        _ctx.DashController.DashStart(_ctx.MovementController.OnGround.GetMovementDirection());
         _ctx.SwitchController.SwitchTo.Dash();
-        Debug.Log(_ctx.MovementController.GetOnGrroundMovementDirectionString());
     }
     public override void StateUpdate()
     {

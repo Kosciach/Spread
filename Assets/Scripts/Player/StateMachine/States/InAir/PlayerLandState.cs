@@ -18,13 +18,14 @@ public class PlayerLandState : PlayerBaseState
         _ctx.SlopeController.ToggleSlopeAngle(true);
 
         _ctx.AnimatorController.SetFloat("FallVelocity", _ctx.GravityController.CurrentGravityForce);
-        _ctx.AnimatorController.SetFloat("FallForwardVelocity", _ctx.MovementController.AnimatorMovementVector.z);
+        _ctx.AnimatorController.SetFloat("FallForwardVelocity", _ctx.MovementController.InAir.CurrentMovementVector.z);
         _ctx.AnimatorController.SetBool("Land", true);
 
         _ctx.FootStepAudioController.LandFootStep(_ctx.GravityController.CurrentGravityForce);
 
         CheckSlowDown();
-        _ctx.RecoverFromLanding();
+        _ctx.SwitchController.SwitchTo.Idle();
+        //_ctx.RecoverFromLanding();
     }
     public override void StateUpdate()
     {

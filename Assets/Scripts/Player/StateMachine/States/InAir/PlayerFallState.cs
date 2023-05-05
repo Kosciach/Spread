@@ -10,7 +10,6 @@ public class PlayerFallState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.MovementController.SetAccelaration(2);
         _ctx.ColliderController.SetColliderRadius(0.09f);
         _ctx.AnimatorController.SetBool("Land", false);
         _ctx.AnimatorController.SetBool("Fall", true);
@@ -18,7 +17,7 @@ public class PlayerFallState : PlayerBaseState
     public override void StateUpdate()
     {
         _ctx.CineCameraController.RotatePlayerToCamera();
-        _ctx.MovementController.InAirMovement();
+        _ctx.MovementController.InAir.Movement();
 
         CheckClimb();
         if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
