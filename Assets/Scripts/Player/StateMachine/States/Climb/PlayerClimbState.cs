@@ -10,7 +10,7 @@ public class PlayerClimbState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 6);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 6);
 
         _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(false);
         _ctx.ColliderController.ToggleCollider(false);
@@ -34,7 +34,7 @@ public class PlayerClimbState : PlayerBaseState
     {
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 6);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 6);
 
         _ctx.AnimatorController.SetBool("Climb", false);
         _ctx.ColliderController.ToggleCollider(true);

@@ -48,7 +48,7 @@ public class PlayerCombatController : MonoBehaviour
         _stateMachine.HandsCameraController.MoveController.SetHandsCameraPosition(PlayerHandsCameraMoveController.HandsCameraPositionsEnum.Combat, 5);
         _stateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Combat, 5);
 
-        _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 5);
+        _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 5);
         _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, true, 5);
 
         _equipedWeapon.GetComponent<RangeWeaponStateMachine>().SwitchController.SwitchTo.Equiped();
@@ -62,7 +62,7 @@ public class PlayerCombatController : MonoBehaviour
         _stateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Base, 5);
         _stateMachine.HandsCameraController.MoveController.SetHandsCameraPosition(PlayerHandsCameraMoveController.HandsCameraPositionsEnum.Idle, 5);
 
-        _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 5);
+        _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
         _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, false, 5);
 
         _stateMachine.Inventory.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
@@ -84,7 +84,7 @@ public class PlayerCombatController : MonoBehaviour
         _stateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Base, 5);
         _stateMachine.HandsCameraController.MoveController.SetHandsCameraPosition(PlayerHandsCameraMoveController.HandsCameraPositionsEnum.Idle, 5);
 
-        _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 5);
+        _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
         _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, false, 5);
 
         SetState(CombatStateEnum.Unarmed);

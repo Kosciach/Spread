@@ -15,7 +15,7 @@ public class PlayerSwimState : PlayerBaseState
 
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
 
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 5);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 5);
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, true, 5);
 
     }
@@ -61,7 +61,7 @@ public class PlayerSwimState : PlayerBaseState
 
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
 
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 5);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, false, 5);
     }
 }

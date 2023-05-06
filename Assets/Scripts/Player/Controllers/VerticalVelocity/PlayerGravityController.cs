@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 
 public class PlayerGravityController : MonoBehaviour
@@ -14,12 +15,12 @@ public class PlayerGravityController : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] float _currentGravityForce; public float CurrentGravityForce { get { return _currentGravityForce; } set { _currentGravityForce = value; } }
+    [SerializeField] float _fallingTime; public float FallingTime { get { return _fallingTime; } }
     [SerializeField] bool _isGrounded; public bool IsGrounded { get { return _isGrounded;} }
     [SerializeField] bool _applyGravity;
     [Space(5)]
     [Range(0, 1)]
     [SerializeField] int _applyGravityToggle;
-
 
 
 
@@ -50,9 +51,16 @@ public class PlayerGravityController : MonoBehaviour
     {
         bool resetGravity = _isGrounded && !_verticalVelocityController.JumpController.IsJump;
 
-        if (resetGravity) _currentGravityForce = -0.01f - _verticalVelocityController.SlopeController.SlopeAngle;
-        else _currentGravityForce -= _gravityForce * Time.deltaTime * Time.deltaTime;
-
+        if (resetGravity)
+        {
+            _fallingTime = 0;
+            _currentGravityForce = -0.01f - _verticalVelocityController.SlopeController.SlopeAngle;
+        }
+        else
+        {
+            _fallingTime += 2 * Time.deltaTime;
+            _currentGravityForce -= _gravityForce * Time.deltaTime;
+        }
 
         _currentGravityForce *= _applyGravityToggle;
     }
@@ -60,7 +68,7 @@ public class PlayerGravityController : MonoBehaviour
     {
         if (!_applyGravity) return;
 
-        _verticalVelocityController.CharacterController.Move(new Vector3(0f, _currentGravityForce, 0f));
+        _verticalVelocityController.CharacterController.Move(new Vector3(0f, _currentGravityForce * Time.deltaTime, 0f));
     }
     private void CheckGround()
     {
@@ -76,7 +84,6 @@ public class PlayerGravityController : MonoBehaviour
             if (_notGroundedTime > 0.5f) _isGrounded = false;
         }
     }
-
 
 
 

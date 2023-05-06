@@ -13,7 +13,7 @@ public class PlayerLadderState : PlayerBaseState
         _ctx.LadderController.ResetBools();
 
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 5);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 5);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 5);
 
         if (_ctx.LadderController.GetLadderType() == PlayerLadderController.LadderEnum.LowerEnter) _ctx.LadderController.LowerLadderEnter();
@@ -36,7 +36,7 @@ public class PlayerLadderState : PlayerBaseState
     public override void StateExit()
     {
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 5);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 5);
     }
 }

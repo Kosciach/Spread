@@ -11,8 +11,6 @@ public class PlayerFallState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 6);
 
         _ctx.ColliderController.SetColliderRadius(0.09f);
         _ctx.AnimatorController.SetBool("Land", false);
@@ -39,6 +37,7 @@ public class PlayerFallState : PlayerBaseState
     public override void StateExit()
     {
         _ctx.AnimatorController.SetBool("Fall", false);
+        _ctx.AnimatorController.SetBool("FallFromGround", false);
     }
 
 

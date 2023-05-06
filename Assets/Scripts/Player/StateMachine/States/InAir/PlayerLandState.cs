@@ -10,20 +10,18 @@ public class PlayerLandState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 6);
+        CheckHardLanding();
 
         _ctx.ColliderController.SetColliderRadius(0.2f);
         _ctx.VerticalVelocityController.SlopeController.ToggleSlopeAngle(true);
 
-        _ctx.AnimatorController.SetFloat("FallVelocity", _ctx.VerticalVelocityController.GravityController.CurrentGravityForce);
+        _ctx.AnimatorController.SetFloat("FallingTime", _ctx.VerticalVelocityController.GravityController.CurrentGravityForce);
         _ctx.AnimatorController.SetFloat("FallForwardVelocity", _ctx.MovementController.InAir.CurrentMovementVector.z);
         _ctx.AnimatorController.SetBool("Land", true);
 
         _ctx.FootStepAudioController.LandFootStep(_ctx.VerticalVelocityController.GravityController.CurrentGravityForce);
 
-        CheckHardLanding();
+
         _ctx.SwitchController.SwitchTo.Idle();
     }
     public override void StateUpdate()
@@ -45,17 +43,15 @@ public class PlayerLandState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, true, 6);
-
         _ctx.AnimatorController.SetBool("Land", false);
     }
 
 
     private void CheckHardLanding()
     {
-        if (_ctx.VerticalVelocityController.GravityController.CurrentGravityForce <= -0.3f)
-            _ctx.WasHardLanding = true;
+        _ctx.WasHardLanding = _ctx.VerticalVelocityController.GravityController.CurrentGravityForce <= -16;
+
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(!_ctx.WasHardLanding);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 6);
     }
 }

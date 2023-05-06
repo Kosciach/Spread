@@ -11,7 +11,7 @@ public class PlayerJumpController : MonoBehaviour
 
 
     [Space(20)]
-    [Header("====Settings====")]
+    [Header("====Debugs====")]
     [SerializeField] bool _isJump; public bool IsJump { get { return _isJump; } }
     [SerializeField] bool _jumpReloaded; public bool JumpReloaded { get { return _jumpReloaded; } }
 
@@ -33,7 +33,7 @@ public class PlayerJumpController : MonoBehaviour
     {
         _verticalVelocityController.GravityController.CurrentGravityForce = 0;
 
-        float jumpHeight = (_verticalVelocityController.GravityController.GravityForce + _jumpForce) / 100;
+        float jumpHeight = _jumpForce * _verticalVelocityController.GravityController.GravityForce / 3;
         _verticalVelocityController.GravityController.CurrentGravityForce = jumpHeight;
     }
     public void AddDownVelocity()
