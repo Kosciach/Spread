@@ -20,9 +20,9 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] PlayerInputController _inputController; public PlayerInputController InputController { get { return _inputController; } }
     [SerializeField] PlayerCombatController _combatController; public PlayerCombatController CombatController { get { return _combatController; } }
     [SerializeField] PlayerMovementController _movementController; public PlayerMovementController MovementController { get { return _movementController; } }
-    [SerializeField] PlayerGravityController _gravityController; public PlayerGravityController GravityController { get { return _gravityController; } }
-    [SerializeField] PlayerJumpController _jumpController; public PlayerJumpController JumpController { get { return _jumpController; } }
-    [SerializeField] PlayerSlopeController _slopeController; public PlayerSlopeController SlopeController { get { return _slopeController; } }
+    [SerializeField] PlayerVerticalVelocityController _verticalVelocityController; public PlayerVerticalVelocityController VerticalVelocityController { get { return _verticalVelocityController; } }
+
+
     [SerializeField] PlayerColliderController _colliderController; public PlayerColliderController ColliderController { get { return _colliderController; } }
     [SerializeField] PlayerClimbController _climbController; public PlayerClimbController ClimbController { get { return _climbController; } }
     [SerializeField] PlayerSwimController _swimController; public PlayerSwimController SwimController { get { return _swimController; } }
@@ -65,7 +65,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Awake()
     {
-        _switchController = new PlayerSwitchController(this, _gravityController, _inputController, _climbController, _jumpController);
+        _switchController = new PlayerSwitchController(this);
         SetStartingState();
     }
     private void SetStartingState()

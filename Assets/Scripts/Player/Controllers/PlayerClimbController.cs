@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerClimbController : MonoBehaviour
 {
     [Header("====References====")]
+    [SerializeField] PlayerStateMachine _playerStateMachine;
     [SerializeField] Transform _bottomRayTransform;
 
 
@@ -41,6 +42,7 @@ public class PlayerClimbController : MonoBehaviour
         bool isWallDetected = false;
 
 
+        if (_playerStateMachine.InputController.MovementInputVector.z <= 0) return false;
 
 
         for(int i=0; i<_rayCount; i++)

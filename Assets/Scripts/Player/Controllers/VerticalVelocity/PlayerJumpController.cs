@@ -6,14 +6,15 @@ using UnityEngine;
 public class PlayerJumpController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerGravityController _gravityController;
+    [SerializeField] PlayerVerticalVelocityController _verticalVelocityController;
 
 
 
     [Space(20)]
     [Header("====Settings====")]
-    [SerializeField] bool _isJump;
-    [SerializeField] bool _jumpReloaded;
+    [SerializeField] bool _isJump; public bool IsJump { get { return _isJump; } }
+    [SerializeField] bool _jumpReloaded; public bool JumpReloaded { get { return _jumpReloaded; } }
+
 
 
     [Space(20)]
@@ -30,34 +31,22 @@ public class PlayerJumpController : MonoBehaviour
 
     public void Jump()
     {
-        _gravityController.SetCurrentGravity(0);
+        _verticalVelocityController.GravityController.CurrentGravityForce = 0;
 
-        float jumpHeight = Mathf.Sqrt(_jumpForce / 60);
-        _gravityController.SetCurrentGravity(jumpHeight);
+        float jumpHeight = (_verticalVelocityController.GravityController.GravityForce + _jumpForce) / 100;
+        _verticalVelocityController.GravityController.CurrentGravityForce = jumpHeight;
     }
     public void AddDownVelocity()
     {
         LeanTween.value(0, 1, 0.2f).setOnUpdate((float val) =>
         {
-            _gravityController.SetCurrentGravity(_gravityController.GetCurrentGravity() - 0.005f * _jumpForce);
+            _verticalVelocityController.GravityController.SetCurrentGravity(_verticalVelocityController.GravityController.GetCurrentGravity() - 0.005f * _jumpForce);
         });
     }
     public bool CheckAboveObsticle()
     {
         Debug.DrawRay(transform.position, Vector3.up * 4, Color.cyan, 5);
         return Physics.Raycast(transform.position, Vector3.up, 4, ~_playerMask);
-    }
-
-
-
-
-    public bool GetIsJump()
-    {
-        return _isJump;
-    }
-    public bool GetJumpReloaded()
-    {
-        return _jumpReloaded;
     }
 
 

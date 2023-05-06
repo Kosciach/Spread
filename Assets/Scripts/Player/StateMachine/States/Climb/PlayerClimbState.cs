@@ -12,7 +12,7 @@ public class PlayerClimbState : PlayerBaseState
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 6);
 
-        _ctx.GravityController.ToggleApplyGravity(false);
+        _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(false);
         _ctx.ColliderController.ToggleCollider(false);
 
 
@@ -38,7 +38,7 @@ public class PlayerClimbState : PlayerBaseState
 
         _ctx.AnimatorController.SetBool("Climb", false);
         _ctx.ColliderController.ToggleCollider(true);
-        _ctx.GravityController.ToggleApplyGravity(true);
+        _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(true);
         _ctx.CineCameraController.ToggleCineInput(true);
     }
 

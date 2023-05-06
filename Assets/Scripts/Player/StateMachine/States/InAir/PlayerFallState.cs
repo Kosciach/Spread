@@ -10,9 +10,12 @@ public class PlayerFallState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 6);
+
         _ctx.ColliderController.SetColliderRadius(0.09f);
         _ctx.AnimatorController.SetBool("Land", false);
-        _ctx.AnimatorController.SetBool("Fall", true);
     }
     public override void StateUpdate()
     {
@@ -21,7 +24,7 @@ public class PlayerFallState : PlayerBaseState
 
         CheckClimb();
         if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
-        if (_ctx.GravityController.GetIsGrounded()) _ctx.SwitchController.SwitchTo.Land();
+        if (_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
     }
     public override void StateFixedUpdate()
     {

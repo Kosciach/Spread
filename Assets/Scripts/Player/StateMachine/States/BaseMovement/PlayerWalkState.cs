@@ -12,11 +12,12 @@ public class PlayerWalkState : PlayerBaseState
         _ctx.CineCameraController.FovController.SetFov(5, 2);
         _ctx.HandsCameraController.MoveController.SetHandsCameraPosition(PlayerHandsCameraMoveController.HandsCameraPositionsEnum.Walk, 5);
 
-        _ctx.JumpController.ToggleJumpReloaded(true);
+        _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(true);
         _ctx.ColliderController.SetColliderRadius(0.5f);
         _ctx.AnimatorController.SetBool("Walk", true);
         _ctx.AnimatorController.SetBool("Land", true);
         _ctx.AnimatorController.SetInt("JumpType", 1);
+        _ctx.AnimatorController.SetBool("FallFromGround", false);
         _ctx.MovementController.OnGround.SetWalkSpeed();
     }
     public override void StateUpdate()
@@ -26,7 +27,7 @@ public class PlayerWalkState : PlayerBaseState
         _ctx.MovementController.OnGround.CheckMovementType();
 
         if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
-        if (!_ctx.GravityController.GetIsGrounded()) _ctx.SwitchController.SwitchTo.Fall();
+        if (!_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
     {
@@ -38,7 +39,11 @@ public class PlayerWalkState : PlayerBaseState
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)) StateChange(_factory.Idle());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump)) StateChange(_factory.Jump());
-        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall)) StateChange(_factory.Fall());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
+        {
+            _ctx.AnimatorController.SetBool("FallFromGround", true);
+            StateChange(_factory.Fall());
+        }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch)) StateChange(_factory.Crouch());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Climb)) StateChange(_factory.Climb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim)) StateChange(_factory.Swim());

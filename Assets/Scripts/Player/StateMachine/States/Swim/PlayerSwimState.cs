@@ -11,7 +11,7 @@ public class PlayerSwimState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.AnimatorController.SetBool("Swim", true);
-        _ctx.GravityController.ToggleApplyGravity(false);
+        _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(false);
 
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
 
@@ -24,7 +24,7 @@ public class PlayerSwimState : PlayerBaseState
         _ctx.MovementController.Swim.Movement();
         _ctx.CineCameraController.RotatePlayerToCamera();
 
-        if (_ctx.SwimController.CheckIsOnSurface() && _ctx.GravityController.GetIsGrounded() && _ctx.SwimController.CheckObjectInFront()) _ctx.SwitchController.SwitchTo.Walk();
+        if (_ctx.SwimController.CheckIsOnSurface() && _ctx.VerticalVelocityController.GravityController.IsGrounded && _ctx.SwimController.CheckObjectInFront()) _ctx.SwitchController.SwitchTo.Walk();
         else if(!_ctx.SwimController.CheckIsOnSurface()) _ctx.SwitchController.SwitchTo.UnderWater();
     }
     public override void StateFixedUpdate()
@@ -57,7 +57,7 @@ public class PlayerSwimState : PlayerBaseState
     {
         _ctx.SwimController.ToggleCameraEffect(false);
         _ctx.AnimatorController.SetBool("Swim", false);
-        _ctx.GravityController.ToggleApplyGravity(true);
+        _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(true);
 
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
 

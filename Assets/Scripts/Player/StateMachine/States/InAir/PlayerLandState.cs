@@ -15,17 +15,16 @@ public class PlayerLandState : PlayerBaseState
         _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 6);
 
         _ctx.ColliderController.SetColliderRadius(0.2f);
-        _ctx.SlopeController.ToggleSlopeAngle(true);
+        _ctx.VerticalVelocityController.SlopeController.ToggleSlopeAngle(true);
 
-        _ctx.AnimatorController.SetFloat("FallVelocity", _ctx.GravityController.CurrentGravityForce);
+        _ctx.AnimatorController.SetFloat("FallVelocity", _ctx.VerticalVelocityController.GravityController.CurrentGravityForce);
         _ctx.AnimatorController.SetFloat("FallForwardVelocity", _ctx.MovementController.InAir.CurrentMovementVector.z);
         _ctx.AnimatorController.SetBool("Land", true);
 
-        _ctx.FootStepAudioController.LandFootStep(_ctx.GravityController.CurrentGravityForce);
+        _ctx.FootStepAudioController.LandFootStep(_ctx.VerticalVelocityController.GravityController.CurrentGravityForce);
 
-        CheckSlowDown();
+        CheckHardLanding();
         _ctx.SwitchController.SwitchTo.Idle();
-        //_ctx.RecoverFromLanding();
     }
     public override void StateUpdate()
     {
@@ -54,9 +53,9 @@ public class PlayerLandState : PlayerBaseState
     }
 
 
-    private void CheckSlowDown()
+    private void CheckHardLanding()
     {
-        if (_ctx.GravityController.CurrentGravityForce <= -0.3f)
+        if (_ctx.VerticalVelocityController.GravityController.CurrentGravityForce <= -0.3f)
             _ctx.WasHardLanding = true;
     }
 }

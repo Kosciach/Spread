@@ -4,146 +4,131 @@ using UnityEngine;
 
 public class PlayerSwitchController
 {
-    private PlayerStateMachine _stateMachine;
-    private PlayerGravityController _gravityController;
-    private PlayerInputController _inputController;
-    private PlayerClimbController _climbController;
-    private PlayerJumpController _jumpController;
+    private PlayerStateMachine _playerStateMachine;
     private SwitchToClass _switchTo; public SwitchToClass SwitchTo { get { return _switchTo; } }
 
 
-    public PlayerSwitchController(PlayerStateMachine stateMachine, PlayerGravityController gravityController, PlayerInputController inputController, PlayerClimbController climbController, PlayerJumpController jumpController)
+    public PlayerSwitchController(PlayerStateMachine playerStateMachineyer)
     {
-        _stateMachine = stateMachine;
-        _gravityController = gravityController;
-        _inputController = inputController;
-        _climbController = climbController;
-        _jumpController = jumpController;
-        _switchTo = new SwitchToClass(_stateMachine, _gravityController, _inputController, _climbController, _jumpController, this);
+        _playerStateMachine = playerStateMachineyer;
+        _switchTo = new SwitchToClass(_playerStateMachine, this);
     }
-
-
 
 
 
 
     public bool IsSwitch(PlayerStateMachine.SwitchEnum stateSwitch)
     {
-        return _stateMachine.StateSwitch == stateSwitch;
+        return _playerStateMachine.StateSwitch == stateSwitch;
+    }
+}
+
+
+
+
+
+public class SwitchToClass
+{
+    private PlayerStateMachine _playerStateMachine;
+    private PlayerSwitchController _switchController;
+    public SwitchToClass(PlayerStateMachine playerStateMachine, PlayerSwitchController switchController)
+    {
+        _playerStateMachine = playerStateMachine;
+        _switchController = switchController;
     }
 
 
 
 
-    public class SwitchToClass
+
+    public void Idle()
     {
-        private PlayerStateMachine _stateMachine;
-        private PlayerGravityController _gravityController;
-        private PlayerInputController _inputController;
-        private PlayerClimbController _climbController;
-        private PlayerJumpController _jumpController;
-        private PlayerSwitchController _switchController;
-        public SwitchToClass(PlayerStateMachine stateMachine, PlayerGravityController gravityController, PlayerInputController inputController, PlayerClimbController climbController, PlayerJumpController jumpController, PlayerSwitchController switchController)
-        {
-            _stateMachine = stateMachine;
-            _gravityController = gravityController;
-            _inputController = inputController;
-            _climbController = climbController;
-            _switchController = switchController;
-            _jumpController = jumpController;
-        }
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Idle;
+    }
+    public void Walk()
+    {
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Walk;
+    }
+    public void Run()
+    {
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Run;
+    }
+
+
+
+    public void Jump()
+    {
+        PlayerVerticalVelocityController verticalVelocityController = _playerStateMachine.VerticalVelocityController;
+
+        bool readyToJump = verticalVelocityController.GravityController.IsGrounded && !verticalVelocityController.JumpController.CheckAboveObsticle() && verticalVelocityController.JumpController.JumpReloaded;
+        if (!readyToJump) return;
+
+
+        //Dash();
+
+        //if (_stateMachine.MovementController.IsDashDirection()) return;
+
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Jump;
+
+
+
+        if (!_playerStateMachine.ClimbController.CanClimbWall()) return;
+
+        Climb();
+    }
+    public void Fall()
+    {
+        if (_switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) return;
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Fall;
+    }
+    public void Land()
+    {
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Land;
+    }
+
+
+
+    public void Crouch()
+    {
+        if (!_playerStateMachine.VerticalVelocityController.GravityController.IsGrounded) return;
+
+        if (_playerStateMachine.StateSwitch == PlayerStateMachine.SwitchEnum.Crouch) _playerStateMachine.SwitchController.SwitchTo.Idle();
+        else _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Crouch;
+    }
 
 
 
 
-
-        public void Idle()
-        {
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Idle;
-        }
-        public void Walk()
-        {
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Walk;
-        }
-        public void Run()
-        {
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Run;
-        }
+    public void Climb()
+    {
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Climb;
+    }
+    public void InAirClimb()
+    {
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.InAirClimb;
+    }
 
 
 
-        public void Jump()
-        {
-            bool readyToJump = _gravityController.GetIsGrounded() && !_jumpController.CheckAboveObsticle() && _jumpController.GetJumpReloaded();
-            if (!readyToJump) return;
-
-
-            //Dash();
-
-            //if (_stateMachine.MovementController.IsDashDirection()) return;
-
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Jump;
+    public void Ladder()
+    {
+        if (_switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle))
+            _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Ladder;
+    }
 
 
 
-            if (!_climbController.CanClimbWall()) return;
+    public void Swim()
+    {
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Swim;
+    }
+    public void UnderWater()
+    {
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.UnderWater;
+    }
 
-            Climb();
-        }
-        public void Fall()
-        {
-            if (_switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) return;
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Fall;
-        }
-        public void Land()
-        {
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Land;
-        }
-
-
-
-        public void Crouch()
-        {
-            if (!_gravityController.GetIsGrounded()) return;
-
-            if (_stateMachine.StateSwitch == PlayerStateMachine.SwitchEnum.Crouch) _stateMachine.SwitchController.SwitchTo.Idle();
-            else _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Crouch;
-        }
-
-
-
-
-        public void Climb()
-        {
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Climb;
-        }
-        public void InAirClimb()
-        {
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.InAirClimb;
-        }
-
-
-
-        public void Ladder()
-        {
-            if (_switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle))
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Ladder;
-        }
-
-
-
-        public void Swim()
-        {
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Swim;
-        }
-        public void UnderWater()
-        {
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.UnderWater;
-        }
-
-        public void Dash()
-        {
-            _stateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Dash;
-        }
+    public void Dash()
+    {
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Dash;
     }
 }

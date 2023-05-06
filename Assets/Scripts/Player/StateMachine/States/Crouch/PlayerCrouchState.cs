@@ -20,7 +20,7 @@ public class PlayerCrouchState : PlayerBaseState
         _ctx.CineCameraController.RotatePlayerToCamera();
         _ctx.MovementController.OnGround.Movement();
 
-        if (!_ctx.GravityController.GetIsGrounded()) _ctx.SwitchController.SwitchTo.Fall();
+        if (!_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
     {

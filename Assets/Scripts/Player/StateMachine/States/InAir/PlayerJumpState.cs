@@ -10,20 +10,24 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.HeadBody, false, 6);
+
         _ctx.ColliderController.SetColliderRadius(0.2f);
 
         PrepareAnimatorBools();
 
-        _ctx.JumpController.ToggleJumpReloaded(false);
-        _ctx.JumpController.ToggleIsJump(true);
-        _ctx.JumpController.Jump();
+        _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(false);
+        _ctx.VerticalVelocityController.JumpController.ToggleIsJump(true);
+        _ctx.VerticalVelocityController.JumpController.Jump();
     }
     public override void StateUpdate()
     {
         _ctx.CineCameraController.RotatePlayerToCamera();
         _ctx.MovementController.InAir.Movement();
 
-        if (_ctx.GravityController.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
+        if (_ctx.VerticalVelocityController.GravityController.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
     {
@@ -31,11 +35,15 @@ public class PlayerJumpState : PlayerBaseState
     }
     public override void StateCheckChange()
     {
-        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall)) StateChange(_factory.Fall());
+        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
+        {
+            _ctx.AnimatorController.SetBool("Fall", true);
+            StateChange(_factory.Fall());
+        }
     }
     public override void StateExit()
     {
-        _ctx.JumpController.ToggleIsJump(false);
+        _ctx.VerticalVelocityController.JumpController.ToggleIsJump(false);
         _ctx.AnimatorController.SetBool("Jump", false);
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerLadderController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerStateMachine _stateMachine;
+    [SerializeField] PlayerStateMachine _playerStateMachine;
 
 
 
@@ -37,20 +37,20 @@ public class PlayerLadderController : MonoBehaviour
     public void LowerLadderEnter()
     {
         SetLadderCamera();
-        _stateMachine.GravityController.ToggleApplyGravity(false);
+        _playerStateMachine.VerticalVelocityController.GravityController.ToggleApplyGravity(false);
 
-        _stateMachine.AnimatorController.SetBool("LadderLowerEnter", true);
+        _playerStateMachine.AnimatorController.SetBool("LadderLowerEnter", true);
         transform.LeanRotateY(_currentLadder.rotation.eulerAngles.y + 90, 0.5f);
         transform.LeanMove(_currentLadder.GetChild(5).position, 0.2f);
     }
     public void LowerLadderExit()
     {
         ResetCamera();
-        _stateMachine.GravityController.ToggleApplyGravity(true);
+        _playerStateMachine.VerticalVelocityController.GravityController.ToggleApplyGravity(true);
 
-        _stateMachine.AnimatorController.SetBool("LadderLowerExit", true);
-        _stateMachine.ColliderController.ToggleCollider(true);
-        _stateMachine.SwitchController.SwitchTo.Idle();
+        _playerStateMachine.AnimatorController.SetBool("LadderLowerExit", true);
+        _playerStateMachine.ColliderController.ToggleCollider(true);
+        _playerStateMachine.SwitchController.SwitchTo.Idle();
     }
 
 
@@ -59,12 +59,12 @@ public class PlayerLadderController : MonoBehaviour
     public void HigherLadderEnter()
     {
         SetLadderCamera();
-        _stateMachine.GravityController.ToggleApplyGravity(false);
+        _playerStateMachine.VerticalVelocityController.GravityController.ToggleApplyGravity(false);
 
 
 
-        _stateMachine.AnimatorController.SetBool("LadderHigherEnter", true);
-        _stateMachine.ColliderController.ToggleCollider(false);
+        _playerStateMachine.AnimatorController.SetBool("LadderHigherEnter", true);
+        _playerStateMachine.ColliderController.ToggleCollider(false);
 
 
 
@@ -76,25 +76,25 @@ public class PlayerLadderController : MonoBehaviour
         {
             transform.LeanMove(_currentLadder.GetChild(3).position, 1f).setOnComplete(() =>
             {
-                _stateMachine.ColliderController.ToggleCollider(true);
+                _playerStateMachine.ColliderController.ToggleCollider(true);
             });
         });
     }
     public void HigherLadderExit()
     {
-        _stateMachine.MovementController.Ladder.ToggleMovement(false);
-        _stateMachine.AnimatorController.SetBool("LadderHigherExit", true);
-        _stateMachine.ColliderController.ToggleCollider(false);
+        _playerStateMachine.MovementController.Ladder.ToggleMovement(false);
+        _playerStateMachine.AnimatorController.SetBool("LadderHigherExit", true);
+        _playerStateMachine.ColliderController.ToggleCollider(false);
 
         transform.LeanMoveY(_currentLadder.GetChild(4).position.y - 1f, 0.5f).setOnComplete(() =>
         {
             transform.LeanMove(_currentLadder.GetChild(4).position, 0.5f).setOnComplete(() =>
             {
-                _stateMachine.ColliderController.ToggleCollider(true);
-                _stateMachine.GravityController.ToggleApplyGravity(true);
+                _playerStateMachine.ColliderController.ToggleCollider(true);
+                _playerStateMachine.VerticalVelocityController.GravityController.ToggleApplyGravity(true);
                 ResetCamera();
-                _stateMachine.MovementController.Ladder.ToggleMovement(true);
-                _stateMachine.SwitchController.SwitchTo.Idle();
+                _playerStateMachine.MovementController.Ladder.ToggleMovement(true);
+                _playerStateMachine.SwitchController.SwitchTo.Idle();
             });
         });
     }
@@ -105,10 +105,10 @@ public class PlayerLadderController : MonoBehaviour
 
     public void ResetBools()
     {
-        _stateMachine.AnimatorController.SetBool("LadderHigherEnter", false);
-        _stateMachine.AnimatorController.SetBool("LadderHigherExit", false);
-        _stateMachine.AnimatorController.SetBool("LadderLowerEnter", false);
-        _stateMachine.AnimatorController.SetBool("LadderLowerExit", false);
+        _playerStateMachine.AnimatorController.SetBool("LadderHigherEnter", false);
+        _playerStateMachine.AnimatorController.SetBool("LadderHigherExit", false);
+        _playerStateMachine.AnimatorController.SetBool("LadderLowerEnter", false);
+        _playerStateMachine.AnimatorController.SetBool("LadderLowerExit", false);
     }
     public LadderEnum GetLadderType()
     {
@@ -125,7 +125,7 @@ public class PlayerLadderController : MonoBehaviour
 
     public void CheckLadderLowerExit()
     {
-        bool lowerExitLock = !_stateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder) || !_stateMachine.GravityController.GetIsGrounded() || _stateMachine.InputController.MovementInputVector.z >= 0;
+        bool lowerExitLock = !_playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder) || !_playerStateMachine.VerticalVelocityController.GravityController.IsGrounded || _playerStateMachine.InputController.MovementInputVector.z >= 0;
         if (lowerExitLock) return;
 
         _ladderType = LadderEnum.LowerExit;
@@ -135,15 +135,15 @@ public class PlayerLadderController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag(_lowerEnterTag) && _stateMachine.InputController.MovementInputVector.z > 0)
+        if(other.CompareTag(_lowerEnterTag) && _playerStateMachine.InputController.MovementInputVector.z > 0)
         {
             LadderEnter(LadderEnum.LowerEnter, other.transform);
         }
-        else if (other.CompareTag(_higherEnterTag) && _stateMachine.InputController.MovementInputVector.z > 0)
+        else if (other.CompareTag(_higherEnterTag) && _playerStateMachine.InputController.MovementInputVector.z > 0)
         {
             LadderEnter(LadderEnum.HigherEnter, other.transform);
         }
-        else if (other.CompareTag(_higherExitTag) && _stateMachine.InputController.MovementInputVector.z > 0)
+        else if (other.CompareTag(_higherExitTag) && _playerStateMachine.InputController.MovementInputVector.z > 0)
         {
             _ladderType = LadderEnum.HigherExit;
             ResetBools();
@@ -154,7 +154,7 @@ public class PlayerLadderController : MonoBehaviour
     private void LadderEnter(LadderEnum enterType, Transform ladder)
     {
         _currentLadder = ladder.parent;
-        _stateMachine.SwitchController.SwitchTo.Ladder();
+        _playerStateMachine.SwitchController.SwitchTo.Ladder();
         _ladderType = enterType;
     }
     private void SetLadderCamera()
@@ -168,13 +168,13 @@ public class PlayerLadderController : MonoBehaviour
         minAngle = angle - 50;
         maxAngle = angle + 50;
 
-        _stateMachine.CineCameraController.HorizontalController.ToggleWrap(false);
-        _stateMachine.CineCameraController.HorizontalController.RotateToAngle(angle, 0.2f);
-        _stateMachine.CineCameraController.HorizontalController.SetBorderValues(minAngle, maxAngle);
+        _playerStateMachine.CineCameraController.HorizontalController.ToggleWrap(false);
+        _playerStateMachine.CineCameraController.HorizontalController.RotateToAngle(angle, 0.2f);
+        _playerStateMachine.CineCameraController.HorizontalController.SetBorderValues(minAngle, maxAngle);
     }
     private void ResetCamera()
     {
-        _stateMachine.CineCameraController.HorizontalController.SetBorderValues(-180, 180);
-        _stateMachine.CineCameraController.HorizontalController.ToggleWrap(true);
+        _playerStateMachine.CineCameraController.HorizontalController.SetBorderValues(-180, 180);
+        _playerStateMachine.CineCameraController.HorizontalController.ToggleWrap(true);
     }
 }

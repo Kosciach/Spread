@@ -5,10 +5,7 @@ using UnityEngine;
 public class PlayerGravityController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerInputController _inputController;
-    [SerializeField] CharacterController _characterController;
-    [SerializeField] PlayerJumpController _jumpController;
-    [SerializeField] PlayerSlopeController _slopeController;
+    [SerializeField] PlayerVerticalVelocityController _verticalVelocityController;
     [SerializeField] Transform _groundCheckPoint;
 
 
@@ -16,8 +13,8 @@ public class PlayerGravityController : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] float _currentGravityForce; public float CurrentGravityForce { get { return _currentGravityForce; } }
-    [SerializeField] bool _isGrounded;
+    [SerializeField] float _currentGravityForce; public float CurrentGravityForce { get { return _currentGravityForce; } set { _currentGravityForce = value; } }
+    [SerializeField] bool _isGrounded; public bool IsGrounded { get { return _isGrounded;} }
     [SerializeField] bool _applyGravity;
     [Space(5)]
     [Range(0, 1)]
@@ -29,7 +26,7 @@ public class PlayerGravityController : MonoBehaviour
     [Space(20)]
     [Header("====Settings====")]
     [Range(0, 100)]
-    [SerializeField] float _gravityForce;
+    [SerializeField] float _gravityForce; public float GravityForce { get { return _gravityForce; } }
     [Range(0, 0.5f)]
     [SerializeField] float _groundCheckRadius;
     [Space(5)]
@@ -51,9 +48,9 @@ public class PlayerGravityController : MonoBehaviour
 
     private void GravityForceControll()
     {
-        bool resetGravity = _isGrounded && !_jumpController.GetIsJump();
+        bool resetGravity = _isGrounded && !_verticalVelocityController.JumpController.IsJump;
 
-        if (resetGravity) _currentGravityForce = -0.01f - _slopeController.GetSlopeAngle();
+        if (resetGravity) _currentGravityForce = -0.01f - _verticalVelocityController.SlopeController.SlopeAngle;
         else _currentGravityForce -= _gravityForce * Time.deltaTime * Time.deltaTime;
 
 
@@ -63,7 +60,7 @@ public class PlayerGravityController : MonoBehaviour
     {
         if (!_applyGravity) return;
 
-        _characterController.Move(new Vector3(0f, _currentGravityForce, 0f));
+        _verticalVelocityController.CharacterController.Move(new Vector3(0f, _currentGravityForce, 0f));
     }
     private void CheckGround()
     {
@@ -82,10 +79,7 @@ public class PlayerGravityController : MonoBehaviour
 
 
 
-    public bool GetIsGrounded()
-    {
-        return _isGrounded;
-    }
+
     public float GetCurrentGravity()
     {
         return _currentGravityForce;
