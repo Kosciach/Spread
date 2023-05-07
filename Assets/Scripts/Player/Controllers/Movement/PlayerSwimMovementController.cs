@@ -36,10 +36,10 @@ public class PlayerSwimMovementController : MonoBehaviour
         Transform mainCameraTransform = _movementController.PlayerStateMachine.CineCameraController.MainCamera.transform;
         Vector3 inputVector = _movementController.PlayerStateMachine.InputController.MovementInputVectorNormalized;
 
-        Vector3 desiredSwimMovementVector = (mainCameraTransform.forward  * inputVector.z + _movementController.PlayerTransform.right * inputVector.x) * _speed * _movementToggle * Time.deltaTime;
+        Vector3 desiredSwimMovementVector = (mainCameraTransform.forward  * inputVector.z + _movementController.PlayerTransform.right * inputVector.x) * _speed * _movementToggle;
 
         _currentMovementVector = Vector3.Lerp(_currentMovementVector, desiredSwimMovementVector, _accelarationSpeed * Time.deltaTime);
-        _movementController.CharacterController.Move(_currentMovementVector);
+        _movementController.CharacterController.Move(_currentMovementVector * Time.deltaTime);
 
         _movementController.PlayerStateMachine.SwimController.ClampPosition();
 

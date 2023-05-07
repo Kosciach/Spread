@@ -34,10 +34,10 @@ public class PlayerLadderMovementController : MonoBehaviour
     public void Movement()
     {
         Vector3 inputVector = _movementController.PlayerStateMachine.InputController.MovementInputVectorNormalized;
-        Vector3 desiredLadderMovementVector = new Vector3(0f, inputVector.z * _speed * _movementToggle * Time.deltaTime, 0f);
+        Vector3 desiredLadderMovementVector = new Vector3(0f, inputVector.z * _speed * _movementToggle, 0f);
 
         _currentMovementVector = Vector3.Lerp(_currentMovementVector, desiredLadderMovementVector, _accelarationSpeed * Time.deltaTime);
-        _movementController.CharacterController.Move(_currentMovementVector);
+        _movementController.CharacterController.Move(_currentMovementVector * Time.deltaTime);
 
         AnimatorMovement();
     }

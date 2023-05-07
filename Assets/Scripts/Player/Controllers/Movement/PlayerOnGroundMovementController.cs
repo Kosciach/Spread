@@ -32,7 +32,8 @@ public class PlayerOnGroundMovementController : MonoBehaviour
     [SerializeField] float _accelarationSpeed;
 
 
-    [SerializeField] Vector3 _currentMovementVector; public Vector3 CurrentMovementVector { get { return _currentMovementVector; } }
+
+    private Vector3 _currentMovementVector; public Vector3 CurrentMovementVector { get { return _currentMovementVector; } }
     private float _animatorMovementSpeed;
 
 
@@ -46,12 +47,12 @@ public class PlayerOnGroundMovementController : MonoBehaviour
     public void Movement()
     {
         Vector3 inputVector = _movementController.PlayerStateMachine.InputController.MovementInputVectorNormalized;
-        Vector3 desiredMovementVector = (_movementController.PlayerTransform.forward * inputVector.z + _movementController.PlayerTransform.right * inputVector.x) * _speed * Time.deltaTime;
+        Vector3 desiredMovementVector = (_movementController.PlayerTransform.forward * inputVector.z + _movementController.PlayerTransform.right * inputVector.x) * _speed;
 
         _currentMovementVector = Vector3.Lerp(_currentMovementVector, desiredMovementVector, _accelarationSpeed);
-        _movementController.InAir.SetCurrentMovementVector(_currentMovementVector);
+        _movementController.InAir.CurrentMovementVector = _currentMovementVector;
 
-        _movementController.CharacterController.Move(_currentMovementVector);
+        _movementController.CharacterController.Move(_currentMovementVector * Time.deltaTime);
 
         AnimatorMovement();
     }
