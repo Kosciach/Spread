@@ -16,7 +16,7 @@ public class PlayerLandState : PlayerBaseState
         _ctx.VerticalVelocityController.SlopeController.ToggleSlopeAngle(true);
 
         _ctx.AnimatorController.SetFloat("FallingTime", _ctx.VerticalVelocityController.GravityController.CurrentGravityForce);
-        _ctx.AnimatorController.SetFloat("FallForwardVelocity", _ctx.MovementController.InAir.CurrentMovementVector.z);
+        _ctx.AnimatorController.SetFloat("FallForwardVelocity", _ctx.PlayerVelocity.VelocityAbsolute.z / 10);
         _ctx.AnimatorController.SetBool("Land", true);
 
         _ctx.FootStepAudioController.LandFootStep(_ctx.VerticalVelocityController.GravityController.CurrentGravityForce);
@@ -53,5 +53,6 @@ public class PlayerLandState : PlayerBaseState
 
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(!_ctx.WasHardLanding);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 6);
+        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, !_ctx.WasHardLanding, 6);
     }
 }

@@ -22,7 +22,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] PlayerMovementController _movementController; public PlayerMovementController MovementController { get { return _movementController; } }
     [SerializeField] PlayerVerticalVelocityController _verticalVelocityController; public PlayerVerticalVelocityController VerticalVelocityController { get { return _verticalVelocityController; } }
 
-
+    [SerializeField] PlayerVelocity _playerVelocity; public PlayerVelocity PlayerVelocity { get { return _playerVelocity; } }
     [SerializeField] PlayerColliderController _colliderController; public PlayerColliderController ColliderController { get { return _colliderController; } }
     [SerializeField] PlayerClimbController _climbController; public PlayerClimbController ClimbController { get { return _climbController; } }
     [SerializeField] PlayerSwimController _swimController; public PlayerSwimController SwimController { get { return _swimController; } }

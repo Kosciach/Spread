@@ -32,7 +32,7 @@ public class PlayerOnGroundMovementController : MonoBehaviour
     [SerializeField] float _accelarationSpeed;
 
 
-    private Vector3 _currentMovementVector;
+    [SerializeField] Vector3 _currentMovementVector; public Vector3 CurrentMovementVector { get { return _currentMovementVector; } }
     private float _animatorMovementSpeed;
 
 
@@ -61,7 +61,7 @@ public class PlayerOnGroundMovementController : MonoBehaviour
         Vector3 animatorMovementVector = inputVector * _animatorMovementSpeed;
 
         _movementController.PlayerStateMachine.AnimatorController.SetFloat("MovementX", animatorMovementVector.x, 0.1f);
-        _movementController.PlayerStateMachine.AnimatorController.SetFloat("MovementZ", animatorMovementVector.z, 0.1f);
+        _movementController.PlayerStateMachine.AnimatorController.SetFloat("MovementZ", animatorMovementVector.z, 0.2f);
     }
 
     public void CheckMovementType()
