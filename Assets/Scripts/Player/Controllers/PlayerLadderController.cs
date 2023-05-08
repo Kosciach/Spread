@@ -82,6 +82,9 @@ public class PlayerLadderController : MonoBehaviour
     }
     public void HigherLadderExit()
     {
+        _playerStateMachine.CineCameraController.ToggleCineInput(false);
+        SetLadderCamera();
+
         _playerStateMachine.MovementController.Ladder.ToggleMovement(false);
         _playerStateMachine.AnimatorController.SetBool("LadderHigherExit", true);
         _playerStateMachine.ColliderController.ToggleCollider(false);
@@ -95,6 +98,7 @@ public class PlayerLadderController : MonoBehaviour
                 ResetCamera();
                 _playerStateMachine.MovementController.Ladder.ToggleMovement(true);
                 _playerStateMachine.SwitchController.SwitchTo.Idle();
+                _playerStateMachine.CineCameraController.ToggleCineInput(true);
             });
         });
     }
@@ -143,7 +147,7 @@ public class PlayerLadderController : MonoBehaviour
         {
             LadderEnter(LadderEnum.HigherEnter, other.transform);
         }
-        else if (other.CompareTag(_higherExitTag) && _playerStateMachine.InputController.MovementInputVector.z > 0)
+        else if (other.CompareTag(_higherExitTag) && _playerStateMachine.MovementController.Ladder.CurrentMovementController.y > 0)
         {
             _ladderType = LadderEnum.HigherExit;
             ResetBools();
@@ -170,6 +174,7 @@ public class PlayerLadderController : MonoBehaviour
 
         _playerStateMachine.CineCameraController.HorizontalController.ToggleWrap(false);
         _playerStateMachine.CineCameraController.HorizontalController.RotateToAngle(angle, 0.2f);
+        _playerStateMachine.CineCameraController.VerticalController.RotateToAngle(0, 0.2f);
         _playerStateMachine.CineCameraController.HorizontalController.SetBorderValues(minAngle, maxAngle);
     }
     private void ResetCamera()

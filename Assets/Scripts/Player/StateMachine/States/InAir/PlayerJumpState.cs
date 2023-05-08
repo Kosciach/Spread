@@ -10,7 +10,7 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
+        //_ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
 
         _ctx.ColliderController.SetColliderRadius(0.2f);
 

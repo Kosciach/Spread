@@ -22,6 +22,7 @@ public class PlayerColliderController : MonoBehaviour
     [Header("====Settings====")]
     [Range(0, 10)]
     [SerializeField] float _colliderRadiusChangeSpeed;
+    [SerializeField] Vector3 _colliderCenterOffset;
 
 
 
@@ -46,7 +47,7 @@ public class PlayerColliderController : MonoBehaviour
     private void FitColliderToPlayer()
     {
         float colliderHeight = _colliderTop.position.y - _colliderBottom.position.y;
-        Vector3 colliderPosition = new Vector3(0, colliderHeight / 2, 0);
+        Vector3 colliderPosition = new Vector3(0, colliderHeight / 2, 0) + _colliderCenterOffset;
 
         _characterController.center = colliderPosition;
         _characterController.height = colliderHeight;

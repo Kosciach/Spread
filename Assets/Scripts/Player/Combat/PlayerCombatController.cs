@@ -45,7 +45,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeapon.transform.localPosition = _equipedWeaponData.InHandPosition;
         _equipedWeapon.transform.localRotation = Quaternion.Euler(_equipedWeaponData.InHandRotation);
 
-        _stateMachine.HandsCameraController.MoveController.SetHandsCameraPosition(PlayerHandsCameraMoveController.HandsCameraPositionsEnum.Combat, 5);
+        _stateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Combat, 5);
         _stateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Combat, 5);
 
         _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 5);
@@ -59,8 +59,8 @@ public class PlayerCombatController : MonoBehaviour
         if (IsState(CombatStateEnum.Unarmed)) return;
 
 
-        _stateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Base, 5);
-        _stateMachine.HandsCameraController.MoveController.SetHandsCameraPosition(PlayerHandsCameraMoveController.HandsCameraPositionsEnum.Idle, 5);
+        _stateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
+        _stateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
         _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
         _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, false, 5);
@@ -81,8 +81,8 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeapon = null;
         _equipedWeaponData = null;
 
-        _stateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Base, 5);
-        _stateMachine.HandsCameraController.MoveController.SetHandsCameraPosition(PlayerHandsCameraMoveController.HandsCameraPositionsEnum.Idle, 5);
+        _stateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
+        _stateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
         _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
         _stateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, false, 5);

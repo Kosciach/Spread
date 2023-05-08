@@ -1,12 +1,12 @@
-using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class PlayerHandsCameraMoveController : MonoBehaviour
+public class PlayerCineCameraMoveController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerHandsCameraController _cameraController;
+    [SerializeField] PlayerCineCameraController _cameraController;
 
 
 
@@ -26,7 +26,7 @@ public class PlayerHandsCameraMoveController : MonoBehaviour
 
     public enum CameraPositionsEnum
     {
-        Idle, Walk, Run, Combat
+        OnGround, Swim, Ladder
     }
 
 
@@ -45,7 +45,7 @@ public class PlayerHandsCameraMoveController : MonoBehaviour
         if (_poseMode) return;
 
         _currentPosition = Vector3.Lerp(_currentPosition, _desiredPosition, _moveSpeed * Time.deltaTime);
-        _cameraController.HandsCamera.transform.localPosition = _currentPosition;
+        _cameraController.MainCameraHolder.transform.localPosition = _currentPosition;
     }
 
     public void SetCameraPosition(CameraPositionsEnum cameraPosition, float moveSpeed)
@@ -53,6 +53,6 @@ public class PlayerHandsCameraMoveController : MonoBehaviour
         _desiredPosition = _cameraPositions[(int)cameraPosition];
         _moveSpeed = moveSpeed;
 
-        _cameraPositionType = cameraPosition;
+        _cameraPositionType  = cameraPosition;
     }
 }

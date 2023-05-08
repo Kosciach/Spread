@@ -27,7 +27,7 @@ public class PlayerLadderMovementController : MonoBehaviour
 
 
 
-    private Vector3 _currentMovementVector;
+    private Vector3 _currentMovementVector; public Vector3 CurrentMovementController { get { return _currentMovementVector; } }
 
 
 

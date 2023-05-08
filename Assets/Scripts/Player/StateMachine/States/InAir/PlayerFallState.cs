@@ -10,7 +10,7 @@ public class PlayerFallState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
+        //_ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
 
         _ctx.ColliderController.SetColliderRadius(0.09f);
         _ctx.AnimatorController.SetBool("Land", false);

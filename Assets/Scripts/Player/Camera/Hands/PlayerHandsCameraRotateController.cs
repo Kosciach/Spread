@@ -26,7 +26,7 @@ public class PlayerHandsCameraRotateController : MonoBehaviour
 
     public enum HandsCameraRotationsEnum
     {
-        Base, Crouch, Climb, Combat, Swim
+        IdleWalkRun, Crouch, Climb, Combat
     }
 
 

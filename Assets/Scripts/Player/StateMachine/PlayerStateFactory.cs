@@ -76,9 +76,4 @@ public class PlayerStateFactory
     {
         return new PlayerDashState(_playerStateMachine, this, MethodBase.GetCurrentMethod().Name);
     }
-
-    public PlayerBaseState Pickup()
-    {
-        return new PlayerPickupState(_playerStateMachine, this, MethodBase.GetCurrentMethod().Name);
-    }
 }

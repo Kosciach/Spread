@@ -112,7 +112,11 @@ public class SwitchToClass
 
     public void Ladder()
     {
-        if (_switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle))
+        if (_switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run)
+            || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)
+            || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)
+            || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch))
+
             _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Ladder;
     }
 

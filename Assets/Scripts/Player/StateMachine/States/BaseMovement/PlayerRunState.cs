@@ -9,11 +9,11 @@ public class PlayerRunState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CineCameraController.FovController.SetFov(15, 2);
-        _ctx.HandsCameraController.MoveController.SetHandsCameraPosition(PlayerHandsCameraMoveController.HandsCameraPositionsEnum.Run, 5);
+        _ctx.CineCameraController.Fov.SetFov(15, 2);
+        _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Run, 5);
 
         _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(true);
-        _ctx.ColliderController.SetColliderRadius(0.5f);
+        _ctx.ColliderController.SetColliderRadius(0.8f);
         _ctx.AnimatorController.SetBool("Run", true);
         _ctx.AnimatorController.SetBool("Land", true);
         _ctx.AnimatorController.SetInt("JumpType", 2);
@@ -26,6 +26,7 @@ public class PlayerRunState : PlayerBaseState
         _ctx.MovementController.OnGround.Movement();
         _ctx.MovementController.OnGround.CheckMovementType();
 
+        if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
         if (!_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()

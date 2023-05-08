@@ -6,9 +6,10 @@ using UnityEngine;
 public class PlayerCineCameraController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerMainCameraFovController _fovController; public PlayerMainCameraFovController FovController { get { return _fovController; } }
-    [SerializeField] PlayerCineCameraHorizontalController _horizontalController; public PlayerCineCameraHorizontalController HorizontalController { get { return _horizontalController; } }
-    [SerializeField] PlayerCineCameraVerticalController _verticalController; public PlayerCineCameraVerticalController VerticalController { get { return _verticalController; } }
+    [SerializeField] PlayerMainCameraFovController _fov; public PlayerMainCameraFovController Fov { get { return _fov; } }
+    [SerializeField] PlayerCineCameraMoveController _move; public PlayerCineCameraMoveController Move { get { return _move; } }
+    [SerializeField] PlayerCineCameraHorizontalController _horizontal; public PlayerCineCameraHorizontalController HorizontalController { get { return _horizontal; } }
+    [SerializeField] PlayerCineCameraVerticalController _vertical; public PlayerCineCameraVerticalController VerticalController { get { return _vertical; } }
     [Space(5)]
     [SerializeField] CinemachineVirtualCamera _cineCamera; public CinemachineVirtualCamera CineCamera { get { return _cineCamera; } }
     [SerializeField] CinemachinePOV _cinePOV; public CinemachinePOV CinePOV { get { return _cinePOV; } }

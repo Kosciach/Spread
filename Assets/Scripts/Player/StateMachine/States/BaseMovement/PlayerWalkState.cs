@@ -9,11 +9,11 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CineCameraController.FovController.SetFov(5, 2);
-        _ctx.HandsCameraController.MoveController.SetHandsCameraPosition(PlayerHandsCameraMoveController.HandsCameraPositionsEnum.Walk, 5);
+        _ctx.CineCameraController.Fov.SetFov(5, 2);
+        _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Walk, 5);
 
         _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(true);
-        _ctx.ColliderController.SetColliderRadius(0.5f);
+        _ctx.ColliderController.SetColliderRadius(0.8f);
         _ctx.AnimatorController.SetBool("Walk", true);
         _ctx.AnimatorController.SetBool("Land", true);
         _ctx.AnimatorController.SetInt("JumpType", 1);
