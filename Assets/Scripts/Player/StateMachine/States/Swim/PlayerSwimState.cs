@@ -17,7 +17,7 @@ public class PlayerSwimState : PlayerBaseState
     public override void StateUpdate()
     {
         _ctx.MovementController.Swim.Movement();
-        _ctx.CineCameraController.RotatePlayerToCamera();
+        _ctx.RotationController.RotateToCanera();
 
         bool isOutOfSwim = _ctx.SwimController.CheckIsOnSurface() && _ctx.VerticalVelocityController.GravityController.IsGrounded && _ctx.SwimController.CheckObjectInFront();
         if (isOutOfSwim) _ctx.SwitchController.SwitchTo.Walk();

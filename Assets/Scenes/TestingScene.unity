@@ -20476,6 +20476,7 @@ GameObject:
   - component: {fileID: 8003831046665861838}
   - component: {fileID: 8003831046665861813}
   - component: {fileID: 8003831046665861828}
+  - component: {fileID: 8003831046665861840}
   - component: {fileID: 8003831046665861839}
   - component: {fileID: 8003831046665861821}
   - component: {fileID: 8003831046665861823}
@@ -20830,6 +20831,7 @@ MonoBehaviour:
   _combatController: {fileID: 8003831046665861838}
   _movementController: {fileID: 962897146}
   _verticalVelocityController: {fileID: 2130282953}
+  _rotationController: {fileID: 8003831046665861840}
   _playerVelocity: {fileID: 8003831046665861839}
   _colliderController: {fileID: 8003831046665861828}
   _climbController: {fileID: 8003831046665861821}
@@ -20857,6 +20859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 8003831046665861830}
+  _mouseInputVector: {x: 0, y: 0}
   _movementInputVector: {x: 0, y: 0, z: 0}
   _movementInputVectorNormalized: {x: 0, y: 0, z: 0}
   _isMoveInput: 0
@@ -20987,6 +20990,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _velocity: {x: 0, y: 0, z: 0}
   _velocityAbsolute: {x: 0, y: 0, z: 0}
+--- !u!114 &8003831046665861840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8003831046665861810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7831e2fcdf7a5f40b7cefbb957ce996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerStateMachine: {fileID: 8003831046665861830}
 --- !u!1 &8018633896559619792
 GameObject:
   m_ObjectHideFlags: 0

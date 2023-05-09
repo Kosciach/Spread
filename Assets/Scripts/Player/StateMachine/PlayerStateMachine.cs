@@ -21,6 +21,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] PlayerCombatController _combatController; public PlayerCombatController CombatController { get { return _combatController; } }
     [SerializeField] PlayerMovementController _movementController; public PlayerMovementController MovementController { get { return _movementController; } }
     [SerializeField] PlayerVerticalVelocityController _verticalVelocityController; public PlayerVerticalVelocityController VerticalVelocityController { get { return _verticalVelocityController; } }
+    [SerializeField] PlayerRotationController _rotationController; public PlayerRotationController RotationController { get { return _rotationController; } }
 
     [SerializeField] PlayerVelocity _playerVelocity; public PlayerVelocity PlayerVelocity { get { return _playerVelocity; } }
     [SerializeField] PlayerColliderController _colliderController; public PlayerColliderController ColliderController { get { return _colliderController; } }

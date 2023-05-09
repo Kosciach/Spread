@@ -22,7 +22,7 @@ public class PlayerJumpState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-        _ctx.CineCameraController.RotatePlayerToCamera();
+        _ctx.RotationController.RotateToCanera();
         _ctx.MovementController.InAir.Movement();
 
         if (_ctx.VerticalVelocityController.GravityController.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();

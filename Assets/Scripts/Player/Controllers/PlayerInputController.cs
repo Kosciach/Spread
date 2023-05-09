@@ -12,6 +12,7 @@ public class PlayerInputController : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
+    [SerializeField] Vector2 _mouseInputVector; public Vector2 MouseInputVector { get { return _mouseInputVector; } }
     [SerializeField] Vector3 _movementInputVector; public Vector3 MovementInputVector { get { return _movementInputVector; } }
     [SerializeField] Vector3 _movementInputVectorNormalized; public Vector3 MovementInputVectorNormalized { get { return _movementInputVectorNormalized; } }
     [SerializeField] bool _isMoveInput; public bool IsMoveInput { get { return _isMoveInput; } }
@@ -43,7 +44,8 @@ public class PlayerInputController : MonoBehaviour
     }
     private void Update()
     {
-        SetMovementVector();
+        SetMovementInputVector();
+        SetMouseInputVector();
     }
 
 
@@ -52,12 +54,17 @@ public class PlayerInputController : MonoBehaviour
 
 
 
-    private void SetMovementVector()
+    private void SetMovementInputVector()
     {
         Vector2 inputVector = _playerInputs.Player.Move.ReadValue<Vector2>();
         _movementInputVector = new Vector3(inputVector.x, 0f, inputVector.y);
         _movementInputVectorNormalized = _movementInputVector.normalized;
     }
+    private void SetMouseInputVector()
+    {
+        _mouseInputVector = _playerInputs.Player.Look.ReadValue<Vector2>();
+    }
+
 
 
     private void SetMoving()

@@ -39,10 +39,6 @@ public class PlayerCineCameraController : MonoBehaviour
         Cursor.lockState = cursorLockMode;
         Cursor.visible = visible;
     }
-    public void RotatePlayerToCamera()
-    {
-        _playerTransform.rotation = Quaternion.Euler(0, _mainCamera.transform.rotation.eulerAngles.y, 0);
-    }
     public void ToggleCineInput(bool enabled)
     {
         _cineInputs.enabled = enabled;

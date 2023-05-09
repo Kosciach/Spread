@@ -21,7 +21,8 @@ public class PlayerIdleState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-        _ctx.CineCameraController.RotatePlayerToCamera();
+        _ctx.RotationController.RotateToCanera();
+        _ctx.RotationController.RotateAnimation();
         _ctx.MovementController.OnGround.Movement();
         _ctx.MovementController.OnGround.CheckMovementType();
 
@@ -46,6 +47,9 @@ public class PlayerIdleState : PlayerBaseState
     public override void StateExit()
     {
         _ctx.AnimatorController.SetBool("Idle", false);
-        //_ctx.MovementController.SetAccelaration(1);
+
+        _ctx.AnimatorController.SetFloat("RotateDirection", 0);
+        _ctx.AnimatorController.SetFloat("RotationSpeed", 0);
+        _ctx.AnimatorController.SetBool("IsRotating", false);
     }
 }

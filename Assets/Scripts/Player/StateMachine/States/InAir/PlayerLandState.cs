@@ -27,7 +27,7 @@ public class PlayerLandState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-        _ctx.CineCameraController.RotatePlayerToCamera();
+        _ctx.RotationController.RotateToCanera();
     }
     public override void StateFixedUpdate()
     {

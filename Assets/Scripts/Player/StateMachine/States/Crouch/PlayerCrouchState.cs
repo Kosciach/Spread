@@ -17,7 +17,7 @@ public class PlayerCrouchState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-        _ctx.CineCameraController.RotatePlayerToCamera();
+        _ctx.RotationController.RotateToCanera();
         _ctx.MovementController.OnGround.Movement();
 
         if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();

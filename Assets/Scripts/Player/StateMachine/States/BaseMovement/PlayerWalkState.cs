@@ -22,7 +22,7 @@ public class PlayerWalkState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-        _ctx.CineCameraController.RotatePlayerToCamera();
+        _ctx.RotationController.RotateToCanera();
         _ctx.MovementController.OnGround.Movement();
         _ctx.MovementController.OnGround.CheckMovementType();
 
