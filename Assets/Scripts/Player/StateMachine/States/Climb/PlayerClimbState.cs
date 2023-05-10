@@ -40,8 +40,8 @@ public class PlayerClimbState : PlayerBaseState
     {
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(enable);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, enable, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, enable, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, enable, 6);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, enable, 6);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, enable, 6);
 
         _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(enable);
         _ctx.ColliderController.ToggleCollider(enable);

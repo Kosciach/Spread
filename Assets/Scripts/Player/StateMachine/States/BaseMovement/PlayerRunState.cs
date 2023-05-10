@@ -10,7 +10,8 @@ public class PlayerRunState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.CineCameraController.Fov.SetFov(15, 2);
-        _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Run, 5);
+        if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+            _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Run, 5);
 
         _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(true);
         _ctx.ColliderController.SetColliderRadius(0.8f);

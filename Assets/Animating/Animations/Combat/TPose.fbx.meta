@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b5d1ca2695d6f2c4f8e8047caca8f808
+guid: a3c555a0a906a6940875830d333ca2e3
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: T-Pose
+      name: TPose
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
@@ -50,9 +50,9 @@ ModelImporter:
       loopBlendPositionY: 0
       loopBlendPositionXZ: 1
       keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
+      keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
-      heightFromFeet: 1
+      heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []

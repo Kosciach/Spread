@@ -50,9 +50,9 @@ public class PlayerSwimState : PlayerBaseState
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(enable);
         _ctx.CineCameraController.Move.SetCameraPosition(cameraPosition, 6);
 
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, enable, 5);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, !enable, 5);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, enable, 5);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, enable, 5);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, !enable, 5);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, enable, 5);
     }
 
 

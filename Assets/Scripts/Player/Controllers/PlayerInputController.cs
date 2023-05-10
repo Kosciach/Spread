@@ -93,7 +93,7 @@ public class PlayerInputController : MonoBehaviour
 
     private void SetEquipWeapon()
     {
-        _playerInputs.Player.ChooseWeapon.performed += ctx => _stateMachine.CombatController.Equip((int)ctx.ReadValue<float>());
+        _playerInputs.Player.ChooseWeapon.performed += ctx => _stateMachine.CombatController.EquipWeapon((int)ctx.ReadValue<float>());
     }
     private void SetHideWeapon()
     {

@@ -51,8 +51,6 @@ public class PlayerHandsCameraRotateController : MonoBehaviour
 
     public void SetHandsCameraRotation(HandsCameraRotationsEnum cameraRotation, float rotateSpeed)
     {
-        if (!_cameraController.PlayerStateMachine.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
-
         _desiredRotation = _handsCameraRotations[(int)cameraRotation];
         _rotateSpeed = rotateSpeed;
         _handsCameraRotationType = cameraRotation;

@@ -7,6 +7,7 @@ using UnityEngine.Animations.Rigging;
 public class PlayerIkLayerController : MonoBehaviour
 {
     [Header("====References====")]
+    [SerializeField] PlayerIkController _ikController;
     [SerializeField] Rig[] _ikLayers;
 
 

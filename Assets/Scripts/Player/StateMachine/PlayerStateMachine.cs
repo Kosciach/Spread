@@ -21,22 +21,30 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] PlayerCombatController _combatController; public PlayerCombatController CombatController { get { return _combatController; } }
     [SerializeField] PlayerMovementController _movementController; public PlayerMovementController MovementController { get { return _movementController; } }
     [SerializeField] PlayerVerticalVelocityController _verticalVelocityController; public PlayerVerticalVelocityController VerticalVelocityController { get { return _verticalVelocityController; } }
+    [SerializeField] PlayerIkController _ikController; public PlayerIkController IkController { get { return _ikController; } }
     [SerializeField] PlayerRotationController _rotationController; public PlayerRotationController RotationController { get { return _rotationController; } }
+
 
     [SerializeField] PlayerVelocity _playerVelocity; public PlayerVelocity PlayerVelocity { get { return _playerVelocity; } }
     [SerializeField] PlayerColliderController _colliderController; public PlayerColliderController ColliderController { get { return _colliderController; } }
+
+
     [SerializeField] PlayerClimbController _climbController; public PlayerClimbController ClimbController { get { return _climbController; } }
     [SerializeField] PlayerSwimController _swimController; public PlayerSwimController SwimController { get { return _swimController; } }
     [SerializeField] PlayerLadderController _ladderController; public PlayerLadderController LadderController { get { return _ladderController; } }
     [SerializeField] PlayerDashController _dashController; public PlayerDashController DashController { get { return _dashController; } }
+
+
     [SerializeField] PlayerInteractionController _interactionController; public PlayerInteractionController InteractionController { get { return _interactionController; } }
     [SerializeField] PlayerAnimatorController _animatorController; public PlayerAnimatorController AnimatorController { get { return _animatorController; } }
-    [SerializeField] PlayerIkLayerController _ikLayerController; public PlayerIkLayerController IkLayerController { get { return _ikLayerController; } }
     [SerializeField] PlayerFootStepAudioController _footStepAudioController; public PlayerFootStepAudioController FootStepAudioController { get { return _footStepAudioController; } }
     [SerializeField] PlayerInventory _inventory; public PlayerInventory Inventory { get { return _inventory; } }
 
+
     [SerializeField] PlayerCineCameraController _cineCameraController; public PlayerCineCameraController CineCameraController { get { return _cineCameraController; } }
     [SerializeField] PlayerHandsCameraController _handsCameraController; public PlayerHandsCameraController HandsCameraController { get { return _handsCameraController; } }
+
+
 
     private PlayerSwitchController _switchController; public PlayerSwitchController SwitchController { get { return _switchController; } }
 

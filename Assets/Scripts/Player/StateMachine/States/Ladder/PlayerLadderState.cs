@@ -13,7 +13,7 @@ public class PlayerLadderState : PlayerBaseState
         _ctx.LadderController.ResetBools();
 
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 5);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 5);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 5);
         _ctx.CineCameraController.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.Ladder, 4);
 
@@ -37,7 +37,7 @@ public class PlayerLadderState : PlayerBaseState
     public override void StateExit()
     {
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 5);
         _ctx.CineCameraController.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.OnGround, 4);
     }

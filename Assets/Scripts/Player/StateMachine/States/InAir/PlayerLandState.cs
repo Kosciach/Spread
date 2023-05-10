@@ -54,6 +54,6 @@ public class PlayerLandState : PlayerBaseState
 
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(!_ctx.WasHardLanding);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, !_ctx.WasHardLanding, 6);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, !_ctx.WasHardLanding, 6);
     }
 }

@@ -11,8 +11,8 @@ public class PlayerInAirClimbState : PlayerBaseState
     {
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, false, 6);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 6);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, false, 6);
 
         _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(false);
         _ctx.ColliderController.ToggleCollider(false);
@@ -37,8 +37,8 @@ public class PlayerInAirClimbState : PlayerBaseState
     {
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 6);
-        _ctx.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, true, 6);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 6);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, true, 6);
 
         _ctx.AnimatorController.SetBool("Climb", false);
         _ctx.ColliderController.ToggleCollider(true);

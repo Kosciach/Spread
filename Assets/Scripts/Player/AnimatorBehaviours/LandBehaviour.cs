@@ -23,9 +23,9 @@ public class LandBehaviour : StateMachineBehaviour
 
         playerStateMachine.HandsCameraController.EnableController.ToggleHandsCamera(true);
         playerStateMachine.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
-        playerStateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, true, 6);
-        playerStateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 6);
-        playerStateMachine.IkLayerController.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, true, 6);
+        playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, true, 6);
+        playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 6);
+        playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, true, 6);
 
         playerStateMachine.WasHardLanding = false;
     }

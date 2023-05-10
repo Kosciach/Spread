@@ -7,14 +7,14 @@ public class PlayerInventory : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] Transform _playerMainCamera;
-    [SerializeField] Transform[] _weaponsHolders = new Transform[5];
+    [SerializeField] Transform[] _weaponsHolders = new Transform[5]; public Transform[] WeaponsHolders { get { return _weaponsHolders; } }
 
 
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] List<GameObject> _weapons = new List<GameObject>(3);
-    [SerializeField] List<WeaponData> _weaponsData = new List<WeaponData>(3);
+    [SerializeField] List<GameObject> _weapons = new List<GameObject>(2); public List<GameObject> Weapons { get { return _weapons; } }
+    [SerializeField] List<WeaponData> _weaponsData = new List<WeaponData>(2); public List<WeaponData> WeaponsData { get { return _weaponsData; } }
 
 
 
