@@ -36,17 +36,19 @@ public class PlayerCombatController : MonoBehaviour
 
     public void EquipWeapon(int choosenWeaponIndex)
     {
-        if(IsState(CombatStateEnum.Equiped))
-        {
-            if (choosenWeaponIndex == _equipedWeaponIndex) HideWeapon();
-            else SwapWeapon(choosenWeaponIndex);
-
-            return;
-        }
+        if (IsState(CombatStateEnum.Equip) || IsState(CombatStateEnum.UnEquip)) return;
 
         GameObject equipedWeapon = _playerStateMachine.Inventory.Weapons[choosenWeaponIndex];
         WeaponData equipedWeaponData = _playerStateMachine.Inventory.WeaponsData[choosenWeaponIndex];
         if (equipedWeapon == null || equipedWeaponData == null) return;
+
+        if (IsState(CombatStateEnum.Equiped))
+        {
+            if (choosenWeaponIndex != _equipedWeaponIndex) SwapWeapon(choosenWeaponIndex);
+
+            return;
+        }
+
 
         _equipedWeaponIndex = choosenWeaponIndex;
         _equipedWeapon = equipedWeapon;
@@ -64,16 +66,19 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Toggle layers
-        _playerStateMachine.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, true, 3);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, false, 3);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 3);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, false, 3);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, true, 3);
+        bool enableLayers = _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle) || _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk);
+        ToggleCombatLayersPreset(enableLayers, 3);
 
 
         //Set left hand correct transform
         _leftHand.localPosition = _equipedWeaponData.Rest.LeftHand_Position;
         _leftHand.localRotation = Quaternion.Euler(_equipedWeaponData.Rest.LeftHand_Rotation);
+
+
+        //SetupFingers
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 4);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 4);
+        _playerStateMachine.IkController.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset);
 
 
         //Move right hand to origin
@@ -109,12 +114,11 @@ public class PlayerCombatController : MonoBehaviour
         LeanTween.move(_rightHand.gameObject, _weaponOrigin.position, 0.5f).setOnComplete(() =>
         {
             //Toggle layers
-            _playerStateMachine.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, false, 3);
-            _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, true, 3);
-            _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 3);
-            _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, true, 3);
-            _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, false, 3);
+            ToggleCombatLayersPreset(false, 3);
 
+            //Disable fingers
+            _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 4);
+            _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 4);
 
             //Prepare hands camera
             _playerStateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
@@ -143,11 +147,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Toggle layers
-        _playerStateMachine.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, false, 3);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, true, 3);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 3);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, true, 3);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, false, 3);
+        ToggleCombatLayersPreset(false, 3);
 
 
         //Prepare hands camera
@@ -174,6 +174,22 @@ public class PlayerCombatController : MonoBehaviour
         _swap = false;
     }
 
+
+
+
+    public void ToggleCombatLayersPreset(bool enable, float speed)
+    {
+        _playerStateMachine.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, enable, speed);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, !enable, speed);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, !enable, speed);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, !enable, speed);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, enable, speed);
+    }
+    public void CheckCombatMovement(bool enable, float speed)
+    {
+        if(IsState(CombatStateEnum.Equiped))
+            ToggleCombatLayersPreset(enable, speed);
+    }
 
 
 

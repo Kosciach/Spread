@@ -9,6 +9,7 @@ public class PlayerClimbState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.CombatController.CheckCombatMovement(false, 3);
         ClimbEnterExit(false);
 
 
@@ -28,6 +29,7 @@ public class PlayerClimbState : PlayerBaseState
     }
     public override void StateExit()
     {
+        _ctx.CombatController.CheckCombatMovement(true, 5);
         ClimbEnterExit(true);
 
         _ctx.AnimatorController.SetBool("Climb", false);

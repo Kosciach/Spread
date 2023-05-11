@@ -9,6 +9,8 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.CombatController.CheckCombatMovement(true, 5);
+
         _ctx.CineCameraController.Fov.SetFov(0, 2);
         if(_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);

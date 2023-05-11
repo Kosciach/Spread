@@ -26,7 +26,7 @@ public class PlayerIkLayerController : MonoBehaviour
 
     public enum LayerEnum
     {
-        SpineLock, Body, Head, Swim, UnderWater, RangeCombat
+        SpineLock, Body, Head, Swim, UnderWater, RangeCombat, FingersRightHand, FingersLeftHand
     }
 
 

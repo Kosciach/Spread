@@ -9,6 +9,8 @@ public class PlayerInAirClimbState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.CombatController.CheckCombatMovement(false, 3);
+
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
         _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 6);
@@ -35,6 +37,8 @@ public class PlayerInAirClimbState : PlayerBaseState
     }
     public override void StateExit()
     {
+        _ctx.CombatController.CheckCombatMovement(true, 5);
+
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
         _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 6);

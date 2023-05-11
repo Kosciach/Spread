@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b94e7f73a251864ea9c5b8a993ab4d2, type: 3}
-  m_Name: TestPistol
+  m_Name: SOP3
   m_EditorClassIdentifier: 
-  WeaponName: TestPistol
+  WeaponName: SOP3
   WeaponHolder: 1
-  InHandPosition: {x: 0.0356, y: 0.1449, z: 0.0364}
-  InHandRotation: {x: 74.72826, y: 245.71042, z: 264.43274}
+  InHandPosition: {x: 0.031, y: 0.1587, z: 0.0569}
+  InHandRotation: {x: 74.71958, y: 245.75235, z: 263.75693}
   Rest:
     RightHand_Position: {x: 0.115, y: -0.15, z: 0.595}
     RightHand_Rotation: {x: 344.80457, y: 272.84445, z: 273.1507}

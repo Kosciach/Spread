@@ -17,7 +17,6 @@ public class WeaponData : ScriptableObject
 
     [Space(20)]
     [Header("====IkHandPositions====")]
-
     [Space(5)]
     public RestTransform Rest;
     [Space(5)]
@@ -26,6 +25,9 @@ public class WeaponData : ScriptableObject
     public AimDownSightTransform AimDownSight;
 
 
+    [Space(20)]
+    [Header("====IkFingers====")]
+    public FingerPreset FingersPreset;
 
 
 

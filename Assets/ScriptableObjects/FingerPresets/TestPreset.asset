@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daec560dcc8e8aa428163fea68b66cd7, type: 3}
+  m_Name: TestPreset
+  m_EditorClassIdentifier: 
+  RightHand:
+    Thumb:
+      Target_Position: {x: 0.0096, y: 0.1459, z: 0.0855}
+      Target_Rotation: {x: 358.42, y: 0, z: 0}
+      Hint_Position: {x: 0.0419, y: 0.0487, z: 0.0647}
+    Index:
+      Target_Position: {x: 0.0406, y: 0.2218, z: 0.0643}
+      Target_Rotation: {x: 0, y: 0, z: 0}
+      Hint_Position: {x: 0.0336, y: 0.2402, z: 0.0653}
+    Middle:
+      Target_Position: {x: 0.0614, y: 0.1809, z: 0.005}
+      Target_Rotation: {x: 309.1, y: 180, z: 180}
+      Hint_Position: {x: -0.0029, y: 0.2349, z: 0.0116}
+    Ring:
+      Target_Position: {x: 0.0625, y: 0.1634, z: -0.0359}
+      Target_Rotation: {x: 281, y: 0, z: 0}
+      Hint_Position: {x: 0.0341, y: 0.2231, z: -0.0196}
+    Pinky:
+      Target_Position: {x: 0.067, y: 0.1439, z: -0.0518}
+      Target_Rotation: {x: 297.5, y: 180, z: 180}
+      Hint_Position: {x: 0.0141, y: 0.2118, z: -0.0678}
+  LeftHand:
+    Thumb:
+      Target_Position: {x: 0.0202, y: 0.1541, z: 0.0798}
+      Target_Rotation: {x: 296.89, y: 0, z: 0}
+      Hint_Position: {x: 0.02, y: 0.0943, z: 0.1375}
+    Index:
+      Target_Position: {x: -0.0079, y: 0.2441, z: 0.0409}
+      Target_Rotation: {x: 328.5, y: 0, z: 0}
+      Hint_Position: {x: -0.0152, y: 0.1398, z: -0.0183}
+    Middle:
+      Target_Position: {x: 0.0044, y: 0.1999, z: -0.0552}
+      Target_Rotation: {x: 315.2, y: 0, z: 0}
+      Hint_Position: {x: -0.0351, y: 0.2413, z: 0.0339}
+    Ring:
+      Target_Position: {x: -0.0362, y: 0.1833, z: -0.0835}
+      Target_Rotation: {x: 331.09998, y: 0, z: 0}
+      Hint_Position: {x: -0.0203, y: 0.2456, z: -0.068}
+    Pinky:
+      Target_Position: {x: -0.0609, y: 0.1407, z: -0.0567}
+      Target_Rotation: {x: 336.19998, y: 180, z: 180}
+      Hint_Position: {x: 0.0262, y: 0.234, z: -0.0893}
