@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponName: SOP3
   WeaponHolder: 1
-  InHandPosition: {x: 0.031, y: 0.1587, z: 0.0569}
-  InHandRotation: {x: 74.71958, y: 245.75235, z: 263.75693}
+  InHandPosition: {x: 0.043, y: 0.155, z: 0.054}
+  InHandRotation: {x: 61.003147, y: 255.26422, z: 270.72302}
   Rest:
     RightHand_Position: {x: 0.115, y: -0.15, z: 0.595}
     RightHand_Rotation: {x: 344.80457, y: 272.84445, z: 273.1507}
-    LeftHand_Position: {x: 0.087, y: -0.001, z: -0.057}
-    LeftHand_Rotation: {x: 18.183308, y: 330.90887, z: 345.84018}
+    LeftHand_Position: {x: 0.0401, y: 0.0261, z: -0.0657}
+    LeftHand_Rotation: {x: 23.770864, y: 356.11832, z: 327.69925}
   AimHip:
-    RightHand_Position: {x: 0.115, y: -0.15, z: 0.595}
-    RightHand_Rotation: {x: 292.32904, y: 283.88617, z: 270.56897}
+    RightHand_Position: {x: 0.057, y: -0.203, z: 0.578}
+    RightHand_Rotation: {x: 286.05154, y: 303.155, z: 266.47443}
     LeftHand_Position: {x: 0, y: 0, z: 0}
     LeftHand_Rotation: {x: 0, y: 0, z: 0}
   AimDownSight:

@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponName: TestPistol
   WeaponHolder: 1
-  InHandPosition: {x: 0.0356, y: 0.1449, z: 0.0364}
-  InHandRotation: {x: 74.72826, y: 245.71042, z: 264.43274}
+  InHandPosition: {x: 0.04, y: 0.144, z: 0.038}
+  InHandRotation: {x: 60.957443, y: 255.30994, z: 269.40805}
   Rest:
     RightHand_Position: {x: 0.115, y: -0.15, z: 0.595}
     RightHand_Rotation: {x: 344.80457, y: 272.84445, z: 273.1507}
-    LeftHand_Position: {x: 0.087, y: -0.001, z: -0.057}
-    LeftHand_Rotation: {x: 18.183308, y: 330.90887, z: 345.84018}
+    LeftHand_Position: {x: 0.0401, y: 0.0261, z: -0.0657}
+    LeftHand_Rotation: {x: 23.770864, y: 356.11832, z: 327.69925}
   AimHip:
-    RightHand_Position: {x: 0.115, y: -0.15, z: 0.595}
-    RightHand_Rotation: {x: 292.32904, y: 283.88617, z: 270.56897}
+    RightHand_Position: {x: 0.057, y: -0.203, z: 0.578}
+    RightHand_Rotation: {x: 286.05154, y: 303.155, z: 266.47443}
     LeftHand_Position: {x: 0, y: 0, z: 0}
     LeftHand_Rotation: {x: 0, y: 0, z: 0}
   AimDownSight:
