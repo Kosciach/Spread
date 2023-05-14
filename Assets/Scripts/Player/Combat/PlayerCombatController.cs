@@ -7,20 +7,21 @@ using UnityEngine;
 public class PlayerCombatController : MonoBehaviour
 {
     [Header("====Reference====")]
-    [SerializeField] PlayerStateMachine _playerStateMachine;
+    [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
+    [SerializeField] PlayerWeaponModeController _playerWeaponModeController; public PlayerWeaponModeController PlayerWeaponModeController { get { return _playerWeaponModeController; } }
     [Space(5)]
     [SerializeField] Transform _rightHandWeaponHolder;
     [SerializeField] Transform _weaponOrigin;
     [Space(5)]
-    [SerializeField] Transform _rightHand;
-    [SerializeField] Transform _leftHand;
+    [SerializeField] Transform _rightHand; public Transform RightHand { get { return _rightHand; } }
+    [SerializeField] Transform _leftHand; public Transform LeftHand { get { return _leftHand; } }
 
 
 
     [Space(20)]
     [Header("====Debug====")]
     [SerializeField] int _equipedWeaponIndex;
-    [SerializeField] GameObject _equipedWeapon;
+    [SerializeField] WeaponStateMachine _equipedWeapon; public WeaponStateMachine EquipedWeapon { get { return _equipedWeapon; } }
     [SerializeField] WeaponData _equipedWeaponData;
     [SerializeField] CombatStateEnum _combatState;
     [SerializeField] bool _swap;
@@ -38,7 +39,7 @@ public class PlayerCombatController : MonoBehaviour
     {
         if (IsState(CombatStateEnum.Equip) || IsState(CombatStateEnum.UnEquip)) return;
 
-        GameObject equipedWeapon = _playerStateMachine.Inventory.Weapons[choosenWeaponIndex];
+        WeaponStateMachine equipedWeapon = _playerStateMachine.Inventory.Weapons[choosenWeaponIndex];
         WeaponData equipedWeaponData = _playerStateMachine.Inventory.WeaponsData[choosenWeaponIndex];
         if (equipedWeapon == null || equipedWeaponData == null) return;
 
@@ -57,7 +58,7 @@ public class PlayerCombatController : MonoBehaviour
 
         //Change states
         SetState(CombatStateEnum.Equip);
-        _equipedWeapon.GetComponent<RangeWeaponStateMachine>().SwitchController.SwitchTo.Equiped();
+        _equipedWeapon.SwitchController.SwitchTo.Equiped();
 
 
         //Prepare hands camera
@@ -71,8 +72,8 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Set left hand correct transform
-        _leftHand.localPosition = _equipedWeaponData.Rest.LeftHand_Position;
-        _leftHand.localRotation = Quaternion.Euler(_equipedWeaponData.Rest.LeftHand_Rotation);
+        _leftHand.localPosition = _equipedWeaponData.LeftHand_Position;
+        _leftHand.localRotation = Quaternion.Euler(_equipedWeaponData.LeftHand_Rotation);
 
 
         //SetupFingers
@@ -91,13 +92,9 @@ public class PlayerCombatController : MonoBehaviour
             _equipedWeapon.transform.localRotation = Quaternion.Euler(_equipedWeaponData.InHandRotation);
 
 
+            //Move right hand to correct position
             Debug.Log("Move to rest!");
-            //Move right hand to rest position
-            LeanTween.rotateLocal(_rightHand.gameObject, _equipedWeaponData.AimHip.RightHand_Rotation, 0.3f);
-            LeanTween.moveLocal(_rightHand.gameObject, _equipedWeaponData.AimHip.RightHand_Position, 0.5f).setOnComplete(() =>
-            {
-                SetState(CombatStateEnum.Equiped);
-            });
+            _equipedWeapon.EquipedController.MoveHandsToCurrentHoldMode(0.3f, 0.5f);
         });
     }
 

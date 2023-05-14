@@ -13,7 +13,7 @@ public class PlayerInventory : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] List<GameObject> _weapons = new List<GameObject>(2); public List<GameObject> Weapons { get { return _weapons; } }
+    [SerializeField] List<WeaponStateMachine> _weapons = new List<WeaponStateMachine>(2); public List<WeaponStateMachine> Weapons { get { return _weapons; } }
     [SerializeField] List<WeaponData> _weaponsData = new List<WeaponData>(2); public List<WeaponData> WeaponsData { get { return _weaponsData; } }
 
 
@@ -22,7 +22,7 @@ public class PlayerInventory : MonoBehaviour
 
 
 
-    public void AddWeapon(GameObject newWeapon, WeaponData newWeaponData)
+    public void AddWeapon(WeaponStateMachine newWeapon, WeaponData newWeaponData)
     {
         Debug.Log("AddedWeapon: " + newWeaponData.WeaponName);
 
@@ -41,28 +41,27 @@ public class PlayerInventory : MonoBehaviour
             if (_weapons[i] == null) return i;
         return -1;
     }
-    public void HolsterWeapon(GameObject weapon, WeaponData weaponData)
+    public void HolsterWeapon(WeaponStateMachine weapon, WeaponData weaponData)
     {
         weapon.transform.parent = _weaponsHolders[(int)weaponData.WeaponHolder];
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
-        RangeWeaponStateMachine newWeaponStateMachine = weapon.GetComponent<RangeWeaponStateMachine>();
-        newWeaponStateMachine.SwitchController.SwitchTo.Inventory();
+        weapon.SwitchController.SwitchTo.Inventory();
     }
 
     public void DropWeapon(int weaponToDropIndex)
     {
         _weapons[weaponToDropIndex].transform.parent = null;
         _weapons[weaponToDropIndex].transform.position = _playerMainCamera.position;
-        _weapons[weaponToDropIndex].GetComponent<RangeWeaponStateMachine>().SwitchController.SwitchTo.Ground();
-        _weapons[weaponToDropIndex].GetComponent<Rigidbody>().AddForce(_playerMainCamera.forward * 10);
+        _weapons[weaponToDropIndex].SwitchController.SwitchTo.Ground();
+        _weapons[weaponToDropIndex].Rigidbody.AddForce(_playerMainCamera.forward * 10);
 
         _weapons[weaponToDropIndex] = null;
         _weaponsData[weaponToDropIndex] = null;
     }
 
-    public GameObject GetWeapon(int index)
+    public WeaponStateMachine GetWeapon(int index)
     {
         return _weapons[index];
     }

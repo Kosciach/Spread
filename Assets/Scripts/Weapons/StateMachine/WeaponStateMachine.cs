@@ -1,22 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class RangeWeaponStateMachine : MonoBehaviour
+public class WeaponStateMachine : MonoBehaviour
 {
-    private RangeWeaponBaseState _currentState; public RangeWeaponBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
-    private RangeWeaponStateFactory _stateFactory;
+    private WeaponBaseState _currentState; public WeaponBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
+    private WeaponStateFactory _stateFactory;
     [SerializeField] string _currentStateName; public string CurrentStateName { get { return _currentStateName; } set { _currentStateName = value; } }
     [SerializeField] StateSwitchEnum _stateSwitch; public StateSwitchEnum StateSwitch { get { return _stateSwitch; } set { _stateSwitch = value; } }
 
 
     [Space(20)]
     [Header("====References====")]
-    [SerializeField] BoxCollider _collider; public BoxCollider Collider { get { return _collider; } }
+    [SerializeField] Collider _collider; public Collider Collider { get { return _collider; } }
     [SerializeField] Rigidbody _rigidbody; public Rigidbody Rigidbody { get { return _rigidbody; } }
     [SerializeField] Outline _outline; public Outline Outline { get { return _outline; } }
+    [SerializeField] WeaponHoldController _equipedModeController; public WeaponHoldController EquipedController { get { return _equipedModeController; } }
     private RangeWeaponSwitchController _switchController; public RangeWeaponSwitchController SwitchController { get { return _switchController; } }
 
 
@@ -36,10 +36,11 @@ public class RangeWeaponStateMachine : MonoBehaviour
     {
         SetUpStartingState();
         _switchController = new RangeWeaponSwitchController(this);
+        _equipedModeController = GetComponent<WeaponHoldController>();
     }
     private void SetUpStartingState()
     {
-        _stateFactory = new RangeWeaponStateFactory(this);
+        _stateFactory = new WeaponStateFactory(this);
         _currentState = _stateFactory.Ground();
         _currentState.StateEnter();
     }
@@ -61,7 +62,7 @@ public class RangeWeaponStateMachine : MonoBehaviour
     public void SetLayer(int layer)
     {
         gameObject.layer = layer;
-        foreach (Transform child in transform)
+        foreach (Transform child in transform.GetChild(0))
             child.gameObject.layer = layer;
     }
 }
@@ -70,27 +71,27 @@ public class RangeWeaponStateMachine : MonoBehaviour
 
 
 
-public class RangeWeaponStateFactory
+public class WeaponStateFactory
 {
-    private RangeWeaponStateMachine _ctx;
+    private WeaponStateMachine _ctx;
 
-    public RangeWeaponStateFactory(RangeWeaponStateMachine ctx)
+    public WeaponStateFactory(WeaponStateMachine ctx)
     {
         _ctx = ctx;
     }
 
 
-    public RangeWeaponBaseState Ground()
+    public WeaponBaseState Ground()
     {
-        return new RangeWeaponGroundState(_ctx, this, MethodBase.GetCurrentMethod().Name);
+        return new WeaponGroundState(_ctx, this, MethodBase.GetCurrentMethod().Name);
     }
-    public RangeWeaponBaseState Inventory()
+    public WeaponBaseState Inventory()
     {
         return new RangeWeaponInventoryState(_ctx, this, MethodBase.GetCurrentMethod().Name);
     }
-    public RangeWeaponBaseState Equiped()
+    public WeaponBaseState Equiped()
     {
-        return new RangeWeaponEquipedState(_ctx, this, MethodBase.GetCurrentMethod().Name);
+        return new WeaponEquipedState(_ctx, this, MethodBase.GetCurrentMethod().Name);
     }
 }
 
@@ -100,10 +101,10 @@ public class RangeWeaponStateFactory
 
 public class RangeWeaponSwitchController
 {
-    private RangeWeaponStateMachine _stateMachine;
+    private WeaponStateMachine _stateMachine;
     private SwitchToClass _switchToClass; public SwitchToClass SwitchTo { get { return _switchToClass; } }
 
-    public RangeWeaponSwitchController(RangeWeaponStateMachine stateMachine)
+    public RangeWeaponSwitchController(WeaponStateMachine stateMachine)
     {
         _stateMachine = stateMachine;
         _switchToClass = new SwitchToClass(stateMachine, this);
@@ -113,7 +114,7 @@ public class RangeWeaponSwitchController
 
 
 
-    public bool IsStateSwitch(RangeWeaponStateMachine.StateSwitchEnum stateSwitch)
+    public bool IsStateSwitch(WeaponStateMachine.StateSwitchEnum stateSwitch)
     {
         return _stateMachine.StateSwitch == stateSwitch;
     }
@@ -122,10 +123,10 @@ public class RangeWeaponSwitchController
 
     public class SwitchToClass
     {
-        private RangeWeaponStateMachine _stateMachine;
+        private WeaponStateMachine _stateMachine;
         private RangeWeaponSwitchController _switchController;
 
-        public SwitchToClass(RangeWeaponStateMachine stateMachine, RangeWeaponSwitchController switchController)
+        public SwitchToClass(WeaponStateMachine stateMachine, RangeWeaponSwitchController switchController)
         {
             _stateMachine = stateMachine;
             _switchController = switchController;
@@ -136,17 +137,17 @@ public class RangeWeaponSwitchController
 
         public void Ground()
         {
-            _stateMachine.StateSwitch = RangeWeaponStateMachine.StateSwitchEnum.Ground;
+            _stateMachine.StateSwitch = WeaponStateMachine.StateSwitchEnum.Ground;
         }
 
         public void Inventory()
         {
-            _stateMachine.StateSwitch = RangeWeaponStateMachine.StateSwitchEnum.Inventory;
+            _stateMachine.StateSwitch = WeaponStateMachine.StateSwitchEnum.Inventory;
         }
 
         public void Equiped()
         {
-            _stateMachine.StateSwitch = RangeWeaponStateMachine.StateSwitchEnum.Equiped;
+            _stateMachine.StateSwitch = WeaponStateMachine.StateSwitchEnum.Equiped;
         }
     }
 }

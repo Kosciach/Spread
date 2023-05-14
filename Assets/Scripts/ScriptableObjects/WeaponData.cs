@@ -16,39 +16,22 @@ public class WeaponData : ScriptableObject
 
 
     [Space(20)]
-    [Header("====IkHandPositions====")]
-    [Space(5)]
-    public RestTransform Rest;
-    [Space(5)]
-    public AimHipTransform AimHip;
-    [Space(5)]
-    public AimDownSightTransform AimDownSight;
-
-
-    [Space(20)]
     [Header("====IkFingers====")]
     public FingerPreset FingersPreset;
 
+    [Space(20)]
+    [Header("====LeftHandIkTransform====")]
+    public Vector3 LeftHand_Position;
+    public Vector3 LeftHand_Rotation;
 
 
     [System.Serializable]
-    public struct RestTransform
+    public struct WeaponTransform
     {
-        public Vector3 RightHand_Position; public Vector3 RightHand_Rotation;
-        public Vector3 LeftHand_Position; public Vector3 LeftHand_Rotation;
+        public Vector3 RightHand_Position;
+        public Vector3 RightHand_Rotation;
     }
-    [System.Serializable]
-    public struct AimHipTransform
-    {
-        public Vector3 RightHand_Position; public Vector3 RightHand_Rotation;
-        public Vector3 LeftHand_Position; public Vector3 LeftHand_Rotation;
-    }
-    [System.Serializable]
-    public struct AimDownSightTransform
-    {
-        public Vector3 RightHand_Position; public Vector3 RightHand_Rotation;
-        public Vector3 LeftHand_Position; public Vector3 LeftHand_Rotation;
-    }
+
     public enum WeaponTypeEnum
     { 
         Primary, Secondary, Melee_Big, Melee_Medium, Melee_Small

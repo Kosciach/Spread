@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RangeWeaponBaseState
+public abstract class WeaponBaseState
 {
-    protected RangeWeaponStateMachine _ctx;
-    protected RangeWeaponStateFactory _factory;
+    protected WeaponStateMachine _ctx;
+    protected WeaponStateFactory _factory;
 
-    public RangeWeaponBaseState(RangeWeaponStateMachine ctx, RangeWeaponStateFactory factory, string stateName)
+    public WeaponBaseState(WeaponStateMachine ctx, WeaponStateFactory factory, string stateName)
     {
         _ctx = ctx;
         _factory = factory;
@@ -22,7 +22,7 @@ public abstract class RangeWeaponBaseState
     public abstract void StateExit();
 
 
-    protected void StateChange(RangeWeaponBaseState newState)
+    protected void StateChange(WeaponBaseState newState)
     {
         StateExit();
         _ctx.CurrentState = newState;

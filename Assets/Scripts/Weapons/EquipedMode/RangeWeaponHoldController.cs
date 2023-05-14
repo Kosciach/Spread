@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RangeWeaponHoldController : WeaponHoldController
+{
+    private RangeWeaponData _rangeWeaponData;
+
+
+    protected override void VirtualAwake()
+    {
+        _rangeWeaponData = GetComponent<WeaponDataHolder>().WeaponData as RangeWeaponData;
+    }
+
+
+    public override void RestHoldMode(float rotateSpeed, float moveSpeed)
+    {
+        Debug.Log("Rest");
+        LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Rest.RightHand_Rotation, rotateSpeed);
+        LeanTween.moveLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Rest.RightHand_Position, moveSpeed).setOnComplete(() =>
+        {
+            _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
+        });
+    }
+    public override void HipHoldMode(float rotateSpeed, float moveSpeed)
+    {
+        Debug.Log("Hip");
+        LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
+        LeanTween.moveLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Hip.RightHand_Position, moveSpeed).setOnComplete(() =>
+        {
+            _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
+        });
+    }
+}

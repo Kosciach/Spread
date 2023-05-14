@@ -41,6 +41,8 @@ public class PlayerInputController : MonoBehaviour
         SetEquipWeapon();
         SetHideWeapon();
         SetDropWeapon();
+        SetChangeWeaponEquipedMode();
+        SetADS();
     }
     private void Update()
     {
@@ -102,6 +104,18 @@ public class PlayerInputController : MonoBehaviour
     private void SetDropWeapon()
     {
         _playerInputs.Player.DropWeapon.performed += ctx => _stateMachine.CombatController.DropWeapon();
+    }
+
+
+    private void SetChangeWeaponEquipedMode()
+    {
+        _playerInputs.Player.ChangeWeaponEquipedMode.performed += ctx => _stateMachine.CombatController.PlayerWeaponModeController.ChangeEquipedHoldMode();
+    }
+
+    private void SetADS()
+    {
+        _playerInputs.Player.ADS.started += ctx => _stateMachine.CombatController.PlayerWeaponModeController.ADS(true);
+        _playerInputs.Player.ADS.canceled += ctx => _stateMachine.CombatController.PlayerWeaponModeController.ADS(false);
     }
 
 

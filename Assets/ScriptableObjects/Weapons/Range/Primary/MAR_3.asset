@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b94e7f73a251864ea9c5b8a993ab4d2, type: 3}
+  m_Name: MAR_3
+  m_EditorClassIdentifier: 
+  WeaponName: MAR_3
+  WeaponHolder: 0
+  InHandPosition: {x: 0.0496, y: 0.1428, z: 0.05}
+  InHandRotation: {x: 330.08615, y: 255.79161, z: 266.85886}
+  FingersPreset: {fileID: 11400000, guid: c96c98f130709fb45b118f3cdca3fb6f, type: 2}
+  LeftHand_Position: {x: 0.2136, y: 0.376, z: 0.1591}
+  LeftHand_Rotation: {x: 356.36456, y: 33.066864, z: 346.6427}
+  Rest:
+    RightHand_Position: {x: 0.056, y: -0.209, z: 0.374}
+    RightHand_Rotation: {x: 315.64893, y: 294.0769, z: 252.84619}
+  Hip:
+    RightHand_Position: {x: 0.056, y: -0.209, z: 0.374}
+    RightHand_Rotation: {x: 289.29858, y: 297.23016, z: 272.68976}
+  ADS:
+    RightHand_Position: {x: 0.0045, y: -0.067, z: 0.595}
+    RightHand_Rotation: {x: 283.4473, y: 296.43225, z: 258.2168}
+  Block:
+    RightHand_Position: {x: 0, y: 0, z: 0}
+    RightHand_Rotation: {x: 0, y: 0, z: 0}

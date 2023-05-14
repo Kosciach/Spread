@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeWeaponInventoryState : RangeWeaponBaseState
+public class RangeWeaponInventoryState : WeaponBaseState
 {
-    public RangeWeaponInventoryState(RangeWeaponStateMachine ctx, RangeWeaponStateFactory factory, string stateName) : base(ctx, factory, stateName) { }
+    public RangeWeaponInventoryState(WeaponStateMachine ctx, WeaponStateFactory factory, string stateName) : base(ctx, factory, stateName) { }
 
 
 
@@ -27,8 +27,8 @@ public class RangeWeaponInventoryState : RangeWeaponBaseState
     }
     public override void StateCheckChange()
     {
-        if (_ctx.SwitchController.IsStateSwitch(RangeWeaponStateMachine.StateSwitchEnum.Ground)) StateChange(_factory.Ground());
-        else if (_ctx.SwitchController.IsStateSwitch(RangeWeaponStateMachine.StateSwitchEnum.Equiped)) StateChange(_factory.Equiped());
+        if (_ctx.SwitchController.IsStateSwitch(WeaponStateMachine.StateSwitchEnum.Ground)) StateChange(_factory.Ground());
+        else if (_ctx.SwitchController.IsStateSwitch(WeaponStateMachine.StateSwitchEnum.Equiped)) StateChange(_factory.Equiped());
     }
     public override void StateExit()
     {
