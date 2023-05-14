@@ -9,9 +9,6 @@ public class PlayerRunState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatController.CheckCombatMovement(false, 2);
-
-
         _ctx.CineCameraController.Fov.SetFov(15, 2);
         if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Run, 5);
@@ -32,6 +29,9 @@ public class PlayerRunState : PlayerBaseState
         _ctx.MovementController.OnGround.Movement();
         _ctx.MovementController.OnGround.CheckMovementType();
 
+        float forwardVelocity = Vector3.Dot(_ctx.MovementController.InAir.CurrentMovementVector, _ctx.transform.forward);
+        _ctx.AnimatorController.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
+
         if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
         if (!_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
     }
@@ -51,7 +51,11 @@ public class PlayerRunState : PlayerBaseState
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch)) StateChange(_factory.Crouch());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Climb)) StateChange(_factory.Climb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
-        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim)) StateChange(_factory.Swim());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))
+        {
+            _ctx.CombatController.HideWeapon();
+            StateChange(_factory.Swim());
+        }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Dash)) StateChange(_factory.Dash());
     }
     public override void StateExit()

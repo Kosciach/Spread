@@ -109,13 +109,13 @@ public class PlayerInputController : MonoBehaviour
 
     private void SetChangeWeaponEquipedMode()
     {
-        _playerInputs.Player.ChangeWeaponEquipedMode.performed += ctx => _stateMachine.CombatController.PlayerWeaponModeController.ChangeEquipedHoldMode();
+        _playerInputs.Player.ChangeWeaponEquipedMode.performed += ctx => _stateMachine.CombatController.EquipedWeaponController.ChangeEquipedHoldMode();
     }
 
     private void SetADS()
     {
-        _playerInputs.Player.ADS.started += ctx => _stateMachine.CombatController.PlayerWeaponModeController.ADS(true);
-        _playerInputs.Player.ADS.canceled += ctx => _stateMachine.CombatController.PlayerWeaponModeController.ADS(false);
+        _playerInputs.Player.ADS.started += ctx => _stateMachine.CombatController.EquipedWeaponController.ADS(true);
+        _playerInputs.Player.ADS.canceled += ctx => _stateMachine.CombatController.EquipedWeaponController.ADS(false);
     }
 
 

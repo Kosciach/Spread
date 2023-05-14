@@ -4075,7 +4075,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 432183949}
   m_LocalRotation: {x: -0, y: -0, z: 0.23430093, w: 0.97216415}
-  m_LocalPosition: {x: 5.05, y: -0.06, z: -0.29}
+  m_LocalPosition: {x: 1.063, y: 0.607, z: -6.78}
   m_LocalScale: {x: 0.9, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10476,7 +10476,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29522
+  m_Name: pb_Mesh29524
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12354,7 +12354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCombatController: {fileID: 0}
-  _holdMode: 0
+  _holdMode: 1
 --- !u!1 &1276562215
 GameObject:
   m_ObjectHideFlags: 0
@@ -15471,7 +15471,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30144
+  m_Name: pb_Mesh30146
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15829,7 +15829,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1630793206}
   - component: {fileID: 1630793204}
-  - component: {fileID: 1630793205}
+  - component: {fileID: 1630793207}
   m_Layer: 6
   m_Name: CombatController
   m_TagString: Untagged
@@ -15850,7 +15850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerStateMachine: {fileID: 8003831046665861830}
-  _playerWeaponModeController: {fileID: 1630793205}
+  _equipedWeaponController: {fileID: 1630793207}
   _rightHandWeaponHolder: {fileID: 214657515}
   _weaponOrigin: {fileID: 1886241853}
   _rightHand: {fileID: 553561153}
@@ -15860,19 +15860,6 @@ MonoBehaviour:
   _equipedWeaponData: {fileID: 0}
   _combatState: 0
   _swap: 0
---- !u!114 &1630793205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1630793203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cb66f16fbf48a24587235a411ab2144, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerCombatController: {fileID: 1630793204}
 --- !u!4 &1630793206
 Transform:
   m_ObjectHideFlags: 0
@@ -15888,6 +15875,21 @@ Transform:
   m_Father: {fileID: 8003831046665861826}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1630793207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630793203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb66f16fbf48a24587235a411ab2144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCombatController: {fileID: 1630793204}
+  _aimDS: 0
+  _block: 0
 --- !u!1 &1643424547
 GameObject:
   m_ObjectHideFlags: 0
@@ -16717,7 +16719,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29662
+  m_Name: pb_Mesh29664
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -17471,6 +17473,7 @@ GameObject:
   - component: {fileID: 2044251195}
   - component: {fileID: 2044251194}
   - component: {fileID: 2044251193}
+  - component: {fileID: 2044251196}
   m_Layer: 3
   m_Name: Table
   m_TagString: Untagged
@@ -17556,6 +17559,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2044251191}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2044251196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044251191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f534d8094101f074c9ce131a07c16653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _joke: {fileID: 21300000, guid: f4e9436c43af0fc4280f763a973d9c09, type: 3}
 --- !u!1 &2087463034
 GameObject:
   m_ObjectHideFlags: 0

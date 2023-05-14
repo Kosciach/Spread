@@ -9,14 +9,13 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatController.CheckCombatMovement(true, 5);
-
         _ctx.CineCameraController.Fov.SetFov(0, 2);
-        if(_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+        if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
         _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(true);
         _ctx.ColliderController.SetColliderRadius(0.8f);
+
         _ctx.AnimatorController.SetBool("Idle", true);
         _ctx.AnimatorController.SetBool("Land", true);
         _ctx.AnimatorController.SetInt("JumpType", 0);
@@ -28,6 +27,9 @@ public class PlayerIdleState : PlayerBaseState
         _ctx.RotationController.RotateAnimation();
         _ctx.MovementController.OnGround.Movement();
         _ctx.MovementController.OnGround.CheckMovementType();
+
+        float forwardVelocity = Vector3.Dot(_ctx.MovementController.InAir.CurrentMovementVector, _ctx.transform.forward);
+        _ctx.AnimatorController.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
 
         if (!_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
     }

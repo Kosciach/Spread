@@ -10,8 +10,6 @@ public class PlayerFallState : PlayerBaseState
 
     public override void StateEnter()
     {
-        //_ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
-
         _ctx.ColliderController.SetColliderRadius(0.09f);
         _ctx.AnimatorController.SetBool("Land", false);
     }
@@ -32,7 +30,11 @@ public class PlayerFallState : PlayerBaseState
     {
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Land)) StateChange(_factory.Land());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.InAirClimb)) StateChange(_factory.InAirClimb());
-        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim)) StateChange(_factory.Swim());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))
+        {
+            _ctx.CombatController.HideWeapon();
+            StateChange(_factory.Swim());
+        }
     }
     public override void StateExit()
     {

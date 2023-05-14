@@ -64,5 +64,6 @@ public class PlayerSwimState : PlayerBaseState
         _ctx.AnimatorController.SetBool("Swim", false);
 
         ExitEnter(PlayerCineCameraMoveController.CameraPositionsEnum.OnGround, true);
+        _ctx.CombatController.EquipWeapon(_ctx.CombatController.EquipedWeaponIndex);
     }
 }

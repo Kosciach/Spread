@@ -9,18 +9,18 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatController.CheckCombatMovement(true, 5);
-
         _ctx.CineCameraController.Fov.SetFov(5, 2);
         if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Walk, 5);
 
         _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(true);
         _ctx.ColliderController.SetColliderRadius(0.8f);
+
         _ctx.AnimatorController.SetBool("Walk", true);
         _ctx.AnimatorController.SetBool("Land", true);
         _ctx.AnimatorController.SetInt("JumpType", 1);
         _ctx.AnimatorController.SetBool("FallFromGround", false);
+
         _ctx.MovementController.OnGround.SetWalkSpeed();
     }
     public override void StateUpdate()
@@ -28,6 +28,9 @@ public class PlayerWalkState : PlayerBaseState
         _ctx.RotationController.RotateToCanera();
         _ctx.MovementController.OnGround.Movement();
         _ctx.MovementController.OnGround.CheckMovementType();
+
+        float forwardVelocity = Vector3.Dot(_ctx.MovementController.InAir.CurrentMovementVector, _ctx.transform.forward);
+        _ctx.AnimatorController.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
 
         if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
         if (!_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
@@ -49,7 +52,11 @@ public class PlayerWalkState : PlayerBaseState
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch)) StateChange(_factory.Crouch());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Climb)) StateChange(_factory.Climb());
-        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim)) StateChange(_factory.Swim());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))
+        {
+            _ctx.CombatController.HideWeapon();
+            StateChange(_factory.Swim());
+        }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Dash)) StateChange(_factory.Dash());
     }
     public override void StateExit()

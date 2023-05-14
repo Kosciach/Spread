@@ -17,7 +17,7 @@ public class PlayerLandState : PlayerBaseState
 
         _ctx.AnimatorController.SetFloat("FallingTime", _ctx.VerticalVelocityController.GravityController.CurrentGravityForce);
         float forwardVelocity = Vector3.Dot(_ctx.MovementController.InAir.CurrentMovementVector, _ctx.transform.forward);
-        _ctx.AnimatorController.SetFloat("FallForwardVelocity", forwardVelocity);
+        _ctx.AnimatorController.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
         _ctx.AnimatorController.SetBool("Land", true);
 
         _ctx.FootStepAudioController.LandFootStep(_ctx.VerticalVelocityController.GravityController.CurrentGravityForce);

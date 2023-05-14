@@ -35,14 +35,11 @@ public class WeaponHoldController : MonoBehaviour
 
 
 
-    public void MoveHandsToCurrentHoldMode(float rotateSpeed, float moveSpeed)
+    public virtual void MoveHandsToCurrentHoldMode(float rotateSpeed, float moveSpeed)
     {
         _holdModeChangeMethods[(int)_holdMode](rotateSpeed, moveSpeed);
     }
-    public void ChangeHoldMode(HoldModeEnum mode)
-    {
-        _holdMode = mode;
-    }
+    public virtual void ChangeHoldMode(HoldModeEnum mode) {}
     public bool IsHoldMode(HoldModeEnum mode)
     {
         return _holdMode == mode;

@@ -13,6 +13,12 @@ public class RangeWeaponHoldController : WeaponHoldController
     }
 
 
+    public override void ChangeHoldMode(HoldModeEnum mode)
+    {
+        _holdMode = mode;
+    }
+
+
     public override void RestHoldMode(float rotateSpeed, float moveSpeed)
     {
         Debug.Log("Rest");

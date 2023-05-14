@@ -8,7 +8,7 @@ public class PlayerCombatController : MonoBehaviour
 {
     [Header("====Reference====")]
     [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
-    [SerializeField] PlayerWeaponModeController _playerWeaponModeController; public PlayerWeaponModeController PlayerWeaponModeController { get { return _playerWeaponModeController; } }
+    [SerializeField] PlayerEquipedWeaponController _equipedWeaponController; public PlayerEquipedWeaponController EquipedWeaponController { get { return _equipedWeaponController; } }
     [Space(5)]
     [SerializeField] Transform _rightHandWeaponHolder;
     [SerializeField] Transform _weaponOrigin;
@@ -20,9 +20,9 @@ public class PlayerCombatController : MonoBehaviour
 
     [Space(20)]
     [Header("====Debug====")]
-    [SerializeField] int _equipedWeaponIndex;
+    [SerializeField] int _equipedWeaponIndex; public int EquipedWeaponIndex { get { return _equipedWeaponIndex; } }
     [SerializeField] WeaponStateMachine _equipedWeapon; public WeaponStateMachine EquipedWeapon { get { return _equipedWeapon; } }
-    [SerializeField] WeaponData _equipedWeaponData;
+    [SerializeField] WeaponData _equipedWeaponData; public WeaponData EquipedWeaponData { get { return _equipedWeaponData; } }
     [SerializeField] CombatStateEnum _combatState;
     [SerializeField] bool _swap;
 
@@ -67,7 +67,10 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Toggle layers
-        bool enableLayers = _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle) || _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk);
+        bool enableLayers = _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)
+            || _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)
+            || _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run)
+            || _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch);
         ToggleCombatLayersPreset(enableLayers, 3);
 
 
@@ -126,6 +129,7 @@ public class PlayerCombatController : MonoBehaviour
             _equipedWeapon = null;
             _equipedWeaponData = null;
 
+            _equipedWeaponController.ADS(false);
             SetState(CombatStateEnum.Unarmed);
         });
     }
@@ -152,6 +156,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
 
+        _equipedWeaponController.ADS(false);
         SetState(CombatStateEnum.Unarmed);
     }
 
