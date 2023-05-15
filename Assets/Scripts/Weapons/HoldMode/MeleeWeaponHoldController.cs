@@ -32,6 +32,7 @@ public class MeleeWeaponHoldController : WeaponHoldController
         LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _meleeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
         LeanTween.moveLocal(_playerCombatController.RightHand.gameObject, _meleeWeaponData.Hip.RightHand_Position, moveSpeed).setOnComplete(() =>
         {
+            _stateMachine.DamageDealingController.enabled = true;
             _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
         });
     }

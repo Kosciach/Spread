@@ -48,8 +48,7 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
 
 
-
-
+    #region Aim
     public void Aim(bool aim)
     {
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
@@ -67,13 +66,11 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
     private void AimEnable()
     {
-        Debug.Log("ADS Enable");
+        _combatController.EquipedWeapon.DamageDealingController.enabled = true;
         MoveHandsToAimTransform();
     }
     private void AimDisable()
     {
-        Debug.Log("ADS Disable");
-
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.EquipedController;
         equipedModeController.MoveHandsToCurrentHoldMode(0.15f, 0.15f);
     }
@@ -105,6 +102,7 @@ public class PlayerEquipedWeaponController : MonoBehaviour
         LeanTween.rotateLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Rotation, 0.15f);
         LeanTween.moveLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 0.15f);
     }
+    #endregion
 
 
 

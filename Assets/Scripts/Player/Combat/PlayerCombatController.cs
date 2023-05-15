@@ -95,7 +95,6 @@ public class PlayerCombatController : MonoBehaviour
 
 
             //Move right hand to correct position
-            Debug.Log("Move to rest!");
             _equipedWeapon.EquipedController.MoveHandsToCurrentHoldMode(0.3f, 0.5f);
         });
     }
@@ -126,6 +125,7 @@ public class PlayerCombatController : MonoBehaviour
             _playerStateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
 
+            _equipedWeapon.DamageDealingController.enabled = false;
             _equipedWeaponController.ToggleAimBool(false);
             _playerStateMachine.Inventory.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
             _equipedWeapon = null;
@@ -153,7 +153,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
         _playerStateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
-
+        _equipedWeapon.DamageDealingController.enabled = false;
         _equipedWeaponController.ToggleAimBool(false);
         _playerStateMachine.Inventory.DropWeapon(_equipedWeaponIndex);
         _equipedWeapon = null;

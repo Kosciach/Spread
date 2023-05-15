@@ -31,3 +31,6 @@ MonoBehaviour:
   Hip:
     RightHand_Position: {x: 0.056, y: -0.209, z: 0.374}
     RightHand_Rotation: {x: 289.29858, y: 297.23016, z: 272.68976}
+  Damage: 0
+  Range: 0
+  FireRate: 0

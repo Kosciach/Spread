@@ -24,9 +24,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddWeapon(WeaponStateMachine newWeapon, WeaponData newWeaponData)
     {
-        Debug.Log("AddedWeapon: " + newWeaponData.WeaponName);
-
-        int smallestEmptyIndex = FindSmallestEmptyIndex(); Debug.Log("SmallestIndex: " + smallestEmptyIndex);
+        int smallestEmptyIndex = FindSmallestEmptyIndex();
         if (smallestEmptyIndex < 0) return;
 
 

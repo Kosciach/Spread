@@ -7,7 +7,6 @@ public class MeleeWeaponData : WeaponData
 {
     [Space(20)]
     [Header("====HoldTransforms====")]
-
     [Space(5)]
     public WeaponTransform Hip;
 }

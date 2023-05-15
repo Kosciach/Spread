@@ -6,6 +6,7 @@ public class WeaponHoldController : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] protected PlayerCombatController _playerCombatController;
+    protected WeaponStateMachine _stateMachine;
 
 
     [Space(20)]
@@ -22,6 +23,7 @@ public class WeaponHoldController : MonoBehaviour
     private void Awake()
     {
         _playerCombatController = FindObjectOfType<PlayerCombatController>();
+        _stateMachine = GetComponent<WeaponStateMachine>();
 
         _holdModeChangeMethods[0] = RestHoldMode;
         _holdModeChangeMethods[1] = HipHoldMode;

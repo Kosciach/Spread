@@ -18,6 +18,7 @@ public class WeaponStateMachine : MonoBehaviour
     [SerializeField] Outline _outline; public Outline Outline { get { return _outline; } }
     private WeaponHoldController _equipedModeController; public WeaponHoldController EquipedController { get { return _equipedModeController; } }
     private WeaponAimIndexHolder _aimIndexHolder; public WeaponAimIndexHolder AimIndexHolder { get { return _aimIndexHolder; } }
+    private WeaponDamageDealingController _damageDealingController; public WeaponDamageDealingController DamageDealingController { get { return _damageDealingController; } }
     private RangeWeaponSwitchController _switchController; public RangeWeaponSwitchController SwitchController { get { return _switchController; } }
 
 
@@ -39,6 +40,7 @@ public class WeaponStateMachine : MonoBehaviour
         _switchController = new RangeWeaponSwitchController(this);
         _equipedModeController = GetComponent<WeaponHoldController>();
         _aimIndexHolder = GetComponent<WeaponAimIndexHolder>();
+        _damageDealingController = GetComponent<WeaponDamageDealingController>();
     }
     private void SetUpStartingState()
     {
