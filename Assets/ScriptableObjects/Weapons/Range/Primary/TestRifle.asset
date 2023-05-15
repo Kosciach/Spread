@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponName: TestRifle
   WeaponHolder: 0
+  WeaponType: 0
   InHandPosition: {x: 0.045, y: 0.139, z: 0.055}
   InHandRotation: {x: 330.04004, y: 251.78183, z: 268.8495}
   FingersPreset: {fileID: 11400000, guid: c96c98f130709fb45b118f3cdca3fb6f, type: 2}
   LeftHand_Position: {x: 0.2136, y: 0.376, z: 0.1591}
   LeftHand_Rotation: {x: 356.36456, y: 33.066864, z: 346.6427}
+  Aim:
+  - RightHand_Position: {x: 0, y: 0, z: 0}
+    RightHand_Rotation: {x: 0, y: 0, z: 0}
+  - RightHand_Position: {x: 0, y: 0, z: 0}
+    RightHand_Rotation: {x: 0, y: 0, z: 0}
   Rest:
     RightHand_Position: {x: 0.056, y: -0.209, z: 0.374}
     RightHand_Rotation: {x: 323.56412, y: 281.44556, z: 277.7054}
   Hip:
     RightHand_Position: {x: 0.056, y: -0.209, z: 0.374}
     RightHand_Rotation: {x: 289.29858, y: 297.23016, z: 272.68976}
-  ADS:
-    RightHand_Position: {x: 0.0045, y: -0.067, z: 0.595}
-    RightHand_Rotation: {x: 283.4473, y: 296.43225, z: 258.2168}
-  Block:
-    RightHand_Position: {x: 0, y: 0, z: 0}
-    RightHand_Rotation: {x: 0, y: 0, z: 0}

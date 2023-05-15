@@ -42,7 +42,8 @@ public class PlayerInputController : MonoBehaviour
         SetHideWeapon();
         SetDropWeapon();
         SetChangeWeaponEquipedMode();
-        SetADS();
+        SetAim();
+        SetChangeAimType();
     }
     private void Update()
     {
@@ -99,7 +100,7 @@ public class PlayerInputController : MonoBehaviour
     }
     private void SetHideWeapon()
     {
-        _playerInputs.Player.HideWeapon.performed += ctx => _stateMachine.CombatController.HideWeapon();
+        _playerInputs.Player.UnEquipWeapon.performed += ctx => _stateMachine.CombatController.UnEquipWeapon(1);
     }
     private void SetDropWeapon()
     {
@@ -109,15 +110,18 @@ public class PlayerInputController : MonoBehaviour
 
     private void SetChangeWeaponEquipedMode()
     {
-        _playerInputs.Player.ChangeWeaponEquipedMode.performed += ctx => _stateMachine.CombatController.EquipedWeaponController.ChangeEquipedHoldMode();
+        _playerInputs.Player.ChangeWeaponHoldMode.performed += ctx => _stateMachine.CombatController.EquipedWeaponController.ChangeEquipedHoldMode();
     }
 
-    private void SetADS()
+    private void SetAim()
     {
-        _playerInputs.Player.ADS.started += ctx => _stateMachine.CombatController.EquipedWeaponController.ADS(true);
-        _playerInputs.Player.ADS.canceled += ctx => _stateMachine.CombatController.EquipedWeaponController.ADS(false);
+        _playerInputs.Player.Aim.started += ctx => _stateMachine.CombatController.EquipedWeaponController.Aim(true);
+        _playerInputs.Player.Aim.canceled += ctx => _stateMachine.CombatController.EquipedWeaponController.Aim(false);
     }
-
+    private void SetChangeAimType()
+    {
+        _playerInputs.Player.ChangeAimType.performed += ctx => _stateMachine.CombatController.EquipedWeaponController.ChangeAimType();
+    }
 
     private void OnEnable()
     {

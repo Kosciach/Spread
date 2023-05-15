@@ -6,12 +6,8 @@ using UnityEngine;
 public class MeleeWeaponData : WeaponData
 {
     [Space(20)]
-    [Header("====RightHandIkTransform====")]
+    [Header("====HoldTransforms====")]
 
     [Space(5)]
     public WeaponTransform Hip;
-    [Space(5)]
-    public WeaponTransform Aim;
-    [Space(5)]
-    public WeaponTransform Block;
 }

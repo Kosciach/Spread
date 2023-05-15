@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponName: MAR_3
   WeaponHolder: 0
+  WeaponType: 0
   InHandPosition: {x: 0.0496, y: 0.1428, z: 0.05}
   InHandRotation: {x: 330.08615, y: 255.79161, z: 266.85886}
   FingersPreset: {fileID: 11400000, guid: c96c98f130709fb45b118f3cdca3fb6f, type: 2}
   LeftHand_Position: {x: 0.2136, y: 0.376, z: 0.1591}
   LeftHand_Rotation: {x: 356.36456, y: 33.066864, z: 346.6427}
+  Aim:
+  - RightHand_Position: {x: -0.022, y: -0.186, z: 0.375}
+    RightHand_Rotation: {x: 285.70197, y: 312.36, z: 257.111}
+  - RightHand_Position: {x: -0.084, y: -0.222, z: 0.374}
+    RightHand_Rotation: {x: 289.29858, y: 297.23016, z: 272.68976}
   Rest:
     RightHand_Position: {x: 0.056, y: -0.209, z: 0.374}
     RightHand_Rotation: {x: 315.64893, y: 294.0769, z: 252.84619}
   Hip:
     RightHand_Position: {x: 0.056, y: -0.209, z: 0.374}
     RightHand_Rotation: {x: 289.29858, y: 297.23016, z: 272.68976}
-  ADS:
-    RightHand_Position: {x: 0.0045, y: -0.067, z: 0.595}
-    RightHand_Rotation: {x: 283.4473, y: 296.43225, z: 258.2168}
-  Block:
-    RightHand_Position: {x: 0, y: 0, z: 0}
-    RightHand_Rotation: {x: 0, y: 0, z: 0}

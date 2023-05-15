@@ -91,7 +91,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""HideWeapon"",
+                    ""name"": ""UnEquipWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""809d7811-ac00-44ab-892b-336d790cb639"",
                     ""expectedControlType"": ""Button"",
@@ -109,7 +109,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ChangeWeaponEquipedMode"",
+                    ""name"": ""ChangeWeaponHoldMode"",
                     ""type"": ""Button"",
                     ""id"": ""d9f84a1d-1dca-46d9-bf61-c1c58fbb3ff7"",
                     ""expectedControlType"": ""Button"",
@@ -118,12 +118,21 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ADS"",
+                    ""name"": ""Aim"",
                     ""type"": ""Button"",
                     ""id"": ""f5cc4edc-d6dd-4258-a062-1aff0b60f31e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": ""Press(pressPoint=1.401298E-45,behavior=2)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeAimType"",
+                    ""type"": ""Button"",
+                    ""id"": ""9d87db7a-6344-49aa-858d-4843625bb5ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -377,7 +386,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""HideWeapon"",
+                    ""action"": ""UnEquipWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -399,7 +408,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ChangeWeaponEquipedMode"",
+                    ""action"": ""ChangeWeaponHoldMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -410,7 +419,18 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ADS"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""451b52f9-af04-414a-ac6c-a50394ed3e46"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ChangeAimType"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1005,10 +1025,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_ChooseWeapon = m_Player.FindAction("ChooseWeapon", throwIfNotFound: true);
-        m_Player_HideWeapon = m_Player.FindAction("HideWeapon", throwIfNotFound: true);
+        m_Player_UnEquipWeapon = m_Player.FindAction("UnEquipWeapon", throwIfNotFound: true);
         m_Player_DropWeapon = m_Player.FindAction("DropWeapon", throwIfNotFound: true);
-        m_Player_ChangeWeaponEquipedMode = m_Player.FindAction("ChangeWeaponEquipedMode", throwIfNotFound: true);
-        m_Player_ADS = m_Player.FindAction("ADS", throwIfNotFound: true);
+        m_Player_ChangeWeaponHoldMode = m_Player.FindAction("ChangeWeaponHoldMode", throwIfNotFound: true);
+        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_ChangeAimType = m_Player.FindAction("ChangeAimType", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1087,10 +1108,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_ChooseWeapon;
-    private readonly InputAction m_Player_HideWeapon;
+    private readonly InputAction m_Player_UnEquipWeapon;
     private readonly InputAction m_Player_DropWeapon;
-    private readonly InputAction m_Player_ChangeWeaponEquipedMode;
-    private readonly InputAction m_Player_ADS;
+    private readonly InputAction m_Player_ChangeWeaponHoldMode;
+    private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_ChangeAimType;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1102,10 +1124,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @ChooseWeapon => m_Wrapper.m_Player_ChooseWeapon;
-        public InputAction @HideWeapon => m_Wrapper.m_Player_HideWeapon;
+        public InputAction @UnEquipWeapon => m_Wrapper.m_Player_UnEquipWeapon;
         public InputAction @DropWeapon => m_Wrapper.m_Player_DropWeapon;
-        public InputAction @ChangeWeaponEquipedMode => m_Wrapper.m_Player_ChangeWeaponEquipedMode;
-        public InputAction @ADS => m_Wrapper.m_Player_ADS;
+        public InputAction @ChangeWeaponHoldMode => m_Wrapper.m_Player_ChangeWeaponHoldMode;
+        public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @ChangeAimType => m_Wrapper.m_Player_ChangeAimType;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1136,18 +1159,21 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @ChooseWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChooseWeapon;
                 @ChooseWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChooseWeapon;
                 @ChooseWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChooseWeapon;
-                @HideWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHideWeapon;
-                @HideWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHideWeapon;
-                @HideWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHideWeapon;
+                @UnEquipWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUnEquipWeapon;
+                @UnEquipWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUnEquipWeapon;
+                @UnEquipWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUnEquipWeapon;
                 @DropWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropWeapon;
                 @DropWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropWeapon;
                 @DropWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropWeapon;
-                @ChangeWeaponEquipedMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeaponEquipedMode;
-                @ChangeWeaponEquipedMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeaponEquipedMode;
-                @ChangeWeaponEquipedMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeaponEquipedMode;
-                @ADS.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnADS;
-                @ADS.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnADS;
-                @ADS.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnADS;
+                @ChangeWeaponHoldMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeaponHoldMode;
+                @ChangeWeaponHoldMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeaponHoldMode;
+                @ChangeWeaponHoldMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeaponHoldMode;
+                @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @ChangeAimType.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeAimType;
+                @ChangeAimType.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeAimType;
+                @ChangeAimType.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeAimType;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1173,18 +1199,21 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @ChooseWeapon.started += instance.OnChooseWeapon;
                 @ChooseWeapon.performed += instance.OnChooseWeapon;
                 @ChooseWeapon.canceled += instance.OnChooseWeapon;
-                @HideWeapon.started += instance.OnHideWeapon;
-                @HideWeapon.performed += instance.OnHideWeapon;
-                @HideWeapon.canceled += instance.OnHideWeapon;
+                @UnEquipWeapon.started += instance.OnUnEquipWeapon;
+                @UnEquipWeapon.performed += instance.OnUnEquipWeapon;
+                @UnEquipWeapon.canceled += instance.OnUnEquipWeapon;
                 @DropWeapon.started += instance.OnDropWeapon;
                 @DropWeapon.performed += instance.OnDropWeapon;
                 @DropWeapon.canceled += instance.OnDropWeapon;
-                @ChangeWeaponEquipedMode.started += instance.OnChangeWeaponEquipedMode;
-                @ChangeWeaponEquipedMode.performed += instance.OnChangeWeaponEquipedMode;
-                @ChangeWeaponEquipedMode.canceled += instance.OnChangeWeaponEquipedMode;
-                @ADS.started += instance.OnADS;
-                @ADS.performed += instance.OnADS;
-                @ADS.canceled += instance.OnADS;
+                @ChangeWeaponHoldMode.started += instance.OnChangeWeaponHoldMode;
+                @ChangeWeaponHoldMode.performed += instance.OnChangeWeaponHoldMode;
+                @ChangeWeaponHoldMode.canceled += instance.OnChangeWeaponHoldMode;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
+                @ChangeAimType.started += instance.OnChangeAimType;
+                @ChangeAimType.performed += instance.OnChangeAimType;
+                @ChangeAimType.canceled += instance.OnChangeAimType;
             }
         }
     }
@@ -1348,10 +1377,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnChooseWeapon(InputAction.CallbackContext context);
-        void OnHideWeapon(InputAction.CallbackContext context);
+        void OnUnEquipWeapon(InputAction.CallbackContext context);
         void OnDropWeapon(InputAction.CallbackContext context);
-        void OnChangeWeaponEquipedMode(InputAction.CallbackContext context);
-        void OnADS(InputAction.CallbackContext context);
+        void OnChangeWeaponHoldMode(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
+        void OnChangeAimType(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

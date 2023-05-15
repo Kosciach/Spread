@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class PlayerLadderState : PlayerBaseState
 {
-    private bool _wasEquipedMode;
+
     public PlayerLadderState(PlayerStateMachine ctx, PlayerStateFactory factory, string stateName) : base(ctx, factory, stateName) { }
 
 
     public override void StateEnter()
     {
-        _wasEquipedMode = _ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Equiped);
+        _ctx.CombatController.TemporaryUnEquip();
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
 
-        if(_wasEquipedMode) _ctx.CombatController.HideWeapon();
         _ctx.LadderController.ResetBools();
 
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
         _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 5);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 5);
         _ctx.CineCameraController.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.Ladder, 4);
@@ -39,11 +38,11 @@ public class PlayerLadderState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
         _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
         _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 5);
         _ctx.CineCameraController.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.OnGround, 4);
 
-        if (_wasEquipedMode) _ctx.CombatController.EquipWeapon(_ctx.CombatController.EquipedWeaponIndex);
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
+        if ( _ctx.CombatController.IsTemporaryUnEquip) _ctx.CombatController.EquipWeapon(_ctx.CombatController.EquipedWeaponIndex);
     }
 }

@@ -9,16 +9,8 @@ public class PlayerInAirClimbState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatController.CheckCombatMovement(false, 3);
-
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 6);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 6);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, false, 6);
-
-        _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(false);
-        _ctx.ColliderController.ToggleCollider(false);
-        _ctx.CineCameraController.ToggleCineInput(false);
+        _ctx.CombatController.TemporaryUnEquip();
+        ClimbEnterExit(false);
         _ctx.CineCameraController.VerticalController.RotateToAngle(0, 0.3f);
 
         Climb(_ctx.ClimbController.GetFinalClimbPosition(), _ctx.ClimbController.GetStartClimbPosition());
@@ -37,20 +29,24 @@ public class PlayerInAirClimbState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.CombatController.CheckCombatMovement(true, 5);
-
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 6);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, true, 6);
-
+        ClimbEnterExit(true);
         _ctx.AnimatorController.SetBool("Climb", false);
-        _ctx.ColliderController.ToggleCollider(true);
-        _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(true);
-        _ctx.CineCameraController.ToggleCineInput(true);
+
+        if (_ctx.CombatController.IsTemporaryUnEquip) _ctx.CombatController.EquipWeapon(_ctx.CombatController.EquipedWeaponIndex);
     }
 
 
+    private void ClimbEnterExit(bool enable)
+    {
+        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(enable);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, enable, 6);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, enable, 6);
+        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, enable, 6);
+
+        _ctx.ColliderController.ToggleCollider(enable);
+        _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(enable);
+        _ctx.CineCameraController.ToggleCineInput(enable);
+    }
 
 
 

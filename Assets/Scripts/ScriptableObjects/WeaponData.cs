@@ -6,7 +6,8 @@ public class WeaponData : ScriptableObject
 {
     [Header("====BaseInfo====")]
     public string WeaponName;
-    public WeaponTypeEnum WeaponHolder;
+    public WeaponHolderEnum WeaponHolder;
+    public WeaponTypeEnum WeaponType;
 
 
     [Space(20)]
@@ -25,6 +26,12 @@ public class WeaponData : ScriptableObject
     public Vector3 LeftHand_Rotation;
 
 
+    [Space(20)]
+    [Header("====AimTransforms====")]
+    [Space(5)]
+    public WeaponTransform[] Aim;
+
+
     [System.Serializable]
     public struct WeaponTransform
     {
@@ -32,8 +39,12 @@ public class WeaponData : ScriptableObject
         public Vector3 RightHand_Rotation;
     }
 
-    public enum WeaponTypeEnum
+    public enum WeaponHolderEnum
     { 
         Primary, Secondary, Melee_Big, Melee_Medium, Melee_Small
+    }
+    public enum WeaponTypeEnum
+    {
+        Range, Melee
     }
 }

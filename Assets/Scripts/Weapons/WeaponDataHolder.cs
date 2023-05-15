@@ -6,7 +6,7 @@ public class WeaponDataHolder : MonoBehaviour, IPickupableInterface
 {
     [Header("====References====")]
     [SerializeField] WeaponData _weaponData; public WeaponData WeaponData { get { return _weaponData; } }
-    [SerializeField] PlayerInventory _playerInventory;
+    private PlayerInventory _playerInventory;
 
 
 

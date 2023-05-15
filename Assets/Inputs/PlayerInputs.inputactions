@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "HideWeapon",
+                    "name": "UnEquipWeapon",
                     "type": "Button",
                     "id": "809d7811-ac00-44ab-892b-336d790cb639",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ChangeWeaponEquipedMode",
+                    "name": "ChangeWeaponHoldMode",
                     "type": "Button",
                     "id": "d9f84a1d-1dca-46d9-bf61-c1c58fbb3ff7",
                     "expectedControlType": "Button",
@@ -96,12 +96,21 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ADS",
+                    "name": "Aim",
                     "type": "Button",
                     "id": "f5cc4edc-d6dd-4258-a062-1aff0b60f31e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "Press(pressPoint=1.401298E-45,behavior=2)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeAimType",
+                    "type": "Button",
+                    "id": "9d87db7a-6344-49aa-858d-4843625bb5ff",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -355,7 +364,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "HideWeapon",
+                    "action": "UnEquipWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -377,7 +386,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "ChangeWeaponEquipedMode",
+                    "action": "ChangeWeaponHoldMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -388,7 +397,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "ADS",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "451b52f9-af04-414a-ac6c-a50394ed3e46",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ChangeAimType",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

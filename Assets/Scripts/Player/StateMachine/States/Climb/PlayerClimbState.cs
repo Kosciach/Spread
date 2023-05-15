@@ -9,7 +9,7 @@ public class PlayerClimbState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatController.CheckCombatMovement(false, 3);
+        _ctx.CombatController.TemporaryUnEquip();
         ClimbEnterExit(false);
 
 
@@ -29,10 +29,10 @@ public class PlayerClimbState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.CombatController.CheckCombatMovement(true, 5);
         ClimbEnterExit(true);
 
         _ctx.AnimatorController.SetBool("Climb", false);
+        if (_ctx.CombatController.IsTemporaryUnEquip) _ctx.CombatController.EquipWeapon(_ctx.CombatController.EquipedWeaponIndex);
     }
 
 

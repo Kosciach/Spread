@@ -32,7 +32,7 @@ public class PlayerFallState : PlayerBaseState
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.InAirClimb)) StateChange(_factory.InAirClimb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))
         {
-            _ctx.CombatController.HideWeapon();
+            _ctx.CombatController.TemporaryUnEquip();
             StateChange(_factory.Swim());
         }
     }

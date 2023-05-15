@@ -16,7 +16,8 @@ public class WeaponStateMachine : MonoBehaviour
     [SerializeField] Collider _collider; public Collider Collider { get { return _collider; } }
     [SerializeField] Rigidbody _rigidbody; public Rigidbody Rigidbody { get { return _rigidbody; } }
     [SerializeField] Outline _outline; public Outline Outline { get { return _outline; } }
-    [SerializeField] WeaponHoldController _equipedModeController; public WeaponHoldController EquipedController { get { return _equipedModeController; } }
+    private WeaponHoldController _equipedModeController; public WeaponHoldController EquipedController { get { return _equipedModeController; } }
+    private WeaponAimIndexHolder _aimIndexHolder; public WeaponAimIndexHolder AimIndexHolder { get { return _aimIndexHolder; } }
     private RangeWeaponSwitchController _switchController; public RangeWeaponSwitchController SwitchController { get { return _switchController; } }
 
 
@@ -37,6 +38,7 @@ public class WeaponStateMachine : MonoBehaviour
         SetUpStartingState();
         _switchController = new RangeWeaponSwitchController(this);
         _equipedModeController = GetComponent<WeaponHoldController>();
+        _aimIndexHolder = GetComponent<WeaponAimIndexHolder>();
     }
     private void SetUpStartingState()
     {

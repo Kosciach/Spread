@@ -20,11 +20,12 @@ public class PlayerCombatController : MonoBehaviour
 
     [Space(20)]
     [Header("====Debug====")]
+    [SerializeField] CombatStateEnum _combatState;
     [SerializeField] int _equipedWeaponIndex; public int EquipedWeaponIndex { get { return _equipedWeaponIndex; } }
     [SerializeField] WeaponStateMachine _equipedWeapon; public WeaponStateMachine EquipedWeapon { get { return _equipedWeapon; } }
     [SerializeField] WeaponData _equipedWeaponData; public WeaponData EquipedWeaponData { get { return _equipedWeaponData; } }
-    [SerializeField] CombatStateEnum _combatState;
     [SerializeField] bool _swap;
+    [SerializeField] bool _isTemporaryUnEquip; public bool IsTemporaryUnEquip { get { return _isTemporaryUnEquip; } }
 
 
     public enum CombatStateEnum
@@ -37,6 +38,8 @@ public class PlayerCombatController : MonoBehaviour
 
     public void EquipWeapon(int choosenWeaponIndex)
     {
+        if (!_playerStateMachine.VerticalVelocityController.GravityController.IsGrounded) return;
+
         if (IsState(CombatStateEnum.Equip) || IsState(CombatStateEnum.UnEquip)) return;
 
         WeaponStateMachine equipedWeapon = _playerStateMachine.Inventory.Weapons[choosenWeaponIndex];
@@ -50,11 +53,11 @@ public class PlayerCombatController : MonoBehaviour
             return;
         }
 
-
+        _isTemporaryUnEquip = false;
         _equipedWeaponIndex = choosenWeaponIndex;
         _equipedWeapon = equipedWeapon;
         _equipedWeaponData = equipedWeaponData;
-
+        _equipedWeaponController.ResetAimType(_equipedWeapon.AimIndexHolder.WeaponAimIndex);
 
         //Change states
         SetState(CombatStateEnum.Equip);
@@ -67,11 +70,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Toggle layers
-        bool enableLayers = _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)
-            || _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)
-            || _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run)
-            || _playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch);
-        ToggleCombatLayersPreset(enableLayers, 3);
+        ToggleCombatLayersPreset(true, false, false, false, true, 3);
 
 
         //Set left hand correct transform
@@ -104,17 +103,19 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
-    public void HideWeapon()
+    public void UnEquipWeapon(float unEquipSpeed)
     {
+        if (!_playerStateMachine.VerticalVelocityController.GravityController.IsGrounded) return;
+
         if (!IsState(CombatStateEnum.Equiped)) return;
 
 
         //Move right hand to origin
-        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.rotation.eulerAngles, 0.3f);
-        LeanTween.move(_rightHand.gameObject, _weaponOrigin.position, 0.5f).setOnComplete(() =>
+        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.rotation.eulerAngles, 0.3f * unEquipSpeed);
+        LeanTween.move(_rightHand.gameObject, _weaponOrigin.position, 0.5f * unEquipSpeed).setOnComplete(() =>
         {
             //Toggle layers
-            ToggleCombatLayersPreset(false, 3);
+            ToggleCombatLayersPreset(false, true, true, true, false, 3);
 
             //Disable fingers
             _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 4);
@@ -125,11 +126,11 @@ public class PlayerCombatController : MonoBehaviour
             _playerStateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
 
+            _equipedWeaponController.ToggleAimBool(false);
             _playerStateMachine.Inventory.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
             _equipedWeapon = null;
             _equipedWeaponData = null;
 
-            _equipedWeaponController.ADS(false);
             SetState(CombatStateEnum.Unarmed);
         });
     }
@@ -139,16 +140,13 @@ public class PlayerCombatController : MonoBehaviour
 
     public void DropWeapon()
     {
+        if (!_playerStateMachine.VerticalVelocityController.GravityController.IsGrounded) return;
+
         if (!IsState(CombatStateEnum.Equiped)) return;
 
 
-        _playerStateMachine.Inventory.DropWeapon(_equipedWeaponIndex);
-        _equipedWeapon = null;
-        _equipedWeaponData = null;
-
-
         //Toggle layers
-        ToggleCombatLayersPreset(false, 3);
+        ToggleCombatLayersPreset(false, true, true, true, false, 3);
 
 
         //Prepare hands camera
@@ -156,7 +154,11 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
 
-        _equipedWeaponController.ADS(false);
+        _equipedWeaponController.ToggleAimBool(false);
+        _playerStateMachine.Inventory.DropWeapon(_equipedWeaponIndex);
+        _equipedWeapon = null;
+        _equipedWeaponData = null;
+
         SetState(CombatStateEnum.Unarmed);
     }
 
@@ -166,7 +168,7 @@ public class PlayerCombatController : MonoBehaviour
     private void SwapWeapon(int choosenWeaponIndex)
     {
         _swap = true;
-        HideWeapon();
+        UnEquipWeapon(1);
         StartCoroutine(ReEquip(choosenWeaponIndex));
     }
     private IEnumerator ReEquip(int choosenWeaponIndex)
@@ -178,19 +180,46 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
-
-    public void ToggleCombatLayersPreset(bool enable, float speed)
+    public void TemporaryUnEquip()
     {
-        _playerStateMachine.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, enable, speed);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, !enable, speed);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, !enable, speed);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, !enable, speed);
-        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, enable, speed);
+        if (!IsState(CombatStateEnum.Equiped)) return;
+
+        _isTemporaryUnEquip = true;
+
+        //Toggle layers
+        ToggleCombatLayersPreset(false, false, false, false, false, 10);
+
+        //Disable fingers
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 5);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 5);
+
+        //Prepare hands camera
+        _playerStateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
+        _playerStateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
+
+
+        _playerStateMachine.Inventory.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
+        _equipedWeapon = null;
+        _equipedWeaponData = null;
+
+        _equipedWeaponController.Aim(false);
+        SetState(CombatStateEnum.Unarmed);
     }
-    public void CheckCombatMovement(bool enable, float speed)
+
+
+
+    public void ToggleCombatLayersPreset(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float speed)
+    {
+        _playerStateMachine.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, combatAnim, speed);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, spineLock, speed);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, body, speed);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, head, speed);
+        _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, combat, speed);
+    }
+    public void CheckCombatMovement(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float speed)
     {
         if(IsState(CombatStateEnum.Equiped))
-            ToggleCombatLayersPreset(enable, speed);
+            ToggleCombatLayersPreset(combatAnim, spineLock, body, head, combat, speed);
     }
 
 
