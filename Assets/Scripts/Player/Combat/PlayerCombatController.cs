@@ -127,6 +127,8 @@ public class PlayerCombatController : MonoBehaviour
 
             _equipedWeapon.DamageDealingController.enabled = false;
             _equipedWeaponController.ToggleAimBool(false);
+            CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+
             _playerStateMachine.Inventory.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
             _equipedWeapon = null;
             _equipedWeaponData = null;
@@ -155,6 +157,8 @@ public class PlayerCombatController : MonoBehaviour
 
         _equipedWeapon.DamageDealingController.enabled = false;
         _equipedWeaponController.ToggleAimBool(false);
+        CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+
         _playerStateMachine.Inventory.DropWeapon(_equipedWeaponIndex);
         _equipedWeapon = null;
         _equipedWeaponData = null;

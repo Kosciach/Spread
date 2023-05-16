@@ -23,12 +23,11 @@ public class MeleeWeaponHoldController : WeaponHoldController
 
     public override void RestHoldMode(float rotateSpeed, float moveSpeed)
     {
-        Debug.Log("Cant use rest for Melee, Switching to Hip");
         HipHoldMode(rotateSpeed, moveSpeed);
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
-        Debug.Log("Hip");
+        CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
         LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _meleeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
         LeanTween.moveLocal(_playerCombatController.RightHand.gameObject, _meleeWeaponData.Hip.RightHand_Position, moveSpeed).setOnComplete(() =>
         {

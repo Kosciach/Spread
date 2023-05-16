@@ -20,7 +20,7 @@ public class FullAutoFireMode : BaseFireMode
     {
         if(_isShootingInput)
         {
-            Debug.Log("PifPaf fast");
+            _weaponShootingController.Shoot();
         }
     }
 }

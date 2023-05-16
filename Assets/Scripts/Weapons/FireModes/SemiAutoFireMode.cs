@@ -10,6 +10,6 @@ public class SemiAutoFireMode : BaseFireMode
     }
     private void Start()
     {
-        _inputs.Range.Shoot.performed += ctx => Debug.Log("PifPaf slow");
+        _inputs.Range.Shoot.performed += ctx => _weaponShootingController.Shoot();
     }
 }

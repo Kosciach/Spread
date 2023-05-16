@@ -7,6 +7,9 @@ public class WeaponShootingController : WeaponDamageDealingController
     [Header("====References====")]
     [SerializeField] BaseFireMode[] _fireModes;
     [SerializeField] GameObject _bulletPrefab;
+    [SerializeField] Transform _barrel;
+    [SerializeField] GameObject _muzzleFlash;
+    private WeaponBarrelController _barrelController;
 
 
     [Space(20)]
@@ -25,6 +28,8 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public override void VirtualAwake()
     {
+        _barrelController = transform.GetChild(1).GetComponent<WeaponBarrelController>();
+
         _fireModes = GetComponents<BaseFireMode>();
         _currentFireMode = _fireModes[0];
 
@@ -42,10 +47,16 @@ public class WeaponShootingController : WeaponDamageDealingController
 
 
 
+
+
     public void Shoot()
     {
-
+        Instantiate(_bulletPrefab, _barrel.position, _barrel.rotation);
+        Instantiate(_muzzleFlash, _barrel.position, _barrel.rotation);
     }
+
+
+
 
 
 
@@ -68,9 +79,11 @@ public class WeaponShootingController : WeaponDamageDealingController
     public override void VirtualOnEnable()
     {
         _currentFireMode.enabled = true;
+        _barrelController.enabled = true;
     }
     public override void VirtualOnDisable()
     {
         _currentFireMode.enabled = false;
+        _barrelController.enabled = false;
     }
 }

@@ -21,4 +21,6 @@ public class RangeWeaponData : WeaponData
     public float Range;
     [Range(0, 10)]
     public float FireRate;
+    [Range(0, 10)]
+    public float CarredForce;
 }

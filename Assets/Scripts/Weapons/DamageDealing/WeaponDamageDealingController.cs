@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class WeaponDamageDealingController : MonoBehaviour
 {
+    protected WeaponStateMachine _stateMachine;
     protected WeaponDamageDealingInputs _inputs; public WeaponDamageDealingInputs Inputs { get { return _inputs; } }
 
 
     private void Awake()
     {
         _inputs = new WeaponDamageDealingInputs();
+        _stateMachine = GetComponent<WeaponStateMachine>();
+
         VirtualAwake();
         enabled = false;
     }
