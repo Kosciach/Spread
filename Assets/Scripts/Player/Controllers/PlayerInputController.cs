@@ -112,14 +112,14 @@ public class PlayerInputController : MonoBehaviour
     {
         _playerInputs.Player.ChangeWeaponHoldMode.performed += ctx => _stateMachine.CombatController.EquipedWeaponController.ChangeEquipedHoldMode();
     }
+    private void SetChangeAimType()
+    {
+        _playerInputs.Player.ChangeAimType.performed += ctx => _stateMachine.CombatController.EquipedWeaponController.ChangeAimType();
+    }
     private void SetAim()
     {
         _playerInputs.Player.Aim.started += ctx => _stateMachine.CombatController.EquipedWeaponController.Aim(true);
         _playerInputs.Player.Aim.canceled += ctx => _stateMachine.CombatController.EquipedWeaponController.Aim(false);
-    }
-    private void SetChangeAimType()
-    {
-        _playerInputs.Player.ChangeAimType.performed += ctx => _stateMachine.CombatController.EquipedWeaponController.ChangeAimType();
     }
 
 

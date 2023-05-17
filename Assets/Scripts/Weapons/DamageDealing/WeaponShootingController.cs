@@ -28,7 +28,8 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public override void VirtualAwake()
     {
-        _barrelController = transform.GetChild(1).GetComponent<WeaponBarrelController>();
+        _barrel = transform.GetChild(1);
+        _barrelController = _barrel.GetComponent<WeaponBarrelController>();
 
         _fireModes = GetComponents<BaseFireMode>();
         _currentFireMode = _fireModes[0];
@@ -51,7 +52,11 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public void Shoot()
     {
-        Instantiate(_bulletPrefab, _barrel.position, _barrel.rotation);
+        GameObject newBullet = Instantiate(_bulletPrefab, _barrel.position, _barrel.rotation);
+
+        BulletController newBulletController = newBullet.GetComponent<BulletController>();
+        newBulletController.PassData(_stateMachine.DataHolder.WeaponData);
+
         Instantiate(_muzzleFlash, _barrel.position, _barrel.rotation);
     }
 

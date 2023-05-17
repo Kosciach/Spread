@@ -24,6 +24,7 @@ public class TargetsPlacerScript : MonoBehaviour
     [SerializeField] SpawnMethodEnum _spawnMethodType;
 
 
+    [SerializeField] List<Transform> _targets = new List<Transform>(); public List<Transform> Targets { get { return _targets; } }
 
     public enum SpawnMethodEnum
     {
@@ -41,10 +42,20 @@ public class TargetsPlacerScript : MonoBehaviour
         _spawningMethods[0] = SpawnEvenly;
         _spawningMethods[1] = SpawnRandomly;
 
-        _spawningMethods[(int)_spawnMethodType]();
+        Spawn();
     }
 
 
+    public void Spawn()
+    {
+        _spawningMethods[(int)_spawnMethodType]();
+    }
+    public void ResetTargets()
+    {
+        foreach (Transform target in _targets) Destroy(target.gameObject);
+        _targets.Clear();
+        Spawn();
+    }
 
 
 
@@ -66,6 +77,7 @@ public class TargetsPlacerScript : MonoBehaviour
 
                 Transform newTarget = Instantiate(_targetPrefab, transform);
                 newTarget.localPosition = position + offset;
+                _targets.Add(newTarget);
             }
             position.z = 0;
         }
@@ -83,6 +95,7 @@ public class TargetsPlacerScript : MonoBehaviour
 
                 Transform newTarget = Instantiate(_targetPrefab, transform);
                 newTarget.localPosition = position;
+                _targets.Add(newTarget);
             }
             position.z = 0;
         }

@@ -240,10 +240,9 @@ MonoBehaviour:
   _bulletVisual: {fileID: 9127270805135621188}
   _hitEffect: {fileID: 8362877130921867983, guid: 03d0758555e9b7144abbffaaecae1ba8,
     type: 3}
-  _forwardStrength: 1
-  _fallStrength: 0.001
-  _rayLengthMultiplier: 1
+  _gravityStrength: 0.1
   _delayBetweenRays: 0
+  _raylength: 5
   _ignoreMask:
     serializedVersion: 2
     m_Bits: 64

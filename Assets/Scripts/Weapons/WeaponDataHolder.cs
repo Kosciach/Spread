@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponDataHolder : MonoBehaviour, IPickupableInterface
+public class WeaponDataHolder : MonoBehaviour, IPickupable
 {
     [Header("====References====")]
     [SerializeField] WeaponData _weaponData; public WeaponData WeaponData { get { return _weaponData; } }

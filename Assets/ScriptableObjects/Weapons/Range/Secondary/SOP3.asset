@@ -14,20 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponName: SOP3
   WeaponHolder: 1
-  InHandPosition: {x: 0.043, y: 0.155, z: 0.054}
-  InHandRotation: {x: 61.003147, y: 255.26422, z: 270.72302}
+  WeaponType: 0
+  InHandPosition: {x: 0.047, y: 0.167, z: 0.042}
+  InHandRotation: {x: 65.41948, y: 300.16626, z: 316.39355}
   FingersPreset: {fileID: 11400000, guid: 9b21472b8a98ac24aa6b6b7a1a31fcaa, type: 2}
-  LeftHand_Position: {x: 0.042, y: -0.018, z: -0.023}
-  LeftHand_Rotation: {x: 8.298869, y: 356.3809, z: 332.93353}
+  LeftHand_Position: {x: 0.0318, y: -0.015, z: -0.0266}
+  LeftHand_Rotation: {x: 8.29887, y: 356.3809, z: 332.93353}
+  Aim:
+  - RightHand_Position: {x: 0.007, y: -0.132, z: 0.552}
+    RightHand_Rotation: {x: 291.78558, y: 235.7727, z: 323.8328}
+  - RightHand_Position: {x: 0.075, y: -0.194, z: 0.566}
+    RightHand_Rotation: {x: 319.73773, y: 253.89629, z: 303.24088}
   Rest:
-    RightHand_Position: {x: 0.057, y: -0.203, z: 0.578}
-    RightHand_Rotation: {x: 324.7873, y: 282.0957, z: 271.9579}
+    RightHand_Position: {x: 0.117, y: -0.189, z: 0.566}
+    RightHand_Rotation: {x: 306.79913, y: 256.57156, z: 267.87625}
   Hip:
-    RightHand_Position: {x: 0.057, y: -0.203, z: 0.578}
-    RightHand_Rotation: {x: 286.05154, y: 303.155, z: 266.47443}
-  ADS:
-    RightHand_Position: {x: 0.0045, y: -0.067, z: 0.595}
-    RightHand_Rotation: {x: 283.4473, y: 296.43225, z: 258.2168}
-  Block:
-    RightHand_Position: {x: 0, y: 0, z: 0}
-    RightHand_Rotation: {x: 0, y: 0, z: 0}
+    RightHand_Position: {x: 0.07, y: -0.2, z: 0.47}
+    RightHand_Rotation: {x: 292.18387, y: 238.4108, z: 320.29547}
+  Damage: 20
+  Range: 2
+  FireRate: 10
+  CarredForce: 5

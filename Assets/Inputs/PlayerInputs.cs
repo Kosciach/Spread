@@ -118,15 +118,6 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Aim"",
-                    ""type"": ""Button"",
-                    ""id"": ""f5cc4edc-d6dd-4258-a062-1aff0b60f31e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press(pressPoint=1.401298E-45,behavior=2)"",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ChangeAimType"",
                     ""type"": ""Button"",
                     ""id"": ""9d87db7a-6344-49aa-858d-4843625bb5ff"",
@@ -136,12 +127,12 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""Aim"",
                     ""type"": ""Button"",
-                    ""id"": ""e7865870-9304-4bef-91f7-6efd64aedd4b"",
+                    ""id"": ""f5cc4edc-d6dd-4258-a062-1aff0b60f31e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(pressPoint=1.401298E-45,behavior=2)"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -435,22 +426,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""451b52f9-af04-414a-ac6c-a50394ed3e46"",
-                    ""path"": ""<Keyboard>/v"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""ChangeAimType"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""eb77f7f0-3184-40d9-90f6-63ee951e7090"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1048,9 +1028,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Player_UnEquipWeapon = m_Player.FindAction("UnEquipWeapon", throwIfNotFound: true);
         m_Player_DropWeapon = m_Player.FindAction("DropWeapon", throwIfNotFound: true);
         m_Player_ChangeWeaponHoldMode = m_Player.FindAction("ChangeWeaponHoldMode", throwIfNotFound: true);
-        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_ChangeAimType = m_Player.FindAction("ChangeAimType", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1132,9 +1111,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_UnEquipWeapon;
     private readonly InputAction m_Player_DropWeapon;
     private readonly InputAction m_Player_ChangeWeaponHoldMode;
-    private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_ChangeAimType;
-    private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_Aim;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1149,9 +1127,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @UnEquipWeapon => m_Wrapper.m_Player_UnEquipWeapon;
         public InputAction @DropWeapon => m_Wrapper.m_Player_DropWeapon;
         public InputAction @ChangeWeaponHoldMode => m_Wrapper.m_Player_ChangeWeaponHoldMode;
-        public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @ChangeAimType => m_Wrapper.m_Player_ChangeAimType;
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1191,15 +1168,12 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @ChangeWeaponHoldMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeaponHoldMode;
                 @ChangeWeaponHoldMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeaponHoldMode;
                 @ChangeWeaponHoldMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeaponHoldMode;
-                @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
-                @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
-                @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @ChangeAimType.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeAimType;
                 @ChangeAimType.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeAimType;
                 @ChangeAimType.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeAimType;
-                @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
-                @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
-                @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1234,15 +1208,12 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @ChangeWeaponHoldMode.started += instance.OnChangeWeaponHoldMode;
                 @ChangeWeaponHoldMode.performed += instance.OnChangeWeaponHoldMode;
                 @ChangeWeaponHoldMode.canceled += instance.OnChangeWeaponHoldMode;
-                @Aim.started += instance.OnAim;
-                @Aim.performed += instance.OnAim;
-                @Aim.canceled += instance.OnAim;
                 @ChangeAimType.started += instance.OnChangeAimType;
                 @ChangeAimType.performed += instance.OnChangeAimType;
                 @ChangeAimType.canceled += instance.OnChangeAimType;
-                @Attack.started += instance.OnAttack;
-                @Attack.performed += instance.OnAttack;
-                @Attack.canceled += instance.OnAttack;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
         }
     }
@@ -1409,9 +1380,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnUnEquipWeapon(InputAction.CallbackContext context);
         void OnDropWeapon(InputAction.CallbackContext context);
         void OnChangeWeaponHoldMode(InputAction.CallbackContext context);
-        void OnAim(InputAction.CallbackContext context);
         void OnChangeAimType(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -96,15 +96,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Aim",
-                    "type": "Button",
-                    "id": "f5cc4edc-d6dd-4258-a062-1aff0b60f31e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press(pressPoint=1.401298E-45,behavior=2)",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ChangeAimType",
                     "type": "Button",
                     "id": "9d87db7a-6344-49aa-858d-4843625bb5ff",
@@ -114,12 +105,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
+                    "name": "Aim",
                     "type": "Button",
-                    "id": "e7865870-9304-4bef-91f7-6efd64aedd4b",
+                    "id": "f5cc4edc-d6dd-4258-a062-1aff0b60f31e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(pressPoint=1.401298E-45,behavior=2)",
                     "initialStateCheck": false
                 }
             ],
@@ -413,22 +404,11 @@
                 {
                     "name": "",
                     "id": "451b52f9-af04-414a-ac6c-a50394ed3e46",
-                    "path": "<Keyboard>/v",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "ChangeAimType",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "eb77f7f0-3184-40d9-90f6-63ee951e7090",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

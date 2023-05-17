@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInteractionController : MonoBehaviour
@@ -24,6 +23,6 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (!Physics.Raycast(_playerMainCamera.position, _playerMainCamera.forward, out pickupHitInfo, _pickupDistance, _pickupMask)) return;
 
-        pickupHitInfo.transform.GetComponent<IPickupableInterface>()?.Pickup();
+        pickupHitInfo.transform.GetComponent<IPickupable>()?.Pickup();
     }
 }

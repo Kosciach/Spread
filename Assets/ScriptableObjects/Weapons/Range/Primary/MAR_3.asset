@@ -21,17 +21,17 @@ MonoBehaviour:
   LeftHand_Position: {x: 0.2136, y: 0.376, z: 0.1591}
   LeftHand_Rotation: {x: 356.36456, y: 33.066864, z: 346.6427}
   Aim:
-  - RightHand_Position: {x: -0.022, y: -0.186, z: 0.375}
-    RightHand_Rotation: {x: 285.70197, y: 312.36, z: 257.111}
-  - RightHand_Position: {x: -0.084, y: -0.222, z: 0.374}
-    RightHand_Rotation: {x: 289.29858, y: 297.23016, z: 272.68976}
+  - RightHand_Position: {x: -0.0199, y: -0.189, z: 0.375}
+    RightHand_Rotation: {x: 286.07755, y: 311.1816, z: 258.33615}
+  - RightHand_Position: {x: 0.056, y: -0.208, z: 0.374}
+    RightHand_Rotation: {x: 312.2413, y: 284.32153, z: 288.80505}
   Rest:
     RightHand_Position: {x: 0.056, y: -0.209, z: 0.374}
     RightHand_Rotation: {x: 315.64893, y: 294.0769, z: 252.84619}
   Hip:
     RightHand_Position: {x: 0.056, y: -0.209, z: 0.374}
     RightHand_Rotation: {x: 289.29858, y: 297.23016, z: 272.68976}
-  Damage: 0
-  Range: 0
-  FireRate: 0
+  Damage: 25
+  Range: 4
+  FireRate: 7
   CarredForce: 10

@@ -67,7 +67,9 @@ public class PlayerEquipedWeaponController : MonoBehaviour
     private void AimEnable()
     {
         _combatController.EquipedWeapon.DamageDealingController.enabled = true;
-        CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.None);
+
+        CheckCrosshair();
+
         MoveHandsToAimTransform();
     }
     private void AimDisable()
@@ -94,16 +96,27 @@ public class PlayerEquipedWeaponController : MonoBehaviour
         _aimType = (AimTypeEnum)_aimTypeIndex;
         _combatController.EquipedWeapon.AimIndexHolder.WeaponAimIndex = _aimTypeIndex;
 
+        CheckCrosshair();
+
         MoveHandsToAimTransform();
     }
 
 
     private void MoveHandsToAimTransform()
     {
+        LeanTween.cancel(_combatController.RightHand.gameObject);
         LeanTween.rotateLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Rotation, 0.15f);
         LeanTween.moveLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 0.15f);
     }
     #endregion
+
+
+
+    private void CheckCrosshair()
+    {
+        if (_aimType == AimTypeEnum.Left) CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+        else CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.None);
+    }
 
 
 
