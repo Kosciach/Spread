@@ -86,7 +86,7 @@ public class PlayerCombatController : MonoBehaviour
 
         //Move right hand to origin
         LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.rotation.eulerAngles, 0.3f);
-        LeanTween.move(_rightHand.gameObject, _weaponOrigin.position, 0.3f).setOnComplete(() =>
+        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.position, 0.3f).setOnComplete(() =>
         {
             //Put weapon in hand
             _equipedWeapon.transform.parent = _rightHandWeaponHolder;
@@ -111,7 +111,7 @@ public class PlayerCombatController : MonoBehaviour
 
         //Move right hand to origin
         LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.rotation.eulerAngles, 0.3f * unEquipSpeed);
-        LeanTween.move(_rightHand.gameObject, _weaponOrigin.position, 0.5f * unEquipSpeed).setOnComplete(() =>
+        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.position, 0.5f * unEquipSpeed).setOnComplete(() =>
         {
             //Toggle layers
             ToggleCombatLayersPreset(false, true, true, true, false, 3);

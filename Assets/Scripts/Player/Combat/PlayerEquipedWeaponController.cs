@@ -10,7 +10,7 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
 
     [Header("====Debugs====")]
-    [SerializeField] bool _aim;
+    [SerializeField] bool _isAim; public bool IsAim { get { return _isAim; } }
     [SerializeField] bool _block;
     [SerializeField] int _aimTypeIndex;
     [SerializeField] AimTypeEnum _aimType;
@@ -36,7 +36,7 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
     public void ChangeEquipedHoldMode()
     {
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _aim) return;
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _isAim) return;
         if (_combatController.EquipedWeaponData.WeaponType == WeaponData.WeaponTypeEnum.Melee) return;
         
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.EquipedController;
@@ -54,13 +54,13 @@ public class PlayerEquipedWeaponController : MonoBehaviour
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
 
         ToggleAimBool(aim);
-        int enableADS = _aim ? 1 : 0;
+        int enableADS = _isAim ? 1 : 0;
 
         _asdMethods[enableADS]();
     }
     public void ToggleAimBool(bool aim)
     {
-        _aim = aim;
+        _isAim = aim;
     }
 
 
@@ -87,7 +87,7 @@ public class PlayerEquipedWeaponController : MonoBehaviour
     }
     public void ChangeAimType()
     {
-        if (!_aim) return;
+        if (!_isAim) return;
         if (_combatController.EquipedWeaponData.Aim.Length <= 1) return;
 
 
@@ -104,9 +104,15 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
     private void MoveHandsToAimTransform()
     {
+        _combatController.PlayerStateMachine.IkController.WeaponAnimator.Sway.enabled = false;
+
         LeanTween.cancel(_combatController.RightHand.gameObject);
         LeanTween.rotateLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Rotation, 0.15f);
-        LeanTween.moveLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 0.15f);
+        LeanTween.moveLocal(_combatController.RightHand.parent.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 0.15f).setOnComplete(() =>
+        {
+            _combatController.PlayerStateMachine.IkController.WeaponAnimator.DesiredRightHandPosition = _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position;
+            _combatController.PlayerStateMachine.IkController.WeaponAnimator.Sway.enabled = true;
+        });
     }
     #endregion
 
