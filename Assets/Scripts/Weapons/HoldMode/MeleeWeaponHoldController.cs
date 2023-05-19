@@ -28,6 +28,8 @@ public class MeleeWeaponHoldController : WeaponHoldController
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
+
+        LeanTween.cancel(_playerCombatController.RightHand.gameObject);
         LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _meleeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
         LeanTween.moveLocal(_playerCombatController.RightHand.gameObject, _meleeWeaponData.Hip.RightHand_Position, moveSpeed).setOnComplete(() =>
         {

@@ -6300,6 +6300,7 @@ GameObject:
   - component: {fileID: 526658071}
   - component: {fileID: 526658074}
   - component: {fileID: 526658070}
+  - component: {fileID: 526658075}
   m_Layer: 6
   m_Name: WeaponAnimator
   m_TagString: Untagged
@@ -6401,13 +6402,14 @@ MonoBehaviour:
   _playerStateMachine: {fileID: 8003831046665861830}
   _sway: {fileID: 526658072}
   _bobbing: {fileID: 526658071}
+  _handOffseter: {fileID: 526658075}
   _ikHandsTargets:
     Right: {fileID: 553561153}
     Left: {fileID: 765279328}
-  _mainVectorsBobSway:
+  _mainVectors:
     Pos: {x: 0, y: 0, z: 0}
     Rot: {x: 0, y: 0, z: 0}
-  _bobSwaySmoothSpeed: 5
+  _bobSwayVectorsSmoothSpeed: 5
 --- !u!114 &526658074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6440,6 +6442,28 @@ MonoBehaviour:
   _mainSpeed: 0.5
   _mainAmplitude: 0
   _bobbingSmoothSpeed: 3
+--- !u!114 &526658075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526658068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec58724ba9ec4d47a29992d8423382b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponAnimator: {fileID: 526658073}
+  _handOffsets:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
+  _handOffsetsTargets:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
+  _offsetToggle: 1
+  _posOffsetSmoothSpeed: 4
+  _rotOffsetSmoothSpeed: 4
 --- !u!1 &539297483
 GameObject:
   m_ObjectHideFlags: 0

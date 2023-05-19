@@ -109,7 +109,6 @@ public class PlayerCombatController : MonoBehaviour
         
         if (!IsState(CombatStateEnum.Equiped)) return;
 
-        SetState(CombatStateEnum.UnEquip);
 
         _playerStateMachine.WeaponAnimator.Bobbing.Toggle(false);
         _playerStateMachine.WeaponAnimator.Sway.Toggle(false);
@@ -118,7 +117,7 @@ public class PlayerCombatController : MonoBehaviour
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
 
-
+        SetState(CombatStateEnum.UnEquip);
         //Move right hand to origin
         LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.rotation.eulerAngles, 0.3f * unEquipSpeed);
         LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.position, 0.5f * unEquipSpeed).setOnComplete(() =>

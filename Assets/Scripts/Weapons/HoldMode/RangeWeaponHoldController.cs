@@ -23,6 +23,7 @@ public class RangeWeaponHoldController : WeaponHoldController
     {
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
+        LeanTween.cancel(_playerCombatController.RightHand.gameObject); 
         LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Rest.RightHand_Rotation, rotateSpeed);
         LeanTween.moveLocal(_playerCombatController.RightHand.parent.gameObject, _rangeWeaponData.Rest.RightHand_Position, moveSpeed).setOnComplete(() =>
         {
@@ -38,6 +39,7 @@ public class RangeWeaponHoldController : WeaponHoldController
     {
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
 
+        LeanTween.cancel(_playerCombatController.RightHand.gameObject);
         LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
         LeanTween.moveLocal(_playerCombatController.RightHand.parent.gameObject, _rangeWeaponData.Hip.RightHand_Position, moveSpeed).setOnComplete(() =>
         {

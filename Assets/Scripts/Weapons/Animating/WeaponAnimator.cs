@@ -9,28 +9,33 @@ public class WeaponAnimator : MonoBehaviour
     [Space(5)]
     [SerializeField] WeaponSwayController _sway; public WeaponSwayController Sway { get { return _sway; } }
     [SerializeField] WeaponBobbingController _bobbing; public WeaponBobbingController Bobbing { get { return _bobbing; } }
+    [SerializeField] WeaponRightHandOffseter _handOffseter; public WeaponRightHandOffseter HandOffseter { get { return _handOffseter; } }
     [Space(10)]
     [SerializeField] IkHandsTargetsStruct _ikHandsTargets; public IkHandsTargetsStruct IkHandsTargets { get { return _ikHandsTargets; } }
 
 
+
+
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] MainVectorsBobSway _mainVectorsBobSway;
-    private MainVectorsBobSway _mainVectorsBobSwayTarget;
+    [SerializeField] PosRotStruct _mainVectors;
+    private PosRotStruct _bobSwayVectors;
+    private PosRotStruct _bobSwayVectorsTarget;
+
 
 
 
     [Space(20)]
     [Header("====Settings====")]
     [Range(0, 5)]
-    [SerializeField] float _bobSwaySmoothSpeed;
+    [SerializeField] float _bobSwayVectorsSmoothSpeed;
 
 
 
 
 
     [System.Serializable]
-    public struct MainVectorsBobSway
+    public struct PosRotStruct
     { 
         public Vector3 Pos;
         public Vector3 Rot;
@@ -51,7 +56,11 @@ public class WeaponAnimator : MonoBehaviour
     {
         CombineBobAndSway();
         SmoothOutBobAndSway();
-        ApplyBobAndSway();
+
+        CombineVectorsToMain();
+
+
+        ApplyMainVectorsToHand();
     }
 
 
@@ -60,17 +69,26 @@ public class WeaponAnimator : MonoBehaviour
 
     private void CombineBobAndSway()
     {
-        _mainVectorsBobSwayTarget.Pos = _bobbing.MainBobVectors.Pos;
-        _mainVectorsBobSwayTarget.Rot = _bobbing.MainBobVectors.Rot + _sway.SwayRot;
+        _bobSwayVectorsTarget.Pos = _bobbing.MainBobVectors.Pos;
+        _bobSwayVectorsTarget.Rot = _bobbing.MainBobVectors.Rot + _sway.SwayRot;
     }
     private void SmoothOutBobAndSway()
     {
-        _mainVectorsBobSway.Pos = Vector3.Lerp(_mainVectorsBobSway.Pos, _mainVectorsBobSwayTarget.Pos, _bobSwaySmoothSpeed * Time.deltaTime);
-        _mainVectorsBobSway.Rot = Vector3.Lerp(_mainVectorsBobSway.Rot, _mainVectorsBobSwayTarget.Rot, _bobSwaySmoothSpeed * Time.deltaTime);
+        _bobSwayVectors.Pos = Vector3.Lerp(_bobSwayVectors.Pos, _bobSwayVectorsTarget.Pos, _bobSwayVectorsSmoothSpeed * Time.deltaTime);
+        _bobSwayVectors.Rot = Vector3.Lerp(_bobSwayVectors.Rot, _bobSwayVectorsTarget.Rot, _bobSwayVectorsSmoothSpeed * Time.deltaTime);
     }
-    private void ApplyBobAndSway()
+
+    private void CombineVectorsToMain()
     {
-        _ikHandsTargets.Right.parent.localRotation = Quaternion.Euler(_mainVectorsBobSway.Rot);
-        _ikHandsTargets.Right.localPosition = _mainVectorsBobSway.Pos;
+        _mainVectors.Pos = _bobSwayVectors.Pos + _handOffseter.HandOffsets.Pos;
+        _mainVectors.Rot = _bobSwayVectors.Rot + _handOffseter.HandOffsets.Rot;
+    }
+
+
+
+    private void ApplyMainVectorsToHand()
+    {
+        _ikHandsTargets.Right.parent.localRotation = Quaternion.Euler(_mainVectors.Rot);
+        _ikHandsTargets.Right.localPosition = _mainVectors.Pos;
     }
 }

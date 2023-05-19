@@ -67,6 +67,8 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
     private void AimEnable()
     {
+        _combatController.EquipedWeapon.DamageDealingController.enabled = true;
+
         CheckCrosshair();
 
         MoveHandsToAimTransform();
