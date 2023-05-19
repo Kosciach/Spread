@@ -21,8 +21,6 @@ public class RangeWeaponHoldController : WeaponHoldController
 
     public override void RestHoldMode(float rotateSpeed, float moveSpeed)
     {
-        _playerCombatController.PlayerStateMachine.IkController.WeaponAnimator.Sway.enabled = false;
-
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
         LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Rest.RightHand_Rotation, rotateSpeed);
@@ -30,16 +28,14 @@ public class RangeWeaponHoldController : WeaponHoldController
         {
             _stateMachine.DamageDealingController.enabled = false;
 
-            _playerCombatController.PlayerStateMachine.IkController.WeaponAnimator.DesiredRightHandPosition = _rangeWeaponData.Rest.RightHand_Position;
-            _playerCombatController.PlayerStateMachine.IkController.WeaponAnimator.Sway.enabled = true;
+            _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
+            _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
 
             _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
         });
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
-        _playerCombatController.PlayerStateMachine.IkController.WeaponAnimator.Sway.enabled = false;
-
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
 
         LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
@@ -47,8 +43,8 @@ public class RangeWeaponHoldController : WeaponHoldController
         {
             _stateMachine.DamageDealingController.enabled = true;
 
-            _playerCombatController.PlayerStateMachine.IkController.WeaponAnimator.DesiredRightHandPosition = _rangeWeaponData.Hip.RightHand_Position;
-            _playerCombatController.PlayerStateMachine.IkController.WeaponAnimator.Sway.enabled = true;
+            _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
+            _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
 
             _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
         });

@@ -61,13 +61,12 @@ public class PlayerEquipedWeaponController : MonoBehaviour
     public void ToggleAimBool(bool aim)
     {
         _isAim = aim;
+        _combatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(!_isAim);
     }
 
 
     private void AimEnable()
     {
-        _combatController.EquipedWeapon.DamageDealingController.enabled = true;
-
         CheckCrosshair();
 
         MoveHandsToAimTransform();
@@ -104,15 +103,9 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
     private void MoveHandsToAimTransform()
     {
-        _combatController.PlayerStateMachine.IkController.WeaponAnimator.Sway.enabled = false;
-
         LeanTween.cancel(_combatController.RightHand.gameObject);
         LeanTween.rotateLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Rotation, 0.15f);
-        LeanTween.moveLocal(_combatController.RightHand.parent.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 0.15f).setOnComplete(() =>
-        {
-            _combatController.PlayerStateMachine.IkController.WeaponAnimator.DesiredRightHandPosition = _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position;
-            _combatController.PlayerStateMachine.IkController.WeaponAnimator.Sway.enabled = true;
-        });
+        LeanTween.moveLocal(_combatController.RightHand.parent.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 0.15f);
     }
     #endregion
 

@@ -106,7 +106,17 @@ public class PlayerCombatController : MonoBehaviour
     {
         if (!_playerStateMachine.VerticalVelocityController.GravityController.IsGrounded) return;
 
+        
         if (!IsState(CombatStateEnum.Equiped)) return;
+
+        SetState(CombatStateEnum.UnEquip);
+
+        _playerStateMachine.WeaponAnimator.Bobbing.Toggle(false);
+        _playerStateMachine.WeaponAnimator.Sway.Toggle(false);
+        _equipedWeapon.DamageDealingController.enabled = false;
+        _equipedWeaponController.ToggleAimBool(false);
+        CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+
 
 
         //Move right hand to origin
@@ -124,10 +134,6 @@ public class PlayerCombatController : MonoBehaviour
             _playerStateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
             _playerStateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
-
-            _equipedWeapon.DamageDealingController.enabled = false;
-            _equipedWeaponController.ToggleAimBool(false);
-            CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
             _playerStateMachine.Inventory.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
             _equipedWeapon = null;
@@ -147,17 +153,29 @@ public class PlayerCombatController : MonoBehaviour
         if (!IsState(CombatStateEnum.Equiped)) return;
 
 
+
+
         //Toggle layers
         ToggleCombatLayersPreset(false, true, true, true, false, 3);
+
+
 
 
         //Prepare hands camera
         _playerStateMachine.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
         _playerStateMachine.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
+
+
+
+        _playerStateMachine.WeaponAnimator.Bobbing.Toggle(false);
+        _playerStateMachine.WeaponAnimator.Sway.Toggle(false);
         _equipedWeapon.DamageDealingController.enabled = false;
         _equipedWeaponController.ToggleAimBool(false);
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+
+
+
 
         _playerStateMachine.Inventory.DropWeapon(_equipedWeaponIndex);
         _equipedWeapon = null;

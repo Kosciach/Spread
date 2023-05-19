@@ -6,11 +6,18 @@ using UnityEngine;
 public class WeaponSwayController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] WeaponIkAnimator _weaponIkAnimator;
+    [SerializeField] WeaponAnimator _weaponAnimator; public WeaponAnimator WeaponAnimator { get { return _weaponAnimator; } }
 
 
 
     [Space(20)]
+    [Header("====Debugs====")]
+    [SerializeField] Vector3 _swayRot; public Vector3 SwayRot { get { return _swayRot; } }
+    [Range(0, 1)]
+    [SerializeField] int _swayToggle;
+
+
+    [Space(10)]
     [Header("====SwayStructs====")]
     [SerializeField] SwayValues _horizontal;
     [SerializeField] SwayValues _vertical;
@@ -48,18 +55,24 @@ public class WeaponSwayController : MonoBehaviour
 
     private void GetHorizontalSway()
     {
-        _horizontal.DesiredSway = _weaponIkAnimator.IkController.PlayerStateMachine.InputController.MouseInputVector.x / _horizontal.Strength;
+        _horizontal.DesiredSway = _weaponAnimator.PlayerStateMachine.InputController.MouseInputVector.x / _horizontal.Strength;
         _horizontal.CurrentSway = Mathf.Lerp(_horizontal.CurrentSway, _horizontal.DesiredSway, _horizontal.Speed * Time.deltaTime);
         _horizontal.CurrentSway = Mathf.Clamp(_horizontal.CurrentSway, -_horizontal.MaxSway, _horizontal.MaxSway);
     }
     private void GetVerticalSway()
     {
-        _vertical.DesiredSway = _weaponIkAnimator.IkController.PlayerStateMachine.InputController.MouseInputVector.y / _vertical.Strength;
+        _vertical.DesiredSway = _weaponAnimator.PlayerStateMachine.InputController.MouseInputVector.y / _vertical.Strength;
         _vertical.CurrentSway = Mathf.Lerp(_vertical.CurrentSway, _vertical.DesiredSway, _vertical.Speed * Time.deltaTime);
         _vertical.CurrentSway = Mathf.Clamp(_vertical.CurrentSway, -_vertical.MaxSway, _vertical.MaxSway);
     }
     private void SetSway()
     {
-        _weaponIkAnimator.IkHandsTargets.Right.parent.localRotation = Quaternion.Euler(Vector3.zero + new Vector3(-_vertical.CurrentSway, _horizontal.CurrentSway, 0));
+        _swayRot = new Vector3(-_vertical.CurrentSway, _horizontal.CurrentSway, 0) * _swayToggle; 
+    }
+
+
+    public void Toggle(bool enable)
+    {
+        _swayToggle = enable ? 1 : 0;
     }
 }
