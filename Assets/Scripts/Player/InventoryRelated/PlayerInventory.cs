@@ -8,7 +8,8 @@ public class PlayerInventory : MonoBehaviour
     [Header("====References====")]
     [SerializeField] Transform _playerMainCamera;
     [SerializeField] Transform[] _weaponsHolders = new Transform[5]; public Transform[] WeaponsHolders { get { return _weaponsHolders; } }
-
+    [SerializeField] WeaponStateMachine _fist; public WeaponStateMachine Fist { get { return _fist; } }
+    [SerializeField] MeleeWeaponData _fistData; public MeleeWeaponData FistData { get { return _fistData; } }
 
 
     [Space(20)]
@@ -20,7 +21,10 @@ public class PlayerInventory : MonoBehaviour
 
 
 
-
+    private void Awake()
+    {
+        HolsterWeapon(_fist, _fistData);
+    }
 
     public void AddWeapon(WeaponStateMachine newWeapon, WeaponData newWeaponData)
     {
@@ -51,20 +55,12 @@ public class PlayerInventory : MonoBehaviour
     public void DropWeapon(int weaponToDropIndex)
     {
         _weapons[weaponToDropIndex].transform.parent = null;
+        _weapons[weaponToDropIndex].transform.SetSiblingIndex(0);
         _weapons[weaponToDropIndex].transform.position = _playerMainCamera.position;
         _weapons[weaponToDropIndex].SwitchController.SwitchTo.Ground();
         _weapons[weaponToDropIndex].Rigidbody.AddForce(_playerMainCamera.forward * 10);
 
-        _weapons[weaponToDropIndex] = null;
-        _weaponsData[weaponToDropIndex] = null;
-    }
-
-    public WeaponStateMachine GetWeapon(int index)
-    {
-        return _weapons[index];
-    }
-    public WeaponData GetWeaponData(int index)
-    {
-        return _weaponsData[index];
+        _weapons[weaponToDropIndex] = _fist;
+        _weaponsData[weaponToDropIndex] = _fistData;
     }
 }

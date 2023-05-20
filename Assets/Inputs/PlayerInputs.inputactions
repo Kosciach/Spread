@@ -110,6 +110,15 @@
                     "id": "f5cc4edc-d6dd-4258-a062-1aff0b60f31e",
                     "expectedControlType": "Button",
                     "processors": "",
+                    "interactions": "Press(pressPoint=0.5,behavior=2)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Block",
+                    "type": "Button",
+                    "id": "e773b132-7115-4da1-a245-9207e1285143",
+                    "expectedControlType": "Button",
+                    "processors": "",
                     "interactions": "Press(pressPoint=1.401298E-45,behavior=2)",
                     "initialStateCheck": false
                 }
@@ -409,6 +418,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "ChangeAimType",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07267517-19fe-4ad1-9317-aa80926041a2",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Block",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -21,8 +21,8 @@ MonoBehaviour:
   LeftHand_Position: {x: 0.099, y: -0.009, z: -0.203}
   LeftHand_Rotation: {x: 11.443649, y: 3.1526086, z: 3.000681}
   Aim:
-  - RightHand_Position: {x: 0, y: 0, z: 0}
-    RightHand_Rotation: {x: 0, y: 0, z: 0}
+  - RightHand_Position: {x: 0.346, y: -0.079, z: 0.501}
+    RightHand_Rotation: {x: 2.6746476, y: 174.73921, z: 4.1681733}
   Hip:
-    RightHand_Position: {x: 0.237, y: -0.267, z: 0.563}
+    RightHand_Position: {x: 0.251, y: -0.4, z: 0.553}
     RightHand_Rotation: {x: 281.68143, y: 119.81635, z: 64.30939}

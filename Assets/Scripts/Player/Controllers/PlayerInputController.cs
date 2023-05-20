@@ -43,6 +43,7 @@ public class PlayerInputController : MonoBehaviour
         SetDropWeapon();
         SetChangeWeaponEquipedMode();
         SetAim();
+        SetBlock();
         SetChangeAimType();
     }
     private void Update()
@@ -96,17 +97,28 @@ public class PlayerInputController : MonoBehaviour
 
     private void SetEquipWeapon()
     {
-        _playerInputs.Player.ChooseWeapon.performed += ctx => _stateMachine.CombatController.EquipWeapon((int)ctx.ReadValue<float>());
+        _playerInputs.Player.ChooseWeapon.performed += ctx =>
+        {
+            if (_stateMachine.CombatController.IsTemporaryUnEquip) return;
+            _stateMachine.CombatController.EquipWeapon((int)ctx.ReadValue<float>());
+        };
     }
     private void SetHideWeapon()
     {
-        _playerInputs.Player.UnEquipWeapon.performed += ctx => _stateMachine.CombatController.UnEquipWeapon(1);
+        _playerInputs.Player.UnEquipWeapon.performed += ctx =>
+        {
+            if (_stateMachine.CombatController.IsTemporaryUnEquip) return;
+            _stateMachine.CombatController.UnEquipWeapon(1);
+        };
     }
     private void SetDropWeapon()
     {
-        _playerInputs.Player.DropWeapon.performed += ctx => _stateMachine.CombatController.DropWeapon();
+        _playerInputs.Player.DropWeapon.performed += ctx =>
+        {
+            if (_stateMachine.CombatController.IsTemporaryUnEquip) return;
+            _stateMachine.CombatController.DropWeapon();
+        };
     }
-
 
     private void SetChangeWeaponEquipedMode()
     {
@@ -121,7 +133,11 @@ public class PlayerInputController : MonoBehaviour
         _playerInputs.Player.Aim.started += ctx => _stateMachine.CombatController.EquipedWeaponController.Aim(true);
         _playerInputs.Player.Aim.canceled += ctx => _stateMachine.CombatController.EquipedWeaponController.Aim(false);
     }
-
+    private void SetBlock()
+    {
+        _playerInputs.Player.Block.started += ctx => _stateMachine.CombatController.EquipedWeaponController.Block(true);
+        _playerInputs.Player.Block.canceled += ctx => _stateMachine.CombatController.EquipedWeaponController.Block(false);
+    }
 
 
 

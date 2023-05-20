@@ -8,6 +8,7 @@ public class WeaponData : ScriptableObject
     public string WeaponName;
     public WeaponHolderEnum WeaponHolder;
     public WeaponTypeEnum WeaponType;
+    public bool Fists;
 
 
     [Space(20)]
@@ -20,6 +21,7 @@ public class WeaponData : ScriptableObject
     [Header("====IkFingers====")]
     public FingerPreset FingersPreset;
 
+
     [Space(20)]
     [Header("====LeftHandIkTransform====")]
     public Vector3 LeftHand_Position;
@@ -27,8 +29,12 @@ public class WeaponData : ScriptableObject
 
 
     [Space(20)]
+    [Header("====BlockTransforms====")]
+    public WeaponTransform Block;
+
+
+    [Space(20)]
     [Header("====AimTransforms====")]
-    [Space(5)]
     public WeaponTransform[] Aim;
 
 
@@ -41,7 +47,7 @@ public class WeaponData : ScriptableObject
 
     public enum WeaponHolderEnum
     { 
-        Primary, Secondary, Melee_Big, Melee_Medium, Melee_Small
+        Primary, Secondary, Melee_Big, Melee_Medium, Melee_Small, Fist
     }
     public enum WeaponTypeEnum
     {

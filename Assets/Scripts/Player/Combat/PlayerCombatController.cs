@@ -30,8 +30,9 @@ public class PlayerCombatController : MonoBehaviour
 
     public enum CombatStateEnum
     {
-        Unarmed, Equip, Equiped, UnEquip
+        Unarmed, Equip, Equiped, UnEquip, UnarmedTemporary
     }
+
 
 
 
@@ -40,27 +41,47 @@ public class PlayerCombatController : MonoBehaviour
     {
         if (!_playerStateMachine.VerticalVelocityController.GravityController.IsGrounded) return;
 
-        if (IsState(CombatStateEnum.Equip) || IsState(CombatStateEnum.UnEquip)) return;
+        if (!IsState(CombatStateEnum.Equiped) && !IsState(CombatStateEnum.Unarmed)) return;
 
-        WeaponStateMachine equipedWeapon = _playerStateMachine.Inventory.Weapons[choosenWeaponIndex];
-        WeaponData equipedWeaponData = _playerStateMachine.Inventory.WeaponsData[choosenWeaponIndex];
-        if (equipedWeapon == null || equipedWeaponData == null) return;
+
+
+
+        WeaponStateMachine equipedWeaponNew = _playerStateMachine.Inventory.Weapons[choosenWeaponIndex];
+        WeaponData equipedWeaponDataNew = _playerStateMachine.Inventory.WeaponsData[choosenWeaponIndex];
+        if (equipedWeaponNew == null || equipedWeaponDataNew == null)
+        {
+            equipedWeaponNew = _playerStateMachine.Inventory.Fist;
+            equipedWeaponDataNew = _playerStateMachine.Inventory.FistData;
+        }
+
+
+
 
         if (IsState(CombatStateEnum.Equiped))
         {
-            if (choosenWeaponIndex != _equipedWeaponIndex) SwapWeapon(choosenWeaponIndex);
+            if (choosenWeaponIndex != _equipedWeaponIndex)
+            {
+                if (equipedWeaponDataNew.Fists && _equipedWeaponData.Fists) return;
+                SwapWeapon(choosenWeaponIndex);
+            }
 
             return;
         }
 
+
+        SetState(CombatStateEnum.Equip);
+        Debug.Log("Equip");
         _isTemporaryUnEquip = false;
         _equipedWeaponIndex = choosenWeaponIndex;
-        _equipedWeapon = equipedWeapon;
-        _equipedWeaponData = equipedWeaponData;
+        _equipedWeapon = equipedWeaponNew;
+        _equipedWeaponData = equipedWeaponDataNew;
         _equipedWeaponController.ResetAimType(_equipedWeapon.AimIndexHolder.WeaponAimIndex);
 
+
+
+
+
         //Change states
-        SetState(CombatStateEnum.Equip);
         _equipedWeapon.SwitchController.SwitchTo.Equiped();
 
 
@@ -109,15 +130,18 @@ public class PlayerCombatController : MonoBehaviour
         
         if (!IsState(CombatStateEnum.Equiped)) return;
 
+        SetState(CombatStateEnum.UnEquip);
+
 
         _playerStateMachine.WeaponAnimator.Bobbing.Toggle(false);
         _playerStateMachine.WeaponAnimator.Sway.Toggle(false);
+
         _equipedWeapon.DamageDealingController.enabled = false;
         _equipedWeaponController.ToggleAimBool(false);
+
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
 
-        SetState(CombatStateEnum.UnEquip);
         //Move right hand to origin
         LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.rotation.eulerAngles, 0.3f * unEquipSpeed);
         LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.position, 0.5f * unEquipSpeed).setOnComplete(() =>
@@ -150,8 +174,7 @@ public class PlayerCombatController : MonoBehaviour
         if (!_playerStateMachine.VerticalVelocityController.GravityController.IsGrounded) return;
 
         if (!IsState(CombatStateEnum.Equiped)) return;
-
-
+        if (_equipedWeaponData.Fists) return;
 
 
         //Toggle layers
@@ -205,7 +228,9 @@ public class PlayerCombatController : MonoBehaviour
     {
         if (!IsState(CombatStateEnum.Equiped)) return;
 
+        SetState(CombatStateEnum.Unarmed);
         _isTemporaryUnEquip = true;
+
 
         //Toggle layers
         ToggleCombatLayersPreset(false, false, false, false, false, 10);
@@ -220,11 +245,11 @@ public class PlayerCombatController : MonoBehaviour
 
 
         _playerStateMachine.Inventory.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
+        _equipedWeaponController.ToggleAimBool(false);
+
         _equipedWeapon = null;
         _equipedWeaponData = null;
 
-        _equipedWeaponController.Aim(false);
-        SetState(CombatStateEnum.Unarmed);
     }
 
 

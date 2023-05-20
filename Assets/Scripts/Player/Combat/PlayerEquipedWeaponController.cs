@@ -11,7 +11,7 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
     [Header("====Debugs====")]
     [SerializeField] bool _isAim; public bool IsAim { get { return _isAim; } }
-    [SerializeField] bool _block;
+    [SerializeField] bool _isBlock; public bool IsBlock { get { return _isBlock; } }
     [SerializeField] int _aimTypeIndex;
     [SerializeField] AimTypeEnum _aimType;
 
@@ -19,6 +19,8 @@ public class PlayerEquipedWeaponController : MonoBehaviour
     private delegate void ADSMethods();
     private ADSMethods[] _asdMethods = new ADSMethods[2];
 
+    private delegate void BlockMethods();
+    private BlockMethods[] _blockMethods = new BlockMethods[2];
 
     public enum AimTypeEnum
     {
@@ -30,13 +32,16 @@ public class PlayerEquipedWeaponController : MonoBehaviour
     private void Awake()
     {
         _asdMethods[0] = AimDisable;    
-        _asdMethods[1] = AimEnable;    
+        _asdMethods[1] = AimEnable;
+
+        _blockMethods[0] = BlockDisable;
+        _blockMethods[1] = BlockEnable;
     }
 
 
     public void ChangeEquipedHoldMode()
     {
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _isAim) return;
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _isAim || _isBlock) return;
         if (_combatController.EquipedWeaponData.WeaponType == WeaponData.WeaponTypeEnum.Melee) return;
         
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.EquipedController;
@@ -53,6 +58,11 @@ public class PlayerEquipedWeaponController : MonoBehaviour
     {
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
 
+        if (_combatController.EquipedWeaponData.Aim.Length <= 0) return;
+
+
+        _combatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(!aim);
+
         ToggleAimBool(aim);
         int enableADS = _isAim ? 1 : 0;
 
@@ -61,13 +71,13 @@ public class PlayerEquipedWeaponController : MonoBehaviour
     public void ToggleAimBool(bool aim)
     {
         _isAim = aim;
-        _combatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(!_isAim);
     }
 
 
     private void AimEnable()
     {
         _combatController.EquipedWeapon.DamageDealingController.enabled = true;
+        ToggleBlockBool(false);
 
         CheckCrosshair();
 
@@ -113,6 +123,8 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
 
 
+
+
     private void CheckCrosshair()
     {
         if (_aimType == AimTypeEnum.Left) CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
@@ -121,8 +133,50 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 
 
 
-    public void Block()
-    {
 
+
+
+    #region Block
+    public void Block(bool block)
+    {
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _isAim) return;
+
+
+
+        _combatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(!block);
+
+        ToggleBlockBool(block);
+        int enableBlock = _isBlock ? 1 : 0;
+
+        _blockMethods[enableBlock]();
     }
+    public void ToggleBlockBool(bool block)
+    {
+        _isBlock = block;
+    }
+
+
+
+    private void BlockEnable()
+    {
+        _combatController.EquipedWeapon.DamageDealingController.enabled = false;
+
+        MoveHandsToBlockTransform();
+    }
+    private void BlockDisable()
+    {
+        _combatController.EquipedWeapon.DamageDealingController.enabled = true;
+
+        WeaponHoldController equipedModeController = _combatController.EquipedWeapon.EquipedController;
+        equipedModeController.MoveHandsToCurrentHoldMode(0.15f, 0.15f);
+    }
+
+
+    private void MoveHandsToBlockTransform()
+    {
+        LeanTween.cancel(_combatController.RightHand.gameObject);
+        LeanTween.rotateLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Block.RightHand_Rotation, 0.15f);
+        LeanTween.moveLocal(_combatController.RightHand.parent.gameObject, _combatController.EquipedWeaponData.Block.RightHand_Position, 0.15f);
+    }
+    #endregion
 }
