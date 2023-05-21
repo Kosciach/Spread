@@ -11,7 +11,7 @@ public class PlayerCombatController : MonoBehaviour
     [SerializeField] PlayerEquipedWeaponController _equipedWeaponController; public PlayerEquipedWeaponController EquipedWeaponController { get { return _equipedWeaponController; } }
     [Space(5)]
     [SerializeField] Transform _rightHandWeaponHolder;
-    [SerializeField] Transform _weaponOrigin;
+    [SerializeField] PlayerWeaponOriginController _weaponOrigin;
     [Space(5)]
     [SerializeField] Transform _rightHand; public Transform RightHand { get { return _rightHand; } }
     [SerializeField] Transform _leftHand; public Transform LeftHand { get { return _leftHand; } }
@@ -21,7 +21,7 @@ public class PlayerCombatController : MonoBehaviour
     [Space(20)]
     [Header("====Debug====")]
     [SerializeField] CombatStateEnum _combatState;
-    [SerializeField] int _equipedWeaponIndex; public int EquipedWeaponIndex { get { return _equipedWeaponIndex; } }
+    [SerializeField] int _equipedWeaponIndex;
     [SerializeField] WeaponStateMachine _equipedWeapon; public WeaponStateMachine EquipedWeapon { get { return _equipedWeapon; } }
     [SerializeField] WeaponData _equipedWeaponData; public WeaponData EquipedWeaponData { get { return _equipedWeaponData; } }
     [SerializeField] bool _swap;
@@ -106,8 +106,9 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Move right hand to origin
-        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.rotation.eulerAngles, 0.3f);
-        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.position, 0.3f).setOnComplete(() =>
+        _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
+        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.transform.GetChild(0).rotation.eulerAngles, 0.3f);
+        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.transform.position, 0.3f).setOnComplete(() =>
         {
             //Put weapon in hand
             _equipedWeapon.transform.parent = _rightHandWeaponHolder;
@@ -143,8 +144,9 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Move right hand to origin
-        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.rotation.eulerAngles, 0.3f * unEquipSpeed);
-        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.position, 0.5f * unEquipSpeed).setOnComplete(() =>
+        _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
+        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.transform.GetChild(0).rotation.eulerAngles, 0.3f * unEquipSpeed);
+        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.transform.position, 0.5f * unEquipSpeed).setOnComplete(() =>
         {
             //Toggle layers
             ToggleCombatLayersPreset(false, true, true, true, false, 3);
@@ -251,7 +253,10 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeaponData = null;
 
     }
-
+    public void RecoverFromTemporaryUnEquip()
+    {
+        if (_isTemporaryUnEquip) EquipWeapon(_equipedWeaponIndex);
+    }
 
 
     public void ToggleCombatLayersPreset(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float speed)

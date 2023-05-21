@@ -8,6 +8,7 @@ public class WeaponData : ScriptableObject
     public string WeaponName;
     public WeaponHolderEnum WeaponHolder;
     public WeaponTypeEnum WeaponType;
+    public Vector3 WeaponOriginRotation;
     public bool Fists;
 
 

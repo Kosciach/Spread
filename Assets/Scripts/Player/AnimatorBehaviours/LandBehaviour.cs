@@ -20,14 +20,24 @@ public class LandBehaviour : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         PlayerStateMachine playerStateMachine = animator.GetComponent<PlayerStateMachine>();
+        bool isWeaponEquiped = playerStateMachine.CombatController.IsState(PlayerCombatController.CombatStateEnum.Equiped);
+
+
 
         playerStateMachine.HandsCameraController.EnableController.ToggleHandsCamera(true);
         playerStateMachine.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
-        playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, true, 6);
-        playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 6);
-        playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, true, 6);
+
+        playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, !isWeaponEquiped, 6);
+        playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, !isWeaponEquiped, 6);
+        playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, !isWeaponEquiped, 6);
 
         playerStateMachine.WasHardLanding = false;
+
+
+
+        //Check if player should recover from remporary unEquip
+        playerStateMachine.CombatController.RecoverFromTemporaryUnEquip();
+
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

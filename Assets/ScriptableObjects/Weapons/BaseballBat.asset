@@ -15,11 +15,16 @@ MonoBehaviour:
   WeaponName: BaseballBat
   WeaponHolder: 2
   WeaponType: 1
+  WeaponOriginRotation: {x: 317.5712, y: 206.62067, z: 236.19122}
+  Fists: 0
   InHandPosition: {x: 0.047, y: 0.151, z: -0.212}
   InHandRotation: {x: 1.6286738, y: 180.00005, z: 180}
   FingersPreset: {fileID: 11400000, guid: 9b21472b8a98ac24aa6b6b7a1a31fcaa, type: 2}
   LeftHand_Position: {x: 0.099, y: -0.009, z: -0.203}
   LeftHand_Rotation: {x: 11.443649, y: 3.1526086, z: 3.000681}
+  Block:
+    RightHand_Position: {x: 0, y: 0, z: 0}
+    RightHand_Rotation: {x: 0, y: 0, z: 0}
   Aim:
   - RightHand_Position: {x: 0.346, y: -0.079, z: 0.501}
     RightHand_Rotation: {x: 2.6746476, y: 174.73921, z: 4.1681733}

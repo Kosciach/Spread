@@ -57,7 +57,8 @@ public class WeaponShootingController : WeaponDamageDealingController
         BulletController newBulletController = newBullet.GetComponent<BulletController>();
         newBulletController.PassData(_stateMachine.DataHolder.WeaponData);
 
-        Instantiate(_muzzleFlash, _barrel.position, _barrel.rotation);
+        GameObject muzzleFlash = Instantiate(_muzzleFlash, _barrel.position, _barrel.rotation);
+        muzzleFlash.transform.parent = _barrel;
     }
 
 

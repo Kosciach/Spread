@@ -43,6 +43,7 @@ public class PlayerLadderState : PlayerBaseState
         _ctx.CineCameraController.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.OnGround, 4);
 
         _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
-        if ( _ctx.CombatController.IsTemporaryUnEquip) _ctx.CombatController.EquipWeapon(_ctx.CombatController.EquipedWeaponIndex);
+
+        _ctx.CombatController.RecoverFromTemporaryUnEquip();
     }
 }

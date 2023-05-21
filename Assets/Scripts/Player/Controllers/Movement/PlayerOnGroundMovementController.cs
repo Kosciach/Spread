@@ -11,8 +11,10 @@ public class PlayerOnGroundMovementController : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
+    [SerializeField] Vector3 _currentMovementVector; public Vector3 CurrentMovementVector { get { return _currentMovementVector; } }
+    [Space(5)]
     [Range(0, 10)]
-    [SerializeField] float _speed;
+    [SerializeField] float _speed; public float Speed { get { return _speed; } }
     [Range(0, 1)]
     [SerializeField] int _movementToggle;
     [Space(5)]
@@ -33,7 +35,7 @@ public class PlayerOnGroundMovementController : MonoBehaviour
 
 
 
-    private Vector3 _currentMovementVector; public Vector3 CurrentMovementVector { get { return _currentMovementVector; } }
+
     private float _animatorMovementSpeed;
 
 

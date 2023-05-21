@@ -32,7 +32,7 @@ public class PlayerInAirClimbState : PlayerBaseState
         ClimbEnterExit(true);
         _ctx.AnimatorController.SetBool("Climb", false);
 
-        if (_ctx.CombatController.IsTemporaryUnEquip) _ctx.CombatController.EquipWeapon(_ctx.CombatController.EquipedWeaponIndex);
+        _ctx.CombatController.RecoverFromTemporaryUnEquip();
     }
 
 
