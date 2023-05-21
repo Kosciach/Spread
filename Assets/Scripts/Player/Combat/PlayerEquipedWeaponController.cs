@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class PlayerEquipedWeaponController : MonoBehaviour
@@ -118,6 +119,7 @@ public class PlayerEquipedWeaponController : MonoBehaviour
         LeanTween.cancel(_combatController.RightHand.gameObject);
         LeanTween.rotateLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Rotation, 0.15f);
         LeanTween.moveLocal(_combatController.RightHand.parent.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 0.15f);
+        _combatController.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
     }
     #endregion
 

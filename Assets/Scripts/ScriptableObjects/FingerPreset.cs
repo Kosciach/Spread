@@ -7,7 +7,8 @@ public class FingerPreset : ScriptableObject
 {
     public Hand RightHand;
     public Hand LeftHand;
-
+    [Space(10)]
+    public Finger TriggerDisciplineIndexFinger;
 
 
 

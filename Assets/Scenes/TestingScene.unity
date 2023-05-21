@@ -11635,6 +11635,7 @@ GameObject:
   - component: {fileID: 872651106}
   - component: {fileID: 872651104}
   - component: {fileID: 872651107}
+  - component: {fileID: 872651108}
   m_Layer: 0
   m_Name: IkController
   m_TagString: Untagged
@@ -11727,6 +11728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ikController: {fileID: 872651106}
+  _triggerDiscipline: {fileID: 872651108}
   _rightHand:
     Thumb: {fileID: 273430905}
     Index: {fileID: 1819632204}
@@ -11739,6 +11741,21 @@ MonoBehaviour:
     Middle: {fileID: 76136051}
     Ring: {fileID: 466037757}
     Pinky: {fileID: 1162698958}
+--- !u!114 &872651108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872651102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8786860cb071e6b419ce4ef7eb7bdac4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fingerIkController: {fileID: 872651107}
+  _enable: 0
+  _tweenTime: 0.1
 --- !u!1 &874734985
 GameObject:
   m_ObjectHideFlags: 0

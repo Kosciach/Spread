@@ -14,6 +14,9 @@ public class WeaponBarrelController : MonoBehaviour
 
     private void Update()
     {
+        float distanceToTarget = Vector3.Distance(transform.position, _target.position);
+        if (distanceToTarget < 2) return;
+
         transform.LookAt(_target);
     }
 }

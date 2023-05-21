@@ -7,8 +7,9 @@ public class PlayerFingerIkController : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] PlayerIkController _ikController;
-    [SerializeField] Hand _rightHand;
-    [SerializeField] Hand _leftHand;
+    [SerializeField] PlayerTriggerDisciplineController _triggerDiscipline; public PlayerTriggerDisciplineController TriggerDiscipline { get { return _triggerDiscipline; } }
+    [SerializeField] Hand _rightHand; public Hand RightHand { get { return _rightHand; } }
+    [SerializeField] Hand _leftHand; public Hand LeftHand { get { return _leftHand; } }
 
 
     [System.Serializable]

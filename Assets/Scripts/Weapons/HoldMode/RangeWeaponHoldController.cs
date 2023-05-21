@@ -8,10 +8,11 @@ public class RangeWeaponHoldController : WeaponHoldController
 
 
     protected override void VirtualAwake()
+    { }
+    private void Start()
     {
-        _rangeWeaponData = GetComponent<WeaponDataHolder>().WeaponData as RangeWeaponData;
+        _rangeWeaponData = _stateMachine.DataHolder.WeaponData as RangeWeaponData;
     }
-
 
     public override void ChangeHoldMode(HoldModeEnum mode)
     {
@@ -28,6 +29,7 @@ public class RangeWeaponHoldController : WeaponHoldController
         LeanTween.moveLocal(_playerCombatController.RightHand.parent.gameObject, _rangeWeaponData.Rest.RightHand_Position, moveSpeed).setOnComplete(() =>
         {
             _stateMachine.DamageDealingController.enabled = false;
+            _stateMachine.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, true);
 
             _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
             _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
@@ -44,6 +46,7 @@ public class RangeWeaponHoldController : WeaponHoldController
         LeanTween.moveLocal(_playerCombatController.RightHand.parent.gameObject, _rangeWeaponData.Hip.RightHand_Position, moveSpeed).setOnComplete(() =>
         {
             _stateMachine.DamageDealingController.enabled = true;
+            _stateMachine.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, false);
 
             _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
             _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);

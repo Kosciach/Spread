@@ -70,7 +70,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         SetState(CombatStateEnum.Equip);
-        Debug.Log("Equip");
+
         _isTemporaryUnEquip = false;
         _equipedWeaponIndex = choosenWeaponIndex;
         _equipedWeapon = equipedWeaponNew;
