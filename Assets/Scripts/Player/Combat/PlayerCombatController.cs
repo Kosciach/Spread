@@ -75,7 +75,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeaponIndex = choosenWeaponIndex;
         _equipedWeapon = equipedWeaponNew;
         _equipedWeaponData = equipedWeaponDataNew;
-        _equipedWeaponController.ResetAimType(_equipedWeapon.AimIndexHolder.WeaponAimIndex);
+        _equipedWeaponController.Aim.ResetAimType(_equipedWeapon.AimIndexHolder.WeaponAimIndex);
 
 
 
@@ -117,7 +117,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
             //Move right hand to correct position
-            _equipedWeapon.EquipedController.MoveHandsToCurrentHoldMode(0.3f, 0.5f);
+            _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(0.3f, 0.5f);
         });
     }
 
@@ -138,7 +138,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.WeaponAnimator.Sway.Toggle(false);
 
         _equipedWeapon.DamageDealingController.enabled = false;
-        _equipedWeaponController.ToggleAimBool(false);
+        _equipedWeaponController.Aim.ToggleAimBool(false);
 
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
@@ -195,7 +195,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.WeaponAnimator.Bobbing.Toggle(false);
         _playerStateMachine.WeaponAnimator.Sway.Toggle(false);
         _equipedWeapon.DamageDealingController.enabled = false;
-        _equipedWeaponController.ToggleAimBool(false);
+        _equipedWeaponController.Aim.ToggleAimBool(false);
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
 
@@ -247,7 +247,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         _playerStateMachine.Inventory.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
-        _equipedWeaponController.ToggleAimBool(false);
+        _equipedWeaponController.Aim.ToggleAimBool(false);
 
         _equipedWeapon = null;
         _equipedWeaponData = null;

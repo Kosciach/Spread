@@ -19,12 +19,12 @@ public class WeaponStateMachine : MonoBehaviour
 
     private PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
     private WeaponDataHolder _dataHolder; public WeaponDataHolder DataHolder { get { return _dataHolder; } }
-    private WeaponHoldController _equipedModeController; public WeaponHoldController EquipedController { get { return _equipedModeController; } }
+    private WeaponHoldController _holdModeController; public WeaponHoldController HoldController { get { return _holdModeController; } }
     private WeaponAimIndexHolder _aimIndexHolder; public WeaponAimIndexHolder AimIndexHolder { get { return _aimIndexHolder; } }
     private WeaponDamageDealingController _damageDealingController; public WeaponDamageDealingController DamageDealingController { get { return _damageDealingController; } }
     private RangeWeaponSwitchController _switchController; public RangeWeaponSwitchController SwitchController { get { return _switchController; } }
 
-
+    private Transform _meshes;
 
 
 
@@ -39,12 +39,13 @@ public class WeaponStateMachine : MonoBehaviour
 
     private void Awake()
     {
+        _meshes = transform.GetChild(0);
         SetUpStartingState();
         _switchController = new RangeWeaponSwitchController(this);
 
         _playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         _dataHolder = GetComponent<WeaponDataHolder>();
-        _equipedModeController = GetComponent<WeaponHoldController>();
+        _holdModeController = GetComponent<WeaponHoldController>();
         _aimIndexHolder = GetComponent<WeaponAimIndexHolder>();
         _damageDealingController = GetComponent<WeaponDamageDealingController>();
     }
@@ -72,8 +73,14 @@ public class WeaponStateMachine : MonoBehaviour
     public void SetLayer(int layer)
     {
         gameObject.layer = layer;
-        foreach (Transform child in transform.GetChild(0))
+        foreach (Transform child in _meshes)
+        {
             child.gameObject.layer = layer;
+
+            if (child.childCount > 0)
+                foreach (Transform smallerChild in child)
+                    smallerChild.gameObject.layer = layer;
+        }
     }
 }
 

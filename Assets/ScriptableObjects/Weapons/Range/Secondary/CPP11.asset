@@ -30,6 +30,9 @@ MonoBehaviour:
     RightHand_Rotation: {x: 291.0951, y: 240.41953, z: 318.8687}
   - RightHand_Position: {x: 0, y: -0.147, z: 0.502}
     RightHand_Rotation: {x: 319.0732, y: 256.29565, z: 304.94684}
+  Run:
+    RightHand_Position: {x: 0.143, y: -0.199, z: 0.502}
+    RightHand_Rotation: {x: 324.528, y: 204.6851, z: 0.49800867}
   Rest:
     RightHand_Position: {x: 0.145, y: -0.141, z: 0.512}
     RightHand_Rotation: {x: 314.42596, y: 258.3231, z: 260.9335}

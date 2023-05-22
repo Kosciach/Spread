@@ -60,7 +60,7 @@ public class PlayerInventory : MonoBehaviour
         _weapons[weaponToDropIndex].SwitchController.SwitchTo.Ground();
         _weapons[weaponToDropIndex].Rigidbody.AddForce(_playerMainCamera.forward * 10);
 
-        _weapons[weaponToDropIndex] = _fist;
-        _weaponsData[weaponToDropIndex] = _fistData;
+        _weapons[weaponToDropIndex] = null;
+        _weaponsData[weaponToDropIndex] = null;
     }
 }

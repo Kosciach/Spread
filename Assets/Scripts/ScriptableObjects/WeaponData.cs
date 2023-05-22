@@ -39,6 +39,13 @@ public class WeaponData : ScriptableObject
     public WeaponTransform[] Aim;
 
 
+    [Space(20)]
+    [Header("====RunTransforms====")]
+    public WeaponTransform Run;
+
+
+
+
     [System.Serializable]
     public struct WeaponTransform
     {

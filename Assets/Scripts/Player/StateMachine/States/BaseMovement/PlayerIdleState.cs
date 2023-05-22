@@ -9,12 +9,19 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.CombatController.EquipedWeaponController.Run.ToggleRunWeaponLock(false);
+
+
         _ctx.CineCameraController.Fov.SetFov(0, 2);
         if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
+
+
         _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(true);
         _ctx.ColliderController.SetColliderRadius(0.8f);
+
+
 
         _ctx.AnimatorController.SetBool("Idle", true);
         _ctx.AnimatorController.SetBool("Land", true);

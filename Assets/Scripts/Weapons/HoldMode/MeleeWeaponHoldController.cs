@@ -9,20 +9,23 @@ public class MeleeWeaponHoldController : WeaponHoldController
 
     protected override void VirtualAwake()
     {
-        _meleeWeaponData = GetComponent<WeaponDataHolder>().WeaponData as MeleeWeaponData;
         _holdMode = HoldModeEnum.Hip;
     }
-
+    private void Start()
+    {
+        _meleeWeaponData = _stateMachine.DataHolder.WeaponData as MeleeWeaponData;
+    }
 
     public override void ChangeHoldMode(HoldModeEnum mode)
     {
-        Debug.Log("Melee weapon cant change to rest :)");
+        _holdMode = mode;
     }
 
 
 
     public override void RestHoldMode(float rotateSpeed, float moveSpeed)
     {
+        _holdMode = HoldModeEnum.Hip;
         HipHoldMode(rotateSpeed, moveSpeed);
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)

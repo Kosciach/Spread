@@ -6,9 +6,13 @@ public class WeaponShootingController : WeaponDamageDealingController
 {
     [Header("====References====")]
     [SerializeField] BaseFireMode[] _fireModes;
+    [Space(5)]
     [SerializeField] GameObject _bulletPrefab;
+    [SerializeField] GameObject _muzzleFlashPrefab;
+    [Space(5)]
     [SerializeField] Transform _barrel;
-    [SerializeField] GameObject _muzzleFlash;
+    [SerializeField] WeaponSlideAnimator _slideAnimator;
+
     private WeaponBarrelController _barrelController;
 
 
@@ -52,13 +56,17 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public void Shoot()
     {
+        //SpawnBullet
         GameObject newBullet = Instantiate(_bulletPrefab, _barrel.position, _barrel.rotation);
-
         BulletController newBulletController = newBullet.GetComponent<BulletController>();
         newBulletController.PassData(_stateMachine.DataHolder.WeaponData);
 
-        GameObject muzzleFlash = Instantiate(_muzzleFlash, _barrel.position, _barrel.rotation);
+        //SpawnMuzzleFlash
+        GameObject muzzleFlash = Instantiate(_muzzleFlashPrefab, _barrel.position, _barrel.rotation);
         muzzleFlash.transform.parent = _barrel;
+
+        //AnimateSlide
+        _slideAnimator.MoveSlide();
     }
 
 
