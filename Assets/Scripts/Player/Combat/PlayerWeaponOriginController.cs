@@ -30,7 +30,7 @@ public class PlayerWeaponOriginController : MonoBehaviour
     private void UpdateOriginPosition()
     {
         Vector3 inputVector = _playerStateMachine.InputController.MovementInputVectorNormalized;
-        Vector3 posOffset = (transform.forward * inputVector.z + transform.right * inputVector.x) * _playerStateMachine.MovementController.OnGround.Speed;
+        Vector3 posOffset = (transform.forward * inputVector.z + transform.right * inputVector.x) * 3;
 
 
         transform.localPosition = _basePos + posOffset / _posOffsetWeakness;

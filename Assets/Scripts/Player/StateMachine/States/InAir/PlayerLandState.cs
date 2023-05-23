@@ -25,6 +25,8 @@ public class PlayerLandState : PlayerBaseState
         _ctx.FootStepAudioController.LandFootStep(_ctx.VerticalVelocityController.GravityController.CurrentGravityForce);
 
         _ctx.SwitchController.SwitchTo.Idle();
+
+        _ctx.WeaponAnimator.InAir.Land();
     }
     public override void StateUpdate()
     {

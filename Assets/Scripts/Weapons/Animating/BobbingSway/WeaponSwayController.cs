@@ -6,7 +6,7 @@ using UnityEngine;
 public class WeaponSwayController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] WeaponAnimator _weaponAnimator; public WeaponAnimator WeaponAnimator { get { return _weaponAnimator; } }
+    [SerializeField] WeaponAnimator _weaponAnimator;
 
 
 

@@ -10,6 +10,7 @@ public class WeaponAnimator : MonoBehaviour
     [SerializeField] WeaponSwayController _sway; public WeaponSwayController Sway { get { return _sway; } }
     [SerializeField] WeaponBobbingController _bobbing; public WeaponBobbingController Bobbing { get { return _bobbing; } }
     [SerializeField] WeaponRightHandOffseter _handOffseter; public WeaponRightHandOffseter HandOffseter { get { return _handOffseter; } }
+    [SerializeField] WeaponInAirController _inAir; public WeaponInAirController InAir { get { return _inAir; } }
     [Space(10)]
     [SerializeField] IkHandsTargetsStruct _ikHandsTargets; public IkHandsTargetsStruct IkHandsTargets { get { return _ikHandsTargets; } }
 

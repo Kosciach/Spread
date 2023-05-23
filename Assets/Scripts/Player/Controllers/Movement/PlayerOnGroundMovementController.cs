@@ -64,7 +64,7 @@ public class PlayerOnGroundMovementController : MonoBehaviour
         Vector3 animatorMovementVector = inputVector * _animatorMovementSpeed;
 
         _movementController.PlayerStateMachine.AnimatorController.SetFloat("MovementX", animatorMovementVector.x, 0.1f);
-        _movementController.PlayerStateMachine.AnimatorController.SetFloat("MovementZ", animatorMovementVector.z, 0.2f);
+        _movementController.PlayerStateMachine.AnimatorController.SetFloat("MovementZ", animatorMovementVector.z, 0.1f);
     }
 
     public void CheckMovementType()

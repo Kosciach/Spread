@@ -5776,6 +5776,7 @@ GameObject:
   - component: {fileID: 526658074}
   - component: {fileID: 526658070}
   - component: {fileID: 526658075}
+  - component: {fileID: 526658077}
   m_Layer: 6
   m_Name: WeaponAnimator
   m_TagString: Untagged
@@ -5878,6 +5879,7 @@ MonoBehaviour:
   _sway: {fileID: 526658072}
   _bobbing: {fileID: 526658071}
   _handOffseter: {fileID: 526658075}
+  _inAir: {fileID: 526658077}
   _ikHandsTargets:
     Right: {fileID: 553561153}
     Left: {fileID: 765279328}
@@ -5939,6 +5941,34 @@ MonoBehaviour:
   _offsetToggle: 1
   _posOffsetSmoothSpeed: 4
   _rotOffsetSmoothSpeed: 4
+--- !u!114 &526658077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526658068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4153bcf3796df09408e050a7e014b836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponAnimator: {fileID: 526658073}
+  _jump:
+    RotX: 30
+    SpeedRot: 4
+    PosY: -0.1
+    SpeedPos: 1
+  _fall:
+    RotX: -50
+    SpeedRot: 3
+    PosY: 0.1
+    SpeedPos: 1
+  _land:
+    RotX: 0
+    SpeedRot: 10
+    PosY: 0
+    SpeedPos: 10
 --- !u!1 &539297483
 GameObject:
   m_ObjectHideFlags: 0
@@ -10307,7 +10337,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30828
+  m_Name: pb_Mesh30836
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10682,7 +10712,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31514
+  m_Name: pb_Mesh31522
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12131,7 +12161,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30978
+  m_Name: pb_Mesh30986
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -26844,10 +26874,13 @@ MonoBehaviour:
   _currentLayerWeights:
   - 0
   - 0
+  - 0
   _desiredLayerWeights:
   - -0.1
   - 1.1
+  - -0.1
   _lerpWeightLayerSpeed:
+  - 4
   - 4
   - 4
 --- !u!114 &8003831046665861821

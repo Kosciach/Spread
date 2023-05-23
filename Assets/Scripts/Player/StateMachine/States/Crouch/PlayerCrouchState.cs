@@ -15,7 +15,7 @@ public class PlayerCrouchState : PlayerBaseState
         if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Crouch, 5);
 
-        _ctx.AnimatorController.SetBool("Crouch", true);
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, true, 3);
         _ctx.MovementController.OnGround.SetCrouchSpeed();
     }
     public override void StateUpdate()
@@ -45,7 +45,8 @@ public class PlayerCrouchState : PlayerBaseState
     {
         if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
-        _ctx.AnimatorController.SetBool("Crouch", false);
+
+        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, false, 3);
 
         _ctx.WeaponAnimator.HandOffseter.ResetPosOffset();
     }

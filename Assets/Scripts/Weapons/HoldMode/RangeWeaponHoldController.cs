@@ -24,6 +24,9 @@ public class RangeWeaponHoldController : WeaponHoldController
     {
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
+        _playerCombatController.RightHand.localPosition = Vector3.zero;
+        _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);
+
         LeanTween.cancel(_playerCombatController.RightHand.gameObject); 
         LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Rest.RightHand_Rotation, rotateSpeed);
         LeanTween.moveLocal(_playerCombatController.RightHand.parent.gameObject, _rangeWeaponData.Rest.RightHand_Position, moveSpeed).setOnComplete(() =>
@@ -40,6 +43,9 @@ public class RangeWeaponHoldController : WeaponHoldController
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
+
+        _playerCombatController.RightHand.localPosition = Vector3.zero;
+        _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);
 
         LeanTween.cancel(_playerCombatController.RightHand.gameObject);
         LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Hip.RightHand_Rotation, rotateSpeed);

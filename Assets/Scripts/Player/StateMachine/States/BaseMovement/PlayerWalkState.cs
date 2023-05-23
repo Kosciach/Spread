@@ -9,7 +9,7 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatController.EquipedWeaponController.Run.ToggleRunWeaponLock(false);
+        //_ctx.CombatController.EquipedWeaponController.Run.ToggleRunWeaponLock(false);
 
 
         _ctx.CineCameraController.Fov.SetFov(5, 2);

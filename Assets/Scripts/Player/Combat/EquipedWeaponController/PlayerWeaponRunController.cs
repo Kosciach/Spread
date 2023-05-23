@@ -55,6 +55,7 @@ public class PlayerWeaponRunController : MonoBehaviour
     }
     private void DisableRunHold()
     {
+
         _combatController.EquipedWeapon.DamageDealingController.enabled = true;
         _combatController.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
 

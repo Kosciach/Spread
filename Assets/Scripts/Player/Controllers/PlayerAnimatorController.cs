@@ -21,7 +21,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public enum LayersEnum
     {
-        Combat, TopBodyStabilizer
+        Combat, TopBodyStabilizer, Crouch
     }
 
 
@@ -71,7 +71,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private void UpdateLayers()
     {
-        for(int i=0; i<2; i++)
+        for(int i=0; i<_currentLayerWeights.Length; i++)
         {
             _currentLayerWeights[i] = Mathf.Lerp(_currentLayerWeights[i], _desiredLayerWeights[i], _lerpWeightLayerSpeed[i] * Time.deltaTime);
             _currentLayerWeights[i] = Mathf.Clamp(_currentLayerWeights[i], 0, 1);

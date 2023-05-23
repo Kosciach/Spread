@@ -11,7 +11,6 @@ public class PlayerIdleState : PlayerBaseState
     {
         _ctx.CombatController.EquipedWeaponController.Run.ToggleRunWeaponLock(false);
 
-
         _ctx.CineCameraController.Fov.SetFov(0, 2);
         if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);

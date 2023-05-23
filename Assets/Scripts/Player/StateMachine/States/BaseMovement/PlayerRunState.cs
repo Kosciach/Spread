@@ -50,7 +50,7 @@ public class PlayerRunState : PlayerBaseState
     public override void StateCheckChange()
     {
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || _ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)) StateChange(_factory.Walk());
-        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump) ) StateChange(_factory.Jump());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump)) StateChange(_factory.Jump());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
         {
             _ctx.AnimatorController.SetBool("FallFromGround", true);

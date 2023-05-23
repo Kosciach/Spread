@@ -107,8 +107,8 @@ public class PlayerCombatController : MonoBehaviour
 
         //Move right hand to origin
         _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
-        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.transform.GetChild(0).rotation.eulerAngles, 0.3f);
-        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.transform.position, 0.3f).setOnComplete(() =>
+        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.transform.GetChild(0).rotation.eulerAngles, 0.1f);
+        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.transform.position, 0.1f).setOnComplete(() =>
         {
             //Put weapon in hand
             _equipedWeapon.transform.parent = _rightHandWeaponHolder;
@@ -139,6 +139,8 @@ public class PlayerCombatController : MonoBehaviour
 
         _equipedWeapon.DamageDealingController.enabled = false;
         _equipedWeaponController.Aim.ToggleAimBool(false);
+        _equipedWeaponController.Block.ToggleBlockBool(false);
+        _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
@@ -194,8 +196,12 @@ public class PlayerCombatController : MonoBehaviour
 
         _playerStateMachine.WeaponAnimator.Bobbing.Toggle(false);
         _playerStateMachine.WeaponAnimator.Sway.Toggle(false);
+
         _equipedWeapon.DamageDealingController.enabled = false;
         _equipedWeaponController.Aim.ToggleAimBool(false);
+        _equipedWeaponController.Block.ToggleBlockBool(false);
+        _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
+
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
 

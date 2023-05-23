@@ -6,7 +6,7 @@ using static UnityEditor.PlayerSettings;
 public class WeaponRightHandOffseter : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] WeaponAnimator _weaponAnimator; public WeaponAnimator WeaponAnimator { get { return _weaponAnimator; } }
+    [SerializeField] WeaponAnimator _weaponAnimator;
 
 
 
