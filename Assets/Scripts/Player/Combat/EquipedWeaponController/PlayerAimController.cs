@@ -100,9 +100,9 @@ public class PlayerAimController : MonoBehaviour
 
     private void MoveHandsToAimTransform()
     {
-        LeanTween.cancel(_combatController.RightHand.gameObject);
-        LeanTween.rotateLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Rotation, 0.15f);
-        LeanTween.moveLocal(_combatController.RightHand.parent.gameObject, _combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 0.15f);
+        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 10);
+        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Rotation, 10);
+
         _combatController.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
     }
 

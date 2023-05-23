@@ -49,9 +49,8 @@ public class PlayerWeaponRunController : MonoBehaviour
         _combatController.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, true);
 
 
-        LeanTween.cancel(_combatController.RightHand.gameObject);
-        LeanTween.moveLocal(_combatController.RightHand.parent.gameObject, _combatController.EquipedWeaponData.Run.RightHand_Position, 0.2f);
-        LeanTween.rotateLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Run.RightHand_Rotation, 0.2f);
+        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_combatController.EquipedWeaponData.Run.RightHand_Position, 7);
+        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_combatController.EquipedWeaponData.Run.RightHand_Rotation, 7);
     }
     private void DisableRunHold()
     {

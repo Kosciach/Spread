@@ -18,6 +18,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
+
     [Space(20)]
     [Header("====Debug====")]
     [SerializeField] CombatStateEnum _combatState;
@@ -32,7 +33,6 @@ public class PlayerCombatController : MonoBehaviour
     {
         Unarmed, Equip, Equiped, UnEquip, UnarmedTemporary
     }
-
 
 
 
@@ -105,6 +105,11 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.IkController.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset);
 
 
+        CodeExecutionDelayer.Instance.ExecuteAfterDelay(2, () =>
+        {
+            Debug.Log("equip after 2s");
+        });
+
         //Move right hand to origin
         _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
         LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.transform.GetChild(0).rotation.eulerAngles, 0.1f);
@@ -143,7 +148,6 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
-
 
         //Move right hand to origin
         _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
@@ -217,6 +221,8 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
+
+
     private void SwapWeapon(int choosenWeaponIndex)
     {
         _swap = true;
@@ -273,13 +279,6 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, head, speed);
         _playerStateMachine.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, combat, speed);
     }
-    public void CheckCombatMovement(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float speed)
-    {
-        if(IsState(CombatStateEnum.Equiped))
-            ToggleCombatLayersPreset(combatAnim, spineLock, body, head, combat, speed);
-    }
-
-
 
 
     public void SetState(CombatStateEnum state)

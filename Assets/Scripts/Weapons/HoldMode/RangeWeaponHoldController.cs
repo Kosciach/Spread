@@ -27,18 +27,19 @@ public class RangeWeaponHoldController : WeaponHoldController
         _playerCombatController.RightHand.localPosition = Vector3.zero;
         _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);
 
-        LeanTween.cancel(_playerCombatController.RightHand.gameObject); 
-        LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Rest.RightHand_Rotation, rotateSpeed);
-        LeanTween.moveLocal(_playerCombatController.RightHand.parent.gameObject, _rangeWeaponData.Rest.RightHand_Position, moveSpeed).setOnComplete(() =>
-        {
-            _stateMachine.DamageDealingController.enabled = false;
-            _stateMachine.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, true);
 
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_rangeWeaponData.Rest.RightHand_Position, 10);
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_rangeWeaponData.Rest.RightHand_Rotation, 10);
 
-            _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
-        });
+
+        _stateMachine.DamageDealingController.enabled = false;
+        _stateMachine.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, true);
+
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
+
+
+        _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
@@ -47,17 +48,18 @@ public class RangeWeaponHoldController : WeaponHoldController
         _playerCombatController.RightHand.localPosition = Vector3.zero;
         _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);
 
-        LeanTween.cancel(_playerCombatController.RightHand.gameObject);
-        LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _rangeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
-        LeanTween.moveLocal(_playerCombatController.RightHand.parent.gameObject, _rangeWeaponData.Hip.RightHand_Position, moveSpeed).setOnComplete(() =>
-        {
-            _stateMachine.DamageDealingController.enabled = true;
-            _stateMachine.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, false);
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_rangeWeaponData.Hip.RightHand_Position, 10);
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_rangeWeaponData.Hip.RightHand_Rotation, 10);
 
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
 
-            _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
-        });
+
+        _stateMachine.DamageDealingController.enabled = true;
+        _stateMachine.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, false);
+
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
+
+
+        _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
     }
 }
