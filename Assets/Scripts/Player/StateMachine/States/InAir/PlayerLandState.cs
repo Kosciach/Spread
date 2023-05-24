@@ -26,7 +26,7 @@ public class PlayerLandState : PlayerBaseState
 
         _ctx.SwitchController.SwitchTo.Idle();
 
-        _ctx.WeaponAnimator.InAir.Land();
+        _ctx.CombatController.EquipedWeaponController.InAir.Land();
     }
     public override void StateUpdate()
     {

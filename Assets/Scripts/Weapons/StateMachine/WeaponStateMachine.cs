@@ -40,14 +40,15 @@ public class WeaponStateMachine : MonoBehaviour
     private void Awake()
     {
         _meshes = transform.GetChild(0);
-        SetUpStartingState();
-        _switchController = new RangeWeaponSwitchController(this);
 
         _playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         _dataHolder = GetComponent<WeaponDataHolder>();
         _holdModeController = GetComponent<WeaponHoldController>();
         _aimIndexHolder = GetComponent<WeaponAimIndexHolder>();
         _damageDealingController = GetComponent<WeaponDamageDealingController>();
+
+        SetUpStartingState();
+        _switchController = new RangeWeaponSwitchController(this);
     }
     private void SetUpStartingState()
     {

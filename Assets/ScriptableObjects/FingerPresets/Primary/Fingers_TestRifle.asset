@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daec560dcc8e8aa428163fea68b66cd7, type: 3}
-  m_Name: BaseRifle
+  m_Name: Fingers_TestRifle
   m_EditorClassIdentifier: 
   RightHand:
     Thumb:
@@ -54,3 +54,7 @@ MonoBehaviour:
       Target_Position: {x: -0.064, y: 0.1003, z: -0.0416}
       Target_Rotation: {x: 338.19998, y: 180, z: 180}
       Hint_Position: {x: 0.0262, y: 0.234, z: -0.0893}
+  TriggerDisciplineIndexFinger:
+    Target_Position: {x: 0.0484, y: 0.2562, z: 0.1073}
+    Target_Rotation: {x: 0, y: 0, z: 0}
+    Hint_Position: {x: 0.0087, y: 0.2256, z: 0.0116}

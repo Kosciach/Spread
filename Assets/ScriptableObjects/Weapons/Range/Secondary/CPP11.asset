@@ -19,20 +19,20 @@ MonoBehaviour:
   Fists: 0
   InHandPosition: {x: 0.0472, y: 0.1542, z: 0.0319}
   InHandRotation: {x: 67.08123, y: 296.0899, z: 312.6352}
-  FingersPreset: {fileID: 11400000, guid: 9b21472b8a98ac24aa6b6b7a1a31fcaa, type: 2}
+  FingersPreset: {fileID: 11400000, guid: 40eb5b3c75a938e4298ad5c67ce66715, type: 2}
   LeftHand_Position: {x: 0.035, y: -0.004, z: -0.03}
   LeftHand_Rotation: {x: 5.481934, y: 352.42, z: 330.80875}
   Block:
-    RightHand_Position: {x: 0, y: 0, z: 0}
-    RightHand_Rotation: {x: 0, y: 0, z: 0}
+    RightHand_Position: {x: 0.096, y: -0.238, z: 0.55}
+    RightHand_Rotation: {x: 315.50604, y: 140.74138, z: 357.54846}
   Aim:
   - RightHand_Position: {x: 0.009, y: -0.101, z: 0.502}
     RightHand_Rotation: {x: 291.0951, y: 240.41953, z: 318.8687}
   - RightHand_Position: {x: 0, y: -0.147, z: 0.502}
     RightHand_Rotation: {x: 319.0732, y: 256.29565, z: 304.94684}
   Run:
-    RightHand_Position: {x: 0.143, y: -0.199, z: 0.502}
-    RightHand_Rotation: {x: 324.528, y: 204.6851, z: 0.49800867}
+    RightHand_Position: {x: 0.1, y: -0.2, z: 0.502}
+    RightHand_Rotation: {x: 317.3, y: 210.5, z: 355.5}
   Rest:
     RightHand_Position: {x: 0.145, y: -0.141, z: 0.512}
     RightHand_Rotation: {x: 314.42596, y: 258.3231, z: 260.9335}

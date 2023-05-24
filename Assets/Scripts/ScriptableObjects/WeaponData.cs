@@ -30,19 +30,20 @@ public class WeaponData : ScriptableObject
 
 
     [Space(20)]
-    [Header("====BlockTransforms====")]
+    [Header("====BlockTransform====")]
     public WeaponTransform Block;
 
-
-    [Space(20)]
+    [Space(10)]
     [Header("====AimTransforms====")]
     public WeaponTransform[] Aim;
 
-
-    [Space(20)]
-    [Header("====RunTransforms====")]
+    [Space(10)]
+    [Header("====RunTransform====")]
     public WeaponTransform Run;
 
+    [Space(10)]
+    [Header("====WallTransform====")]
+    public WeaponTransform Wall;
 
 
 

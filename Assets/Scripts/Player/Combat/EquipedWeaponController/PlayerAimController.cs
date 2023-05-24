@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,8 +21,7 @@ public class PlayerAimController : MonoBehaviour
         ADS, Left
     }
 
-    private delegate void AimMethods();
-    private AimMethods[] _aimMethods = new AimMethods[2];
+    private Action[] _aimMethods = new Action[2];
 
 
 
@@ -40,7 +40,7 @@ public class PlayerAimController : MonoBehaviour
 
     public void Aim(bool aim)
     {
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Wall.IsWall) return;
 
         if (_combatController.EquipedWeaponData.Aim.Length <= 0) return;
 
@@ -71,7 +71,7 @@ public class PlayerAimController : MonoBehaviour
     private void AimDisable()
     {
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.HoldController;
-        equipedModeController.MoveHandsToCurrentHoldMode(0.15f, 0.15f);
+        equipedModeController.MoveHandsToCurrentHoldMode(5, 5);
     }
 
 

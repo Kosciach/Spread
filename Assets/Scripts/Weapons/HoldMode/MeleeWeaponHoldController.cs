@@ -32,9 +32,8 @@ public class MeleeWeaponHoldController : WeaponHoldController
     {
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
 
-        LeanTween.cancel(_playerCombatController.RightHand.gameObject);
-        LeanTween.rotateLocal(_playerCombatController.RightHand.gameObject, _meleeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
-        LeanTween.moveLocal(_playerCombatController.RightHand.parent.gameObject, _meleeWeaponData.Hip.RightHand_Position, moveSpeed).setOnComplete(() =>
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_meleeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
+        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_meleeWeaponData.Hip.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
         {
             _stateMachine.DamageDealingController.enabled = true;
 

@@ -26,6 +26,6 @@ public class PlayerEquipedWeaponHoldController : MonoBehaviour
         WeaponHoldController.HoldModeEnum equipedMode = equipedWeaponHoldController.IsHoldMode(WeaponHoldController.HoldModeEnum.Hip) ? WeaponHoldController.HoldModeEnum.Rest : WeaponHoldController.HoldModeEnum.Hip;
 
         equipedWeaponHoldController.ChangeHoldMode(equipedMode);
-        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(0.2f, 0.2f);
+        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(6, 6);
     }
 }

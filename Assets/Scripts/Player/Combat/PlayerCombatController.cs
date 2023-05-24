@@ -9,6 +9,7 @@ public class PlayerCombatController : MonoBehaviour
     [Header("====Reference====")]
     [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
     [SerializeField] PlayerEquipedWeaponController _equipedWeaponController; public PlayerEquipedWeaponController EquipedWeaponController { get { return _equipedWeaponController; } }
+    [SerializeField] PlayerWeaponWallDetector _weaponWallDetector; public PlayerWeaponWallDetector WeaponWallDetector { get { return _weaponWallDetector;} }
     [Space(5)]
     [SerializeField] Transform _rightHandWeaponHolder;
     [SerializeField] PlayerWeaponOriginController _weaponOrigin;
@@ -105,15 +106,11 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.IkController.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset);
 
 
-        CodeExecutionDelayer.Instance.ExecuteAfterDelay(2, () =>
-        {
-            Debug.Log("equip after 2s");
-        });
 
         //Move right hand to origin
         _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
-        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.transform.GetChild(0).rotation.eulerAngles, 0.1f);
-        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.transform.position, 0.1f).setOnComplete(() =>
+        _playerStateMachine.WeaponAnimator.MainPositioner.SetRot(_weaponOrigin.transform.GetChild(0).localRotation.eulerAngles, 10);
+        _playerStateMachine.WeaponAnimator.MainPositioner.SetPos(_weaponOrigin.transform.localPosition, 10).CurrentLerpFinished(() =>
         {
             //Put weapon in hand
             _equipedWeapon.transform.parent = _rightHandWeaponHolder;
@@ -122,7 +119,8 @@ public class PlayerCombatController : MonoBehaviour
 
 
             //Move right hand to correct position
-            _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(0.3f, 0.5f);
+            _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(5, 6);
+            _weaponWallDetector.ToggleCollider(true);
         });
     }
 
@@ -147,13 +145,17 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
+
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+
 
         //Move right hand to origin
         _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
-        LeanTween.rotate(_rightHand.gameObject, _weaponOrigin.transform.GetChild(0).rotation.eulerAngles, 0.3f * unEquipSpeed);
-        LeanTween.move(_rightHand.parent.gameObject, _weaponOrigin.transform.position, 0.5f * unEquipSpeed).setOnComplete(() =>
+        _playerStateMachine.WeaponAnimator.MainPositioner.SetRot(_weaponOrigin.transform.GetChild(0).localRotation.eulerAngles, 10);
+        _playerStateMachine.WeaponAnimator.MainPositioner.SetPos(_weaponOrigin.transform.localPosition, 10).CurrentLerpFinished(() =>
         {
+            _weaponWallDetector.ToggleCollider(false);
+
             //Toggle layers
             ToggleCombatLayersPreset(false, true, true, true, false, 3);
 
@@ -184,6 +186,8 @@ public class PlayerCombatController : MonoBehaviour
         if (!IsState(CombatStateEnum.Equiped)) return;
         if (_equipedWeaponData.Fists) return;
 
+
+        _weaponWallDetector.ToggleCollider(false);
 
         //Toggle layers
         ToggleCombatLayersPreset(false, true, true, true, false, 3);
@@ -260,6 +264,8 @@ public class PlayerCombatController : MonoBehaviour
 
         _playerStateMachine.Inventory.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
         _equipedWeaponController.Aim.ToggleAimBool(false);
+        _equipedWeaponController.Block.ToggleBlockBool(false);
+        _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
         _equipedWeapon = null;
         _equipedWeaponData = null;

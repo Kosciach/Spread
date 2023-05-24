@@ -15,16 +15,24 @@ MonoBehaviour:
   WeaponName: SOP12
   WeaponHolder: 1
   WeaponType: 0
+  WeaponOriginRotation: {x: 0, y: 0, z: 0}
+  Fists: 0
   InHandPosition: {x: 0.047, y: 0.167, z: 0.042}
   InHandRotation: {x: 65.41948, y: 300.16626, z: 316.39355}
-  FingersPreset: {fileID: 11400000, guid: 9b21472b8a98ac24aa6b6b7a1a31fcaa, type: 2}
+  FingersPreset: {fileID: 11400000, guid: 77af1811dddb8604dab1fc6d061100f6, type: 2}
   LeftHand_Position: {x: 0.0318, y: -0.015, z: -0.0266}
   LeftHand_Rotation: {x: 8.29887, y: 356.3809, z: 332.93353}
+  Block:
+    RightHand_Position: {x: 0.073, y: -0.21, z: 0.63}
+    RightHand_Rotation: {x: 330.4478, y: 197.15262, z: 350.9616}
   Aim:
   - RightHand_Position: {x: 0.011, y: -0.124, z: 0.4895}
     RightHand_Rotation: {x: 292.7655, y: 236.7715, z: 322.66626}
   - RightHand_Position: {x: 0.031, y: -0.189, z: 0.566}
     RightHand_Rotation: {x: 320.0894, y: 253.77158, z: 304.79047}
+  Run:
+    RightHand_Position: {x: 0.102, y: -0.2, z: 0.579}
+    RightHand_Rotation: {x: 321.69568, y: 201.44957, z: 365.4}
   Rest:
     RightHand_Position: {x: 0.117, y: -0.189, z: 0.566}
     RightHand_Rotation: {x: 306.79913, y: 256.57156, z: 267.87625}

@@ -49,14 +49,27 @@ public class PlayerRunState : PlayerBaseState
     }
     public override void StateCheckChange()
     {
-        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || _ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)) StateChange(_factory.Walk());
-        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump)) StateChange(_factory.Jump());
+        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || _ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle) || _ctx.CombatController.EquipedWeaponController.Wall.IsWall)
+        {
+            _ctx.CombatController.EquipedWeaponController.Run.ToggleRunWeaponLock(false);
+            StateChange(_factory.Walk());
+        }
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump))
+        {
+            _ctx.CombatController.EquipedWeaponController.Run.ToggleRunWeaponLock(false);
+            StateChange(_factory.Jump());
+        }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
         {
+            _ctx.CombatController.EquipedWeaponController.Run.ToggleRunWeaponLock(false);
             _ctx.AnimatorController.SetBool("FallFromGround", true);
             StateChange(_factory.Fall());
         }
-        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch)) StateChange(_factory.Crouch());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch))
+        {
+            _ctx.CombatController.EquipedWeaponController.Run.ToggleRunWeaponLock(false);
+            StateChange(_factory.Crouch());
+        }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Climb)) StateChange(_factory.Climb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))

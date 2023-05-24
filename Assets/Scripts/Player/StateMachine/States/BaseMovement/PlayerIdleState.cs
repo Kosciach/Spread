@@ -9,8 +9,6 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatController.EquipedWeaponController.Run.ToggleRunWeaponLock(false);
-
         _ctx.CineCameraController.Fov.SetFov(0, 2);
         if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
@@ -46,6 +44,7 @@ public class PlayerIdleState : PlayerBaseState
     public override void StateCheckChange()
     {
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)) StateChange(_factory.Walk());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) && !_ctx.CombatController.EquipedWeaponController.Wall.IsWall) StateChange(_factory.Run());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump)) StateChange(_factory.Jump());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
         {

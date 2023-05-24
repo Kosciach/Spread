@@ -24,8 +24,6 @@ public class WeaponBaseBobbing : MonoBehaviour
     [Space(15)]
     [Range(0, 10)]
     [SerializeField] float _mainSpeed;
-    [Range(0, 10)]
-    [SerializeField] float _mainAmplitude;
     [Space(10)]
     [Range(0, 10)]
     [SerializeField] float _bobbingSmoothSpeed;

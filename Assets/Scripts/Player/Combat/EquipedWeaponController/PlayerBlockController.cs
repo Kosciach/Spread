@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +15,7 @@ public class PlayerBlockController : MonoBehaviour
     [SerializeField] bool _isBlock; public bool IsBlock { get { return _isBlock; } }
 
 
-    private delegate void BlockMethods();
-    private BlockMethods[] _blockMethods = new BlockMethods[2];
+    private Action[] _blockMethods = new Action[2];
 
 
 
@@ -33,7 +33,7 @@ public class PlayerBlockController : MonoBehaviour
     #region Block
     public void Block(bool block)
     {
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim) return;
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim || _equipedWeaponController.Wall.IsWall) return;
 
 
 
@@ -56,22 +56,15 @@ public class PlayerBlockController : MonoBehaviour
         _combatController.EquipedWeapon.DamageDealingController.enabled = false;
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
-        MoveHandsToBlockTransform();
+        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_combatController.EquipedWeaponData.Block.RightHand_Position, 6);
+        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_combatController.EquipedWeaponData.Block.RightHand_Rotation, 6);
     }
     private void BlockDisable()
     {
         _combatController.EquipedWeapon.DamageDealingController.enabled = true;
 
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.HoldController;
-        equipedModeController.MoveHandsToCurrentHoldMode(0.15f, 0.15f);
-    }
-
-
-    private void MoveHandsToBlockTransform()
-    {
-        LeanTween.cancel(_combatController.RightHand.gameObject);
-        LeanTween.rotateLocal(_combatController.RightHand.gameObject, _combatController.EquipedWeaponData.Block.RightHand_Rotation, 0.15f);
-        LeanTween.moveLocal(_combatController.RightHand.parent.gameObject, _combatController.EquipedWeaponData.Block.RightHand_Position, 0.15f);
+        equipedModeController.MoveHandsToCurrentHoldMode(6, 6);
     }
     #endregion
 }

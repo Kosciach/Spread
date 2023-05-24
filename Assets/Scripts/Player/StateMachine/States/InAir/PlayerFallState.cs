@@ -13,7 +13,7 @@ public class PlayerFallState : PlayerBaseState
         _ctx.ColliderController.SetColliderRadius(0.09f);
         _ctx.AnimatorController.SetBool("Land", false);
 
-        _ctx.WeaponAnimator.InAir.Fall();
+        _ctx.CombatController.EquipedWeaponController.InAir.Fall();
     }
     public override void StateUpdate()
     {

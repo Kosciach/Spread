@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,15 +16,14 @@ public class PlayerWeaponRunController : MonoBehaviour
 
 
 
-    private delegate void RunHoldMethods();
-    private RunHoldMethods[] _runHoldMethods = new RunHoldMethods[2];
+    private Action[] _runMethods = new Action[2];
 
 
     private void Awake()
     {
         _combatController = _equipedWeaponController.CombatController;
-        _runHoldMethods[0] = DisableRunHold;
-        _runHoldMethods[1] = EnableRunHold;
+        _runMethods[0] = DisableRun;
+        _runMethods[1] = EnableRun;
     }
 
 
@@ -35,7 +35,7 @@ public class PlayerWeaponRunController : MonoBehaviour
         int index = enable ? 1 : 0;
         ToggleRunWeaponLockBool(enable);
 
-        _runHoldMethods[index]();
+        _runMethods[index]();
     }
     public void ToggleRunWeaponLockBool(bool enable)
     {
@@ -43,16 +43,16 @@ public class PlayerWeaponRunController : MonoBehaviour
     }
 
 
-    private void EnableRunHold()
+    private void EnableRun()
     {
         _combatController.EquipedWeapon.DamageDealingController.enabled = false;
         _combatController.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, true);
 
 
-        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_combatController.EquipedWeaponData.Run.RightHand_Position, 7);
-        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_combatController.EquipedWeaponData.Run.RightHand_Rotation, 7);
+        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_combatController.EquipedWeaponData.Run.RightHand_Position, 6);
+        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_combatController.EquipedWeaponData.Run.RightHand_Rotation, 6);
     }
-    private void DisableRunHold()
+    private void DisableRun()
     {
 
         _combatController.EquipedWeapon.DamageDealingController.enabled = true;
@@ -62,6 +62,6 @@ public class PlayerWeaponRunController : MonoBehaviour
         WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeapon.HoldController;
 
         equipedWeaponHoldController.ChangeHoldMode(_combatController.EquipedWeapon.HoldController.HoldMode);
-        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(0.2f, 0.2f);
+        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(5, 5);
     }
 }
