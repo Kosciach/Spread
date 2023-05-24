@@ -46,3 +46,5 @@ MonoBehaviour:
   Range: 4
   FireRate: 7
   CarredForce: 10
+  Recoil: 0.1
+  Weight: 3

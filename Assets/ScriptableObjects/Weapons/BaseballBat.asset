@@ -31,6 +31,9 @@ MonoBehaviour:
   Run:
     RightHand_Position: {x: 0.198, y: -0.481, z: 0.62}
     RightHand_Rotation: {x: 326.24805, y: 67.75604, z: 79.24556}
+  Wall:
+    RightHand_Position: {x: 0.251, y: -0.4, z: 0.4}
+    RightHand_Rotation: {x: 281.68143, y: 119.81635, z: 64.30939}
   Hip:
     RightHand_Position: {x: 0.251, y: -0.4, z: 0.553}
     RightHand_Rotation: {x: 281.68143, y: 119.81635, z: 64.30939}

@@ -23,4 +23,8 @@ public class RangeWeaponData : WeaponData
     public float FireRate;
     [Range(0, 10)]
     public float CarredForce;
+    [Range(0, 0.5f)]
+    public float Recoil;
+    [Range(0.1f, 5)]
+    public float Weight;
 }

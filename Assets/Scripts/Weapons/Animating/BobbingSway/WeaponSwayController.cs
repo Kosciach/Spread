@@ -16,7 +16,6 @@ public class WeaponSwayController : MonoBehaviour
     [Range(0, 1)]
     [SerializeField] int _swayToggle;
 
-
     [Space(10)]
     [Header("====SwayStructs====")]
     [SerializeField] SwayValues _horizontal;

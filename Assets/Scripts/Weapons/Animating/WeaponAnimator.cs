@@ -11,6 +11,7 @@ public class WeaponAnimator : MonoBehaviour
     [SerializeField] WeaponSwayController _sway; public WeaponSwayController Sway { get { return _sway; } }
     [SerializeField] WeaponBobbingController _bobbing; public WeaponBobbingController Bobbing { get { return _bobbing; } }
     [SerializeField] WeaponRightHandOffseter _handOffseter; public WeaponRightHandOffseter HandOffseter { get { return _handOffseter; } }
+    [SerializeField] WeaponRecoilController _recoil; public WeaponRecoilController Recoil { get { return _recoil; } }
     [Space(10)]
     [SerializeField] IkHandsTargetsStruct _ikHandsTargets; public IkHandsTargetsStruct IkHandsTargets { get { return _ikHandsTargets; } }
 
@@ -83,8 +84,8 @@ public class WeaponAnimator : MonoBehaviour
 
     private void CombineAdditionalVectors()
     {
-        _additionalVectors.Pos = _bobSwayVectors.Pos + _handOffseter.HandOffsets.Pos;
-        _additionalVectors.Rot = _bobSwayVectors.Rot + _handOffseter.HandOffsets.Rot;
+        _additionalVectors.Pos = _bobSwayVectors.Pos + _handOffseter.HandOffsets.Pos + _recoil.RecoilVectors.Pos;
+        _additionalVectors.Rot = _bobSwayVectors.Rot + _handOffseter.HandOffsets.Rot + _recoil.RecoilVectors.Rot;
     }
 
 

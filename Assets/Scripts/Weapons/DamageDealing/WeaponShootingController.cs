@@ -56,6 +56,8 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public void Shoot()
     {
+        RangeWeaponData rangeWeaponData = (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
+
         //SpawnBullet
         GameObject newBullet = Instantiate(_bulletPrefab, _barrel.position, _barrel.rotation);
         BulletController newBulletController = newBullet.GetComponent<BulletController>();
@@ -67,6 +69,9 @@ public class WeaponShootingController : WeaponDamageDealingController
 
         //AnimateSlide
         _slideAnimator.MoveSlide();
+
+        //Recoil
+        _stateMachine.PlayerStateMachine.WeaponAnimator.Recoil.Recoil(rangeWeaponData.Recoil, rangeWeaponData.Weight);
     }
 
 

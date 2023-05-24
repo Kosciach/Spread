@@ -33,6 +33,9 @@ MonoBehaviour:
   Run:
     RightHand_Position: {x: 0.102, y: -0.2, z: 0.579}
     RightHand_Rotation: {x: 321.69568, y: 201.44957, z: 365.4}
+  Wall:
+    RightHand_Position: {x: 0.088, y: -0.23, z: 0.491}
+    RightHand_Rotation: {x: 308.10123, y: 255.36424, z: 263.3697}
   Rest:
     RightHand_Position: {x: 0.117, y: -0.189, z: 0.566}
     RightHand_Rotation: {x: 306.79913, y: 256.57156, z: 267.87625}
@@ -43,3 +46,5 @@ MonoBehaviour:
   Range: 2
   FireRate: 10
   CarredForce: 5
+  Recoil: 0.07
+  Weight: 1
