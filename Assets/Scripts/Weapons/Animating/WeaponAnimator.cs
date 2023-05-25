@@ -21,7 +21,7 @@ public class WeaponAnimator : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] PosRotStruct _mainVectors;
-    [SerializeField] PosRotStruct _additionalVectors;
+    [SerializeField] PosRotStruct _additionalVectors; public PosRotStruct AdditionalVectors { get { return _additionalVectors; } }
     private PosRotStruct _bobSwayVectors;
     private PosRotStruct _bobSwayVectorsTarget;
 

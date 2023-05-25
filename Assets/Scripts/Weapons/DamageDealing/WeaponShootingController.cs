@@ -71,7 +71,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _slideAnimator.MoveSlide();
 
         //Recoil
-        _stateMachine.PlayerStateMachine.WeaponAnimator.Recoil.Recoil(rangeWeaponData.Recoil, rangeWeaponData.Weight);
+        _stateMachine.PlayerStateMachine.WeaponAnimator.Recoil.Recoil(rangeWeaponData.RecoilSettings);
     }
 
 

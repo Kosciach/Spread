@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daec560dcc8e8aa428163fea68b66cd7, type: 3}
+  m_Name: Fingers_TBGG13
+  m_EditorClassIdentifier: 
+  RightHand:
+    Thumb:
+      Target_Position: {x: -0.0172, y: 0.1233, z: 0.0893}
+      Target_Rotation: {x: 21.800001, y: 0, z: 0}
+      Hint_Position: {x: 0.0465, y: 0.0489, z: 0.0516}
+    Index:
+      Target_Position: {x: 0.0211, y: 0.259, z: -0.0152}
+      Target_Rotation: {x: 279.7, y: 180, z: 180}
+      Hint_Position: {x: 0.0336, y: 0.2402, z: 0.0653}
+    Middle:
+      Target_Position: {x: 0.0633, y: 0.156, z: -0.0054}
+      Target_Rotation: {x: 309.09995, y: 180, z: 180}
+      Hint_Position: {x: -0.0029, y: 0.2349, z: 0.0116}
+    Ring:
+      Target_Position: {x: 0.0722, y: 0.1431, z: -0.0503}
+      Target_Rotation: {x: 318, y: 0, z: 0}
+      Hint_Position: {x: 0.0341, y: 0.2231, z: -0.0196}
+    Pinky:
+      Target_Position: {x: 0.0766, y: 0.1155, z: -0.0655}
+      Target_Rotation: {x: 297.5, y: 180, z: 180}
+      Hint_Position: {x: 0.0141, y: 0.2118, z: -0.0678}
+  LeftHand:
+    Thumb:
+      Target_Position: {x: 0.0308, y: 0.1463, z: 0.1157}
+      Target_Rotation: {x: 60.410004, y: 0, z: 0}
+      Hint_Position: {x: -0.0828, y: 0.1031, z: 0.1662}
+    Index:
+      Target_Position: {x: -0.088, y: 0.195, z: 0.0715}
+      Target_Rotation: {x: 80.40002, y: 0, z: 0}
+      Hint_Position: {x: 0.049, y: 0.254, z: 0.056}
+    Middle:
+      Target_Position: {x: -0.0682, y: 0.1754, z: 0.0449}
+      Target_Rotation: {x: 36.7, y: 180, z: 180}
+      Hint_Position: {x: 0.01, y: 0.2346, z: -0.011}
+    Ring:
+      Target_Position: {x: -0.0702, y: 0.213, z: 0.039}
+      Target_Rotation: {x: 39.700005, y: 180, z: 180}
+      Hint_Position: {x: -0.2004, y: 0.1673, z: -0.1003}
+    Pinky:
+      Target_Position: {x: -0.099, y: 0.1237, z: -0.023}
+      Target_Rotation: {x: 80.6, y: 180, z: 180}
+      Hint_Position: {x: -0.036, y: 0.212, z: -0.072}
+  TriggerDisciplineIndexFinger:
+    Target_Position: {x: -0.0016, y: 0.2934, z: 0.0885}
+    Target_Rotation: {x: 28.700022, y: 0, z: 0}
+    Hint_Position: {x: 0.043, y: 0.236, z: 0.019}

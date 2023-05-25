@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class WeaponBarrelController : MonoBehaviour
 {
+    private WeaponStateMachine _stateMachine;
     private Transform _target;
+
 
     private void Awake()
     {
+        _stateMachine = transform.parent.GetComponent<WeaponStateMachine>();
         _target = GameObject.FindGameObjectWithTag("WeaponBarrelTarget").transform;
     }
 

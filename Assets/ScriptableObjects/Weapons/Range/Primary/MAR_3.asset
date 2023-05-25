@@ -46,5 +46,8 @@ MonoBehaviour:
   Range: 4
   FireRate: 7
   CarredForce: 10
-  Recoil: 0.1
-  Weight: 3
+  RecoilSettings:
+    Time: 0
+    BackPush: 0.05
+    RotX: 1
+    RotZ: 0.5

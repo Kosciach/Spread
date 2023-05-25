@@ -17,34 +17,40 @@ MonoBehaviour:
   WeaponType: 0
   WeaponOriginRotation: {x: 317.5712, y: 206.62067, z: 236.19122}
   Fists: 0
-  InHandPosition: {x: 0.0472, y: 0.1542, z: 0.0319}
-  InHandRotation: {x: 67.08123, y: 296.0899, z: 312.6352}
+  InHandPosition: {x: 0.046, y: 0.1557, z: 0.037}
+  InHandRotation: {x: 66.22784, y: 298.53564, z: 306.29974}
   FingersPreset: {fileID: 11400000, guid: 40eb5b3c75a938e4298ad5c67ce66715, type: 2}
-  LeftHand_Position: {x: 0.035, y: -0.004, z: -0.03}
-  LeftHand_Rotation: {x: 5.481934, y: 352.42, z: 330.80875}
+  LeftHand_Position: {x: 0.043, y: 0.015, z: -0.039}
+  LeftHand_Rotation: {x: 358.32816, y: 9.452123, z: 326.94086}
   Block:
     RightHand_Position: {x: 0.096, y: -0.238, z: 0.55}
     RightHand_Rotation: {x: 315.50604, y: 140.74138, z: 357.54846}
   Aim:
-  - RightHand_Position: {x: 0.009, y: -0.101, z: 0.502}
-    RightHand_Rotation: {x: 291.0951, y: 240.41953, z: 318.8687}
-  - RightHand_Position: {x: 0, y: -0.147, z: 0.502}
-    RightHand_Rotation: {x: 319.0732, y: 256.29565, z: 304.94684}
+  - RightHand_Position: {x: -0.003, y: -0.108, z: 0.833}
+    RightHand_Rotation: {x: 284.59564, y: 218.97803, z: 341.30835}
+  - RightHand_Position: {x: 0.051, y: -0.152, z: 0.582}
+    RightHand_Rotation: {x: 311.14764, y: 252.78094, z: 306.2594}
   Run:
-    RightHand_Position: {x: 0.1, y: -0.2, z: 0.502}
-    RightHand_Rotation: {x: 317.3, y: 210.5, z: 355.5}
+    RightHand_Position: {x: 0.1, y: -0.215, z: 0.636}
+    RightHand_Rotation: {x: 327.08496, y: 195.22496, z: 364.5}
   Wall:
     RightHand_Position: {x: 0.088, y: -0.23, z: 0.491}
     RightHand_Rotation: {x: 308.10123, y: 255.36424, z: 263.3697}
   Rest:
-    RightHand_Position: {x: 0.145, y: -0.141, z: 0.512}
-    RightHand_Rotation: {x: 314.42596, y: 258.3231, z: 260.9335}
+    RightHand_Position: {x: 0.051, y: -0.151, z: 0.474}
+    RightHand_Rotation: {x: 304.07367, y: 254.5628, z: 280.81818}
   Hip:
     RightHand_Position: {x: 0.073, y: -0.157, z: 0.502}
-    RightHand_Rotation: {x: 292.85736, y: 241.11646, z: 316.34015}
+    RightHand_Rotation: {x: 286.21765, y: 227.77518, z: 330.46494}
   Damage: 20
   Range: 2
   FireRate: 10
   CarredForce: 5
-  Recoil: 0.1
-  Weight: 1
+  RecoilSettings:
+    Time: 0
+    BackPush: 0.1
+    RotX: 5
+    RotZ: 5
+  BarrelRecoilSettings:
+    OffsetX: 0
+    OffsetY: 0

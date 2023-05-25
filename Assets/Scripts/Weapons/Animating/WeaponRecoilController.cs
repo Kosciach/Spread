@@ -40,16 +40,13 @@ public class WeaponRecoilController : MonoBehaviour
     }
 
 
-    public void Recoil(float recoil, float weight)
+    public void Recoil(RangeWeaponData.RecoilSettingsStruct recoilSettings)
     {
-        LeanTween.value(_recoilVectors.Pos.z, -recoil, _recoilSpeed / 100).setOnUpdate((float val) =>
-        {
-            _recoilVectors.Pos = new Vector3(0, 0, val);
-        });
+        //Move to the back
+        _recoilVectors.Pos = new Vector3(0, 0, -recoilSettings.BackPush);
 
-        LeanTween.value(_recoilVectors.Rot.x, -5 / weight, _recoilSpeed / 100).setOnUpdate((float val) =>
-        {
-            _recoilVectors.Rot = new Vector3(val, 0, 0);
-        });
+        //Rotation
+        float zAngle = Random.Range(-recoilSettings.RotZ, recoilSettings.RotZ);
+        _recoilVectors.Rot = new Vector3(-recoilSettings.RotX, 0, zAngle);
     }
 }

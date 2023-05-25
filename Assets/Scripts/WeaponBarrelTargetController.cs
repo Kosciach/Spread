@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponBarrelTargetController : MonoBehaviour
 {
     [Header("====References====")]
+    [SerializeField] PlayerStateMachine _playerStateMachine;
     [SerializeField] Transform _target;
 
 
@@ -13,6 +14,18 @@ public class WeaponBarrelTargetController : MonoBehaviour
     [SerializeField] LayerMask _playerMask;
 
     private void Update()
+    {
+        ApplyAdditionalWeaponAnimatorRotation();
+        ShootRay();
+    }
+
+
+
+    private void ApplyAdditionalWeaponAnimatorRotation()
+    {
+        transform.localRotation = Quaternion.Euler(_playerStateMachine.WeaponAnimator.AdditionalVectors.Rot);
+    }
+    private void ShootRay()
     {
         RaycastHit hit;
 

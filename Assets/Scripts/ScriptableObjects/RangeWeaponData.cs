@@ -17,14 +17,27 @@ public class RangeWeaponData : WeaponData
     [Header("====RangeStats====")]
     [Range(0, 120)]
     public float Damage;
-    [Range(0, 4)]
+    [Range(0, 6)]
     public float Range;
-    [Range(0, 10)]
+    [Range(0, 30)]
     public float FireRate;
-    [Range(0, 10)]
+    [Range(0, 100)]
     public float CarredForce;
-    [Range(0, 0.5f)]
-    public float Recoil;
-    [Range(0.1f, 5)]
-    public float Weight;
+
+    [Space(5)]
+    public RecoilSettingsStruct RecoilSettings;
+
+
+
+
+    [System.Serializable]
+    public struct RecoilSettingsStruct
+    {
+        [Range(0, 0.5f)]
+        public float BackPush;
+        [Range(0, 45)]
+        public float RotX;
+        [Range(0, 5)]
+        public float RotZ;
+    }
 }

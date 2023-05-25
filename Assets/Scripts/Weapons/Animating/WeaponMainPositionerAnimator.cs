@@ -63,6 +63,9 @@ public class WeaponMainPositionerAnimator : MonoBehaviour
     {
         _currentMainVectors.Pos = Vector3.Lerp(_currentMainVectors.Pos, _desiredMainVectors.Pos, _posVectorSmoothSpeed * Time.deltaTime);
         _currentMainVectors.Rot = Vector3.Lerp(_currentMainVectors.Rot, _desiredMainVectors.Rot, _rotVectorSmoothSpeed * Time.deltaTime);
+
+        _positioner.localPosition = _desiredMainVectors.Pos;
+        _positioner.localRotation = Quaternion.Euler(_desiredMainVectors.Rot);
     }
     private void SetupTransformVectors()
     {
