@@ -22,32 +22,34 @@ MonoBehaviour:
   FingersPreset: {fileID: 11400000, guid: cb28fa8f993c726459f02f4b099b57c9, type: 2}
   LeftHand_Position: {x: 0.2581, y: 0.3429, z: 0.1082}
   LeftHand_Rotation: {x: 347.4245, y: 55.767937, z: 358.26215}
-  Block:
-    RightHand_Position: {x: 0.222, y: -0.362, z: 0.583}
-    RightHand_Rotation: {x: 302.14615, y: 149.3001, z: 6.2739377}
-  Aim:
-  - RightHand_Position: {x: -0.034, y: -0.187, z: 0.341}
-    RightHand_Rotation: {x: 279.2062, y: 288.54044, z: 283.3981}
-  - RightHand_Position: {x: 0.106, y: -0.221, z: 0.341}
-    RightHand_Rotation: {x: 331.83337, y: 271.11374, z: 304.01804}
-  Run:
-    RightHand_Position: {x: 0.052, y: -0.22, z: 0.374}
-    RightHand_Rotation: {x: 292.05298, y: 277.46152, z: 250.96445}
-  Wall:
-    RightHand_Position: {x: 0.088, y: -0.268, z: 0.491}
-    RightHand_Rotation: {x: 308.10123, y: 255.36424, z: 263.3697}
-  Rest:
-    RightHand_Position: {x: 0.0522, y: -0.209, z: 0.374}
-    RightHand_Rotation: {x: 297.04022, y: 280.6047, z: 253.69778}
-  Hip:
-    RightHand_Position: {x: 0.0522, y: -0.209, z: 0.374}
-    RightHand_Rotation: {x: 282.83917, y: 276.77246, z: 295.58923}
-  Damage: 25
-  Range: 4
-  FireRate: 7
-  CarredForce: 10
+  WeaponTransforms:
+    Block:
+      RightHand_Position: {x: 0.222, y: -0.362, z: 0.583}
+      RightHand_Rotation: {x: 302.14615, y: 149.3001, z: 6.2739377}
+    Aim:
+    - RightHand_Position: {x: -0.034, y: -0.187, z: 0.341}
+      RightHand_Rotation: {x: 279.2062, y: 288.54044, z: 283.3981}
+    - RightHand_Position: {x: 0.106, y: -0.221, z: 0.341}
+      RightHand_Rotation: {x: 331.83337, y: 271.11374, z: 304.01804}
+    Run:
+      RightHand_Position: {x: 0.052, y: -0.22, z: 0.374}
+      RightHand_Rotation: {x: 292.05298, y: 277.46152, z: 250.96445}
+    Wall:
+      RightHand_Position: {x: 0.088, y: -0.268, z: 0.491}
+      RightHand_Rotation: {x: 308.10123, y: 255.36424, z: 263.3697}
+  HoldTransforms:
+    Rest:
+      RightHand_Position: {x: 0.0522, y: -0.209, z: 0.374}
+      RightHand_Rotation: {x: 297.04022, y: 280.6047, z: 253.69778}
+    Hip:
+      RightHand_Position: {x: 0.0522, y: -0.209, z: 0.374}
+      RightHand_Rotation: {x: 282.83917, y: 276.77246, z: 295.58923}
+  RangeStats:
+    Damage: 30
+    Range: 5
+    FireRate: 12
+    CarredForce: 15
   RecoilSettings:
-    Time: 0
     BackPush: 0.05
     RotX: 1
     RotZ: 0.5

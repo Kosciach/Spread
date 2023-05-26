@@ -33,7 +33,7 @@ public class PlayerLadderMovementController : MonoBehaviour
 
     public void Movement()
     {
-        Vector3 inputVector = _movementController.PlayerStateMachine.InputController.MovementInputVectorNormalized;
+        Vector3 inputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVectorNormalized;
         Vector3 desiredLadderMovementVector = new Vector3(0f, inputVector.z * _speed * _movementToggle, 0f);
 
         _currentMovementVector = Vector3.Lerp(_currentMovementVector, desiredLadderMovementVector, _accelarationSpeed * Time.deltaTime);
@@ -43,10 +43,10 @@ public class PlayerLadderMovementController : MonoBehaviour
     }
     private void AnimatorMovement()
     {
-        Vector3 inputVector = _movementController.PlayerStateMachine.InputController.MovementInputVector;
+        Vector3 inputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVector;
         Vector3 animatorMovementVector = inputVector * 2 * _movementToggle;
 
-        _movementController.PlayerStateMachine.AnimatorController.SetFloat("LadderVelocity", animatorMovementVector.z, 0.1f);
+        _movementController.PlayerStateMachine.AnimatingControllers.Animator.SetFloat("LadderVelocity", animatorMovementVector.z, 0.1f);
     }
 
 

@@ -13,7 +13,7 @@ public class WeaponAnimator : MonoBehaviour
     [SerializeField] WeaponRightHandOffseter _handOffseter; public WeaponRightHandOffseter HandOffseter { get { return _handOffseter; } }
     [SerializeField] WeaponRecoilController _recoil; public WeaponRecoilController Recoil { get { return _recoil; } }
     [Space(10)]
-    [SerializeField] IkHandsTargetsStruct _ikHandsTargets; public IkHandsTargetsStruct IkHandsTargets { get { return _ikHandsTargets; } }
+    [SerializeField] Transform _rightHandIk; public Transform RightHandIk { get { return _rightHandIk; } }
 
 
 
@@ -42,12 +42,6 @@ public class WeaponAnimator : MonoBehaviour
     { 
         public Vector3 Pos;
         public Vector3 Rot;
-    }
-    [System.Serializable]
-    public struct IkHandsTargetsStruct
-    {
-        public Transform Right;
-        public Transform Left;
     }
 
 
@@ -95,12 +89,12 @@ public class WeaponAnimator : MonoBehaviour
         _mainVectors.Pos = _mainPositioner.CurrentMainVectors.Pos;
         _mainVectors.Rot = _mainPositioner.CurrentMainVectors.Rot;
 
-        _ikHandsTargets.Right.parent.localPosition = _mainVectors.Pos;
-        _ikHandsTargets.Right.localRotation = Quaternion.Euler(_mainVectors.Rot);
+        _rightHandIk.parent.localPosition = _mainVectors.Pos;
+        _rightHandIk.localRotation = Quaternion.Euler(_mainVectors.Rot);
     }
     private void ApplyAdditionalVectorsToHand()
     {
-        _ikHandsTargets.Right.parent.localRotation = Quaternion.Euler(_additionalVectors.Rot);
-        _ikHandsTargets.Right.localPosition = _additionalVectors.Pos;
+        _rightHandIk.parent.localRotation = Quaternion.Euler(_additionalVectors.Rot);
+        _rightHandIk.localPosition = _additionalVectors.Pos;
     }
 }

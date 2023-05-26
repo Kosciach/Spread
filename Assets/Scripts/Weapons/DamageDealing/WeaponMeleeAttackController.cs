@@ -26,7 +26,7 @@ public class WeaponMeleeAttackController : WeaponDamageDealingController
 
     private void Attack()
     {
-        int attackType = _stateMachine.PlayerStateMachine.CombatController.EquipedWeaponController.Aim.IsAim ? 1 : 0;
+        int attackType = _stateMachine.PlayerStateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.IsAim ? 1 : 0;
         _attackType[attackType]();
     }
 

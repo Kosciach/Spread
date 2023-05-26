@@ -17,6 +17,6 @@ public class WeaponDataHolder : MonoBehaviour, IPickupable
 
     public void Pickup()
     {
-        _playerInventory.AddWeapon(gameObject.GetComponent<WeaponStateMachine>(), _weaponData);
+        _playerInventory.Weapon.AddWeapon(gameObject.GetComponent<WeaponStateMachine>(), _weaponData);
     }
 }

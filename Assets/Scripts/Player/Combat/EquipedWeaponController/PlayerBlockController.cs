@@ -37,7 +37,7 @@ public class PlayerBlockController : MonoBehaviour
 
 
 
-        _combatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(!block);
+        _combatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(!block);
 
         ToggleBlockBool(block);
         int enableBlock = _isBlock ? 1 : 0;
@@ -56,8 +56,8 @@ public class PlayerBlockController : MonoBehaviour
         _combatController.EquipedWeapon.DamageDealingController.enabled = false;
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
-        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_combatController.EquipedWeaponData.Block.RightHand_Position, 6);
-        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_combatController.EquipedWeaponData.Block.RightHand_Rotation, 6);
+        _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Position, 6);
+        _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Rotation, 6);
     }
     private void BlockDisable()
     {

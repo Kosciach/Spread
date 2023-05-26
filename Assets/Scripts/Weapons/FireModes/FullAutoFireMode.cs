@@ -39,7 +39,7 @@ public class FullAutoFireMode : BaseFireMode
 
     public bool CheckTimeToShoot()
     {
-        _currentTimeToShoot -= _weaponData.FireRate * 10 * Time.deltaTime;
+        _currentTimeToShoot -= _weaponData.RangeStats.FireRate * 10 * Time.deltaTime;
         _currentTimeToShoot = Mathf.Clamp(_currentTimeToShoot, 0, _timeToShoot);
 
         return _currentTimeToShoot == 0;

@@ -44,7 +44,7 @@ public class PlayerSlopeController : MonoBehaviour
     private void EdgeDetection()
     {
         bool walkingToEdge = false;
-        Vector3 inputVector = _verticalVelocityController.PlayerStateMachine.InputController.MovementInputVectorNormalized;
+        Vector3 inputVector = _verticalVelocityController.PlayerStateMachine.CoreControllers.Input.MovementInputVectorNormalized;
         Vector3 rayPosition = transform.position + (transform.forward / 2 * inputVector.z + transform.right / 2 * inputVector.x);
 
         Debug.DrawRay(rayPosition + Vector3.up, Vector3.down * 2, Color.red, 1);

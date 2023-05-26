@@ -9,37 +9,37 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CineCameraController.Fov.SetFov(5, 2);
-        if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
-            _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Walk, 5);
+        _ctx.CameraControllers.Cine.Fov.SetFov(5, 2);
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+            _ctx.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Walk, 5);
 
 
 
-        _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(true);
-        _ctx.ColliderController.SetColliderRadius(0.8f);
+        _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleJumpReloaded(true);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.8f);
 
 
 
-        _ctx.AnimatorController.SetBool("Walk", true);
-        _ctx.AnimatorController.SetBool("Land", true);
-        _ctx.AnimatorController.SetInt("JumpType", 1);
-        _ctx.AnimatorController.SetBool("FallFromGround", false);
+        _ctx.AnimatingControllers.Animator.SetBool("Walk", true);
+        _ctx.AnimatingControllers.Animator.SetBool("Land", true);
+        _ctx.AnimatingControllers.Animator.SetInt("JumpType", 1);
+        _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", false);
 
 
 
-        _ctx.MovementController.OnGround.SetWalkSpeed();
+        _ctx.MovementControllers.Movement.OnGround.SetWalkSpeed();
     }
     public override void StateUpdate()
     {
-        _ctx.RotationController.RotateToCanera();
-        _ctx.MovementController.OnGround.Movement();
-        _ctx.MovementController.OnGround.CheckMovementType();
+        _ctx.MovementControllers.Rotation.RotateToCanera();
+        _ctx.MovementControllers.Movement.OnGround.Movement();
+        _ctx.MovementControllers.Movement.OnGround.CheckMovementType();
 
-        float forwardVelocity = Vector3.Dot(_ctx.MovementController.InAir.CurrentMovementVector, _ctx.transform.forward);
-        _ctx.AnimatorController.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
+        float forwardVelocity = Vector3.Dot(_ctx.MovementControllers.Movement.InAir.CurrentMovementVector, _ctx.transform.forward);
+        _ctx.AnimatingControllers.Animator.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
 
-        if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
-        if (!_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
+        if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
+        if (!_ctx.MovementControllers.VerticalVelocity.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
     {
@@ -47,26 +47,26 @@ public class PlayerWalkState : PlayerBaseState
     }
     public override void StateCheckChange()
     {
-        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) && !_ctx.CombatController.EquipedWeaponController.Wall.IsWall) StateChange(_factory.Run());
+        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) && !_ctx.CombatControllers.Combat.EquipedWeaponController.Wall.IsWall) StateChange(_factory.Run());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)) StateChange(_factory.Idle());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump)) StateChange(_factory.Jump());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
         {
-            _ctx.AnimatorController.SetBool("FallFromGround", true);
+            _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", true);
             StateChange(_factory.Fall());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch)) StateChange(_factory.Crouch());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Climb)) StateChange(_factory.Climb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))
         {
-            _ctx.CombatController.TemporaryUnEquip();
+            _ctx.CombatControllers.Combat.TemporaryUnEquip();
             StateChange(_factory.Swim());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Dash)) StateChange(_factory.Dash());
     }
     public override void StateExit()
     {
-        _ctx.AnimatorController.SetBool("Walk", false);
+        _ctx.AnimatingControllers.Animator.SetBool("Walk", false);
     }
 }

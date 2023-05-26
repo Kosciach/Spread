@@ -10,23 +10,23 @@ public class PlayerLadderState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatController.TemporaryUnEquip();
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(false);
+        _ctx.CombatControllers.Combat.TemporaryUnEquip();
+        _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(false);
 
-        _ctx.LadderController.ResetBools();
+        _ctx.StateControllers.Ladder.ResetBools();
 
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 5);
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 5);
-        _ctx.CineCameraController.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.Ladder, 4);
+        _ctx.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, false, 5);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 5);
+        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.Ladder, 4);
 
-        if (_ctx.LadderController.GetLadderType() == PlayerLadderController.LadderEnum.LowerEnter) _ctx.LadderController.LowerLadderEnter();
-        else if (_ctx.LadderController.GetLadderType() == PlayerLadderController.LadderEnum.HigherEnter) _ctx.LadderController.HigherLadderEnter();
+        if (_ctx.StateControllers.Ladder.GetLadderType() == PlayerLadderController.LadderEnum.LowerEnter) _ctx.StateControllers.Ladder.LowerLadderEnter();
+        else if (_ctx.StateControllers.Ladder.GetLadderType() == PlayerLadderController.LadderEnum.HigherEnter) _ctx.StateControllers.Ladder.HigherLadderEnter();
     }
     public override void StateUpdate()
     {
-        _ctx.LadderController.CheckLadderLowerExit();
+        _ctx.StateControllers.Ladder.CheckLadderLowerExit();
 
-        _ctx.MovementController.Ladder.Movement();
+        _ctx.MovementControllers.Movement.Ladder.Movement();
     }
     public override void StateFixedUpdate()
     {
@@ -38,12 +38,12 @@ public class PlayerLadderState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 5);
-        _ctx.CineCameraController.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.OnGround, 4);
+        _ctx.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, true, 5);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 5);
+        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.OnGround, 4);
 
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(true);
+        _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(true);
 
-        _ctx.CombatController.RecoverFromTemporaryUnEquip();
+        _ctx.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
     }
 }

@@ -12,15 +12,18 @@ public class WeaponData : ScriptableObject
     public bool Fists;
 
 
+
+
     [Space(20)]
-    [Header("====WeaponTransform====")]
+    [Header("====InHandWeaponTransform====")]
     public Vector3 InHandPosition;
     public Vector3 InHandRotation;
 
-
-    [Space(20)]
-    [Header("====IkFingers====")]
+    [Space(10)]
+    [Header("====IkFingersPreset====")]
     public FingerPreset FingersPreset;
+
+
 
 
     [Space(20)]
@@ -30,20 +33,11 @@ public class WeaponData : ScriptableObject
 
 
     [Space(20)]
-    [Header("====BlockTransform====")]
-    public WeaponTransform Block;
+    [Header("====WeaponTransforms====")]
+    public WeaponTransformsStruct WeaponTransforms;
 
-    [Space(10)]
-    [Header("====AimTransforms====")]
-    public WeaponTransform[] Aim;
 
-    [Space(10)]
-    [Header("====RunTransform====")]
-    public WeaponTransform Run;
 
-    [Space(10)]
-    [Header("====WallTransform====")]
-    public WeaponTransform Wall;
 
 
 
@@ -53,6 +47,27 @@ public class WeaponData : ScriptableObject
         public Vector3 RightHand_Position;
         public Vector3 RightHand_Rotation;
     }
+
+    [System.Serializable]
+    public struct WeaponTransformsStruct
+    {
+        [Header("====BlockTransform====")]
+        public WeaponTransform Block;
+
+        [Space(5)]
+        [Header("====AimTransforms====")]
+        public WeaponTransform[] Aim;
+
+        [Space(5)]
+        [Header("====RunTransform====")]
+        public WeaponTransform Run;
+
+        [Space(5)]
+        [Header("====WallTransform====")]
+        public WeaponTransform Wall;
+    }
+
+
 
     public enum WeaponHolderEnum
     { 

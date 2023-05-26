@@ -10,19 +10,19 @@ public class PlayerFallState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.ColliderController.SetColliderRadius(0.09f);
-        _ctx.AnimatorController.SetBool("Land", false);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.09f);
+        _ctx.AnimatingControllers.Animator.SetBool("Land", false);
 
-        _ctx.CombatController.EquipedWeaponController.InAir.Fall();
+        _ctx.CombatControllers.Combat.EquipedWeaponController.InAir.Fall();
     }
     public override void StateUpdate()
     {
-        _ctx.RotationController.RotateToCanera();
-        _ctx.MovementController.InAir.Movement();
+        _ctx.MovementControllers.Rotation.RotateToCanera();
+        _ctx.MovementControllers.Movement.InAir.Movement();
 
         CheckClimb();
-        if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
-        if (_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
+        if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
+        if (_ctx.MovementControllers.VerticalVelocity.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
     }
     public override void StateFixedUpdate()
     {
@@ -34,21 +34,21 @@ public class PlayerFallState : PlayerBaseState
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.InAirClimb)) StateChange(_factory.InAirClimb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))
         {
-            _ctx.CombatController.TemporaryUnEquip();
+            _ctx.CombatControllers.Combat.TemporaryUnEquip();
             StateChange(_factory.Swim());
         }
     }
     public override void StateExit()
     {
-        _ctx.AnimatorController.SetBool("Fall", false);
-        _ctx.AnimatorController.SetBool("FallFromGround", false);
+        _ctx.AnimatingControllers.Animator.SetBool("Fall", false);
+        _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", false);
     }
 
 
 
     private void CheckClimb()
     {
-        if (_ctx.ClimbController.CheckFallingClimb())
+        if (_ctx.StateControllers.Climb.CheckFallingClimb())
         {
             _ctx.SwitchController.SwitchTo.InAirClimb();
         }

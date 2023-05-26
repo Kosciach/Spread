@@ -15,36 +15,15 @@ public class PlayerStateMachine : MonoBehaviour
 
 
     [Space(20)]
-    [Header("====PlayerScripts====")]
-
-    [SerializeField] PlayerInputController _inputController; public PlayerInputController InputController { get { return _inputController; } }
-    [SerializeField] PlayerCombatController _combatController; public PlayerCombatController CombatController { get { return _combatController; } }
-    [SerializeField] PlayerMovementController _movementController; public PlayerMovementController MovementController { get { return _movementController; } }
-    [SerializeField] PlayerVerticalVelocityController _verticalVelocityController; public PlayerVerticalVelocityController VerticalVelocityController { get { return _verticalVelocityController; } }
-    [SerializeField] PlayerIkController _ikController; public PlayerIkController IkController { get { return _ikController; } }
-    [SerializeField] PlayerRotationController _rotationController; public PlayerRotationController RotationController { get { return _rotationController; } }
-
-    [SerializeField] WeaponAnimator _weaponAnimator; public WeaponAnimator WeaponAnimator { get { return _weaponAnimator; } }
-
-    [SerializeField] PlayerVelocity _playerVelocity; public PlayerVelocity PlayerVelocity { get { return _playerVelocity; } }
-    [SerializeField] PlayerColliderController _colliderController; public PlayerColliderController ColliderController { get { return _colliderController; } }
-
-
-    [SerializeField] PlayerClimbController _climbController; public PlayerClimbController ClimbController { get { return _climbController; } }
-    [SerializeField] PlayerSwimController _swimController; public PlayerSwimController SwimController { get { return _swimController; } }
-    [SerializeField] PlayerLadderController _ladderController; public PlayerLadderController LadderController { get { return _ladderController; } }
-    [SerializeField] PlayerDashController _dashController; public PlayerDashController DashController { get { return _dashController; } }
-
-
-    [SerializeField] PlayerInteractionController _interactionController; public PlayerInteractionController InteractionController { get { return _interactionController; } }
-    [SerializeField] PlayerAnimatorController _animatorController; public PlayerAnimatorController AnimatorController { get { return _animatorController; } }
-    [SerializeField] PlayerFootStepAudioController _footStepAudioController; public PlayerFootStepAudioController FootStepAudioController { get { return _footStepAudioController; } }
-    [SerializeField] PlayerInventory _inventory; public PlayerInventory Inventory { get { return _inventory; } }
-
-
-    [SerializeField] PlayerCineCameraController _cineCameraController; public PlayerCineCameraController CineCameraController { get { return _cineCameraController; } }
-    [SerializeField] PlayerHandsCameraController _handsCameraController; public PlayerHandsCameraController HandsCameraController { get { return _handsCameraController; } }
-
+    [Header("====Controllers====")]
+    [SerializeField] CoreControllersStruct _coreControllers; public CoreControllersStruct CoreControllers { get { return _coreControllers; } }
+    [SerializeField] AnimatingControllersStruct _animatingControllers; public AnimatingControllersStruct AnimatingControllers { get { return _animatingControllers; } }
+    [SerializeField] CameraControllersStruct _cameraControllers; public CameraControllersStruct CameraControllers { get { return _cameraControllers; } }
+    [SerializeField] MovementControllersStruct _movementControllers; public MovementControllersStruct MovementControllers { get { return _movementControllers; } }
+    [SerializeField] StateControllersStruct _stateControllers; public StateControllersStruct StateControllers { get { return _stateControllers; } }
+    [SerializeField] CombatControllersStruct _combatControllers; public CombatControllersStruct CombatControllers { get { return _combatControllers; } }
+    [SerializeField] InventoryControllersStruct _inventoryControllers; public InventoryControllersStruct InventoryControllers { get { return _inventoryControllers; } }
+    [SerializeField] AudioControllersStruct _audioControllers; public AudioControllersStruct AudioControllers { get { return _audioControllers; } }
 
 
     private PlayerSwitchController _switchController; public PlayerSwitchController SwitchController { get { return _switchController; } }
@@ -59,6 +38,67 @@ public class PlayerStateMachine : MonoBehaviour
 
 
 
+    [System.Serializable]
+    public struct CoreControllersStruct
+    {
+        public PlayerInputController Input;
+        public PlayerColliderController Collider;
+        public PlayerInteractionController Interaction;
+    }
+
+    [System.Serializable]
+    public struct AnimatingControllersStruct
+    {
+        public PlayerAnimatorController Animator;
+        public WeaponAnimator Weapon;
+        public LeftHandAnimator LeftHand;
+        public PlayerIkController IkController;
+    }
+
+    [System.Serializable]
+    public struct CameraControllersStruct
+    {
+        public PlayerCineCameraController Cine;
+        public PlayerHandsCameraController Hands;
+    }
+
+    [System.Serializable]
+    public struct MovementControllersStruct
+    {
+        public PlayerMovementController Movement;
+        public PlayerVerticalVelocityController VerticalVelocity;
+        public PlayerVelocity Velocity;
+        public PlayerRotationController Rotation;
+    }
+
+    [System.Serializable]
+    public struct StateControllersStruct
+    {
+        public PlayerClimbController Climb;
+        public PlayerSwimController Swim;
+        public PlayerLadderController Ladder;
+        public PlayerDashController Dash;
+    }
+
+    [System.Serializable]
+    public struct CombatControllersStruct
+    {
+        public PlayerCombatController Combat;
+    }
+
+    [System.Serializable]
+    public struct InventoryControllersStruct
+    {
+        public PlayerInventory Inventory;
+    }
+
+    [System.Serializable]
+    public struct AudioControllersStruct
+    {
+        public PlayerFootStepAudioController FootStep;
+    }
+
+
 
     public enum SwitchEnum
     {
@@ -70,6 +110,8 @@ public class PlayerStateMachine : MonoBehaviour
         Swim, UnderWater,
         Dash
     }
+
+
 
 
 

@@ -10,16 +10,16 @@ public class PlayerUnderWaterState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.SwimController.ToggleCameraEffect(true);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, false, 5);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.UnderWater, true, 5);
+        _ctx.StateControllers.Swim.ToggleCameraEffect(true);
+        _ctx.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, false, 5);
+        _ctx.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.UnderWater, true, 5);
     }
     public override void StateUpdate()
     {
-        _ctx.MovementController.Swim.Movement();
-        _ctx.RotationController.RotateToCanera();
+        _ctx.MovementControllers.Movement.Swim.Movement();
+        _ctx.MovementControllers.Rotation.RotateToCanera();
 
-        if (_ctx.SwimController.CheckIsOnSurface()) _ctx.SwitchController.SwitchTo.Swim();
+        if (_ctx.StateControllers.Swim.CheckIsOnSurface()) _ctx.SwitchController.SwitchTo.Swim();
     }
     public override void StateFixedUpdate()
     {
@@ -31,8 +31,8 @@ public class PlayerUnderWaterState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.SwimController.ToggleCameraEffect(false);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, true, 5);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.UnderWater, false, 5);
+        _ctx.StateControllers.Swim.ToggleCameraEffect(false);
+        _ctx.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Swim, true, 5);
+        _ctx.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.UnderWater, false, 5);
     }
 }

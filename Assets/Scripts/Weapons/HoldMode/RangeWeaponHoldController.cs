@@ -28,14 +28,14 @@ public class RangeWeaponHoldController : WeaponHoldController
         _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);
 
 
-        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_rangeWeaponData.Rest.RightHand_Rotation, rotateSpeed);
-        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_rangeWeaponData.Rest.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
+        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_rangeWeaponData.HoldTransforms.Rest.RightHand_Rotation, rotateSpeed);
+        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_rangeWeaponData.HoldTransforms.Rest.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
         {
             _stateMachine.DamageDealingController.enabled = false;
-            _stateMachine.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, true);
+            _stateMachine.PlayerStateMachine.AnimatingControllers.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, true);
 
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
+            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
+            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
 
 
             _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
@@ -49,14 +49,14 @@ public class RangeWeaponHoldController : WeaponHoldController
         _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);
 
 
-        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_rangeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
-        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_rangeWeaponData.Hip.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
+        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_rangeWeaponData.HoldTransforms.Hip.RightHand_Rotation, rotateSpeed);
+        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_rangeWeaponData.HoldTransforms.Hip.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
         {
             _stateMachine.DamageDealingController.enabled = true;
-            _stateMachine.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, false);
+            _stateMachine.PlayerStateMachine.AnimatingControllers.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, false);
 
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
+            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
+            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
 
 
             _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);

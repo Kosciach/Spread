@@ -28,7 +28,7 @@ public class WeaponBobbingController : MonoBehaviour
 
 
 
-    private float _playerVelocity => _weaponAnimator.PlayerStateMachine.MovementController.OnGround.CurrentMovementVector.magnitude;
+    private float _playerVelocity => _weaponAnimator.PlayerStateMachine.MovementControllers.Movement.OnGround.CurrentMovementVector.magnitude;
     public float PlayerVelocity { get { return _playerVelocity; } }
 
 

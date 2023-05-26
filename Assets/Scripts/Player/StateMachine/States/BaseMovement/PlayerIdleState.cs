@@ -9,33 +9,33 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CineCameraController.Fov.SetFov(0, 2);
-        if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
-            _ctx.HandsCameraController.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
+        _ctx.CameraControllers.Cine.Fov.SetFov(0, 2);
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+            _ctx.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
 
 
-        _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(true);
-        _ctx.ColliderController.SetColliderRadius(0.8f);
+        _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleJumpReloaded(true);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.8f);
 
 
 
-        _ctx.AnimatorController.SetBool("Idle", true);
-        _ctx.AnimatorController.SetBool("Land", true);
-        _ctx.AnimatorController.SetInt("JumpType", 0);
-        _ctx.AnimatorController.SetBool("FallFromGround", false);
+        _ctx.AnimatingControllers.Animator.SetBool("Idle", true);
+        _ctx.AnimatingControllers.Animator.SetBool("Land", true);
+        _ctx.AnimatingControllers.Animator.SetInt("JumpType", 0);
+        _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", false);
     }
     public override void StateUpdate()
     {
-        _ctx.RotationController.RotateToCanera();
-        _ctx.RotationController.RotateAnimation();
-        _ctx.MovementController.OnGround.Movement();
-        _ctx.MovementController.OnGround.CheckMovementType();
+        _ctx.MovementControllers.Rotation.RotateToCanera();
+        _ctx.MovementControllers.Rotation.RotateAnimation();
+        _ctx.MovementControllers.Movement.OnGround.Movement();
+        _ctx.MovementControllers.Movement.OnGround.CheckMovementType();
 
-        float forwardVelocity = Vector3.Dot(_ctx.MovementController.InAir.CurrentMovementVector, _ctx.transform.forward);
-        _ctx.AnimatorController.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
+        float forwardVelocity = Vector3.Dot(_ctx.MovementControllers.Movement.InAir.CurrentMovementVector, _ctx.transform.forward);
+        _ctx.AnimatingControllers.Animator.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
 
-        if (!_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
+        if (!_ctx.MovementControllers.VerticalVelocity.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
     {
@@ -44,11 +44,11 @@ public class PlayerIdleState : PlayerBaseState
     public override void StateCheckChange()
     {
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)) StateChange(_factory.Walk());
-        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) && !_ctx.CombatController.EquipedWeaponController.Wall.IsWall) StateChange(_factory.Run());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) && !_ctx.CombatControllers.Combat.EquipedWeaponController.Wall.IsWall) StateChange(_factory.Run());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump)) StateChange(_factory.Jump());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
         {
-            _ctx.AnimatorController.SetBool("FallFromGround", true);
+            _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", true);
             StateChange(_factory.Fall());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch)) StateChange(_factory.Crouch());
@@ -56,10 +56,10 @@ public class PlayerIdleState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.AnimatorController.SetBool("Idle", false);
+        _ctx.AnimatingControllers.Animator.SetBool("Idle", false);
 
-        _ctx.AnimatorController.SetFloat("RotateDirection", 0);
-        _ctx.AnimatorController.SetFloat("RotationSpeed", 0);
-        _ctx.AnimatorController.SetBool("IsRotating", false);
+        _ctx.AnimatingControllers.Animator.SetFloat("RotateDirection", 0);
+        _ctx.AnimatingControllers.Animator.SetFloat("RotationSpeed", 0);
+        _ctx.AnimatingControllers.Animator.SetBool("IsRotating", false);
     }
 }

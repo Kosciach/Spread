@@ -10,16 +10,16 @@ public class PlayerDashState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.AnimatorController.SetFloat("DashX", _ctx.InputController.MovementInputVector.x);
-        _ctx.AnimatorController.SetFloat("DashZ", _ctx.InputController.MovementInputVector.z);
-        _ctx.AnimatorController.SetBool("Dash", true);
+        _ctx.AnimatingControllers.Animator.SetFloat("DashX", _ctx.CoreControllers.Input.MovementInputVector.x);
+        _ctx.AnimatingControllers.Animator.SetFloat("DashZ", _ctx.CoreControllers.Input.MovementInputVector.z);
+        _ctx.AnimatingControllers.Animator.SetBool("Dash", true);
 
-        _ctx.DashController.DashStart(_ctx.MovementController.OnGround.GetMovementDirection());
+        _ctx.StateControllers.Dash.DashStart(_ctx.MovementControllers.Movement.OnGround.GetMovementDirection());
         _ctx.SwitchController.SwitchTo.Dash();
     }
     public override void StateUpdate()
     {
-        _ctx.DashController.DashMove();
+        _ctx.StateControllers.Dash.DashMove();
     }
     public override void StateFixedUpdate()
     {
@@ -32,6 +32,6 @@ public class PlayerDashState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.AnimatorController.SetBool("Dash", false);
+        _ctx.AnimatingControllers.Animator.SetBool("Dash", false);
     }
 }

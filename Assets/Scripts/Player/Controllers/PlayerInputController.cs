@@ -91,7 +91,7 @@ public class PlayerInputController : MonoBehaviour
     }
     private void SetInteraction()
     {
-        _playerInputs.Player.Interact.performed += ctx => _stateMachine.InteractionController.Interaction();
+        _playerInputs.Player.Interact.performed += ctx => _stateMachine.CoreControllers.Interaction.Interaction();
     }
 
 
@@ -99,44 +99,44 @@ public class PlayerInputController : MonoBehaviour
     {
         _playerInputs.Player.ChooseWeapon.performed += ctx =>
         {
-            if (_stateMachine.CombatController.IsTemporaryUnEquip) return;
-            _stateMachine.CombatController.EquipWeapon((int)ctx.ReadValue<float>());
+            if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
+            _stateMachine.CombatControllers.Combat.EquipWeapon((int)ctx.ReadValue<float>());
         };
     }
     private void SetHideWeapon()
     {
         _playerInputs.Player.UnEquipWeapon.performed += ctx =>
         {
-            if (_stateMachine.CombatController.IsTemporaryUnEquip) return;
-            _stateMachine.CombatController.UnEquipWeapon(1);
+            if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
+            _stateMachine.CombatControllers.Combat.UnEquipWeapon(1);
         };
     }
     private void SetDropWeapon()
     {
         _playerInputs.Player.DropWeapon.performed += ctx =>
         {
-            if (_stateMachine.CombatController.IsTemporaryUnEquip) return;
-            _stateMachine.CombatController.DropWeapon();
+            if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
+            _stateMachine.CombatControllers.Combat.DropWeapon();
         };
     }
 
     private void SetChangeWeaponEquipedMode()
     {
-        _playerInputs.Player.ChangeWeaponHoldMode.performed += ctx => _stateMachine.CombatController.EquipedWeaponController.Hold.ChangeEquipedHoldMode();
+        _playerInputs.Player.ChangeWeaponHoldMode.performed += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Hold.ChangeEquipedHoldMode();
     }
     private void SetChangeAimType()
     {
-        _playerInputs.Player.ChangeAimType.performed += ctx => _stateMachine.CombatController.EquipedWeaponController.Aim.ChangeAimType();
+        _playerInputs.Player.ChangeAimType.performed += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.ChangeAimType();
     }
     private void SetAim()
     {
-        _playerInputs.Player.Aim.started += ctx => _stateMachine.CombatController.EquipedWeaponController.Aim.Aim(true);
-        _playerInputs.Player.Aim.canceled += ctx => _stateMachine.CombatController.EquipedWeaponController.Aim.Aim(false);
+        _playerInputs.Player.Aim.started += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.Aim(true);
+        _playerInputs.Player.Aim.canceled += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.Aim(false);
     }
     private void SetBlock()
     {
-        _playerInputs.Player.Block.started += ctx => _stateMachine.CombatController.EquipedWeaponController.Block.Block(true);
-        _playerInputs.Player.Block.canceled += ctx => _stateMachine.CombatController.EquipedWeaponController.Block.Block(false);
+        _playerInputs.Player.Block.started += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.Block(true);
+        _playerInputs.Player.Block.canceled += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.Block(false);
     }
 
 

@@ -9,11 +9,11 @@ public class PlayerInAirClimbState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatController.TemporaryUnEquip();
+        _ctx.CombatControllers.Combat.TemporaryUnEquip();
         ClimbEnterExit(false);
-        _ctx.CineCameraController.VerticalController.RotateToAngle(0, 0.3f);
+        _ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
 
-        Climb(_ctx.ClimbController.GetFinalClimbPosition(), _ctx.ClimbController.GetStartClimbPosition());
+        Climb(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
     }
     public override void StateUpdate()
     {
@@ -30,22 +30,22 @@ public class PlayerInAirClimbState : PlayerBaseState
     public override void StateExit()
     {
         ClimbEnterExit(true);
-        _ctx.AnimatorController.SetBool("Climb", false);
+        _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
 
-        _ctx.CombatController.RecoverFromTemporaryUnEquip();
+        _ctx.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
     }
 
 
     private void ClimbEnterExit(bool enable)
     {
-        _ctx.HandsCameraController.EnableController.ToggleHandsCamera(enable);
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, enable, 6);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, enable, 6);
-        _ctx.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, enable, 6);
+        _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(enable);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, enable, 6);
+        _ctx.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, enable, 6);
+        _ctx.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, enable, 6);
 
-        _ctx.ColliderController.ToggleCollider(enable);
-        _ctx.VerticalVelocityController.GravityController.ToggleApplyGravity(enable);
-        _ctx.CineCameraController.ToggleCineInput(enable);
+        _ctx.CoreControllers.Collider.ToggleCollider(enable);
+        _ctx.MovementControllers.VerticalVelocity.GravityController.ToggleApplyGravity(enable);
+        _ctx.CameraControllers.Cine.ToggleCineInput(enable);
     }
 
 
@@ -53,11 +53,11 @@ public class PlayerInAirClimbState : PlayerBaseState
 
     private void Climb(Vector3 finalClimbPosition, Vector3 startClimbPosition)
     {
-        _ctx.AnimatorController.SetInt("ClimbType", 2);
+        _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 2);
 
         LeanTween.cancel(_ctx.gameObject);
 
-        _ctx.AnimatorController.SetBool("Climb", true);
+        _ctx.AnimatingControllers.Animator.SetBool("Climb", true);
         _ctx.transform.LeanMoveY(finalClimbPosition.y - 1.3f, 0.5f).setOnComplete(() =>
         {
             _ctx.transform.LeanMove(finalClimbPosition, 0.5f).setOnComplete(() =>

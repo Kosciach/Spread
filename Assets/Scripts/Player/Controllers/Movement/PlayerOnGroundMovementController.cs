@@ -48,7 +48,7 @@ public class PlayerOnGroundMovementController : MonoBehaviour
 
     public void Movement()
     {
-        Vector3 inputVector = _movementController.PlayerStateMachine.InputController.MovementInputVectorNormalized;
+        Vector3 inputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVectorNormalized;
         Vector3 desiredMovementVector = (_movementController.PlayerTransform.forward * inputVector.z + _movementController.PlayerTransform.right * inputVector.x) * _speed;
 
         _currentMovementVector = Vector3.Lerp(_currentMovementVector, desiredMovementVector, _accelarationSpeed);
@@ -60,18 +60,18 @@ public class PlayerOnGroundMovementController : MonoBehaviour
     }
     private void AnimatorMovement()
     {
-        Vector3 inputVector = _movementController.PlayerStateMachine.InputController.MovementInputVector;
+        Vector3 inputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVector;
         Vector3 animatorMovementVector = inputVector * _animatorMovementSpeed;
 
-        _movementController.PlayerStateMachine.AnimatorController.SetFloat("MovementX", animatorMovementVector.x, 0.1f);
-        _movementController.PlayerStateMachine.AnimatorController.SetFloat("MovementZ", animatorMovementVector.z, 0.1f);
+        _movementController.PlayerStateMachine.AnimatingControllers.Animator.SetFloat("MovementX", animatorMovementVector.x, 0.1f);
+        _movementController.PlayerStateMachine.AnimatingControllers.Animator.SetFloat("MovementZ", animatorMovementVector.z, 0.1f);
     }
 
     public void CheckMovementType()
     {
-        bool isMoveInput = _movementController.PlayerStateMachine.InputController.IsMoveInput;
-        bool isRunInput = _movementController.PlayerStateMachine.InputController.IsRunInput;
-        Vector3 movementInputVector = _movementController.PlayerStateMachine.InputController.MovementInputVector;
+        bool isMoveInput = _movementController.PlayerStateMachine.CoreControllers.Input.IsMoveInput;
+        bool isRunInput = _movementController.PlayerStateMachine.CoreControllers.Input.IsRunInput;
+        Vector3 movementInputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVector;
         bool canSwitch = _movementController.PlayerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)
                         || _movementController.PlayerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)
                         || _movementController.PlayerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run);
@@ -85,8 +85,8 @@ public class PlayerOnGroundMovementController : MonoBehaviour
         _movementType = MovementTypeEnum.Walk;
         if (canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Walk();
         if (!isRunInput || movementInputVector.z <= 0
-            || _movementController.PlayerStateMachine.CombatController.EquipedWeaponController.Aim.IsAim
-            || _movementController.PlayerStateMachine.CombatController.EquipedWeaponController.Block.IsBlock) return;
+            || _movementController.PlayerStateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.IsAim
+            || _movementController.PlayerStateMachine.CombatControllers.Combat.EquipedWeaponController.Block.IsBlock) return;
 
 
         _movementType = MovementTypeEnum.Run;
@@ -96,7 +96,7 @@ public class PlayerOnGroundMovementController : MonoBehaviour
 
     public Vector3 GetMovementDirection()
     {
-        Vector3 inputVector = _movementController.PlayerStateMachine.InputController.MovementInputVectorNormalized;
+        Vector3 inputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVectorNormalized;
         return (_movementController.PlayerTransform.forward * inputVector.z + _movementController.PlayerTransform.right * inputVector.x);
     }
 

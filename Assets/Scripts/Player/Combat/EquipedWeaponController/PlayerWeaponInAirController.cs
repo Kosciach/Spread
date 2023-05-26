@@ -37,17 +37,17 @@ public class PlayerWeaponInAirController : MonoBehaviour
 
     public void Jump()
     {
-        _equipedWeaponController.CombatController.PlayerStateMachine.WeaponAnimator.HandOffseter.SetRotOffset(new Vector3(_jump.RotX, 0, 0), _jump.SpeedRot);
-        _equipedWeaponController.CombatController.PlayerStateMachine.WeaponAnimator.HandOffseter.SetPosOffset(new Vector3(0, _jump.PosY, 0), _jump.SpeedPos);
+        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(new Vector3(_jump.RotX, 0, 0), _jump.SpeedRot);
+        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(new Vector3(0, _jump.PosY, 0), _jump.SpeedPos);
     }
     public void Fall()
     {
-        _equipedWeaponController.CombatController.PlayerStateMachine.WeaponAnimator.HandOffseter.SetRotOffset(new Vector3(_fall.RotX, 0, 0), _fall.SpeedRot);
-        _equipedWeaponController.CombatController.PlayerStateMachine.WeaponAnimator.HandOffseter.SetPosOffset(new Vector3(0, _fall.PosY, 0), _fall.SpeedPos);
+        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(new Vector3(_fall.RotX, 0, 0), _fall.SpeedRot);
+        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(new Vector3(0, _fall.PosY, 0), _fall.SpeedPos);
     }
     public void Land()
     {
-        _equipedWeaponController.CombatController.PlayerStateMachine.WeaponAnimator.HandOffseter.SetRotOffset(new Vector3(_land.RotX, 0, 0), _land.SpeedRot);
-        _equipedWeaponController.CombatController.PlayerStateMachine.WeaponAnimator.HandOffseter.SetPosOffset(new Vector3(0, _land.PosY, 0), _land.SpeedPos);
+        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(new Vector3(_land.RotX, 0, 0), _land.SpeedRot);
+        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(new Vector3(0, _land.PosY, 0), _land.SpeedPos);
     }
 }

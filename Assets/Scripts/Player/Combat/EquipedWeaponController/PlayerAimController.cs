@@ -42,10 +42,10 @@ public class PlayerAimController : MonoBehaviour
     {
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Wall.IsWall) return;
 
-        if (_combatController.EquipedWeaponData.Aim.Length <= 0) return;
+        if (_combatController.EquipedWeaponData.WeaponTransforms.Aim.Length <= 0) return;
 
 
-        _combatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(!aim);
+        _combatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(!aim);
 
         ToggleAimBool(aim);
         int enableADS = _isAim ? 1 : 0;
@@ -84,11 +84,11 @@ public class PlayerAimController : MonoBehaviour
     public void ChangeAimType()
     {
         if (!_isAim) return;
-        if (_combatController.EquipedWeaponData.Aim.Length <= 1) return;
+        if (_combatController.EquipedWeaponData.WeaponTransforms.Aim.Length <= 1) return;
 
 
         _aimTypeIndex++;
-        _aimTypeIndex = _aimTypeIndex >= _combatController.EquipedWeaponData.Aim.Length ? 0 : _aimTypeIndex;
+        _aimTypeIndex = _aimTypeIndex >= _combatController.EquipedWeaponData.WeaponTransforms.Aim.Length ? 0 : _aimTypeIndex;
         _aimType = (AimTypeEnum)_aimTypeIndex;
         _combatController.EquipedWeapon.AimIndexHolder.WeaponAimIndex = _aimTypeIndex;
 
@@ -100,10 +100,10 @@ public class PlayerAimController : MonoBehaviour
 
     private void MoveHandsToAimTransform()
     {
-        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Position, 10);
-        _combatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_combatController.EquipedWeaponData.Aim[_aimTypeIndex].RightHand_Rotation, 10);
+        _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Aim[_aimTypeIndex].RightHand_Position, 20);
+        _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_combatController.EquipedWeaponData.WeaponTransforms.Aim[_aimTypeIndex].RightHand_Rotation, 20);
 
-        _combatController.PlayerStateMachine.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
     }
 
     private void CheckCrosshair()

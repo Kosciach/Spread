@@ -54,13 +54,13 @@ public class WeaponSwayController : MonoBehaviour
 
     private void GetHorizontalSway()
     {
-        _horizontal.DesiredSway = _weaponAnimator.PlayerStateMachine.InputController.MouseInputVector.x / _horizontal.Strength;
+        _horizontal.DesiredSway = _weaponAnimator.PlayerStateMachine.CoreControllers.Input.MouseInputVector.x / _horizontal.Strength;
         _horizontal.CurrentSway = Mathf.Lerp(_horizontal.CurrentSway, _horizontal.DesiredSway, _horizontal.Speed * Time.deltaTime);
         _horizontal.CurrentSway = Mathf.Clamp(_horizontal.CurrentSway, -_horizontal.MaxSway, _horizontal.MaxSway);
     }
     private void GetVerticalSway()
     {
-        _vertical.DesiredSway = _weaponAnimator.PlayerStateMachine.InputController.MouseInputVector.y / _vertical.Strength;
+        _vertical.DesiredSway = _weaponAnimator.PlayerStateMachine.CoreControllers.Input.MouseInputVector.y / _vertical.Strength;
         _vertical.CurrentSway = Mathf.Lerp(_vertical.CurrentSway, _vertical.DesiredSway, _vertical.Speed * Time.deltaTime);
         _vertical.CurrentSway = Mathf.Clamp(_vertical.CurrentSway, -_vertical.MaxSway, _vertical.MaxSway);
     }

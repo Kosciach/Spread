@@ -33,7 +33,7 @@ public class PlayerInAirMovementController : MonoBehaviour
 
     public void Movement()
     {
-        Vector3 inputVector = _movementController.PlayerStateMachine.InputController.MovementInputVectorNormalized;
+        Vector3 inputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVectorNormalized;
 
         Vector3 desiredMovementVector = (_movementController.PlayerTransform.forward * inputVector.z + _movementController.PlayerTransform.right * inputVector.x) * _speed * _movementToggle * Time.deltaTime;
         _currentMovementVector = Vector3.Lerp(_currentMovementVector, desiredMovementVector, _accelarationSpeed * Time.deltaTime);

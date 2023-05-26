@@ -10,22 +10,22 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.ColliderController.SetColliderRadius(0.2f);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f);
 
         PrepareAnimatorBools();
 
-        _ctx.VerticalVelocityController.JumpController.ToggleJumpReloaded(false);
-        _ctx.VerticalVelocityController.JumpController.ToggleIsJump(true);
-        _ctx.VerticalVelocityController.JumpController.Jump();
+        _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleJumpReloaded(false);
+        _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleIsJump(true);
+        _ctx.MovementControllers.VerticalVelocity.JumpController.Jump();
 
-        _ctx.CombatController.EquipedWeaponController.InAir.Jump();
+        _ctx.CombatControllers.Combat.EquipedWeaponController.InAir.Jump();
     }
     public override void StateUpdate()
     {
-        _ctx.RotationController.RotateToCanera();
-        _ctx.MovementController.InAir.Movement();
+        _ctx.MovementControllers.Rotation.RotateToCanera();
+        _ctx.MovementControllers.Movement.InAir.Movement();
 
-        if (_ctx.VerticalVelocityController.GravityController.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
+        if (_ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
     {
@@ -35,22 +35,22 @@ public class PlayerJumpState : PlayerBaseState
     {
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
         {
-            _ctx.AnimatorController.SetBool("Fall", true);
+            _ctx.AnimatingControllers.Animator.SetBool("Fall", true);
             StateChange(_factory.Fall());
         }
     }
     public override void StateExit()
     {
-        _ctx.VerticalVelocityController.JumpController.ToggleIsJump(false);
-        _ctx.AnimatorController.SetBool("Jump", false);
+        _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleIsJump(false);
+        _ctx.AnimatingControllers.Animator.SetBool("Jump", false);
     }
 
 
 
     private void PrepareAnimatorBools()
     {
-        _ctx.AnimatorController.SetBool("Jump", true);
-        _ctx.AnimatorController.SetBool("Fall", false);
-        _ctx.AnimatorController.SetBool("Land", false);
+        _ctx.AnimatingControllers.Animator.SetBool("Jump", true);
+        _ctx.AnimatingControllers.Animator.SetBool("Fall", false);
+        _ctx.AnimatingControllers.Animator.SetBool("Land", false);
     }
 }

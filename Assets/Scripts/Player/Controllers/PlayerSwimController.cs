@@ -79,7 +79,7 @@ public class PlayerSwimController : MonoBehaviour
 
     public bool CheckObjectInFront()
     {
-        return Physics.Raycast(transform.position, transform.forward * _stateMachine.InputController.MovementInputVector.z, 1f, _groundMask);
+        return Physics.Raycast(transform.position, transform.forward * _stateMachine.CoreControllers.Input.MovementInputVector.z, 1f, _groundMask);
     }
 
     public void ToggleCameraEffect(bool enable)

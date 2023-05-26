@@ -44,7 +44,7 @@ public class BulletController : MonoBehaviour
         _rayStartPoint = transform.position;
         _rayTargetPoint = _rayStartPoint + transform.forward * _raylength;
 
-        Destroy(gameObject, _weaponData.Range);
+        Destroy(gameObject, _weaponData.RangeStats.Range);
     }
 
     private void Update()
@@ -64,8 +64,8 @@ public class BulletController : MonoBehaviour
     {
         Instantiate(_hitEffect, _hit.point, Quaternion.LookRotation(_hit.normal));
 
-        _hit.rigidbody?.AddForceAtPosition(-_hit.normal * _weaponData.CarredForce * 10, _hit.point);
-        _hit.transform.GetComponent<IDamageable>()?.TakeDamage(_weaponData.Damage);
+        _hit.rigidbody?.AddForceAtPosition(-_hit.normal * _weaponData.RangeStats.CarredForce * 10, _hit.point);
+        _hit.transform.GetComponent<IDamageable>()?.TakeDamage(_weaponData.RangeStats.Damage);
     }
 
 

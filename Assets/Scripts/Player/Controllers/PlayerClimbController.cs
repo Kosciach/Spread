@@ -42,7 +42,7 @@ public class PlayerClimbController : MonoBehaviour
         bool isWallDetected = false;
 
 
-        if (_playerStateMachine.InputController.MovementInputVector.z <= 0) return false;
+        if (_playerStateMachine.CoreControllers.Input.MovementInputVector.z <= 0) return false;
 
 
         for(int i=0; i<_rayCount; i++)

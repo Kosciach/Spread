@@ -7,28 +7,40 @@ public class RangeWeaponData : WeaponData
 {
     [Space(20)]
     [Header("====HoldTransforms====")]
-    [Space(5)]
-    public WeaponTransform Rest;
-    [Space(5)]
-    public WeaponTransform Hip;
-
+    public HoldTransformsStruct HoldTransforms;
+ 
 
     [Space(20)]
-    [Header("====RangeStats====")]
-    [Range(0, 120)]
-    public float Damage;
-    [Range(0, 6)]
-    public float Range;
-    [Range(0, 30)]
-    public float FireRate;
-    [Range(0, 100)]
-    public float CarredForce;
-
+    [Header("====Stats====")]
+    public RangeStatsStruct RangeStats;
     [Space(5)]
     public RecoilSettingsStruct RecoilSettings;
 
 
 
+
+
+
+    [System.Serializable]
+    public struct HoldTransformsStruct
+    {
+        public WeaponTransform Rest;
+        [Space(5)]
+        public WeaponTransform Hip;
+    }
+
+    [System.Serializable]
+    public struct RangeStatsStruct
+    {
+        [Range(0, 120)]
+        public float Damage;
+        [Range(0, 6)]
+        public float Range;
+        [Range(0, 30)]
+        public float FireRate;
+        [Range(0, 100)]
+        public float CarredForce;
+    }
 
     [System.Serializable]
     public struct RecoilSettingsStruct
@@ -40,4 +52,5 @@ public class RangeWeaponData : WeaponData
         [Range(0, 5)]
         public float RotZ;
     }
+
 }

@@ -32,13 +32,13 @@ public class MeleeWeaponHoldController : WeaponHoldController
     {
         CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
 
-        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetRot(_meleeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
-        _playerCombatController.PlayerStateMachine.WeaponAnimator.MainPositioner.SetPos(_meleeWeaponData.Hip.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
+        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_meleeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
+        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_meleeWeaponData.Hip.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
         {
             _stateMachine.DamageDealingController.enabled = true;
 
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Bobbing.Toggle(true);
-            _playerCombatController.PlayerStateMachine.WeaponAnimator.Sway.Toggle(true);
+            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
+            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
 
             _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
         });

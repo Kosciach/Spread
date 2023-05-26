@@ -40,7 +40,7 @@ public class PlayerHandsCameraEnableController : MonoBehaviour
 
     public void ToggleHandsCamera(bool enable)
     {
-        if (!_stateMachine.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
+        if (!_stateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
 
         int index = enable ? 0 : 1;
 

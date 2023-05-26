@@ -10,21 +10,21 @@ public class PlayerCrouchState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.WeaponAnimator.HandOffseter.SetPosOffset(new Vector3(0, 0, -0.18f), 5);
+        _ctx.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(new Vector3(0, 0, -0.18f), 5);
 
-        if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
-            _ctx.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Crouch, 5);
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+            _ctx.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Crouch, 5);
 
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, true, 3);
-        _ctx.MovementController.OnGround.SetCrouchSpeed();
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, true, 3);
+        _ctx.MovementControllers.Movement.OnGround.SetCrouchSpeed();
     }
     public override void StateUpdate()
     {
-        _ctx.RotationController.RotateToCanera();
-        _ctx.MovementController.OnGround.Movement();
+        _ctx.MovementControllers.Rotation.RotateToCanera();
+        _ctx.MovementControllers.Movement.OnGround.Movement();
 
-        if (_ctx.SwimController.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
-        if (!_ctx.VerticalVelocityController.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
+        if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
+        if (!_ctx.MovementControllers.VerticalVelocity.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
     {
@@ -43,11 +43,11 @@ public class PlayerCrouchState : PlayerBaseState
     }
     public override void StateExit()
     {
-        if (_ctx.CombatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
-            _ctx.HandsCameraController.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+            _ctx.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
 
-        _ctx.AnimatorController.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, false, 3);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, false, 3);
 
-        _ctx.WeaponAnimator.HandOffseter.ResetPosOffset();
+        _ctx.AnimatingControllers.Weapon.HandOffseter.ResetPosOffset();
     }
 }

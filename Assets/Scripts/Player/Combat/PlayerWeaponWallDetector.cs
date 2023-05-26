@@ -18,13 +18,13 @@ public class PlayerWeaponWallDetector : MonoBehaviour
     {
         if (other.CompareTag("Weapon") || other.CompareTag("Player")) return;
 
-        _playerStateMachine.CombatController.EquipedWeaponController.Wall.ToggleWall(true);
+        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.ToggleWall(true);
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Weapon") || other.CompareTag("Player")) return;
 
-        _playerStateMachine.CombatController.EquipedWeaponController.Wall.ToggleWall(false);
+        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.ToggleWall(false);
     }
 
 

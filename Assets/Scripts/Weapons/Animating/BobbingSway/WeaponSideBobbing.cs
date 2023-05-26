@@ -36,8 +36,8 @@ public class WeaponSideBobbing : MonoBehaviour
 
     private void SetSideBobbing()
     {
-        int sideMovementX = (int)_bobbingController.WeaponAnimator.PlayerStateMachine.InputController.MovementInputVector.x;
-        int sideMovementZ = (int)_bobbingController.WeaponAnimator.PlayerStateMachine.InputController.MovementInputVector.z;
+        int sideMovementX = (int)_bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x;
+        int sideMovementZ = (int)_bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Input.MovementInputVector.z;
         _sideMovementRotTarget = new Vector3(sideMovementZ * _sideBobbingStrength/3, 0, sideMovementX * -_sideBobbingStrength);
     }
 

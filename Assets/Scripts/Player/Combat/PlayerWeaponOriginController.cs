@@ -29,7 +29,7 @@ public class PlayerWeaponOriginController : MonoBehaviour
     }
     private void UpdateOriginPosition()
     {
-        Vector3 inputVector = _playerStateMachine.InputController.MovementInputVectorNormalized;
+        Vector3 inputVector = _playerStateMachine.CoreControllers.Input.MovementInputVectorNormalized;
         Vector3 posOffset = (transform.forward * inputVector.z + transform.right * inputVector.x) * 3;
 
 
