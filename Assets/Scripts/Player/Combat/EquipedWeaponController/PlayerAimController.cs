@@ -13,6 +13,7 @@ public class PlayerAimController : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] bool _isAim; public bool IsAim { get { return _isAim; } }
+    [SerializeField] bool _isInput; public bool IsInput { get { return _isInput; } set { _isInput = value; } }
     [SerializeField] int _aimTypeIndex;
     [SerializeField] AimTypeEnum _aimType;
 
@@ -32,7 +33,6 @@ public class PlayerAimController : MonoBehaviour
         _aimMethods[0] = AimDisable;
         _aimMethods[1] = AimEnable;
     }
-
 
 
 

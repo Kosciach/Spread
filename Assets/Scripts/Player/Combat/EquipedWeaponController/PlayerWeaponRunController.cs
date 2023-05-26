@@ -17,6 +17,7 @@ public class PlayerWeaponRunController : MonoBehaviour
 
 
     private Action[] _runMethods = new Action[2];
+    private Action _transitionFromRun;
 
 
     private void Awake()
@@ -54,7 +55,20 @@ public class PlayerWeaponRunController : MonoBehaviour
     }
     private void DisableRun()
     {
+        if (_equipedWeaponController.Wall.IsWall) _transitionFromRun = TransitionToWall;
+        else _transitionFromRun = TransitionNormally;
 
+        _transitionFromRun();
+    }
+
+
+
+    private void TransitionToWall()
+    {
+        _equipedWeaponController.Wall.Wall(true);
+    }
+    private void TransitionNormally()
+    {
         _combatController.EquipedWeapon.DamageDealingController.enabled = true;
         _combatController.PlayerStateMachine.AnimatingControllers.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
 

@@ -9,22 +9,31 @@ public class PlayerWeaponWallDetector : MonoBehaviour
     [SerializeField] Collider _collider;
 
 
+    [Space(20)]
+    [Header("====Debugs====")]
+    [SerializeField] bool _isWallDetected;
 
 
 
 
+    private void Update()
+    {
+        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.ToggleWallBool(_isWallDetected);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Weapon") || other.CompareTag("Player")) return;
 
-        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.ToggleWall(true);
+        _isWallDetected = true;
+        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.Wall(_isWallDetected);
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Weapon") || other.CompareTag("Player")) return;
 
-        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.ToggleWall(false);
+        _isWallDetected = false;
+        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.Wall(_isWallDetected);
     }
 
 

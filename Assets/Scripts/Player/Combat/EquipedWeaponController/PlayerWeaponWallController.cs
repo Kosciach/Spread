@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class PlayerWeaponWallController : MonoBehaviour
@@ -16,6 +17,7 @@ public class PlayerWeaponWallController : MonoBehaviour
 
 
     private Action[] _wallMethods = new Action[2];
+    private Action _transitionFromWall;
 
 
     private void Awake()
@@ -27,13 +29,11 @@ public class PlayerWeaponWallController : MonoBehaviour
 
 
 
-    public void ToggleWall(bool enable)
+    public void Wall(bool enable)
     {
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
 
         int index = enable ? 1 : 0;
-
-        ToggleWallBool(enable);
 
         _wallMethods[index]();
     }
@@ -56,9 +56,36 @@ public class PlayerWeaponWallController : MonoBehaviour
     }
     private void WallDisable()
     {
-        _combatController.EquipedWeapon.DamageDealingController.enabled = true;
+        if (_equipedWeaponController.Block.IsInput)
+        {
+            if (_equipedWeaponController.Aim.IsInput) _transitionFromWall = TransitionToAim;
+            else _transitionFromWall = TransitionToBlock;
+        }
+        else
+        {
+            if (_equipedWeaponController.Aim.IsInput) _transitionFromWall = TransitionToAim;
+            else _transitionFromWall = TransitionToHold;
+        }
 
+        _transitionFromWall();
+    }
+
+
+
+    private void TransitionToHold()
+    {
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.HoldController;
         equipedModeController.MoveHandsToCurrentHoldMode(6, 6);
     }
+    private void TransitionToBlock()
+    {
+        _isWall = false;
+        _equipedWeaponController.Block.Block(true);
+    }
+    private void TransitionToAim()
+    {
+        _isWall = false;
+        _equipedWeaponController.Aim.Aim(true);
+    }
+
 }

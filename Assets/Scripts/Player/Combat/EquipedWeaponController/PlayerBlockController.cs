@@ -13,6 +13,7 @@ public class PlayerBlockController : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] bool _isBlock; public bool IsBlock { get { return _isBlock; } }
+    [SerializeField] bool _isInput; public bool IsInput { get { return _isInput; } set { _isInput = value; } }
 
 
     private Action[] _blockMethods = new Action[2];
@@ -30,7 +31,7 @@ public class PlayerBlockController : MonoBehaviour
 
 
 
-    #region Block
+
     public void Block(bool block)
     {
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim || _equipedWeaponController.Wall.IsWall) return;
@@ -66,5 +67,4 @@ public class PlayerBlockController : MonoBehaviour
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.HoldController;
         equipedModeController.MoveHandsToCurrentHoldMode(6, 6);
     }
-    #endregion
 }

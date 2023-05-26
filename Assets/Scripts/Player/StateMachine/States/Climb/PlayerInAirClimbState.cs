@@ -30,8 +30,8 @@ public class PlayerInAirClimbState : PlayerBaseState
     public override void StateExit()
     {
         ClimbEnterExit(true);
-        _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
 
+        _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
         _ctx.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
     }
 

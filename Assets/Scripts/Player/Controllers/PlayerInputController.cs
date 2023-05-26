@@ -130,13 +130,29 @@ public class PlayerInputController : MonoBehaviour
     }
     private void SetAim()
     {
-        _playerInputs.Player.Aim.started += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.Aim(true);
-        _playerInputs.Player.Aim.canceled += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.Aim(false);
+        _playerInputs.Player.Aim.started += ctx =>
+        {
+            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.Aim(true);
+            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.IsInput = true;
+        };
+        _playerInputs.Player.Aim.canceled += ctx =>
+        {
+            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.Aim(false);
+            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.IsInput = false;
+        };
     }
     private void SetBlock()
     {
-        _playerInputs.Player.Block.started += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.Block(true);
-        _playerInputs.Player.Block.canceled += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.Block(false);
+        _playerInputs.Player.Block.started += ctx =>
+        {
+            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.Block(true);
+            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.IsInput = true;
+        };
+        _playerInputs.Player.Block.canceled += ctx =>
+        {
+            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.Block(false);
+            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.IsInput = false;
+        };
     }
 
 

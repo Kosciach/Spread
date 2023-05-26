@@ -42,6 +42,8 @@ public class PlayerFallState : PlayerBaseState
     {
         _ctx.AnimatingControllers.Animator.SetBool("Fall", false);
         _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", false);
+
+        _ctx.CombatControllers.Combat.EquipedWeaponController.InAir.Land();
     }
 
 

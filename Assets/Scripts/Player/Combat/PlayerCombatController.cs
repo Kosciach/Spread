@@ -95,9 +95,6 @@ public class PlayerCombatController : MonoBehaviour
         ToggleCombatLayersPreset(true, false, false, false, true, 3);
 
 
-        //Set left hand correct transform
-        _leftHand.localPosition = _equipedWeaponData.LeftHand_Position;
-        _leftHand.localRotation = Quaternion.Euler(_equipedWeaponData.LeftHand_Rotation);
 
 
         //SetupFingers
@@ -105,6 +102,12 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 4);
         _playerStateMachine.AnimatingControllers.IkController.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset);
 
+
+
+
+        //Move left hand to position
+        _playerStateMachine.AnimatingControllers.LeftHand.SetPos(_equipedWeaponData.LeftHand_Position, 10);
+        _playerStateMachine.AnimatingControllers.LeftHand.SetRot(_equipedWeaponData.LeftHand_Rotation, 10);
 
 
         //Move right hand to origin
@@ -263,6 +266,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
+        _equipedWeapon.DamageDealingController.enabled = false;
         _equipedWeaponController.Aim.ToggleAimBool(false);
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
