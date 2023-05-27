@@ -26,7 +26,7 @@ MonoBehaviour:
       LeftHand_Rotation: {x: 358.32816, y: 9.452123, z: 326.94086}
     Block:
       LeftHand_Position: {x: 0.167, y: -0.1, z: 0.267}
-      LeftHand_Rotation: {x: 364.4, y: -147.2, z: 351.85306}
+      LeftHand_Rotation: {x: 364.4, y: -147.2, z: 345}
   WeaponTransforms:
     Block:
       RightHand_Position: {x: 0.16, y: 0.1, z: 0.61}

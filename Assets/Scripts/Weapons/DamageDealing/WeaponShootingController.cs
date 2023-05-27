@@ -23,6 +23,12 @@ public class WeaponShootingController : WeaponDamageDealingController
     [SerializeField] FireModeTypeEnum _currentFireModeType;
 
 
+    [Space(20)]
+    [Header("====Settings====")]
+    [SerializeField] Ammo _ammoType;
+
+
+
     public enum FireModeTypeEnum
     {
         Safety, Semi, Auto,
@@ -56,6 +62,13 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public void Shoot()
     {
+        if (!_stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo.IsAmmoForShoot(_ammoType))
+        {
+            Debug.Log("Not enough ammo!");
+            return;
+        }
+
+
         RangeWeaponData rangeWeaponData = (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
 
         //SpawnBullet
@@ -75,6 +88,9 @@ public class WeaponShootingController : WeaponDamageDealingController
 
         //Shake
         CameraShake.Instance.Shake(0.5f, 10);
+
+        //Ammo
+        _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo.RemoveAmmo(_ammoType, 1);
     }
 
 
