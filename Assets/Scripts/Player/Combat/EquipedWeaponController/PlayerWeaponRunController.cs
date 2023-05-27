@@ -47,11 +47,14 @@ public class PlayerWeaponRunController : MonoBehaviour
     private void EnableRun()
     {
         _combatController.EquipedWeapon.DamageDealingController.enabled = false;
-        _combatController.PlayerStateMachine.AnimatingControllers.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, true);
+        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, true);
 
 
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Position, 6);
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Rotation, 6);
+
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 6);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 6);
     }
     private void DisableRun()
     {
@@ -70,7 +73,7 @@ public class PlayerWeaponRunController : MonoBehaviour
     private void TransitionNormally()
     {
         _combatController.EquipedWeapon.DamageDealingController.enabled = true;
-        _combatController.PlayerStateMachine.AnimatingControllers.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
+        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
 
 
         WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeapon.HoldController;

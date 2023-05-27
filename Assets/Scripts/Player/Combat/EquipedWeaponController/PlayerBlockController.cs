@@ -59,10 +59,14 @@ public class PlayerBlockController : MonoBehaviour
 
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Position, 6);
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Rotation, 6);
+
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Block.LeftHand_Position, 6);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Block.LeftHand_Rotation, 6);
     }
     private void BlockDisable()
     {
-        _combatController.EquipedWeapon.DamageDealingController.enabled = true;
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 8);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 8);
 
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.HoldController;
         equipedModeController.MoveHandsToCurrentHoldMode(6, 6);

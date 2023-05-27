@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "WeaponData/MeleeWeaponData", fileName = "MeleeWeaponData")]
 public class MeleeWeaponData : WeaponData
 {
-    [Space(20)]
+    [Space(5)]
     [Header("====HoldTransforms====")]
     [Space(5)]
     public WeaponTransform Hip;

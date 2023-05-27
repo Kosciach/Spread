@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerTriggerDisciplineController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerFingerIkController _fingerIkController;
+    [SerializeField] PlayerFingerAnimator _fingerAnimator;
 
 
     [Space(20)]
@@ -44,16 +44,16 @@ public class PlayerTriggerDisciplineController : MonoBehaviour
 
     private void EnableTriggerDiscipline(FingerPreset fingerPreset)
     {
-        LeanTween.moveLocal(_fingerIkController.RightHand.Index.gameObject, fingerPreset.TriggerDisciplineIndexFinger.Target_Position, _tweenTime);
-        LeanTween.rotateLocal(_fingerIkController.RightHand.Index.gameObject, fingerPreset.TriggerDisciplineIndexFinger.Target_Rotation, _tweenTime);
+        LeanTween.moveLocal(_fingerAnimator.RightHand.Index.gameObject, fingerPreset.TriggerDisciplineIndexFinger.Target_Position, _tweenTime);
+        LeanTween.rotateLocal(_fingerAnimator.RightHand.Index.gameObject, fingerPreset.TriggerDisciplineIndexFinger.Target_Rotation, _tweenTime);
 
-        LeanTween.moveLocal(_fingerIkController.RightHand.Index.parent.GetChild(3).gameObject, fingerPreset.TriggerDisciplineIndexFinger.Hint_Position, _tweenTime);
+        LeanTween.moveLocal(_fingerAnimator.RightHand.Index.parent.GetChild(3).gameObject, fingerPreset.TriggerDisciplineIndexFinger.Hint_Position, _tweenTime);
     }
     private void DisableTriggerDiscipline(FingerPreset fingerPreset)
     {
-        LeanTween.moveLocal(_fingerIkController.RightHand.Index.gameObject, fingerPreset.RightHand.Index.Target_Position, _tweenTime);
-        LeanTween.rotateLocal(_fingerIkController.RightHand.Index.gameObject, fingerPreset.RightHand.Index.Target_Rotation, _tweenTime);
+        LeanTween.moveLocal(_fingerAnimator.RightHand.Index.gameObject, fingerPreset.Base.RightHand.Index.Target_Position, _tweenTime);
+        LeanTween.rotateLocal(_fingerAnimator.RightHand.Index.gameObject, fingerPreset.Base.RightHand.Index.Target_Rotation, _tweenTime);
 
-        LeanTween.moveLocal(_fingerIkController.RightHand.Index.parent.GetChild(3).gameObject, fingerPreset.RightHand.Index.Hint_Position, _tweenTime);
+        LeanTween.moveLocal(_fingerAnimator.RightHand.Index.parent.GetChild(3).gameObject, fingerPreset.Base.RightHand.Index.Hint_Position, _tweenTime);
     }
 }

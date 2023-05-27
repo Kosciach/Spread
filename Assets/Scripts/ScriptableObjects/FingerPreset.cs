@@ -5,12 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/FingerPreset",fileName = "FingerPreset")]
 public class FingerPreset : ScriptableObject
 {
-    public Hand RightHand;
-    public Hand LeftHand;
+    public PresetStruct Base;
+    public PresetStruct Block;
     [Space(10)]
     public Finger TriggerDisciplineIndexFinger;
 
 
+
+
+    [System.Serializable]
+    public struct PresetStruct
+    {
+        public Hand RightHand;
+        public Hand LeftHand;
+    }
 
     [System.Serializable]
     public struct Hand

@@ -32,7 +32,7 @@ public class RangeWeaponHoldController : WeaponHoldController
         _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_rangeWeaponData.HoldTransforms.Rest.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
         {
             _stateMachine.DamageDealingController.enabled = false;
-            _stateMachine.PlayerStateMachine.AnimatingControllers.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, true);
+            _stateMachine.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, true);
 
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
@@ -53,7 +53,7 @@ public class RangeWeaponHoldController : WeaponHoldController
         _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_rangeWeaponData.HoldTransforms.Hip.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
         {
             _stateMachine.DamageDealingController.enabled = true;
-            _stateMachine.PlayerStateMachine.AnimatingControllers.IkController.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, false);
+            _stateMachine.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_stateMachine.DataHolder.WeaponData, false);
 
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);

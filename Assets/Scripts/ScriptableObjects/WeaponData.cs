@@ -28,12 +28,11 @@ public class WeaponData : ScriptableObject
 
     [Space(20)]
     [Header("====LeftHandIkTransform====")]
-    public Vector3 LeftHand_Position;
-    public Vector3 LeftHand_Rotation;
+    public LeftHandTransformsStruct LeftHandTransforms;
 
 
     [Space(20)]
-    [Header("====WeaponTransforms====")]
+    [Header("====WeaponIkTransforms====")]
     public WeaponTransformsStruct WeaponTransforms;
 
 
@@ -51,20 +50,32 @@ public class WeaponData : ScriptableObject
     [System.Serializable]
     public struct WeaponTransformsStruct
     {
-        [Header("====BlockTransform====")]
         public WeaponTransform Block;
 
         [Space(5)]
-        [Header("====AimTransforms====")]
         public WeaponTransform[] Aim;
 
         [Space(5)]
-        [Header("====RunTransform====")]
         public WeaponTransform Run;
 
         [Space(5)]
-        [Header("====WallTransform====")]
         public WeaponTransform Wall;
+    }
+
+
+
+    [System.Serializable]
+    public struct LeftHandTransform
+    {
+        public Vector3 LeftHand_Position;
+        public Vector3 LeftHand_Rotation;
+    }
+
+    [System.Serializable]
+    public struct LeftHandTransformsStruct
+    {
+        public LeftHandTransform Base;
+        public LeftHandTransform Block;
     }
 
 

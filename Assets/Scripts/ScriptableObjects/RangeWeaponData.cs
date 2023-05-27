@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "WeaponData/RangeWeaponData", fileName = "RangeWeaponData")]
 public class RangeWeaponData : WeaponData
 {
-    [Space(20)]
+    [Space(5)]
     [Header("====HoldTransforms====")]
     public HoldTransformsStruct HoldTransforms;
  

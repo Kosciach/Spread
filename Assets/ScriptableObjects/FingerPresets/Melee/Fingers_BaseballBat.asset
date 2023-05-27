@@ -12,6 +12,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daec560dcc8e8aa428163fea68b66cd7, type: 3}
   m_Name: Fingers_BaseballBat
   m_EditorClassIdentifier: 
+  Base:
+    RightHand:
+      Thumb:
+        Target_Position: {x: 0.0156, y: 0.1036, z: 0.1253}
+        Target_Rotation: {x: 36.999996, y: 0, z: 0}
+        Hint_Position: {x: 0.101, y: 0.036, z: -0.084}
+      Index:
+        Target_Position: {x: 0.041, y: 0.2314, z: -0.0093}
+        Target_Rotation: {x: 42.770004, y: 0, z: 0}
+        Hint_Position: {x: 0.0336, y: 0.2402, z: 0.0653}
+      Middle:
+        Target_Position: {x: 0.0614, y: 0.1809, z: 0.005}
+        Target_Rotation: {x: 309.1, y: 180, z: 180}
+        Hint_Position: {x: -0.0029, y: 0.2349, z: 0.0116}
+      Ring:
+        Target_Position: {x: 0.0625, y: 0.1634, z: -0.0359}
+        Target_Rotation: {x: 281, y: 0, z: 0}
+        Hint_Position: {x: 0.0341, y: 0.2231, z: -0.0196}
+      Pinky:
+        Target_Position: {x: 0.067, y: 0.1439, z: -0.0518}
+        Target_Rotation: {x: 297.5, y: 180, z: 180}
+        Hint_Position: {x: 0.0141, y: 0.2118, z: -0.0678}
+    LeftHand:
+      Thumb:
+        Target_Position: {x: -0.045, y: 0.112, z: 0.073}
+        Target_Rotation: {x: 28.400002, y: 0, z: 0}
+        Hint_Position: {x: 0.0413, y: 0.1082, z: 0.1287}
+      Index:
+        Target_Position: {x: -0.0521, y: 0.2268, z: 0.0422}
+        Target_Rotation: {x: 73.58999, y: 0, z: 0}
+        Hint_Position: {x: 0.0022, y: 0.1463, z: 0.0011}
+      Middle:
+        Target_Position: {x: -0.0511, y: 0.1707, z: -0.0509}
+        Target_Rotation: {x: 282.59998, y: 180, z: 180}
+        Hint_Position: {x: -0.0409, y: 0.2354, z: -0.0196}
+      Ring:
+        Target_Position: {x: -0.0515, y: 0.1382, z: -0.061}
+        Target_Rotation: {x: 300.7, y: 180, z: 180}
+        Hint_Position: {x: -0.0779, y: 0.1649, z: -0.0771}
+      Pinky:
+        Target_Position: {x: -0.06, y: 0.1381, z: -0.0641}
+        Target_Rotation: {x: 336.19998, y: 180, z: 180}
+        Hint_Position: {x: 0.0262, y: 0.234, z: -0.0893}
+  Block:
+    RightHand:
+      Thumb:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
+      Index:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
+      Middle:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
+      Ring:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
+      Pinky:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
+    LeftHand:
+      Thumb:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
+      Index:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
+      Middle:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
+      Ring:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
+      Pinky:
+        Target_Position: {x: 0, y: 0, z: 0}
+        Target_Rotation: {x: 0, y: 0, z: 0}
+        Hint_Position: {x: 0, y: 0, z: 0}
   RightHand:
     Thumb:
       Target_Position: {x: 0.0156, y: 0.1036, z: 0.1253}

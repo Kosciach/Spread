@@ -52,7 +52,8 @@ public class PlayerStateMachine : MonoBehaviour
         public PlayerAnimatorController Animator;
         public WeaponAnimator Weapon;
         public LeftHandAnimator LeftHand;
-        public PlayerIkController IkController;
+        public PlayerFingerAnimator Fingers;
+        public PlayerIkLayerController IkLayers;
     }
 
     [System.Serializable]

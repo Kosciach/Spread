@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerFingerIkController : MonoBehaviour
+public class PlayerFingerAnimator : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerIkController _ikController;
+    [SerializeField] PlayerStateMachine _playerStateMachine;
     [SerializeField] PlayerTriggerDisciplineController _triggerDiscipline; public PlayerTriggerDisciplineController TriggerDiscipline { get { return _triggerDiscipline; } }
     [SerializeField] Hand _rightHand; public Hand RightHand { get { return _rightHand; } }
     [SerializeField] Hand _leftHand; public Hand LeftHand { get { return _leftHand; } }
@@ -29,7 +29,7 @@ public class PlayerFingerIkController : MonoBehaviour
 
 
 
-    public void SetUpAllFingers(FingerPreset fingerPreset)
+    public void SetUpAllFingers(FingerPreset.PresetStruct fingerPreset)
     {
         SetUpHandFingers(_rightHand, fingerPreset.RightHand);
         SetUpHandFingers(_leftHand, fingerPreset.LeftHand);

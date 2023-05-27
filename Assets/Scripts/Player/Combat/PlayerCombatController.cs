@@ -98,16 +98,16 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //SetupFingers
-        _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 4);
-        _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 4);
-        _playerStateMachine.AnimatingControllers.IkController.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 4);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 4);
+        _playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset.Base);
 
 
 
 
         //Move left hand to position
-        _playerStateMachine.AnimatingControllers.LeftHand.SetPos(_equipedWeaponData.LeftHand_Position, 10);
-        _playerStateMachine.AnimatingControllers.LeftHand.SetRot(_equipedWeaponData.LeftHand_Rotation, 10);
+        _playerStateMachine.AnimatingControllers.LeftHand.SetPos(_equipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 10);
+        _playerStateMachine.AnimatingControllers.LeftHand.SetRot(_equipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 10);
 
 
         //Move right hand to origin
@@ -163,8 +163,8 @@ public class PlayerCombatController : MonoBehaviour
             ToggleCombatLayersPreset(false, true, true, true, false, 3);
 
             //Disable fingers
-            _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 4);
-            _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 4);
+            _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 4);
+            _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 4);
 
             //Prepare hands camera
             _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
@@ -257,8 +257,8 @@ public class PlayerCombatController : MonoBehaviour
         ToggleCombatLayersPreset(false, false, false, false, false, 10);
 
         //Disable fingers
-        _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 5);
-        _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 5);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 5);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 5);
 
         //Prepare hands camera
         _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
@@ -284,10 +284,10 @@ public class PlayerCombatController : MonoBehaviour
     public void ToggleCombatLayersPreset(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float speed)
     {
         _playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, combatAnim, speed);
-        _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, spineLock, speed);
-        _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, body, speed);
-        _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, head, speed);
-        _playerStateMachine.AnimatingControllers.IkController.Layers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, combat, speed);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, spineLock, speed);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, body, speed);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, head, speed);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, combat, speed);
     }
 
 
