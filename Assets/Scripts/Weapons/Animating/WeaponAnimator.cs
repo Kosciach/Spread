@@ -7,7 +7,7 @@ public class WeaponAnimator : MonoBehaviour
     [Header("====References====")]
     [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
     [Space(5)]
-    [SerializeField] WeaponMainPositionerAnimator _mainPositioner; public WeaponMainPositionerAnimator MainPositioner { get { return _mainPositioner; } }
+    [SerializeField] WeaponMainPositioner _mainPositioner; public WeaponMainPositioner MainPositioner { get { return _mainPositioner; } }
     [SerializeField] WeaponSwayController _sway; public WeaponSwayController Sway { get { return _sway; } }
     [SerializeField] WeaponBobbingController _bobbing; public WeaponBobbingController Bobbing { get { return _bobbing; } }
     [SerializeField] WeaponRightHandOffseter _handOffseter; public WeaponRightHandOffseter HandOffseter { get { return _handOffseter; } }

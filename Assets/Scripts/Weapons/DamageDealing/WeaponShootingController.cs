@@ -14,6 +14,8 @@ public class WeaponShootingController : WeaponDamageDealingController
     [SerializeField] WeaponSlideAnimator _slideAnimator;
 
     private WeaponBarrelController _barrelController;
+    private WeaponAmmoController _ammoController; public WeaponAmmoController AmmoController { get { return _ammoController; } }
+
 
 
     [Space(20)]
@@ -21,11 +23,6 @@ public class WeaponShootingController : WeaponDamageDealingController
     [SerializeField] BaseFireMode _currentFireMode;
     [SerializeField] int _currentFireModeIndex;
     [SerializeField] FireModeTypeEnum _currentFireModeType;
-
-
-    [Space(20)]
-    [Header("====Settings====")]
-    [SerializeField] Ammo _ammoType;
 
 
 
@@ -38,6 +35,7 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public override void VirtualAwake()
     {
+        _ammoController = GetComponent<WeaponAmmoController>();
         _barrel = transform.GetChild(1);
         _barrelController = _barrel.GetComponent<WeaponBarrelController>();
 
@@ -54,6 +52,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     private void Start()
     {
         _inputs.Range.ChangeFireMode.performed += ctx => ChangeFireMode();
+        _inputs.Range.Reload.performed += ctx => _ammoController.Reload();
     }
 
 
@@ -62,9 +61,9 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public void Shoot()
     {
-        if (!_stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo.IsAmmoForShoot(_ammoType))
+        if (!_ammoController.IsRoundInChamber)
         {
-            Debug.Log("Not enough ammo!");
+            Debug.Log("No round in the chamber!");
             return;
         }
 
@@ -90,7 +89,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         CameraShake.Instance.Shake(0.5f, 10);
 
         //Ammo
-        _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo.RemoveAmmo(_ammoType, 1);
+        _ammoController.OnShoot();
     }
 
 
@@ -118,10 +117,12 @@ public class WeaponShootingController : WeaponDamageDealingController
     {
         _currentFireMode.enabled = true;
         _barrelController.enabled = true;
+        _ammoController.enabled = true;
     }
     public override void VirtualOnDisable()
     {
         _currentFireMode.enabled = false;
         _barrelController.enabled = false;
+        _ammoController.enabled = false;
     }
 }

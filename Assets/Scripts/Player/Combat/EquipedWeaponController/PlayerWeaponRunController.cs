@@ -31,6 +31,7 @@ public class PlayerWeaponRunController : MonoBehaviour
 
     public void ToggleRunWeaponLock(bool enable)
     {
+        if (_combatController.PlayerStateMachine.AnimatingControllers.Reload.IsReloading) return;
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim || _equipedWeaponController.Block.IsBlock) return;
 
         int index = enable ? 1 : 0;

@@ -15,6 +15,8 @@ public class RangeWeaponData : WeaponData
     public RangeStatsStruct RangeStats;
     [Space(5)]
     public RecoilSettingsStruct RecoilSettings;
+    [Space(5)]
+    public AmmoSettingsStruct AmmoSettings;
 
 
 
@@ -53,4 +55,10 @@ public class RangeWeaponData : WeaponData
         public float RotZ;
     }
 
+    [System.Serializable]
+    public struct AmmoSettingsStruct
+    {
+        public int MagSize;
+        public Ammo AmmoType;
+    }
 }

@@ -54,6 +54,7 @@ public class PlayerStateMachine : MonoBehaviour
         public LeftHandAnimator LeftHand;
         public PlayerFingerAnimator Fingers;
         public PlayerIkLayerController IkLayers;
+        public WeaponReloadAnimator Reload;
     }
 
     [System.Serializable]

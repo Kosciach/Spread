@@ -7,7 +7,7 @@ public class LeftHandAnimator : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] PlayerStateMachine _playerStateMachine;
-    [SerializeField] Transform _leftHandIk;
+    [SerializeField] Transform _leftHandIk; public Transform LeftHandIk { get { return _leftHandIk; } }
 
 
 

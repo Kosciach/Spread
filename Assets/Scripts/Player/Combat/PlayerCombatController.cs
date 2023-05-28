@@ -124,6 +124,8 @@ public class PlayerCombatController : MonoBehaviour
             //Move right hand to correct position
             _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(5, 6);
             _weaponWallDetector.ToggleCollider(true);
+
+            CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
         });
     }
 
@@ -149,7 +151,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
 
-        CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
 
         //Move right hand to origin
@@ -175,6 +177,7 @@ public class PlayerCombatController : MonoBehaviour
             _equipedWeapon = null;
             _equipedWeaponData = null;
 
+            CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
             SetState(CombatStateEnum.Unarmed);
         });
     }
@@ -213,7 +216,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
-        CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
 
 
@@ -222,6 +225,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeapon = null;
         _equipedWeaponData = null;
 
+        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
         SetState(CombatStateEnum.Unarmed);
     }
 
@@ -274,6 +278,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeapon = null;
         _equipedWeaponData = null;
 
+        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
     }
     public void RecoverFromTemporaryUnEquip()
     {

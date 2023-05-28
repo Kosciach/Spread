@@ -58,3 +58,6 @@ MonoBehaviour:
     BackPush: 0.1
     RotX: 2
     RotZ: 2
+  AmmoSettings:
+    MagSize: 35
+    AmmoType: {fileID: 11400000, guid: 3c45487ce23f68e42806317015a885d8, type: 2}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangeWeaponHoldController : WeaponHoldController
 {
     private RangeWeaponData _rangeWeaponData;
-
+    private WeaponShootingController _shootingController => (WeaponShootingController)_stateMachine.DamageDealingController;
 
     protected override void VirtualAwake()
     { }
@@ -22,7 +22,7 @@ public class RangeWeaponHoldController : WeaponHoldController
 
     public override void RestHoldMode(float rotateSpeed, float moveSpeed)
     {
-        CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
         _playerCombatController.RightHand.localPosition = Vector3.zero;
         _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);
@@ -43,7 +43,7 @@ public class RangeWeaponHoldController : WeaponHoldController
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
-        CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
 
         _playerCombatController.RightHand.localPosition = Vector3.zero;
         _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);

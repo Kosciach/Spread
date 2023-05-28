@@ -40,8 +40,8 @@ public class PlayerAimController : MonoBehaviour
 
     public void Aim(bool aim)
     {
+        if (_combatController.PlayerStateMachine.AnimatingControllers.Reload.IsReloading) return;
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Wall.IsWall) return;
-
         if (_combatController.EquipedWeaponData.WeaponTransforms.Aim.Length <= 0) return;
 
 
@@ -111,7 +111,7 @@ public class PlayerAimController : MonoBehaviour
 
     private void CheckCrosshair()
     {
-        if (_aimType == AimTypeEnum.Left) CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
-        else CanvasController.Instance.CrosshairController.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.None);
+        if (_aimType == AimTypeEnum.Left) CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+        else CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.None);
     }
 }

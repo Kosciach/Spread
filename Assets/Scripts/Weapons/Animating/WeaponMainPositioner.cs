@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponMainPositionerAnimator : MonoBehaviour
+public class WeaponMainPositioner : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] WeaponAnimator _weaponAnimator;
@@ -74,13 +74,13 @@ public class WeaponMainPositionerAnimator : MonoBehaviour
     }
 
 
-    public WeaponMainPositionerAnimator SetPos(Vector3 pos, float speed)
+    public WeaponMainPositioner SetPos(Vector3 pos, float speed)
     {
         _desiredMainVectors.Pos = pos;
         _posVectorSmoothSpeed = speed;
         return this;
     }
-    public WeaponMainPositionerAnimator SetRot(Vector3 rot, float speed)
+    public WeaponMainPositioner SetRot(Vector3 rot, float speed)
     {
         _desiredMainVectors.Rot = rot;
         _rotVectorSmoothSpeed = speed;

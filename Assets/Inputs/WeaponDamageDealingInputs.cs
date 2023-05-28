@@ -72,6 +72,15 @@ public partial class @WeaponDamageDealingInputs : IInputActionCollection2, IDisp
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""8e4e8437-85f9-470d-87fd-168f7d710f0b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -96,6 +105,17 @@ public partial class @WeaponDamageDealingInputs : IInputActionCollection2, IDisp
                     ""action"": ""ChangeFireMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0732781-cc9c-4ccf-8cbe-db4090b7aee5"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -109,6 +129,7 @@ public partial class @WeaponDamageDealingInputs : IInputActionCollection2, IDisp
         m_Range = asset.FindActionMap("Range", throwIfNotFound: true);
         m_Range_Shoot = m_Range.FindAction("Shoot", throwIfNotFound: true);
         m_Range_ChangeFireMode = m_Range.FindAction("ChangeFireMode", throwIfNotFound: true);
+        m_Range_Reload = m_Range.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -203,12 +224,14 @@ public partial class @WeaponDamageDealingInputs : IInputActionCollection2, IDisp
     private IRangeActions m_RangeActionsCallbackInterface;
     private readonly InputAction m_Range_Shoot;
     private readonly InputAction m_Range_ChangeFireMode;
+    private readonly InputAction m_Range_Reload;
     public struct RangeActions
     {
         private @WeaponDamageDealingInputs m_Wrapper;
         public RangeActions(@WeaponDamageDealingInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shoot => m_Wrapper.m_Range_Shoot;
         public InputAction @ChangeFireMode => m_Wrapper.m_Range_ChangeFireMode;
+        public InputAction @Reload => m_Wrapper.m_Range_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Range; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -224,6 +247,9 @@ public partial class @WeaponDamageDealingInputs : IInputActionCollection2, IDisp
                 @ChangeFireMode.started -= m_Wrapper.m_RangeActionsCallbackInterface.OnChangeFireMode;
                 @ChangeFireMode.performed -= m_Wrapper.m_RangeActionsCallbackInterface.OnChangeFireMode;
                 @ChangeFireMode.canceled -= m_Wrapper.m_RangeActionsCallbackInterface.OnChangeFireMode;
+                @Reload.started -= m_Wrapper.m_RangeActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_RangeActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_RangeActionsCallbackInterface.OnReload;
             }
             m_Wrapper.m_RangeActionsCallbackInterface = instance;
             if (instance != null)
@@ -234,6 +260,9 @@ public partial class @WeaponDamageDealingInputs : IInputActionCollection2, IDisp
                 @ChangeFireMode.started += instance.OnChangeFireMode;
                 @ChangeFireMode.performed += instance.OnChangeFireMode;
                 @ChangeFireMode.canceled += instance.OnChangeFireMode;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
             }
         }
     }
@@ -246,5 +275,6 @@ public partial class @WeaponDamageDealingInputs : IInputActionCollection2, IDisp
     {
         void OnShoot(InputAction.CallbackContext context);
         void OnChangeFireMode(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

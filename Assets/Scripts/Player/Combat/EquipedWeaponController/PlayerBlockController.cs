@@ -34,6 +34,7 @@ public class PlayerBlockController : MonoBehaviour
 
     public void Block(bool block)
     {
+        if (_combatController.PlayerStateMachine.AnimatingControllers.Reload.IsReloading) return;
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim || _equipedWeaponController.Wall.IsWall) return;
 
 

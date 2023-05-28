@@ -12,7 +12,7 @@ public class PlayerAmmoInventory : MonoBehaviour
     [Header("====Debugs====")]
     [SerializeField] int _spaceForAmmoTaken;
     [SerializeField] int _spaceForAmmoLeft;
-    [SerializeField] int[] _ammoTypesAmmount;
+    [SerializeField] int[] _ammoTypesAmmount; public int[] AmmoTypesAmmount { get { return _ammoTypesAmmount; } }
 
     [Space(20)]
     [Header("====Settings====")]
@@ -40,6 +40,8 @@ public class PlayerAmmoInventory : MonoBehaviour
         _spaceForAmmoTaken += newAmmo.SizeInInventory * ammount;
 
         _spaceForAmmoLeft = _maxSpaceForAmmo - _spaceForAmmoTaken;
+
+        CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(_ammoTypesAmmount[index]);
     }
 
 
@@ -48,21 +50,14 @@ public class PlayerAmmoInventory : MonoBehaviour
     {
         int index = (int)newAmmo.AmmoType;
 
-        if (_ammoTypesAmmount[index] < newAmmo.SizeInInventory * ammount) return;
+        if (_ammoTypesAmmount[index] < ammount) return;
 
 
-        _ammoTypesAmmount[index] -= newAmmo.SizeInInventory * ammount;
-        _spaceForAmmoTaken -= ammount;
+        _ammoTypesAmmount[index] -= ammount;
+        _spaceForAmmoTaken -= newAmmo.SizeInInventory * ammount;
 
         _spaceForAmmoLeft = _maxSpaceForAmmo - _spaceForAmmoTaken;
-    }
 
-
-
-    public bool IsAmmoForShoot(Ammo newAmmo)
-    {
-        int index = (int)newAmmo.AmmoType;
-
-        return _ammoTypesAmmount[index] > 0;
+        CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(_ammoTypesAmmount[index]);
     }
 }
