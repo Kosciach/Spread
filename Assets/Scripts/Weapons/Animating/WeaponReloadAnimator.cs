@@ -23,7 +23,7 @@ public class WeaponReloadAnimator : MonoBehaviour
 
 
 
-    public void Reload(WeaponReloadAnimData reloadAnim)
+    public void Reload(AnimatorOverrideController reloadAnimOveride)
     {
         if (!_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded) return;
         if (_playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.IsWall) return;
@@ -31,7 +31,9 @@ public class WeaponReloadAnimator : MonoBehaviour
         _isReloading = true;
         _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.WeaponReload, true, 10);
 
-        StartCoroutine(AnimRightHand(reloadAnim));
+        _playerStateMachine.AnimatingControllers.Animator.OverrideAnimationClip(reloadAnimOveride);
+        _playerStateMachine.AnimatingControllers.Animator.SetBool("Reload", true);
+
     }
 
 
@@ -39,7 +41,9 @@ public class WeaponReloadAnimator : MonoBehaviour
     public void ReloadFinish()
     {
         _isReloading = false;
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.WeaponReload, false, 10);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.WeaponReload, false, 5);
+
+        _playerStateMachine.AnimatingControllers.Animator.ResetAnimatorController();
     }
 
 
@@ -47,19 +51,7 @@ public class WeaponReloadAnimator : MonoBehaviour
 
 
 
-    private IEnumerator AnimRightHand(WeaponReloadAnimData reloadAnim)
-    {
-        for (int i = 0; i < reloadAnim.RightHandTransforms.Length; i++)
-        {
-            yield return new WaitForSeconds(reloadAnim.RightHandTransforms[i].TimeToHappen);
 
 
-            Debug.Log(i);
-            LeanTween.rotateLocal(_rightHandIk.gameObject, reloadAnim.RightHandTransforms[i].Rot, reloadAnim.RightHandTransforms[i].Rot_Time);
 
-            _rightHandIk.LeanMoveLocal(reloadAnim.RightHandTransforms[i].Pos, reloadAnim.RightHandTransforms[i].Pos_Time);
-            _rightHandIk_Hint.LeanMoveLocal(reloadAnim.RightHandTransforms[i].Hint_Pos, reloadAnim.RightHandTransforms[i].Pos_Time);
-        }
-        ReloadFinish();
-    }
 }

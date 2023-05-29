@@ -1000,7 +1000,7 @@ MonoBehaviour:
   _isRoundInChamber: 1
   _ammoInMag: 0
   _weaponData: {fileID: 11400000, guid: 8ab9daa0e83fb5946ad8bdae25941c01, type: 2}
-  _reloadAnimData: {fileID: 0}
+  _reloadAnimOveride: {fileID: 0}
 --- !u!1 &73011085
 GameObject:
   m_ObjectHideFlags: 0
@@ -9863,7 +9863,7 @@ MonoBehaviour:
   _isRoundInChamber: 1
   _ammoInMag: 0
   _weaponData: {fileID: 11400000, guid: 21626fa3ee9e9f54a88cf40b97e9793d, type: 2}
-  _reloadAnimData: {fileID: 0}
+  _reloadAnimOveride: {fileID: 0}
 --- !u!1 &674885603
 GameObject:
   m_ObjectHideFlags: 0
@@ -14382,7 +14382,7 @@ MonoBehaviour:
   _isRoundInChamber: 1
   _ammoInMag: 0
   _weaponData: {fileID: 11400000, guid: 910073a4d768cc24ca729f78296cb4a1, type: 2}
-  _reloadAnimData: {fileID: 0}
+  _reloadAnimOveride: {fileID: 0}
 --- !u!1 &1270988095
 GameObject:
   m_ObjectHideFlags: 0
@@ -15039,7 +15039,7 @@ MonoBehaviour:
   _isRoundInChamber: 1
   _ammoInMag: 0
   _weaponData: {fileID: 11400000, guid: 8ab9daa0e83fb5946ad8bdae25941c01, type: 2}
-  _reloadAnimData: {fileID: 11400000, guid: dc81ab5b85a70db4983fc33031137b18, type: 2}
+  _reloadAnimOveride: {fileID: 22100000, guid: 834372f536bc92b41b4feaaf6687d39d, type: 2}
 --- !u!1 &1308391446
 GameObject:
   m_ObjectHideFlags: 0
@@ -17177,7 +17177,7 @@ MonoBehaviour:
   _isRoundInChamber: 1
   _ammoInMag: 0
   _weaponData: {fileID: 11400000, guid: 139b096dbaa94294f9dcda299e164bbe, type: 2}
-  _reloadAnimData: {fileID: 0}
+  _reloadAnimOveride: {fileID: 0}
 --- !u!1 &1451122777
 GameObject:
   m_ObjectHideFlags: 0
@@ -18338,7 +18338,7 @@ MonoBehaviour:
   _isRoundInChamber: 1
   _ammoInMag: 0
   _weaponData: {fileID: 11400000, guid: dc94370658b0f0845ae30cfe13116316, type: 2}
-  _reloadAnimData: {fileID: 0}
+  _reloadAnimOveride: {fileID: 0}
 --- !u!1 &1515632879
 GameObject:
   m_ObjectHideFlags: 0
@@ -20968,6 +20968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 3654861958794934898}
+  _baseAnimator: {fileID: 9100000, guid: 3d30ca9a5fc29574d832455dab049824, type: 2}
   _currentLayerWeights:
   - 0
   - 0

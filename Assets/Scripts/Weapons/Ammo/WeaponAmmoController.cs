@@ -12,7 +12,7 @@ public class WeaponAmmoController : MonoBehaviour
     [SerializeField] bool _isRoundInChamber; public bool IsRoundInChamber { get { return _isRoundInChamber; } }
     [SerializeField] int _ammoInMag; public int AmmoInMag { get { return _ammoInMag; } }
     [SerializeField] RangeWeaponData _weaponData;
-    [SerializeField] WeaponReloadAnimData _reloadAnimData;
+    [SerializeField] AnimatorOverrideController _reloadAnimOveride;
 
     private Action<int, PlayerAmmoInventory>[] _reloadMethods = new Action<int, PlayerAmmoInventory>[2];
 
@@ -54,7 +54,7 @@ public class WeaponAmmoController : MonoBehaviour
 
     public void Reload()
     {
-        _stateMachine.PlayerStateMachine.AnimatingControllers.Reload.Reload(_reloadAnimData);
+        _stateMachine.PlayerStateMachine.AnimatingControllers.Reload.Reload(_reloadAnimOveride);
 
 
         //Check if mag is full

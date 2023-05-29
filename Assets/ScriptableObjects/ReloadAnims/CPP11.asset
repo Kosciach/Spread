@@ -14,15 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RightHandTransforms:
   - Pos: {x: 0.182, y: -0.102, z: 0.603}
-    Rot: {x: 282.53284, y: 89.88101, z: 82.15589}
+    Rot: {x: 282.5328, y: 89.88101, z: 82.15589}
     Hint_Pos: {x: 0.319, y: -0.3, z: 0.47}
-    TimeToHappen: 0
+    TimeToHappen: 1
     Pos_Time: 1
     Rot_Time: 1
-  - Pos: {x: 0.182, y: -0.102, z: 0.603}
-    Rot: {x: 307.0753, y: 121.21822, z: 51.58666}
+  - Pos: {x: 0.182, y: 0.102, z: 0.603}
+    Rot: {x: 284.35504, y: 118.95934, z: 52.307774}
     Hint_Pos: {x: 0.319, y: -0.3, z: 0.47}
-    TimeToHappen: 2
+    TimeToHappen: 1
+    Pos_Time: 1
+    Rot_Time: 1
+  - Pos: {x: 0.182, y: 0.102, z: 0.603}
+    Rot: {x: 283.7677, y: 114.275276, z: 57.134487}
+    Hint_Pos: {x: 0.319, y: -0.3, z: 0.47}
+    TimeToHappen: 1
+    Pos_Time: 1
+    Rot_Time: 1
+  - Pos: {x: 0.18, y: -0.111, z: 0.604}
+    Rot: {x: 283.7677, y: 114.275276, z: 57.134487}
+    Hint_Pos: {x: 0.319, y: -0.3, z: 0.47}
+    TimeToHappen: 1
+    Pos_Time: 1
+    Rot_Time: 1
+  - Pos: {x: 0.186, y: -0.082, z: 0.601}
+    Rot: {x: 283.7677, y: 114.275276, z: 57.134487}
+    Hint_Pos: {x: 0.319, y: -0.3, z: 0.47}
+    TimeToHappen: 1
+    Pos_Time: 1
+    Rot_Time: 1
+  - Pos: {x: 0.122, y: -0.493, z: 0.476}
+    Rot: {x: 283.7677, y: 114.275276, z: 57.134487}
+    Hint_Pos: {x: 0.319, y: -0.3, z: 0.47}
+    TimeToHappen: 1
     Pos_Time: 1
     Rot_Time: 1
   LeftHandTransforms: []
