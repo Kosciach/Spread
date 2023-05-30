@@ -16,6 +16,7 @@ MonoBehaviour:
   WeaponHolder: 1
   WeaponType: 0
   WeaponOriginRotation: {x: 317.5712, y: 206.62067, z: 236.19122}
+  Icon: {fileID: 21300000, guid: c7b387dd960ec1f4ba61c6cf9e6fe10f, type: 3}
   Fists: 0
   InHandPosition: {x: 0.0427, y: 0.1524, z: 0.0419}
   InHandRotation: {x: 67.04727, y: 298.98105, z: 308.07034}

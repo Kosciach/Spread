@@ -16,12 +16,14 @@ public class WeaponStateMachine : MonoBehaviour
     [SerializeField] Collider _collider; public Collider Collider { get { return _collider; } }
     [SerializeField] Rigidbody _rigidbody; public Rigidbody Rigidbody { get { return _rigidbody; } }
     [SerializeField] Outline _outline; public Outline Outline { get { return _outline; } }
+    [Space(5)]
+    [SerializeField] WeaponHoldController _holdModeController; public WeaponHoldController HoldController { get { return _holdModeController; } }
+    [SerializeField] WeaponDamageDealingController _damageDealingController; public WeaponDamageDealingController DamageDealingController { get { return _damageDealingController; } }
+    [SerializeField] WeaponDataHolder _dataHolder; public WeaponDataHolder DataHolder { get { return _dataHolder; } }
+    [SerializeField] WeaponAimIndexHolder _aimIndexHolder; public WeaponAimIndexHolder AimIndexHolder { get { return _aimIndexHolder; } }
+
 
     private PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
-    private WeaponDataHolder _dataHolder; public WeaponDataHolder DataHolder { get { return _dataHolder; } }
-    private WeaponHoldController _holdModeController; public WeaponHoldController HoldController { get { return _holdModeController; } }
-    private WeaponAimIndexHolder _aimIndexHolder; public WeaponAimIndexHolder AimIndexHolder { get { return _aimIndexHolder; } }
-    private WeaponDamageDealingController _damageDealingController; public WeaponDamageDealingController DamageDealingController { get { return _damageDealingController; } }
     private RangeWeaponSwitchController _switchController; public RangeWeaponSwitchController SwitchController { get { return _switchController; } }
 
     private Transform _meshes;
@@ -42,10 +44,10 @@ public class WeaponStateMachine : MonoBehaviour
         _meshes = transform.GetChild(0);
 
         _playerStateMachine = FindObjectOfType<PlayerStateMachine>();
-        _dataHolder = GetComponent<WeaponDataHolder>();
+        /*_dataHolder = GetComponent<WeaponDataHolder>();
         _holdModeController = GetComponent<WeaponHoldController>();
         _aimIndexHolder = GetComponent<WeaponAimIndexHolder>();
-        _damageDealingController = GetComponent<WeaponDamageDealingController>();
+        _damageDealingController = GetComponent<WeaponDamageDealingController>();*/
 
         SetUpStartingState();
         _switchController = new RangeWeaponSwitchController(this);

@@ -31,7 +31,6 @@ public class PlayerWeaponWallController : MonoBehaviour
 
     public void Wall(bool enable)
     {
-        if (_combatController.PlayerStateMachine.AnimatingControllers.Reload.IsReloading) return;
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
 
         int index = enable ? 1 : 0;
@@ -45,7 +44,7 @@ public class PlayerWeaponWallController : MonoBehaviour
 
     private void WallEnable()
     {
-        _combatController.EquipedWeapon.DamageDealingController.enabled = false;
+        _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Aim.ToggleAimBool(false);
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);

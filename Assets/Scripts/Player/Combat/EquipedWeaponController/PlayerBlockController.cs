@@ -34,7 +34,6 @@ public class PlayerBlockController : MonoBehaviour
 
     public void Block(bool block)
     {
-        if (_combatController.PlayerStateMachine.AnimatingControllers.Reload.IsReloading) return;
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim || _equipedWeaponController.Wall.IsWall) return;
 
 
@@ -55,7 +54,7 @@ public class PlayerBlockController : MonoBehaviour
 
     private void BlockEnable()
     {
-        _combatController.EquipedWeapon.DamageDealingController.enabled = false;
+        _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Position, 6);

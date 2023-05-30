@@ -11,9 +11,10 @@ public class WeaponAmmoController : MonoBehaviour
     [Header("====Debugs====")]
     [SerializeField] bool _isRoundInChamber; public bool IsRoundInChamber { get { return _isRoundInChamber; } }
     [SerializeField] int _ammoInMag; public int AmmoInMag { get { return _ammoInMag; } }
-    [SerializeField] RangeWeaponData _weaponData;
     [SerializeField] AnimatorOverrideController _reloadAnimOveride;
 
+
+    private RangeWeaponData _weaponData;
     private Action<int, PlayerAmmoInventory>[] _reloadMethods = new Action<int, PlayerAmmoInventory>[2];
 
 
@@ -22,6 +23,8 @@ public class WeaponAmmoController : MonoBehaviour
     private void Awake()
     {
         _stateMachine = GetComponent<WeaponStateMachine>();
+        _weaponData = (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
+
         _reloadMethods[0] = ReloadWithoutRoundInChamber;
         _reloadMethods[1] = ReloadWithRoundInChamber;
     }
@@ -51,12 +54,42 @@ public class WeaponAmmoController : MonoBehaviour
 
 
 
+    public void TriggerReload()
+    {
+        //Check if mag is full
+        int magSize = _weaponData.AmmoSettings.MagSize;
+        if (_ammoInMag >= magSize) return;
+
+
+        //Check if there is ammo in inventory
+        PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
+        int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
+        if (playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex] <= 0) return;
+
+
+        _stateMachine.PlayerStateMachine.AnimatingControllers.Reload.Reload(_reloadAnimOveride, _weaponData.FingersPreset, () =>
+        {
+            //Calculate ammo to reload
+            int ammoToReload = magSize - _ammoInMag;
+            ammoToReload = Mathf.Clamp(ammoToReload, 0, playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
+
+
+            //Choose reload method
+            int reloadMethodIndex = _isRoundInChamber ? 1 : 0;
+            _reloadMethods[reloadMethodIndex](ammoToReload, playerAmmoInventory);
+
+            playerAmmoInventory.RemoveAmmo(_weaponData.AmmoSettings.AmmoType, ammoToReload);
+            CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
+            CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
+            CanvasController.Instance.HudControllers.Ammo.UpdateRoundInChamber(_isRoundInChamber);
+        });
+    }
+
+
+
 
     public void Reload()
     {
-        _stateMachine.PlayerStateMachine.AnimatingControllers.Reload.Reload(_reloadAnimOveride);
-
-
         //Check if mag is full
         int magSize = _weaponData.AmmoSettings.MagSize;
         if (_ammoInMag >= magSize) return;
@@ -83,8 +116,6 @@ public class WeaponAmmoController : MonoBehaviour
         CanvasController.Instance.HudControllers.Ammo.UpdateRoundInChamber(_isRoundInChamber);
     }
 
-
-
     private void ReloadWithRoundInChamber(int ammoToReload, PlayerAmmoInventory playerAmmoInventory)
     {
         //Put ammo in mag
@@ -100,7 +131,8 @@ public class WeaponAmmoController : MonoBehaviour
 
 
 
-    private void OnEnable()
+
+    public void CheckAllAmmoUI()
     {
         PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
         int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
@@ -108,5 +140,7 @@ public class WeaponAmmoController : MonoBehaviour
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
         CanvasController.Instance.HudControllers.Ammo.UpdateRoundInChamber(_isRoundInChamber);
+
+        CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
     }
 }

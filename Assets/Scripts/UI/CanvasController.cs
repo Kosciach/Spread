@@ -16,6 +16,7 @@ public class CanvasController : MonoBehaviour
     {
         public CrosshairController Crosshair;
         public AmmoHudController Ammo;
+        public WeaponHudController Weapon;
     }
 
 

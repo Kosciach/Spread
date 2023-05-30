@@ -125,7 +125,7 @@ public class PlayerCombatController : MonoBehaviour
             _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(5, 6);
             _weaponWallDetector.ToggleCollider(true);
 
-            CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
+            _equipedWeapon.DamageDealingController.WeaponEquiped();
         });
     }
 
@@ -145,7 +145,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
         _playerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
 
-        _equipedWeapon.DamageDealingController.enabled = false;
+        _equipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Aim.ToggleAimBool(false);
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
@@ -172,12 +172,12 @@ public class PlayerCombatController : MonoBehaviour
             _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
             _playerStateMachine.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
+            _equipedWeapon.DamageDealingController.WeaponUnEquiped();
 
             _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
             _equipedWeapon = null;
             _equipedWeaponData = null;
 
-            CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
             SetState(CombatStateEnum.Unarmed);
         });
     }
@@ -211,21 +211,19 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
         _playerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
 
-        _equipedWeapon.DamageDealingController.enabled = false;
+        _equipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Aim.ToggleAimBool(false);
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
-
-
+        _equipedWeapon.DamageDealingController.WeaponUnEquiped();
 
         _playerStateMachine.InventoryControllers.Inventory.Weapon.DropWeapon(_equipedWeaponIndex);
         _equipedWeapon = null;
         _equipedWeaponData = null;
 
-        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
         SetState(CombatStateEnum.Unarmed);
     }
 
@@ -270,15 +268,15 @@ public class PlayerCombatController : MonoBehaviour
 
 
         _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
-        _equipedWeapon.DamageDealingController.enabled = false;
+        _equipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Aim.ToggleAimBool(false);
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 
+        _equipedWeapon.DamageDealingController.WeaponUnEquiped();
+
         _equipedWeapon = null;
         _equipedWeaponData = null;
-
-        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
     }
     public void RecoverFromTemporaryUnEquip()
     {

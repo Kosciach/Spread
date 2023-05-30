@@ -23,6 +23,9 @@ public class WeaponShootingController : WeaponDamageDealingController
     [SerializeField] BaseFireMode _currentFireMode;
     [SerializeField] int _currentFireModeIndex;
     [SerializeField] FireModeTypeEnum _currentFireModeType;
+    [Space(5)]
+    [SerializeField] bool _shootToggle;
+    [SerializeField] bool _reloadToggle;
 
 
 
@@ -39,6 +42,8 @@ public class WeaponShootingController : WeaponDamageDealingController
         _barrel = transform.GetChild(1);
         _barrelController = _barrel.GetComponent<WeaponBarrelController>();
 
+
+
         _fireModes = GetComponents<BaseFireMode>();
         _currentFireMode = _fireModes[0];
 
@@ -52,7 +57,11 @@ public class WeaponShootingController : WeaponDamageDealingController
     private void Start()
     {
         _inputs.Range.ChangeFireMode.performed += ctx => ChangeFireMode();
-        _inputs.Range.Reload.performed += ctx => _ammoController.Reload();
+        _inputs.Range.Reload.performed += ctx =>
+        {
+            if (!_reloadToggle) return;
+            _ammoController.TriggerReload();
+        };
     }
 
 
@@ -61,6 +70,8 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public void Shoot()
     {
+        if (!_shootToggle) return;
+
         if (!_ammoController.IsRoundInChamber)
         {
             Debug.Log("No round in the chamber!");
@@ -101,6 +112,8 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     private void ChangeFireMode()
     {
+        if (!_shootToggle) return;
+
         _currentFireModeIndex++;
         _currentFireModeIndex = _currentFireModeIndex == _fireModes.Length ? 0 : _currentFireModeIndex;
         _currentFireMode = _fireModes[_currentFireModeIndex];
@@ -113,16 +126,37 @@ public class WeaponShootingController : WeaponDamageDealingController
 
 
 
-    public override void VirtualOnEnable()
+    public override void ToggleOn()
     {
-        _currentFireMode.enabled = true;
+        _shootToggle = true;
         _barrelController.enabled = true;
-        _ammoController.enabled = true;
     }
-    public override void VirtualOnDisable()
+    public override void ToggleOff()
     {
-        _currentFireMode.enabled = false;
+        _shootToggle = false;
         _barrelController.enabled = false;
-        _ammoController.enabled = false;
+    }
+
+
+
+
+    public override void WeaponEquiped()
+    {
+        Debug.Log("RAnge E");
+        _reloadToggle = true;
+
+        _ammoController.CheckAllAmmoUI();
+        CanvasController.Instance.HudControllers.Weapon.UpdateIcon(_stateMachine.DataHolder.WeaponData.Icon);
+
+        CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
+        CanvasController.Instance.HudControllers.Weapon.Toggle(true, 0.1f);
+    }
+    public override void WeaponUnEquiped()
+    {
+        Debug.Log("RAnge UnE");
+        _reloadToggle = false;
+
+        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
+        CanvasController.Instance.HudControllers.Weapon.Toggle(false, 0.1f);
     }
 }

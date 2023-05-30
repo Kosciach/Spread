@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,7 @@ public class WeaponMeleeAttackController : WeaponDamageDealingController
 {
 
 
-    private delegate void AttackType();
-    private AttackType[] _attackType = new AttackType[2];
+    private Action[] _attackType = new Action[2];
 
 
     public override void VirtualAwake()
@@ -26,6 +26,8 @@ public class WeaponMeleeAttackController : WeaponDamageDealingController
 
     private void Attack()
     {
+        if (!_mainToggle) return;
+
         int attackType = _stateMachine.PlayerStateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.IsAim ? 1 : 0;
         _attackType[attackType]();
     }
@@ -38,5 +40,28 @@ public class WeaponMeleeAttackController : WeaponDamageDealingController
     private void Throw()
     {
         Debug.Log("Throw");
+    }
+
+
+
+
+
+    public override void ToggleOn()
+    {
+
+    }
+    public override void ToggleOff()
+    {
+
+    }
+
+
+    public override void WeaponEquiped()
+    {
+        Debug.Log("Melee E");
+    }
+    public override void WeaponUnEquiped()
+    {
+        Debug.Log("Melee UnE");
     }
 }

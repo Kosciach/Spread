@@ -10,11 +10,9 @@ public class MeleeWeaponHoldController : WeaponHoldController
     protected override void VirtualAwake()
     {
         _holdMode = HoldModeEnum.Hip;
+        _meleeWeaponData = (MeleeWeaponData)_stateMachine.DataHolder.WeaponData;
     }
-    private void Start()
-    {
-        _meleeWeaponData = _stateMachine.DataHolder.WeaponData as MeleeWeaponData;
-    }
+
 
     public override void ChangeHoldMode(HoldModeEnum mode)
     {
@@ -35,7 +33,7 @@ public class MeleeWeaponHoldController : WeaponHoldController
         _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_meleeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
         _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_meleeWeaponData.Hip.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
         {
-            _stateMachine.DamageDealingController.enabled = true;
+            _stateMachine.DamageDealingController.Toggle(true);
 
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);

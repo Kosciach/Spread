@@ -31,7 +31,6 @@ public class PlayerWeaponRunController : MonoBehaviour
 
     public void ToggleRunWeaponLock(bool enable)
     {
-        if (_combatController.PlayerStateMachine.AnimatingControllers.Reload.IsReloading) return;
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim || _equipedWeaponController.Block.IsBlock) return;
 
         int index = enable ? 1 : 0;
@@ -47,7 +46,7 @@ public class PlayerWeaponRunController : MonoBehaviour
 
     private void EnableRun()
     {
-        _combatController.EquipedWeapon.DamageDealingController.enabled = false;
+        _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
         _combatController.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, true);
 
 
@@ -73,7 +72,7 @@ public class PlayerWeaponRunController : MonoBehaviour
     }
     private void TransitionNormally()
     {
-        _combatController.EquipedWeapon.DamageDealingController.enabled = true;
+        _combatController.EquipedWeapon.DamageDealingController.Toggle(true);
         _combatController.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
 
 

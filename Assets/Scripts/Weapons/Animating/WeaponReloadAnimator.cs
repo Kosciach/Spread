@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,20 +21,23 @@ public class WeaponReloadAnimator : MonoBehaviour
 
 
 
+    private FingerPreset _fingerPreset;
+    private Action _reloadMethod;
 
 
-
-    public void Reload(AnimatorOverrideController reloadAnimOveride)
+    public void Reload(AnimatorOverrideController reloadAnimOveride, FingerPreset fingerPreset, Action reloadMethod)
     {
         if (!_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded) return;
         if (_playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.IsWall) return;
 
+        _fingerPreset = fingerPreset;
+        _reloadMethod = reloadMethod;
+        SetPreAnimIkTransforms();
+
         _isReloading = true;
         _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.WeaponReload, true, 10);
-
         _playerStateMachine.AnimatingControllers.Animator.OverrideAnimationClip(reloadAnimOveride);
         _playerStateMachine.AnimatingControllers.Animator.SetBool("Reload", true);
-
     }
 
 
@@ -41,14 +45,25 @@ public class WeaponReloadAnimator : MonoBehaviour
     public void ReloadFinish()
     {
         _isReloading = false;
+
         _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.WeaponReload, false, 5);
 
-        _playerStateMachine.AnimatingControllers.Animator.ResetAnimatorController();
+        _playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_fingerPreset.Base);
+
+        _reloadMethod();
     }
 
 
 
 
+    private void SetPreAnimIkTransforms()
+    {
+        _rightHandIk.localPosition = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner.CurrentMainVectors.Pos;
+        _rightHandIk.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.Weapon.MainPositioner.CurrentMainVectors.Rot);
+
+        _leftHandIk.localPosition = _playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Pos;
+        _leftHandIk.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Rot);
+    }
 
 
 

@@ -9,6 +9,7 @@ public class WeaponData : ScriptableObject
     public WeaponHolderEnum WeaponHolder;
     public WeaponTypeEnum WeaponType;
     public Vector3 WeaponOriginRotation;
+    public Sprite Icon;
     public bool Fists;
 
 

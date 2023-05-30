@@ -40,7 +40,6 @@ public class PlayerAimController : MonoBehaviour
 
     public void Aim(bool aim)
     {
-        if (_combatController.PlayerStateMachine.AnimatingControllers.Reload.IsReloading) return;
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Wall.IsWall) return;
         if (_combatController.EquipedWeaponData.WeaponTransforms.Aim.Length <= 0) return;
 
@@ -60,7 +59,7 @@ public class PlayerAimController : MonoBehaviour
 
     private void AimEnable()
     {
-        _combatController.EquipedWeapon.DamageDealingController.enabled = true;
+        _combatController.EquipedWeapon.DamageDealingController.Toggle(true);
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
 

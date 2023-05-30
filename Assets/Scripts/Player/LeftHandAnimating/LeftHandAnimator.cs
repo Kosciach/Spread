@@ -15,7 +15,7 @@ public class LeftHandAnimator : MonoBehaviour
     [Header("====Debugs====")]
     [SerializeField] AnimatingModeEnum _animatingMode;
     [Space(10)]
-    [SerializeField] TransformVectorsStruct _currentTransformVectors;
+    [SerializeField] TransformVectorsStruct _currentTransformVectors; public TransformVectorsStruct CurrentTransformVectors { get { return _currentTransformVectors; } }
     [SerializeField] TransformVectorsStruct _desiredTransformVectors;
     [Space(10)]
     [SerializeField] VectorSpeeds _vectorSpeeds;
@@ -27,7 +27,7 @@ public class LeftHandAnimator : MonoBehaviour
 
 
     [System.Serializable] 
-    private struct TransformVectorsStruct
+    public struct TransformVectorsStruct
     {
         public Vector3 Pos;
         public Vector3 Rot;
