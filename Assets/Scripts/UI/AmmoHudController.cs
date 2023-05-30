@@ -8,11 +8,15 @@ public class AmmoHudController : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] CanvasController _canvasController;
-    [Space(5)]
+    [Space(10)]
     [SerializeField] TextMeshProUGUI _ammoInMag;
     [SerializeField] TextMeshProUGUI _ammoInInventory;
-    [SerializeField] Image _roundInChamber;
     [Space(5)]
+    [SerializeField] Image[] _roundImages;
+    [SerializeField] Image[] _roundImages_Shadows;
+    [Space(5)]
+    [SerializeField] GameObject[] _fireModePresets;
+    [Space(10)]
     [SerializeField] CanvasGroup _canvasGroup;
 
 
@@ -34,8 +38,31 @@ public class AmmoHudController : MonoBehaviour
     {
         int roundInChamberColorIndex = isRoundInChamber ? 1 : 0;
 
-        _roundInChamber.color = _roundInChamberColors[roundInChamberColorIndex];
+        foreach (Image roundImage in _roundImages)
+            roundImage.color = _roundInChamberColors[roundInChamberColorIndex];
     }
+    public void ChangeRoundIcon(Sprite roundIcon)
+    {
+        foreach(Image roundImage in _roundImages)
+            roundImage.sprite = roundIcon;
+
+        foreach (Image roundImage in _roundImages_Shadows)
+            roundImage.sprite = roundIcon;
+    }
+
+    public void ChangeFireMode(WeaponShootingController.FireModeTypeEnum fireModeType)
+    {
+        int index = (int)fireModeType;
+
+        foreach (GameObject fireModePreset in _fireModePresets) fireModePreset.SetActive(false);
+        _fireModePresets[index].SetActive(true);
+    }
+
+
+
+
+
+
 
 
 

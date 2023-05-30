@@ -41,6 +41,8 @@ public class PlayerAmmoInventory : MonoBehaviour
 
         _spaceForAmmoLeft = _maxSpaceForAmmo - _spaceForAmmoTaken;
 
+        RangeWeaponData rangeWeaponData = (RangeWeaponData)_inventory.StateMachine.CombatControllers.Combat.EquipedWeapon.DataHolder.WeaponData;
+        if (!_inventory.StateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped) || rangeWeaponData.AmmoSettings.AmmoType.AmmoType != newAmmo.AmmoType) return;
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(_ammoTypesAmmount[index]);
     }
 

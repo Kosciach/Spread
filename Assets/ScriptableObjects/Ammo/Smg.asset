@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SizeInInventory: 2
   AmmoType: 1
+  SingleRoundIcon: {fileID: 21300000, guid: 758d0519208147646a992299a35d8a9f, type: 3}

@@ -7,7 +7,7 @@ public class Ammo : ScriptableObject
 {
     public int SizeInInventory;
     public AmmoTypeEnum AmmoType;
-
+    public Sprite SingleRoundIcon;
 
 
 

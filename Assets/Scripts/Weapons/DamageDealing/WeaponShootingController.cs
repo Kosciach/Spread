@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponShootingController : WeaponDamageDealingController
@@ -29,6 +30,7 @@ public class WeaponShootingController : WeaponDamageDealingController
 
 
 
+    private RangeWeaponData _rangeWeaponData => (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
     public enum FireModeTypeEnum
     {
         Safety, Semi, Auto,
@@ -60,7 +62,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _inputs.Range.Reload.performed += ctx =>
         {
             if (!_reloadToggle) return;
-            _ammoController.TriggerReload();
+            _ammoController.Reload();
         };
     }
 
@@ -78,9 +80,6 @@ public class WeaponShootingController : WeaponDamageDealingController
             return;
         }
 
-
-        RangeWeaponData rangeWeaponData = (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
-
         //SpawnBullet
         GameObject newBullet = Instantiate(_bulletPrefab, _barrel.position, _barrel.rotation);
         BulletController newBulletController = newBullet.GetComponent<BulletController>();
@@ -94,7 +93,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _slideAnimator.MoveSlide();
 
         //Recoil
-        _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Recoil.Recoil(rangeWeaponData.RecoilSettings);
+        _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Recoil.Recoil(_rangeWeaponData.RecoilSettings);
 
         //Shake
         CameraShake.Instance.Shake(0.5f, 10);
@@ -122,6 +121,9 @@ public class WeaponShootingController : WeaponDamageDealingController
         _currentFireMode.enabled = true;
 
         _currentFireModeType = _currentFireMode.FireModeType;
+
+
+        CanvasController.Instance.HudControllers.Ammo.ChangeFireMode(_currentFireModeType);
     }
 
 
@@ -147,6 +149,8 @@ public class WeaponShootingController : WeaponDamageDealingController
 
         _ammoController.CheckAllAmmoUI();
         CanvasController.Instance.HudControllers.Weapon.UpdateIcon(_stateMachine.DataHolder.WeaponData.Icon);
+        CanvasController.Instance.HudControllers.Ammo.ChangeRoundIcon(_rangeWeaponData.AmmoSettings.AmmoType.SingleRoundIcon);
+        CanvasController.Instance.HudControllers.Ammo.ChangeFireMode(_currentFireModeType);
 
         CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
         CanvasController.Instance.HudControllers.Weapon.Toggle(true, 0.1f);
