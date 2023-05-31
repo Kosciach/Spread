@@ -6968,8 +6968,13 @@ MonoBehaviour:
     Pos: {x: 0, y: 0, z: 0}
     Rot: {x: 0, y: 0, z: 0}
   _toggle: 1
+  _toggles:
+    MoveBack: 1
+    RotX: 1
+    RotY: 1
+    RotZ: 1
   _resetRecoilPosSpeed: 10
-  _resetRecoilRotSpeed: 5
+  _resetRecoilRotSpeed: 10
   _recoilSpeed: 0
 --- !u!1 &539297483
 GameObject:

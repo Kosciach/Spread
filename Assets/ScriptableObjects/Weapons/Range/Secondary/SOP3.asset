@@ -57,8 +57,9 @@ MonoBehaviour:
     CarredForce: 7
   RecoilSettings:
     BackPush: 0.15
-    RotX: 4
-    RotZ: 5
+    RotX: 6
+    RotY: 2
+    RotZ: 3
   AmmoSettings:
     MagSize: 7
     AmmoType: {fileID: 11400000, guid: e4909301d267d854c906fb41fcb3fbff, type: 2}

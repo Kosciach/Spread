@@ -58,6 +58,7 @@ MonoBehaviour:
   RecoilSettings:
     BackPush: 0.1
     RotX: 2
+    RotY: 1
     RotZ: 2
   AmmoSettings:
     MagSize: 35

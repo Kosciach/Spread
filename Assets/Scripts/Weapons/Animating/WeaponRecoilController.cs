@@ -18,12 +18,27 @@ public class WeaponRecoilController : MonoBehaviour
 
     [Space(20)]
     [Header("====Settings====")]
+    [SerializeField] TogglesSettings _toggles;
+    [Space(5)]
     [Range(0, 10)]
     [SerializeField] float _resetRecoilPosSpeed;
     [Range(0, 10)]
     [SerializeField] float _resetRecoilRotSpeed;
     [Range(0, 1)]
     [SerializeField] float _recoilSpeed;
+
+
+
+
+    [System.Serializable]
+    private struct TogglesSettings
+    {
+        public bool MoveBack;
+        public bool RotX;
+        public bool RotY;
+        public bool RotZ;
+    }
+
 
 
     private void Update()
@@ -40,13 +55,56 @@ public class WeaponRecoilController : MonoBehaviour
     }
 
 
+
     public void Recoil(RangeWeaponData.RecoilSettingsStruct recoilSettings)
     {
-        //Move to the back
-        _recoilVectors.Pos = new Vector3(0, 0, -recoilSettings.BackPush);
+        if (_toggles.MoveBack) MoveBack(recoilSettings);
+        if (_toggles.RotX) RotX(recoilSettings);
+        if (_toggles.RotY) RotY(recoilSettings);
+        if (_toggles.RotZ) RotZ(recoilSettings);
+    }
 
-        //Rotation
-        float zAngle = Random.Range(-recoilSettings.RotZ, recoilSettings.RotZ);
-        _recoilVectors.Rot = new Vector3(-recoilSettings.RotX, zAngle, zAngle);
+
+    private int zAngleDirection = 1;
+    private int yAngleDirection = -1;
+    private void MoveBack(RangeWeaponData.RecoilSettingsStruct recoilSettings)
+    {
+        LeanTween.value(_recoilVectors.Pos.z, -recoilSettings.BackPush, 0.04f).setOnUpdate((float val) =>
+        {
+            _recoilVectors.Pos.z = val;
+        });
+    }
+    private void RotX(RangeWeaponData.RecoilSettingsStruct recoilSettings)
+    {
+        LeanTween.value(_recoilVectors.Rot.x, -recoilSettings.RotX, 0.1f).setOnUpdate((float val) =>
+        {
+            _recoilVectors.Rot.x = val;
+        });
+    }
+    private void RotY(RangeWeaponData.RecoilSettingsStruct recoilSettings)
+    {
+        yAngleDirection = Random.Range(0, 2) == 0 ? -1 : 1;
+        float yAngle = recoilSettings.RotY * yAngleDirection;
+
+        LeanTween.value(_recoilVectors.Rot.y, yAngle, 0.1f).setEaseInOutBack().setOnUpdate((float val) =>
+        {
+            _recoilVectors.Rot.y = val;
+        });
+    }
+    private void RotZ(RangeWeaponData.RecoilSettingsStruct recoilSettings)
+    {
+        zAngleDirection = zAngleDirection == 1 ? -1 : 1;
+        float zAngle = recoilSettings.RotZ * zAngleDirection;
+
+        LeanTween.value(_recoilVectors.Rot.z, zAngle, 0.1f).setOnUpdate((float val) =>
+        {
+            _recoilVectors.Rot.z = val;
+        }).setOnComplete(() =>
+        {
+            LeanTween.value(_recoilVectors.Rot.z, -zAngle, 0.1f).setOnUpdate((float val) =>
+            {
+                _recoilVectors.Rot.z = val;
+            });
+        });
     }
 }

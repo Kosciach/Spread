@@ -49,8 +49,10 @@ public class RangeWeaponData : WeaponData
     {
         [Range(0, 0.5f)]
         public float BackPush;
-        [Range(0, 45)]
+        [Range(0, 10)]
         public float RotX;
+        [Range(0, 5)]
+        public float RotY;
         [Range(0, 5)]
         public float RotZ;
     }
