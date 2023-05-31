@@ -47,6 +47,6 @@ public class WeaponRecoilController : MonoBehaviour
 
         //Rotation
         float zAngle = Random.Range(-recoilSettings.RotZ, recoilSettings.RotZ);
-        _recoilVectors.Rot = new Vector3(-recoilSettings.RotX, 0, zAngle);
+        _recoilVectors.Rot = new Vector3(-recoilSettings.RotX, zAngle, zAngle);
     }
 }

@@ -47,7 +47,7 @@ public class PlayerWeaponRunController : MonoBehaviour
     private void EnableRun()
     {
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
-        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, true);
+        //_combatController.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, true);
 
 
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Position, 6);
@@ -73,7 +73,6 @@ public class PlayerWeaponRunController : MonoBehaviour
     private void TransitionNormally()
     {
         _combatController.EquipedWeapon.DamageDealingController.Toggle(true);
-        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, false);
 
 
         WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeapon.HoldController;

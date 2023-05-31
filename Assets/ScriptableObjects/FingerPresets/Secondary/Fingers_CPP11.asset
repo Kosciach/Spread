@@ -98,49 +98,7 @@ MonoBehaviour:
         Target_Position: {x: 0, y: 0, z: 0}
         Target_Rotation: {x: 0, y: 0, z: 0}
         Hint_Position: {x: 0, y: 0, z: 0}
-  RightHand:
-    Thumb:
-      Target_Position: {x: -0.0012, y: 0.1588, z: 0.087}
-      Target_Rotation: {x: 336.9, y: 0, z: 0}
-      Hint_Position: {x: 0.1344, y: 0.1767, z: 0.1623}
-    Index:
-      Target_Position: {x: 0.0606, y: 0.2247, z: -0.0071}
-      Target_Rotation: {x: 325.39996, y: 180, z: 180}
-      Hint_Position: {x: -0.0034, y: 0.2508, z: 0.0533}
-    Middle:
-      Target_Position: {x: 0.0721, y: 0.1648, z: 0.0215}
-      Target_Rotation: {x: 326.8, y: 180, z: 180}
-      Hint_Position: {x: 0.0008, y: 0.2305, z: -0.0038}
-    Ring:
-      Target_Position: {x: 0.0873, y: 0.1545, z: -0.0364}
-      Target_Rotation: {x: 308.39996, y: 0, z: 0}
-      Hint_Position: {x: 0.0387, y: 0.2177, z: -0.0384}
-    Pinky:
-      Target_Position: {x: 0.0961, y: 0.1356, z: -0.0423}
-      Target_Rotation: {x: 311.69995, y: 180, z: 180}
-      Hint_Position: {x: 0.0174, y: 0.2078, z: -0.0816}
-  LeftHand:
-    Thumb:
-      Target_Position: {x: -0.0949, y: 0.1474, z: 0.0955}
-      Target_Rotation: {x: 308.3, y: 180, z: 180}
-      Hint_Position: {x: 0.0425, y: 0.1011, z: 0.1443}
-    Index:
-      Target_Position: {x: -0.109, y: 0.2039, z: 0.0433}
-      Target_Rotation: {x: 277.49994, y: 180, z: 180}
-      Hint_Position: {x: -0.035, y: 0.272, z: 0.029}
-    Middle:
-      Target_Position: {x: -0.0958, y: 0.1823, z: -0.0084}
-      Target_Rotation: {x: 320.86996, y: 180, z: 180}
-      Hint_Position: {x: 0.0357, y: 0.2769, z: 0.0394}
-    Ring:
-      Target_Position: {x: -0.1094, y: 0.179, z: -0.0526}
-      Target_Rotation: {x: 271.99997, y: 0, z: 0}
-      Hint_Position: {x: 0.035700094, y: 0.27689853, z: 0.039399818}
-    Pinky:
-      Target_Position: {x: -0.116, y: 0.168, z: -0.0622}
-      Target_Rotation: {x: -0, y: 0, z: 0}
-      Hint_Position: {x: 0.035700094, y: 0.27689853, z: 0.039399818}
   TriggerDisciplineIndexFinger:
     Target_Position: {x: 0.0483, y: 0.2915, z: 0.0215}
-    Target_Rotation: {x: 313, y: 0, z: 0}
+    Target_Rotation: {x: 76.7, y: 0, z: 0}
     Hint_Position: {x: -0.0014, y: 0.2304, z: 0.0582}

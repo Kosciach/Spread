@@ -27,6 +27,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     [Space(5)]
     [SerializeField] bool _shootToggle;
     [SerializeField] bool _reloadToggle;
+    [SerializeField] bool _isEquiped;
 
 
 
@@ -43,8 +44,6 @@ public class WeaponShootingController : WeaponDamageDealingController
         _ammoController = GetComponent<WeaponAmmoController>();
         _barrel = transform.GetChild(1);
         _barrelController = _barrel.GetComponent<WeaponBarrelController>();
-
-
 
         _fireModes = GetComponents<BaseFireMode>();
         _currentFireMode = _fireModes[0];
@@ -89,17 +88,17 @@ public class WeaponShootingController : WeaponDamageDealingController
         GameObject muzzleFlash = Instantiate(_muzzleFlashPrefab, _barrel.position, _barrel.rotation);
         muzzleFlash.transform.parent = _barrel;
 
+        //Ammo
+        _ammoController.OnShoot();
+
         //AnimateSlide
-        _slideAnimator.MoveSlide();
+        _slideAnimator.MoveSlide(_ammoController.IsRoundInChamber);
 
         //Recoil
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Recoil.Recoil(_rangeWeaponData.RecoilSettings);
 
         //Shake
         CameraShake.Instance.Shake(0.5f, 10);
-
-        //Ammo
-        _ammoController.OnShoot();
     }
 
 
@@ -127,16 +126,21 @@ public class WeaponShootingController : WeaponDamageDealingController
     }
 
 
-
     public override void ToggleOn()
     {
         _shootToggle = true;
         _barrelController.enabled = true;
+
+        if (!_isEquiped) return;
+        _stateMachine.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_rangeWeaponData, false);
     }
     public override void ToggleOff()
     {
         _shootToggle = false;
         _barrelController.enabled = false;
+
+        if (!_isEquiped) return;
+        _stateMachine.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_rangeWeaponData, true);
     }
 
 
@@ -144,8 +148,8 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public override void WeaponEquiped()
     {
-        Debug.Log("RAnge E");
         _reloadToggle = true;
+        _isEquiped = true;
 
         _ammoController.CheckAllAmmoUI();
         CanvasController.Instance.HudControllers.Weapon.UpdateIcon(_stateMachine.DataHolder.WeaponData.Icon);
@@ -159,6 +163,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     {
         Debug.Log("RAnge UnE");
         _reloadToggle = false;
+        _isEquiped = false;
 
         CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
         CanvasController.Instance.HudControllers.Weapon.Toggle(false, 0.1f);

@@ -13,6 +13,8 @@ public abstract class WeaponDamageDealingController : MonoBehaviour
     private Action[] _toggleMethods = new Action[2];
 
 
+
+
     private void Awake()
     {
         _inputs = new WeaponDamageDealingInputs();
@@ -24,7 +26,6 @@ public abstract class WeaponDamageDealingController : MonoBehaviour
         Toggle(false);
     }
     public abstract void VirtualAwake();
-
 
 
 
