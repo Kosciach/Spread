@@ -37,7 +37,12 @@ public class WeaponData : ScriptableObject
     public WeaponTransformsStruct WeaponTransforms;
 
 
-
+    [Space(20)]
+    [Header("====AnimatingSettings====")]
+    [Range(0, 2)]
+    public float SwayWeight;
+    [Range(0, 2)]
+    public float BobbingWeight;
 
 
 

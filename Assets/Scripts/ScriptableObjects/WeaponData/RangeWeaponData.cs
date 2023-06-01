@@ -47,6 +47,9 @@ public class RangeWeaponData : WeaponData
     [System.Serializable]
     public struct RecoilSettingsStruct
     {
+        [Range(0.1f, 5)]
+        public float Speed;
+        [Space(5)]
         [Range(0, 0.5f)]
         public float BackPush;
         [Range(0, 10)]

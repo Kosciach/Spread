@@ -43,6 +43,8 @@ MonoBehaviour:
     Wall:
       RightHand_Position: {x: 0.075, y: -0.183, z: 0.519}
       RightHand_Rotation: {x: 341.92737, y: 193.17256, z: 346.46863}
+  SwayWeight: 0.6
+  BobbingWeight: 0
   HoldTransforms:
     Rest:
       RightHand_Position: {x: 0.075, y: -0.183, z: 0.519}
@@ -56,10 +58,11 @@ MonoBehaviour:
     FireRate: 6
     CarredForce: 7
   RecoilSettings:
+    Speed: 1
     BackPush: 0.1
-    RotX: 4
-    RotY: 2
-    RotZ: 3
+    RotX: 3
+    RotY: 0.1
+    RotZ: 1.5
   AmmoSettings:
     MagSize: 9
     AmmoType: {fileID: 11400000, guid: e4909301d267d854c906fb41fcb3fbff, type: 2}

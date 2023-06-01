@@ -158,6 +158,8 @@ public class WeaponShootingController : WeaponDamageDealingController
 
         CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
         CanvasController.Instance.HudControllers.Weapon.Toggle(true, 0.1f);
+
+        _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Sway.SetWeight(_rangeWeaponData.SwayWeight);
     }
     public override void WeaponUnEquiped()
     {

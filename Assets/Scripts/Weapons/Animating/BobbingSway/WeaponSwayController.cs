@@ -12,9 +12,19 @@ public class WeaponSwayController : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] Vector3 _swayRot; public Vector3 SwayRot { get { return _swayRot; } }
+    [SerializeField] WeaponAnimator.PosRotStruct _currentSwayVectors; public WeaponAnimator.PosRotStruct CurrentSwayVectors { get { return _currentSwayVectors; } }
+    private WeaponAnimator.PosRotStruct _desiredSwayVectors;
     [Range(0, 1)]
     [SerializeField] int _swayToggle;
+
+
+    [Space(20)]
+    [Header("====Settings====")]
+    [Range(0, 10)]
+    [SerializeField] float _smoothSpeedPos;
+    [Range(0, 10)]
+    [SerializeField] float _smoothSpeedRot;
+
 
     [Space(10)]
     [Header("====SwayStructs====")]
@@ -22,51 +32,87 @@ public class WeaponSwayController : MonoBehaviour
     [SerializeField] SwayValues _vertical;
 
 
+
+
     [System.Serializable]
     public struct SwayValues
     {
-        [Header("====Debugs====")]
-        public float DesiredSway;
-        public float CurrentSway;
+        [Range(0, 2)]
+        public float Weight;
 
-        [Space(20)]
-        [Header("====Settings====")]
+        [Space(5)]
         [Range(0, 10)]
-        public float Strength;
+        public float PosStrength;
+        [Range(0, 5)]
+        public float PosLimit;
+
+        [Space(5)]
         [Range(0, 10)]
-        public float Speed;
-        [Range(0, 10)]
-        public float MaxSway;
+        public float RotStrength;
+        [Range(0, 20)]
+        public float RotLimit;
     }
+
 
 
 
     private void Update()
     {
-        GetHorizontalSway();
-        GetVerticalSway();
+        HorizonstalSway();
+        VerticalSway();
 
-        SetSway();
+        SmoothOutSway();
     }
 
 
 
 
-    private void GetHorizontalSway()
+
+
+    private void HorizonstalSway()
     {
-        _horizontal.DesiredSway = _weaponAnimator.PlayerStateMachine.CoreControllers.Input.MouseInputVector.x / _horizontal.Strength;
-        _horizontal.CurrentSway = Mathf.Lerp(_horizontal.CurrentSway, _horizontal.DesiredSway, _horizontal.Speed * Time.deltaTime);
-        _horizontal.CurrentSway = Mathf.Clamp(_horizontal.CurrentSway, -_horizontal.MaxSway, _horizontal.MaxSway);
+        Vector3 mouseInputVector = _weaponAnimator.PlayerStateMachine.CoreControllers.Input.MouseInputVector;
+
+        //Pos
+        float swayPos = (mouseInputVector.x / 1000) * _horizontal.PosStrength;
+        swayPos = Mathf.Clamp(swayPos, -_horizontal.PosLimit/20, _horizontal.PosLimit/20);
+        _desiredSwayVectors.Pos.x = -swayPos * _horizontal.Weight;
+
+        //Rot
+        float swayRot = (mouseInputVector.x / 10) * _horizontal.RotStrength;
+        swayRot = Mathf.Clamp(swayRot, -_horizontal.RotLimit, _horizontal.RotLimit);
+        _desiredSwayVectors.Rot.y = swayRot * _horizontal.Weight;
+        _desiredSwayVectors.Rot.z = -swayRot * _horizontal.Weight;
     }
-    private void GetVerticalSway()
+
+    private void VerticalSway()
     {
-        _vertical.DesiredSway = _weaponAnimator.PlayerStateMachine.CoreControllers.Input.MouseInputVector.y / _vertical.Strength;
-        _vertical.CurrentSway = Mathf.Lerp(_vertical.CurrentSway, _vertical.DesiredSway, _vertical.Speed * Time.deltaTime);
-        _vertical.CurrentSway = Mathf.Clamp(_vertical.CurrentSway, -_vertical.MaxSway, _vertical.MaxSway);
+        Vector3 mouseInputVector = _weaponAnimator.PlayerStateMachine.CoreControllers.Input.MouseInputVector;
+
+        //Pos
+        float swayPos = (mouseInputVector.y / 1000) * _vertical.PosStrength;
+        swayPos = Mathf.Clamp(swayPos, -_vertical.PosLimit / 20, _vertical.PosLimit / 20);
+        _desiredSwayVectors.Pos.y = -swayPos * _vertical.Weight;
+
+
+        //Rot
+        float swayRot = (mouseInputVector.y / 10) * _vertical.RotStrength;
+        swayRot = Mathf.Clamp(swayRot, -_vertical.RotLimit, _vertical.RotLimit);
+        _desiredSwayVectors.Rot.x = -swayRot * _vertical.Weight;
     }
-    private void SetSway()
+
+    private void SmoothOutSway()
     {
-        _swayRot = new Vector3(-_vertical.CurrentSway, _horizontal.CurrentSway, 0) * _swayToggle; 
+        _currentSwayVectors.Pos = Vector3.Lerp(_currentSwayVectors.Pos, _desiredSwayVectors.Pos, _smoothSpeedPos * Time.deltaTime);
+        _currentSwayVectors.Rot = Vector3.Lerp(_currentSwayVectors.Rot, _desiredSwayVectors.Rot, _smoothSpeedRot * Time.deltaTime);
+    }
+
+
+
+    public void SetWeight(float weight)
+    {
+        _horizontal.Weight = weight;
+        _vertical.Weight = weight;
     }
 
 

@@ -67,8 +67,8 @@ public class WeaponAnimator : MonoBehaviour
 
     private void CombineBobAndSway()
     {
-        _bobSwayVectorsTarget.Pos = _bobbing.MainBobVectors.Pos;
-        _bobSwayVectorsTarget.Rot = _bobbing.MainBobVectors.Rot + _sway.SwayRot;
+        _bobSwayVectorsTarget.Pos = _bobbing.MainBobVectors.Pos + _sway.CurrentSwayVectors.Pos;
+        _bobSwayVectorsTarget.Rot = _bobbing.MainBobVectors.Rot + _sway.CurrentSwayVectors.Rot;
     }
     private void SmoothOutBobAndSway()
     {

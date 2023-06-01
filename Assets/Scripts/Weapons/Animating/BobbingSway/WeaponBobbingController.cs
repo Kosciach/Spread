@@ -51,8 +51,8 @@ public class WeaponBobbingController : MonoBehaviour
 
     private void CombineBobbingVectors()
     {
-        _mainBobVectors.Rot = (_side.SideMovementRot + _base.Rot) * _bobbingToggle * (_playerVelocity > 0 ? 1 : 0);
-        _mainBobVectors.Pos = (_base.Pos) * _bobbingToggle * (_playerVelocity > 0 ? 1 : 0);
+        _mainBobVectors.Rot = (_side.SideMovementRot + _base.CurrentVectors.Rot) * _bobbingToggle;
+        _mainBobVectors.Pos = (_base.CurrentVectors.Pos) * _bobbingToggle;
     }
 
 

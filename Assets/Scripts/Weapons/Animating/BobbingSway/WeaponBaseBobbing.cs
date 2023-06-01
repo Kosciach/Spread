@@ -10,8 +10,8 @@ public class WeaponBaseBobbing : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] Vector3 _pos; public Vector3 Pos { get { return _pos; } }
-    [SerializeField] Vector3 _rot; public Vector3 Rot { get { return _rot; } }
+    [SerializeField] WeaponAnimator.PosRotStruct _currentVectors; public WeaponAnimator.PosRotStruct CurrentVectors { get { return _currentVectors; } }
+    [SerializeField] WeaponAnimator.PosRotStruct _desiredVectors; public WeaponAnimator.PosRotStruct DesiredVectors { get { return _desiredVectors; } }
 
 
     [Space(20)]
@@ -23,15 +23,12 @@ public class WeaponBaseBobbing : MonoBehaviour
     [SerializeField] BaseBobRotSettings _rotSettingsY;
     [Space(15)]
     [Range(0, 10)]
-    [SerializeField] float _mainSpeed;
+    [SerializeField] float[] _speedMultipliers;
+    [Range(0, 10)]
+    [SerializeField] float[] _distanceMultipliers;
     [Space(10)]
     [Range(0, 10)]
     [SerializeField] float _bobbingSmoothSpeed;
-
-
-
-    private Vector3 _posTarget;
-    private Vector3 _rotTarget;
 
 
     [System.Serializable]
@@ -54,7 +51,7 @@ public class WeaponBaseBobbing : MonoBehaviour
     }
 
 
-
+    private int _speedSelector => (int)(_bobbingController.PlayerVelocity/4 + 0.4f);
 
 
     private void Update()
@@ -68,31 +65,24 @@ public class WeaponBaseBobbing : MonoBehaviour
 
     private void SetBaseBobPos()
     {
-        float baseBobSpeedX = _posSettingsX.Speed * _bobbingController.PlayerVelocity * _mainSpeed;
-        float baseBobPosX = _posSettingsX.TravelDistance / 100 * Mathf.Cos(baseBobSpeedX * Time.time);
-        _posTarget.x = baseBobPosX;
+        _desiredVectors.Pos.x = Mathf.Sin(Time.time * _posSettingsX.Speed * _speedMultipliers[_speedSelector]) * _posSettingsX.TravelDistance * _distanceMultipliers[_speedSelector] / 50;
+        _desiredVectors.Pos.y = Mathf.Sin(Time.time * _posSettingsY.Speed * _speedMultipliers[_speedSelector]) * _posSettingsY.TravelDistance * _distanceMultipliers[_speedSelector] / 50;
 
-        float baseBobSpeedY = _posSettingsY.Speed * _bobbingController.PlayerVelocity * _mainSpeed;
-        float baseBobPosY = _posSettingsY.TravelDistance / 100 * Mathf.Sin(baseBobSpeedY * Time.time);
-        _posTarget.y = baseBobPosY;
     }
+
+
     private void SetBaseBobRot()
     {
-        float baseBobSpeedX = _rotSettingsX.Speed * _bobbingController.PlayerVelocity * _mainSpeed;
-        float baseBobRotX = _rotSettingsX.TravelDistance * Mathf.Cos(baseBobSpeedX * Time.time);
-        _rotTarget.x = baseBobRotX * _rotSettingsX.Strength;
+        _desiredVectors.Rot.x = Mathf.Cos(Time.time * _rotSettingsX.Speed * _speedMultipliers[_speedSelector]) * _rotSettingsX.TravelDistance * _distanceMultipliers[_speedSelector];
+        _desiredVectors.Rot.y = Mathf.Cos(Time.time * _rotSettingsY.Speed * _speedMultipliers[_speedSelector]) * _rotSettingsY.TravelDistance * _distanceMultipliers[_speedSelector];
 
-        float baseBobSpeedY = _rotSettingsY.Speed * _bobbingController.PlayerVelocity * _mainSpeed;
-        float baseBobRotY = _rotSettingsY.TravelDistance * Mathf.Sin(baseBobSpeedY * Time.time);
-        _rotTarget.y = baseBobRotY * _rotSettingsY.Strength;
+        _desiredVectors.Rot.x *= _rotSettingsX.Strength;
+        _desiredVectors.Rot.y *= _rotSettingsY.Strength;
     }
-
-
-
 
     private void SmoothOutBobbing()
     {
-        _pos = Vector3.Lerp(_pos, _posTarget, _bobbingSmoothSpeed * Time.deltaTime);
-        _rot = Vector3.Lerp(_rot, _rotTarget, _bobbingSmoothSpeed * Time.deltaTime);
+        _currentVectors.Pos = Vector3.Lerp(_currentVectors.Pos, _desiredVectors.Pos, _bobbingSmoothSpeed * Time.deltaTime);
+        _currentVectors.Rot = Vector3.Lerp(_currentVectors.Rot, _desiredVectors.Rot, _bobbingSmoothSpeed * Time.deltaTime);
     }
 }

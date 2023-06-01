@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class PlayerWeaponInAirController : MonoBehaviour
@@ -8,46 +9,45 @@ public class PlayerWeaponInAirController : MonoBehaviour
     [SerializeField] PlayerEquipedWeaponController _equipedWeaponController;
 
 
-
-    [Space(20)]
-    [Header("====Settings====")]
-    [SerializeField] SettingsStruct _jump;
-    [SerializeField] SettingsStruct _fall;
-    [SerializeField] SettingsStruct _land;
-
-
-    [System.Serializable]
-    public struct SettingsStruct
-    {
-        [Header("===Rot===")]
-        [Range(-90, 90)]
-        public float RotX;
-        [Range(0, 10)]
-        public float SpeedRot;
-
-        [Space(10)]
-        [Header("===Pos===")]
-        [Range(-0.1f, 0.1f)]
-        public float PosY;
-        [Range(0, 10)]
-        public float SpeedPos;
-    }
-
-
-
+    private Vector3 _pos;
+    private Vector3 _rot;
     public void Jump()
     {
-        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(new Vector3(_jump.RotX, 0, 0), _jump.SpeedRot);
-        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(new Vector3(0, _jump.PosY, 0), _jump.SpeedPos);
+        LeanTween.value(_pos.y, 0.04f, 1).setEaseOutQuart().setOnUpdate((float val) =>
+        {
+            _pos.y = val;
+            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(_pos, 100);
+        });
+        LeanTween.value(_rot.x, 15, 1).setEaseOutQuart().setOnUpdate((float val) =>
+        {
+            _rot.x = val;
+            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(_rot, 100);
+        });
     }
     public void Fall()
     {
-        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(new Vector3(_fall.RotX, 0, 0), _fall.SpeedRot);
-        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(new Vector3(0, _fall.PosY, 0), _fall.SpeedPos);
+        LeanTween.value(_pos.y, 0.02f, 0.5f).setEaseInQuart().setOnUpdate((float val) =>
+        {
+            _pos.y = val;
+            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(_pos, 100);
+        });
+        LeanTween.value(_rot.x, -15, 0.5f).setEaseInCubic().setOnUpdate((float val) =>
+        {
+            _rot.x = val;
+            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(_rot, 100);
+        });
     }
     public void Land()
     {
-        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(new Vector3(_land.RotX, 0, 0), _land.SpeedRot);
-        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(new Vector3(0, _land.PosY, 0), _land.SpeedPos);
+        LeanTween.value(_pos.y, 0, 0.3f).setEaseOutBack().setOnUpdate((float val) =>
+        {
+            _pos.y = val;
+            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(_pos, 100);
+        });
+        LeanTween.value(_rot.x, 0, 0.5f).setEaseOutBack().setOnUpdate((float val) =>
+        {
+            _rot.x = val;
+            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(_rot, 100);
+        });
     }
 }

@@ -6800,8 +6800,8 @@ MonoBehaviour:
   _bobbingController: {fileID: 526658071}
   _sideMovementRotTarget: {x: 0, y: 0, z: 0}
   _sideMovementRot: {x: 0, y: 0, z: 0}
-  _sideBobbingStrength: 5
-  _smoothSpeed: 2
+  _sideBobbingStrength: 6
+  _smoothSpeed: 5
 --- !u!114 &526658071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6835,20 +6835,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponAnimator: {fileID: 526658073}
-  _swayRot: {x: 0, y: 0, z: 0}
-  _swayToggle: 0
+  _currentSwayVectors:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
+  _swayToggle: 1
+  _smoothSpeedPos: 10
+  _smoothSpeedRot: 10
   _horizontal:
-    DesiredSway: 0
-    CurrentSway: 0
-    Strength: 7
-    Speed: 10
-    MaxSway: 5
+    Weight: 0
+    PosStrength: 1
+    PosLimit: 1
+    RotStrength: 2
+    RotLimit: 10
   _vertical:
-    DesiredSway: 0
-    CurrentSway: 0
-    Strength: 7
-    Speed: 10
-    MaxSway: 5
+    Weight: 0
+    PosStrength: 2
+    PosLimit: 2
+    RotStrength: 2
+    RotLimit: 20
 --- !u!114 &526658073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6888,24 +6892,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bobbingController: {fileID: 526658071}
-  _pos: {x: 0, y: 0, z: 0}
-  _rot: {x: 0, y: 0, z: 0}
+  _currentVectors:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
+  _desiredVectors:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
   _posSettingsX:
-    TravelDistance: 1
+    TravelDistance: 0.5
     Speed: 3
   _posSettingsY:
-    TravelDistance: 0.5
+    TravelDistance: 0.25
     Speed: 6
   _rotSettingsX:
-    TravelDistance: 0
-    Speed: 0
-    Strength: 0
-  _rotSettingsY:
     TravelDistance: 1
+    Speed: 1.5
+    Strength: -1
+  _rotSettingsY:
+    TravelDistance: 2
     Speed: 3
-    Strength: -3
-  _mainSpeed: 0.5
-  _bobbingSmoothSpeed: 3
+    Strength: 1
+  _speedMultipliers:
+  - 1
+  - 1.5
+  - 3
+  _distanceMultipliers:
+  - 0.1
+  - 1
+  - 4
+  _bobbingSmoothSpeed: 10
 --- !u!114 &526658075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6971,7 +6986,7 @@ MonoBehaviour:
   _toggles:
     MoveBack: 1
     RotX: 1
-    RotY: 1
+    RotY: 0
     RotZ: 1
   _resetRecoilPosSpeed: 10
   _resetRecoilRotSpeed: 10
@@ -20333,21 +20348,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipedWeaponController: {fileID: 1630793207}
-  _jump:
-    RotX: 30
-    SpeedRot: 4
-    PosY: -0.1
-    SpeedPos: 1
-  _fall:
-    RotX: -50
-    SpeedRot: 3
-    PosY: 0.1
-    SpeedPos: 1
-  _land:
-    RotX: 0
-    SpeedRot: 10
-    PosY: 0
-    SpeedPos: 10
 --- !u!1 &1643424547
 GameObject:
   m_ObjectHideFlags: 0

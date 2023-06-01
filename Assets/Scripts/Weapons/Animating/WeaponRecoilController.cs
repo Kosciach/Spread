@@ -28,6 +28,9 @@ public class WeaponRecoilController : MonoBehaviour
     [SerializeField] float _recoilSpeed;
 
 
+    private int zAngleDirection = 1;
+    private int yAngleDirection = -1;
+
 
 
     [System.Serializable]
@@ -38,6 +41,7 @@ public class WeaponRecoilController : MonoBehaviour
         public bool RotY;
         public bool RotZ;
     }
+
 
 
 
@@ -64,19 +68,16 @@ public class WeaponRecoilController : MonoBehaviour
         if (_toggles.RotZ) RotZ(recoilSettings);
     }
 
-
-    private int zAngleDirection = 1;
-    private int yAngleDirection = -1;
     private void MoveBack(RangeWeaponData.RecoilSettingsStruct recoilSettings)
     {
-        LeanTween.value(_recoilVectors.Pos.z, -recoilSettings.BackPush, 0.04f).setOnUpdate((float val) =>
+        LeanTween.value(_recoilVectors.Pos.z, -recoilSettings.BackPush, 0.04f / recoilSettings.Speed).setOnUpdate((float val) =>
         {
             _recoilVectors.Pos.z = val;
         });
     }
     private void RotX(RangeWeaponData.RecoilSettingsStruct recoilSettings)
     {
-        LeanTween.value(_recoilVectors.Rot.x, -recoilSettings.RotX, 0.1f).setOnUpdate((float val) =>
+        LeanTween.value(_recoilVectors.Rot.x, -recoilSettings.RotX, 0.1f / recoilSettings.Speed).setOnUpdate((float val) =>
         {
             _recoilVectors.Rot.x = val;
         });
@@ -86,7 +87,7 @@ public class WeaponRecoilController : MonoBehaviour
         yAngleDirection = Random.Range(0, 2) == 0 ? -1 : 1;
         float yAngle = recoilSettings.RotY * yAngleDirection;
 
-        LeanTween.value(_recoilVectors.Rot.y, yAngle, 0.1f).setEaseInOutBack().setOnUpdate((float val) =>
+        LeanTween.value(_recoilVectors.Rot.y, yAngle, 0.1f / recoilSettings.Speed).setEaseInOutBack().setOnUpdate((float val) =>
         {
             _recoilVectors.Rot.y = val;
         });
@@ -96,12 +97,12 @@ public class WeaponRecoilController : MonoBehaviour
         zAngleDirection = zAngleDirection == 1 ? -1 : 1;
         float zAngle = recoilSettings.RotZ * zAngleDirection;
 
-        LeanTween.value(_recoilVectors.Rot.z, zAngle, 0.1f).setOnUpdate((float val) =>
+        LeanTween.value(_recoilVectors.Rot.z, zAngle, 0.1f / recoilSettings.Speed).setOnUpdate((float val) =>
         {
             _recoilVectors.Rot.z = val;
         }).setOnComplete(() =>
         {
-            LeanTween.value(_recoilVectors.Rot.z, -zAngle, 0.1f).setOnUpdate((float val) =>
+            LeanTween.value(_recoilVectors.Rot.z, -zAngle, 0.1f / recoilSettings.Speed).setOnUpdate((float val) =>
             {
                 _recoilVectors.Rot.z = val;
             });
