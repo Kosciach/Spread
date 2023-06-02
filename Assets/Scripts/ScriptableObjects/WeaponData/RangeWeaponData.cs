@@ -42,6 +42,8 @@ public class RangeWeaponData : WeaponData
         public float FireRate;
         [Range(0, 100)]
         public float CarredForce;
+        [Range(0, 5)]
+        public float AccuracyOffset;
     }
 
     [System.Serializable]

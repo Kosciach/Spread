@@ -18,7 +18,7 @@ public class PlayerLandState : PlayerBaseState
         _ctx.CoreControllers.Collider.SetColliderRadius(0.2f);
         _ctx.MovementControllers.VerticalVelocity.SlopeController.ToggleSlopeAngle(true);
 
-        _ctx.AnimatingControllers.Animator.SetFloat("FallingTime", _ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce);
+        _ctx.AnimatingControllers.Animator.SetFloat("FallingTime", _ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.SlopeController.SlopeAngle);
         _ctx.AnimatingControllers.Animator.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
         _ctx.AnimatingControllers.Animator.SetBool("Land", true);
 
@@ -48,7 +48,8 @@ public class PlayerLandState : PlayerBaseState
 
     private void CheckHardLanding()
     {
-        _ctx.WasHardLanding = _ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce <= -12;
+        Debug.Log(_ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.SlopeController.SlopeAngle);
+        _ctx.WasHardLanding = _ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.SlopeController.SlopeAngle <= -12;
 
         if (_ctx.WasHardLanding) _ctx.CombatControllers.Combat.TemporaryUnEquip();
         _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(!_ctx.WasHardLanding);

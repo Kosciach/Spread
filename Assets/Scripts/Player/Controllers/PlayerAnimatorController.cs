@@ -1,14 +1,11 @@
-using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class PlayerAnimatorController : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] Animator _animator;
-    [SerializeField] AnimatorController _baseAnimator;
 
 
 
@@ -69,10 +66,6 @@ public class PlayerAnimatorController : MonoBehaviour
     public void OverrideAnimationClip(AnimatorOverrideController overide)
     {
         _animator.runtimeAnimatorController = overide;
-    }
-    public void ResetAnimatorController()
-    {
-        _animator.runtimeAnimatorController = _baseAnimator;
     }
 
 

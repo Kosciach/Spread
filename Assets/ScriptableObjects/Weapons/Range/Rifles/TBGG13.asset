@@ -57,6 +57,7 @@ MonoBehaviour:
     Range: 5
     FireRate: 7
     CarredForce: 20
+    AccuracyOffset: 2
   RecoilSettings:
     Speed: 1
     BackPush: 0.2
@@ -64,5 +65,5 @@ MonoBehaviour:
     RotY: 0.1
     RotZ: 1.5
   AmmoSettings:
-    MagSize: 35
+    MagSize: 1000
     AmmoType: {fileID: 11400000, guid: 3c45487ce23f68e42806317015a885d8, type: 2}

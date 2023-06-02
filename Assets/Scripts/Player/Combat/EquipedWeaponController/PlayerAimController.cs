@@ -43,9 +43,6 @@ public class PlayerAimController : MonoBehaviour
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Wall.IsWall) return;
         if (_combatController.EquipedWeaponData.WeaponTransforms.Aim.Length <= 0) return;
 
-
-        _combatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(!aim);
-
         ToggleAimBool(aim);
         int enableADS = _isAim ? 1 : 0;
 

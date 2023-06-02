@@ -79,6 +79,8 @@ public class WeaponShootingController : WeaponDamageDealingController
             return;
         }
 
+        _barrelController.RotateBarrel();
+
         //SpawnBullet
         GameObject newBullet = Instantiate(_bulletPrefab, _barrel.position, _barrel.rotation);
         BulletController newBulletController = newBullet.GetComponent<BulletController>();
@@ -110,7 +112,7 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     private void ChangeFireMode()
     {
-        if (!_shootToggle) return;
+        if (!_isEquiped) return;
 
         _currentFireModeIndex++;
         _currentFireModeIndex = _currentFireModeIndex == _fireModes.Length ? 0 : _currentFireModeIndex;
@@ -163,7 +165,6 @@ public class WeaponShootingController : WeaponDamageDealingController
     }
     public override void WeaponUnEquiped()
     {
-        Debug.Log("RAnge UnE");
         _reloadToggle = false;
         _isEquiped = false;
 

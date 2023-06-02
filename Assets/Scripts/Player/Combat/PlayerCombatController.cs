@@ -51,8 +51,7 @@ public class PlayerCombatController : MonoBehaviour
         WeaponData equipedWeaponDataNew = _playerStateMachine.InventoryControllers.Inventory.Weapon.WeaponsData[choosenWeaponIndex];
         if (equipedWeaponNew == null || equipedWeaponDataNew == null)
         {
-            equipedWeaponNew = _playerStateMachine.InventoryControllers.Inventory.Weapon.Fist;
-            equipedWeaponDataNew = _playerStateMachine.InventoryControllers.Inventory.Weapon.FistData;
+            return;
         }
 
 
