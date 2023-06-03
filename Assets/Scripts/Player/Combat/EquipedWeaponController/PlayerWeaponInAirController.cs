@@ -9,45 +9,52 @@ public class PlayerWeaponInAirController : MonoBehaviour
     [SerializeField] PlayerEquipedWeaponController _equipedWeaponController;
 
 
-    private Vector3 _pos;
-    private Vector3 _rot;
+    private SettingsStruct _pos;
+    private SettingsStruct _rot;
+
+
+    private PlayerVerticalVelocityController _verticalVelocity;
+    private float _gravityStrength => _verticalVelocity.GravityController.CurrentGravityForce - _verticalVelocity.SlopeController.SlopeAngle;
+
+
+    private struct SettingsStruct
+    {
+        public Vector3 Vector;
+        public float Speed;
+    }
+
+
+
+
+    private void Awake()
+    {
+        _verticalVelocity = _equipedWeaponController.CombatController.PlayerStateMachine.MovementControllers.VerticalVelocity;
+    }
+    private void Update()
+    {
+        _pos.Vector.y = _gravityStrength / 100;
+        _rot.Vector.x = _gravityStrength * 4;
+
+        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(_pos.Vector, _pos.Speed);
+        _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(_rot.Vector, _rot.Speed);
+    }
+
+
+
+
     public void Jump()
     {
-        LeanTween.value(_pos.y, 0.04f, 1).setEaseOutQuart().setOnUpdate((float val) =>
-        {
-            _pos.y = val;
-            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(_pos, 100);
-        });
-        LeanTween.value(_rot.x, 15, 1).setEaseOutQuart().setOnUpdate((float val) =>
-        {
-            _rot.x = val;
-            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(_rot, 100);
-        });
+        _pos.Speed = 5;
+        _rot.Speed = 5;
     }
     public void Fall()
     {
-        LeanTween.value(_pos.y, 0.02f, 0.5f).setEaseInQuart().setOnUpdate((float val) =>
-        {
-            _pos.y = val;
-            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(_pos, 100);
-        });
-        LeanTween.value(_rot.x, -15, 0.5f).setEaseInCubic().setOnUpdate((float val) =>
-        {
-            _rot.x = val;
-            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(_rot, 100);
-        });
+        _pos.Speed = 5;
+        _rot.Speed = 5;
     }
     public void Land()
     {
-        LeanTween.value(_pos.y, 0, 0.3f).setEaseOutBack().setOnUpdate((float val) =>
-        {
-            _pos.y = val;
-            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetPosOffset(_pos, 100);
-        });
-        LeanTween.value(_rot.x, 0, 0.5f).setEaseOutBack().setOnUpdate((float val) =>
-        {
-            _rot.x = val;
-            _equipedWeaponController.CombatController.PlayerStateMachine.AnimatingControllers.Weapon.HandOffseter.SetRotOffset(_rot, 100);
-        });
+        _pos.Speed = 10;
+        _rot.Speed = 20;
     }
 }
