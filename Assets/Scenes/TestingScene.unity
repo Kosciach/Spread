@@ -6162,7 +6162,7 @@ MonoBehaviour:
   _sideMovementRotTarget: {x: 0, y: 0, z: 0}
   _sideMovementRot: {x: 0, y: 0, z: 0}
   _sideBobbingStrength: 6
-  _smoothSpeed: 5
+  _smoothSpeed: 1
 --- !u!114 &526658071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6200,8 +6200,8 @@ MonoBehaviour:
     Pos: {x: 0, y: 0, z: 0}
     Rot: {x: 0, y: 0, z: 0}
   _swayToggle: 1
-  _smoothSpeedPos: 10
-  _smoothSpeedRot: 10
+  _smoothSpeedPos: 6
+  _smoothSpeedRot: 6
   _horizontal:
     Weight: 0
     PosStrength: 1
@@ -6233,10 +6233,10 @@ MonoBehaviour:
   _handOffseter: {fileID: 526658075}
   _recoil: {fileID: 526658079}
   _rightHandIk: {fileID: 553561153}
-  _mainVectors:
+  _baseVectors:
     Pos: {x: 0, y: 0, z: 0}
     Rot: {x: 0, y: 0, z: 0}
-  _additionalVectors:
+  _extraVectors:
     Pos: {x: 0, y: 0, z: 0}
     Rot: {x: 0, y: 0, z: 0}
   _bobSwayVectorsSmoothSpeed: 5
@@ -6259,6 +6259,8 @@ MonoBehaviour:
   _desiredVectors:
     Pos: {x: 0, y: 0, z: 0}
     Rot: {x: 0, y: 0, z: 0}
+  _bobbingType: 0
+  _toggle: 1
   _posSettingsX:
     TravelDistance: 0.5
     Speed: 3
@@ -6274,7 +6276,7 @@ MonoBehaviour:
     Speed: 3
     Strength: 1
   _speedMultipliers:
-  - 1
+  - 0.5
   - 1.5
   - 3
   _distanceMultipliers:
@@ -6325,8 +6327,12 @@ MonoBehaviour:
     Pos: {x: 0, y: 0, z: 0}
     Rot: {x: 0, y: 0, z: 0}
   _positioningMode: 0
+  _isHandAtPos: 0
+  _isHandAtRot: 0
   _posVectorSmoothSpeed: 0
   _rotVectorSmoothSpeed: 0
+  _isHandAtPosTreshold: 0.1
+  _isHandAtRotTreshold: 5
 --- !u!114 &526658079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6466,7 +6472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 553561153}
   m_Layer: 0
-  m_Name: RightHandIkTargetRot
+  m_Name: RightHandIkTargetBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19074,7 +19080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipedWeaponController: {fileID: 1630793207}
-  _weaponLock: 0
+  _isRun: 0
 --- !u!114 &1630793212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20063,7 +20069,7 @@ GameObject:
   - component: {fileID: 1789213290}
   - component: {fileID: 1789213291}
   m_Layer: 0
-  m_Name: RightHandIk_TargetPos
+  m_Name: RightHandIk_TargetExtra
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

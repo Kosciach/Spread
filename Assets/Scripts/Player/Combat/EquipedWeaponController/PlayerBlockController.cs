@@ -55,7 +55,7 @@ public class PlayerBlockController : MonoBehaviour
     private void BlockEnable()
     {
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
-        _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
+        _equipedWeaponController.Run.ToggleRunBool(false);
 
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Position, 6);
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Rotation, 6);

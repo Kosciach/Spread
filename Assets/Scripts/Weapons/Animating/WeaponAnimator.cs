@@ -20,8 +20,8 @@ public class WeaponAnimator : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] PosRotStruct _mainVectors;
-    [SerializeField] PosRotStruct _additionalVectors; public PosRotStruct AdditionalVectors { get { return _additionalVectors; } }
+    [SerializeField] PosRotStruct _baseVectors;
+    [SerializeField] PosRotStruct _extraVectors; public PosRotStruct ExtraVectors { get { return _extraVectors; } }
     private PosRotStruct _bobSwayVectors;
     private PosRotStruct _bobSwayVectorsTarget;
 
@@ -30,7 +30,7 @@ public class WeaponAnimator : MonoBehaviour
 
     [Space(20)]
     [Header("====Settings====")]
-    [Range(0, 5)]
+    [Range(0, 10)]
     [SerializeField] float _bobSwayVectorsSmoothSpeed;
 
 
@@ -51,50 +51,40 @@ public class WeaponAnimator : MonoBehaviour
 
     private void Update()
     {
-        CombineBobAndSway();
-        SmoothOutBobAndSway();
-
-        CombineAdditionalVectors();
+        CombineVectorsForBaseTarget();
+        CombineVectorsForExtraTarget();
 
 
-        ApplyAdditionalVectorsToHand();
-        ApplyMainVectorsToHand();
+        ApplyVectorsToBaseTarget();
+        ApplyVectorsToExtraTarget();
     }
 
 
 
 
 
-    private void CombineBobAndSway()
-    {
-        _bobSwayVectorsTarget.Pos = _bobbing.MainBobVectors.Pos + _sway.CurrentSwayVectors.Pos;
-        _bobSwayVectorsTarget.Rot = _bobbing.MainBobVectors.Rot + _sway.CurrentSwayVectors.Rot;
-    }
-    private void SmoothOutBobAndSway()
-    {
-        _bobSwayVectors.Pos = Vector3.Lerp(_bobSwayVectors.Pos, _bobSwayVectorsTarget.Pos, _bobSwayVectorsSmoothSpeed * Time.deltaTime);
-        _bobSwayVectors.Rot = Vector3.Lerp(_bobSwayVectors.Rot, _bobSwayVectorsTarget.Rot, _bobSwayVectorsSmoothSpeed * Time.deltaTime);
-    }
 
-    private void CombineAdditionalVectors()
+    private void CombineVectorsForBaseTarget()
     {
-        _additionalVectors.Pos = _bobSwayVectors.Pos + _handOffseter.HandOffsets.Pos + _recoil.RecoilVectors.Pos;
-        _additionalVectors.Rot = _bobSwayVectors.Rot + _handOffseter.HandOffsets.Rot + _recoil.RecoilVectors.Rot;
+        _baseVectors.Pos = _mainPositioner.CurrentMainVectors.Pos + _bobbing.Base.CurrentVectors.Pos;
+        _baseVectors.Rot = _mainPositioner.CurrentMainVectors.Rot + _bobbing.Base.CurrentVectors.Rot;
+    }
+    private void CombineVectorsForExtraTarget()
+    {
+        _extraVectors.Pos = _recoil.RecoilVectors.Pos + _sway.CurrentSwayVectors.Pos + _handOffseter.HandOffsets.Pos;
+        _extraVectors.Rot = _recoil.RecoilVectors.Rot + _sway.CurrentSwayVectors.Rot + _handOffseter.HandOffsets.Rot + _bobbing.Side.SideMovementRot;
     }
 
 
 
-    private void ApplyMainVectorsToHand()
+    private void ApplyVectorsToBaseTarget()
     {
-        _mainVectors.Pos = _mainPositioner.CurrentMainVectors.Pos;
-        _mainVectors.Rot = _mainPositioner.CurrentMainVectors.Rot;
-
-        _rightHandIk.parent.localPosition = _mainVectors.Pos;
-        _rightHandIk.localRotation = Quaternion.Euler(_mainVectors.Rot);
+        _rightHandIk.parent.localPosition = _baseVectors.Pos;
+        _rightHandIk.localRotation = Quaternion.Euler(_baseVectors.Rot);
     }
-    private void ApplyAdditionalVectorsToHand()
+    private void ApplyVectorsToExtraTarget()
     {
-        _rightHandIk.parent.localRotation = Quaternion.Euler(_additionalVectors.Rot);
-        _rightHandIk.localPosition = _additionalVectors.Pos;
+        _rightHandIk.parent.localRotation = Quaternion.Euler(_extraVectors.Rot);
+        _rightHandIk.localPosition = _extraVectors.Pos;
     }
 }

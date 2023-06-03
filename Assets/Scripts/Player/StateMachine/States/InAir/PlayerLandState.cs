@@ -48,7 +48,6 @@ public class PlayerLandState : PlayerBaseState
 
     private void CheckHardLanding()
     {
-        Debug.Log(_ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.SlopeController.SlopeAngle);
         _ctx.WasHardLanding = _ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.SlopeController.SlopeAngle <= -12;
 
         if (_ctx.WasHardLanding) _ctx.CombatControllers.Combat.TemporaryUnEquip();

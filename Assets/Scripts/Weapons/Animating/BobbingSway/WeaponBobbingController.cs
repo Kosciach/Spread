@@ -8,8 +8,8 @@ public class WeaponBobbingController : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] WeaponAnimator _weaponAnimator; public WeaponAnimator WeaponAnimator { get { return _weaponAnimator; } }
-    [SerializeField] WeaponBaseBobbing _base;
-    [SerializeField] WeaponSideBobbing _side;
+    [SerializeField] WeaponBaseBobbing _base; public WeaponBaseBobbing Base { get { return _base; } }
+    [SerializeField] WeaponSideBobbing _side; public WeaponSideBobbing Side { get { return _side; } }
 
 
 
@@ -25,11 +25,6 @@ public class WeaponBobbingController : MonoBehaviour
     [Header("====Settings====")]
     [Range(0, 5)]
     [SerializeField] float _playerVelocitySmoothSpeed;
-
-
-
-    private float _playerVelocity => _weaponAnimator.PlayerStateMachine.MovementControllers.Movement.OnGround.CurrentMovementVector.magnitude;
-    public float PlayerVelocity { get { return _playerVelocity; } }
 
 
     [System.Serializable]

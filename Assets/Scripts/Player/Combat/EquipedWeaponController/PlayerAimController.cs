@@ -58,7 +58,7 @@ public class PlayerAimController : MonoBehaviour
     {
         _combatController.EquipedWeapon.DamageDealingController.Toggle(true);
         _equipedWeaponController.Block.ToggleBlockBool(false);
-        _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
+        _equipedWeaponController.Run.ToggleRunBool(false);
 
         CheckCrosshair();
 

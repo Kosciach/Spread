@@ -47,7 +47,7 @@ public class PlayerWeaponWallController : MonoBehaviour
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Aim.ToggleAimBool(false);
         _equipedWeaponController.Block.ToggleBlockBool(false);
-        _equipedWeaponController.Run.ToggleRunWeaponLockBool(false);
+        _equipedWeaponController.Run.ToggleRunBool(false);
 
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Wall.RightHand_Position, 6);
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_combatController.EquipedWeaponData.WeaponTransforms.Wall.RightHand_Rotation, 6);

@@ -23,7 +23,7 @@ public class WeaponBarrelTargetController : MonoBehaviour
 
     private void ApplyAdditionalWeaponAnimatorRotation()
     {
-        transform.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.Weapon.AdditionalVectors.Rot);
+        transform.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.Weapon.ExtraVectors.Rot);
     }
     private void ShootRay()
     {

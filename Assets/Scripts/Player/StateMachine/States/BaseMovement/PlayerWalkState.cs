@@ -9,6 +9,8 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.AnimatingControllers.Weapon.Bobbing.Base.ChangeBobbingType(WeaponBaseBobbing.BobbingTypeEnum.Walk);
+
         _ctx.CameraControllers.Cine.Fov.SetFov(5, 2);
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Walk, 5);

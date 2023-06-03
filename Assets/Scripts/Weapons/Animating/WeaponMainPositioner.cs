@@ -18,14 +18,16 @@ public class WeaponMainPositioner : MonoBehaviour
     [SerializeField] MainVectors _desiredMainVectors;
     [Space(5)]
     [SerializeField] PositioningMode _positioningMode;
-
+    [SerializeField] bool _isHandAtPos; public bool IsHandAtPos { get { return _isHandAtPos; } }
+    [SerializeField] bool _isHandAtRot; public bool IsHandAtRot { get { return _isHandAtRot; } }
 
     [Space(20)]
     [Header("====Settings====")]
     [SerializeField] float _posVectorSmoothSpeed;
     [SerializeField] float _rotVectorSmoothSpeed;
 
-
+    [SerializeField] float _isHandAtPosTreshold;
+    [SerializeField] float _isHandAtRotTreshold;
     private IEnumerator _lerpFinishCoroutine;
 
 
@@ -63,6 +65,9 @@ public class WeaponMainPositioner : MonoBehaviour
     {
         _currentMainVectors.Pos = Vector3.Lerp(_currentMainVectors.Pos, _desiredMainVectors.Pos, _posVectorSmoothSpeed * Time.deltaTime);
         _currentMainVectors.Rot = Vector3.Lerp(_currentMainVectors.Rot, _desiredMainVectors.Rot, _rotVectorSmoothSpeed * Time.deltaTime);
+
+        _isHandAtPos = Vector3.Distance(_desiredMainVectors.Pos, _currentMainVectors.Pos) <= _isHandAtPosTreshold;
+        _isHandAtRot = Vector3.Distance(_desiredMainVectors.Rot, _currentMainVectors.Rot) <= _isHandAtRotTreshold;
 
         _positioner.localPosition = _desiredMainVectors.Pos;
         _positioner.localRotation = Quaternion.Euler(_desiredMainVectors.Rot);

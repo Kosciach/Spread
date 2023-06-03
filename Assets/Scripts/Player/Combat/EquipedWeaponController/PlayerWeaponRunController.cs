@@ -12,7 +12,7 @@ public class PlayerWeaponRunController : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] bool _weaponLock; public bool WeaponLock { get { return _weaponLock; } }
+    [SerializeField] bool _isRun; public bool IsRun { get { return _isRun; } }
 
 
 
@@ -29,26 +29,24 @@ public class PlayerWeaponRunController : MonoBehaviour
 
 
 
-    public void ToggleRunWeaponLock(bool enable)
+    public void ToggleRun(bool enable)
     {
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim || _equipedWeaponController.Block.IsBlock) return;
 
         int index = enable ? 1 : 0;
-        ToggleRunWeaponLockBool(enable);
+        ToggleRunBool(enable);
 
         _runMethods[index]();
     }
-    public void ToggleRunWeaponLockBool(bool enable)
+    public void ToggleRunBool(bool enable)
     {
-        _weaponLock = enable;
+        _isRun = enable;
     }
 
 
     private void EnableRun()
     {
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
-        //_combatController.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_combatController.EquipedWeaponData, true);
-
 
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Position, 6);
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Rotation, 6);
@@ -78,6 +76,6 @@ public class PlayerWeaponRunController : MonoBehaviour
         WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeapon.HoldController;
 
         equipedWeaponHoldController.ChangeHoldMode(_combatController.EquipedWeapon.HoldController.HoldMode);
-        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(5, 5);
+        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(6, 6);
     }
 }

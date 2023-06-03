@@ -32,6 +32,7 @@ public class RangeWeaponHoldController : WeaponHoldController
         _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_rangeWeaponData.HoldTransforms.Rest.RightHand_Rotation, rotateSpeed);
         _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_rangeWeaponData.HoldTransforms.Rest.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
         {
+            Debug.Log("Finish");
             _stateMachine.DamageDealingController.Toggle(false);
 
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,8 @@ public class WeaponBaseBobbing : MonoBehaviour
     [Header("====Debugs====")]
     [SerializeField] WeaponAnimator.PosRotStruct _currentVectors; public WeaponAnimator.PosRotStruct CurrentVectors { get { return _currentVectors; } }
     [SerializeField] WeaponAnimator.PosRotStruct _desiredVectors; public WeaponAnimator.PosRotStruct DesiredVectors { get { return _desiredVectors; } }
-
+    [SerializeField] BobbingTypeEnum _bobbingType;
+    [SerializeField] bool _toggle;
 
     [Space(20)]
     [Header("====Settings====")]
@@ -31,6 +33,13 @@ public class WeaponBaseBobbing : MonoBehaviour
     [SerializeField] float _bobbingSmoothSpeed;
 
 
+    private int _bobbingTypeIndex;
+
+
+    public enum BobbingTypeEnum
+    {
+        Idle,Walk,Run
+    }
     [System.Serializable]
     public struct BaseBobPosSettings
     {
@@ -51,7 +60,7 @@ public class WeaponBaseBobbing : MonoBehaviour
     }
 
 
-    private int _speedSelector => (int)(_bobbingController.PlayerVelocity/4 + 0.4f);
+
 
 
     private void Update()
@@ -63,26 +72,45 @@ public class WeaponBaseBobbing : MonoBehaviour
     }
 
 
+
+
     private void SetBaseBobPos()
     {
-        _desiredVectors.Pos.x = Mathf.Sin(Time.time * _posSettingsX.Speed * _speedMultipliers[_speedSelector]) * _posSettingsX.TravelDistance * _distanceMultipliers[_speedSelector] / 50;
-        _desiredVectors.Pos.y = Mathf.Sin(Time.time * _posSettingsY.Speed * _speedMultipliers[_speedSelector]) * _posSettingsY.TravelDistance * _distanceMultipliers[_speedSelector] / 50;
-
+        _desiredVectors.Pos.x = Mathf.Sin(Time.time * _posSettingsX.Speed * _speedMultipliers[_bobbingTypeIndex]) * _posSettingsX.TravelDistance * _distanceMultipliers[_bobbingTypeIndex] / 50;
+        _desiredVectors.Pos.y = Mathf.Sin(Time.time * _posSettingsY.Speed * _speedMultipliers[_bobbingTypeIndex]) * _posSettingsY.TravelDistance * _distanceMultipliers[_bobbingTypeIndex] / 50;
     }
-
-
     private void SetBaseBobRot()
     {
-        _desiredVectors.Rot.x = Mathf.Cos(Time.time * _rotSettingsX.Speed * _speedMultipliers[_speedSelector]) * _rotSettingsX.TravelDistance * _distanceMultipliers[_speedSelector];
-        _desiredVectors.Rot.y = Mathf.Cos(Time.time * _rotSettingsY.Speed * _speedMultipliers[_speedSelector]) * _rotSettingsY.TravelDistance * _distanceMultipliers[_speedSelector];
+        _desiredVectors.Rot.x = Mathf.Cos(Time.time * _rotSettingsX.Speed * _speedMultipliers[_bobbingTypeIndex]) * _rotSettingsX.TravelDistance * _distanceMultipliers[_bobbingTypeIndex];
+        _desiredVectors.Rot.y = Mathf.Cos(Time.time * _rotSettingsY.Speed * _speedMultipliers[_bobbingTypeIndex]) * _rotSettingsY.TravelDistance * _distanceMultipliers[_bobbingTypeIndex];
 
         _desiredVectors.Rot.x *= _rotSettingsX.Strength;
         _desiredVectors.Rot.y *= _rotSettingsY.Strength;
     }
 
+
+
     private void SmoothOutBobbing()
     {
-        _currentVectors.Pos = Vector3.Lerp(_currentVectors.Pos, _desiredVectors.Pos, _bobbingSmoothSpeed * Time.deltaTime);
-        _currentVectors.Rot = Vector3.Lerp(_currentVectors.Rot, _desiredVectors.Rot, _bobbingSmoothSpeed * Time.deltaTime);
+        int toggleWeight = _toggle ? 1 : 0;
+        _currentVectors.Pos = Vector3.Lerp(_currentVectors.Pos, _desiredVectors.Pos, _bobbingSmoothSpeed * Time.deltaTime) * toggleWeight;
+        _currentVectors.Rot = Vector3.Lerp(_currentVectors.Rot, _desiredVectors.Rot, _bobbingSmoothSpeed * Time.deltaTime) * toggleWeight;
+    }
+
+
+
+
+
+
+
+
+    public void ChangeBobbingType(BobbingTypeEnum bobbingType)
+    {
+        _bobbingType = bobbingType;
+        _bobbingTypeIndex = (int)_bobbingType;
+    }
+    public void Toggle(bool toggle)
+    {
+        _toggle = toggle;
     }
 }
