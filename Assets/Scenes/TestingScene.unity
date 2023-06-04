@@ -6124,6 +6124,8 @@ GameObject:
   - component: {fileID: 526658070}
   - component: {fileID: 526658075}
   - component: {fileID: 526658079}
+  - component: {fileID: 526658082}
+  - component: {fileID: 526658080}
   m_Layer: 6
   m_Name: WeaponAnimator
   m_TagString: Untagged
@@ -6232,6 +6234,8 @@ MonoBehaviour:
   _bobbing: {fileID: 526658071}
   _handOffseter: {fileID: 526658075}
   _recoil: {fileID: 526658079}
+  _inAir: {fileID: 526658082}
+  _fireMode: {fileID: 526658080}
   _rightHandIk: {fileID: 553561153}
   _baseVectors:
     Pos: {x: 0, y: 0, z: 0}
@@ -6358,6 +6362,45 @@ MonoBehaviour:
   _resetRecoilPosSpeed: 10
   _resetRecoilRotSpeed: 10
   _recoilSpeed: 0
+--- !u!114 &526658080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526658068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9c2140acfa934fad2f289177871c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponAnimator: {fileID: 526658073}
+  _vectors:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
+  _resetSpeed: 10
+--- !u!114 &526658082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526658068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cd76c77ae391434e8c9602f0e2d42b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponAnimator: {fileID: 526658073}
+  _currentVectors:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
+  _desiredVectors:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
+  _toggle: 1
+  _posSmoothSpeed: 0
+  _rotSmoothSpeed: 0
 --- !u!1 &539297483
 GameObject:
   m_ObjectHideFlags: 0
@@ -18954,7 +18997,6 @@ GameObject:
   - component: {fileID: 1630793209}
   - component: {fileID: 1630793208}
   - component: {fileID: 1630793211}
-  - component: {fileID: 1630793213}
   - component: {fileID: 1630793212}
   m_Layer: 6
   m_Name: CombatController
@@ -19020,7 +19062,6 @@ MonoBehaviour:
   _aim: {fileID: 1630793209}
   _block: {fileID: 1630793208}
   _run: {fileID: 1630793211}
-  _inAir: {fileID: 1630793213}
   _wall: {fileID: 1630793212}
 --- !u!114 &1630793208
 MonoBehaviour:
@@ -19095,19 +19136,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _equipedWeaponController: {fileID: 1630793207}
   _isWall: 0
---- !u!114 &1630793213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1630793203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4153bcf3796df09408e050a7e014b836, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _equipedWeaponController: {fileID: 1630793207}
 --- !u!1 &1643424547
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class WeaponShootingController : WeaponDamageDealingController
@@ -125,6 +126,8 @@ public class WeaponShootingController : WeaponDamageDealingController
 
 
         CanvasController.Instance.HudControllers.Ammo.ChangeFireMode(_currentFireModeType);
+
+        _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.FireMode.ChangeFireModeAnim();
     }
 
 

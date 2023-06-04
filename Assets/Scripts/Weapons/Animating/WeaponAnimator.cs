@@ -11,7 +11,9 @@ public class WeaponAnimator : MonoBehaviour
     [SerializeField] WeaponSwayController _sway; public WeaponSwayController Sway { get { return _sway; } }
     [SerializeField] WeaponBobbingController _bobbing; public WeaponBobbingController Bobbing { get { return _bobbing; } }
     [SerializeField] WeaponRightHandOffseter _handOffseter; public WeaponRightHandOffseter HandOffseter { get { return _handOffseter; } }
-    [SerializeField] WeaponRecoilController _recoil; public WeaponRecoilController Recoil { get { return _recoil; } }
+    [SerializeField] WeaponRecoilAnimator _recoil; public WeaponRecoilAnimator Recoil { get { return _recoil; } }
+    [SerializeField] WeaponInAirAnimator _inAir; public WeaponInAirAnimator InAir { get { return _inAir; } }
+    [SerializeField] WeaponFireModeAnimator _fireMode; public WeaponFireModeAnimator FireMode { get { return _fireMode; } }
     [Space(10)]
     [SerializeField] Transform _rightHandIk; public Transform RightHandIk { get { return _rightHandIk; } }
 
@@ -71,8 +73,8 @@ public class WeaponAnimator : MonoBehaviour
     }
     private void CombineVectorsForExtraTarget()
     {
-        _extraVectors.Pos = _recoil.RecoilVectors.Pos + _sway.CurrentSwayVectors.Pos + _handOffseter.HandOffsets.Pos;
-        _extraVectors.Rot = _recoil.RecoilVectors.Rot + _sway.CurrentSwayVectors.Rot + _handOffseter.HandOffsets.Rot + _bobbing.Side.SideMovementRot;
+        _extraVectors.Pos = _recoil.RecoilVectors.Pos + _sway.CurrentSwayVectors.Pos + _inAir.CurrentVectors.Pos + _handOffseter.HandOffsets.Pos + _fireMode.Vectors.Pos;
+        _extraVectors.Rot = _recoil.RecoilVectors.Rot + _sway.CurrentSwayVectors.Rot + _inAir.CurrentVectors.Rot + _handOffseter.HandOffsets.Rot + _fireMode.Vectors.Rot + _bobbing.Side.SideMovementRot;
     }
 
 

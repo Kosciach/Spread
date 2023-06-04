@@ -10,6 +10,5 @@ public class PlayerEquipedWeaponController : MonoBehaviour
     [SerializeField] PlayerAimController _aim; public PlayerAimController Aim { get { return _aim; } }
     [SerializeField] PlayerBlockController _block; public PlayerBlockController Block { get { return _block; } }
     [SerializeField] PlayerWeaponRunController _run; public PlayerWeaponRunController Run { get { return _run; } }
-    [SerializeField] PlayerWeaponInAirController _inAir; public PlayerWeaponInAirController InAir { get { return _inAir; } }
     [SerializeField] PlayerWeaponWallController _wall; public PlayerWeaponWallController Wall { get { return _wall; } }
 }

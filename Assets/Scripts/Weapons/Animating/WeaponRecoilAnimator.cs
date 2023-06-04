@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponRecoilController : MonoBehaviour
+public class WeaponRecoilAnimator : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] WeaponAnimator _weaponAnimator;

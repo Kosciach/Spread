@@ -33,8 +33,8 @@ MonoBehaviour:
       RightHand_Position: {x: 0.222, y: -0.362, z: 0.583}
       RightHand_Rotation: {x: 302.14615, y: 149.3001, z: 363}
     Aim:
-    - RightHand_Position: {x: -0.0341, y: -0.177, z: 0.341}
-      RightHand_Rotation: {x: 279.20996, y: 288.45, z: 283.40295}
+    - RightHand_Position: {x: -0.03226, y: -0.177, z: 0.341}
+      RightHand_Rotation: {x: 279.64523, y: 287.59802, z: 284.2666}
     - RightHand_Position: {x: 0.106, y: -0.221, z: 0.341}
       RightHand_Rotation: {x: 331.83337, y: 271.11374, z: 304.01804}
     Run:

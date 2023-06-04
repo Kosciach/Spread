@@ -18,7 +18,8 @@ public class PlayerJumpState : PlayerBaseState
         _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleIsJump(true);
         _ctx.MovementControllers.VerticalVelocity.JumpController.Jump();
 
-        _ctx.CombatControllers.Combat.EquipedWeaponController.InAir.Jump();
+        _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);
+        _ctx.AnimatingControllers.Weapon.InAir.SetRotSpeed(5);
     }
     public override void StateUpdate()
     {
