@@ -86,6 +86,8 @@ public class PlayerStateMachine : MonoBehaviour
     public struct CombatControllersStruct
     {
         public PlayerCombatController Combat;
+        public PlayerEquipedWeaponController EquipedWeapon;
+        public PlayerLeaningController Leaning;
     }
 
     [System.Serializable]

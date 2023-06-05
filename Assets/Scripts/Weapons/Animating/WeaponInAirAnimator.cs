@@ -26,7 +26,11 @@ public class WeaponInAirAnimator : MonoBehaviour
     [SerializeField] float _posSmoothSpeed;
     [Range(0, 20)]
     [SerializeField] float _rotSmoothSpeed;
-
+    [Space(5)]
+    [Range(0, 0.1f)]
+    [SerializeField] float _maxPos;
+    [Range(0, 45)]
+    [SerializeField] float _maxRot;
 
 
     private PlayerVerticalVelocityController _verticalVelocity;
@@ -50,13 +54,16 @@ public class WeaponInAirAnimator : MonoBehaviour
 
     private void SetVectors()
     {
-        _desiredVectors.Pos.y = _gravityStrength / 100;
+        _desiredVectors.Pos.y = _gravityStrength / 90;
         _desiredVectors.Rot.x = _gravityStrength * 4;
     }
     private void UpdateVectors()
     {
         _currentVectors.Pos = Vector3.Lerp(_currentVectors.Pos, _desiredVectors.Pos, _posSmoothSpeed * Time.deltaTime) * _toggle;
+        _currentVectors.Pos = Vector3.ClampMagnitude(_currentVectors.Pos, _maxPos);
+
         _currentVectors.Rot = Vector3.Lerp(_currentVectors.Rot, _desiredVectors.Rot, _rotSmoothSpeed * Time.deltaTime) * _toggle;
+        _currentVectors.Rot = Vector3.ClampMagnitude(_currentVectors.Rot, _maxRot);
     }
 
 

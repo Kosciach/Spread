@@ -13,8 +13,8 @@ public class PlayerHandsCameraMoveController : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] CameraPositionsEnum _cameraPositionType;
+    [SerializeField] Vector3 _currentPosition; public Vector3 CurrentPosition { get { return _currentPosition; } }
     [SerializeField] Vector3 _desiredPosition;
-    [SerializeField] Vector3 _currentPosition;
     [SerializeField] float _moveSpeed;
 
 
@@ -45,7 +45,6 @@ public class PlayerHandsCameraMoveController : MonoBehaviour
         if (_poseMode) return;
 
         _currentPosition = Vector3.Lerp(_currentPosition, _desiredPosition, _moveSpeed * Time.deltaTime);
-        _cameraController.HandsCamera.transform.localPosition = _currentPosition;
     }
 
     public void SetCameraPosition(CameraPositionsEnum cameraPosition, float moveSpeed)

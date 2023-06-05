@@ -18,7 +18,7 @@ public class PlayerWeaponWallDetector : MonoBehaviour
 
     private void Update()
     {
-        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.ToggleWallBool(_isWallDetected);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Wall.ToggleWallBool(_isWallDetected);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,14 +26,14 @@ public class PlayerWeaponWallDetector : MonoBehaviour
         if (other.CompareTag("Weapon") || other.CompareTag("Player")) return;
 
         _isWallDetected = true;
-        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.Wall(_isWallDetected);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Wall.Wall(_isWallDetected);
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Weapon") || other.CompareTag("Player")) return;
 
         _isWallDetected = false;
-        _playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.Wall(_isWallDetected);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Wall.Wall(_isWallDetected);
     }
 
 

@@ -28,7 +28,7 @@ public class WeaponReloadAnimator : MonoBehaviour
     public void Reload(AnimatorOverrideController reloadAnimOveride, FingerPreset fingerPreset, Action reloadMethod)
     {
         if (!_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded) return;
-        if (_playerStateMachine.CombatControllers.Combat.EquipedWeaponController.Wall.IsWall) return;
+        if (_playerStateMachine.CombatControllers.EquipedWeapon.Wall.IsWall) return;
 
         _fingerPreset = fingerPreset;
         _reloadMethod = reloadMethod;

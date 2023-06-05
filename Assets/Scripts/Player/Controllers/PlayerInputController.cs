@@ -37,7 +37,9 @@ public class PlayerInputController : MonoBehaviour
         SetRunning();
         SetJump();
         SetCrouch();
+
         SetInteraction();
+
         SetEquipWeapon();
         SetHideWeapon();
         SetDropWeapon();
@@ -45,6 +47,8 @@ public class PlayerInputController : MonoBehaviour
         SetAim();
         SetBlock();
         SetChangeAimType();
+
+        SetLean();
     }
     private void Update()
     {
@@ -57,7 +61,7 @@ public class PlayerInputController : MonoBehaviour
 
 
 
-
+    #region InputVectors
     private void SetMovementInputVector()
     {
         Vector2 inputVector = _playerInputs.Player.Move.ReadValue<Vector2>();
@@ -68,9 +72,9 @@ public class PlayerInputController : MonoBehaviour
     {
         _mouseInputVector = _playerInputs.Player.Look.ReadValue<Vector2>();
     }
+    #endregion
 
-
-
+    #region Movement
     private void SetMoving()
     {
         _playerInputs.Player.Move.started += ctx => { _isMoveInput = true; };
@@ -89,12 +93,14 @@ public class PlayerInputController : MonoBehaviour
     {
         _playerInputs.Player.Crouch.performed += ctx => _stateMachine.SwitchController.SwitchTo.Crouch();
     }
+    #endregion
+
     private void SetInteraction()
     {
         _playerInputs.Player.Interact.performed += ctx => _stateMachine.CoreControllers.Interaction.Interaction();
     }
 
-
+    #region Combat
     private void SetEquipWeapon()
     {
         _playerInputs.Player.ChooseWeapon.performed += ctx =>
@@ -122,41 +128,49 @@ public class PlayerInputController : MonoBehaviour
 
     private void SetChangeWeaponEquipedMode()
     {
-        _playerInputs.Player.ChangeWeaponHoldMode.performed += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Hold.ChangeEquipedHoldMode();
+        _playerInputs.Player.ChangeWeaponHoldMode.performed += ctx => _stateMachine.CombatControllers.EquipedWeapon.Hold.ChangeEquipedHoldMode();
     }
     private void SetChangeAimType()
     {
-        _playerInputs.Player.ChangeAimType.performed += ctx => _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.ChangeAimType();
+        _playerInputs.Player.ChangeAimType.performed += ctx => _stateMachine.CombatControllers.EquipedWeapon.Aim.ChangeAimType();
     }
     private void SetAim()
     {
         _playerInputs.Player.Aim.started += ctx =>
         {
-            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.Aim(true);
-            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.IsInput = true;
+            _stateMachine.CombatControllers.EquipedWeapon.Aim.Aim(true);
+            _stateMachine.CombatControllers.EquipedWeapon.Aim.IsInput = true;
         };
         _playerInputs.Player.Aim.canceled += ctx =>
         {
-            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.Aim(false);
-            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.IsInput = false;
+            _stateMachine.CombatControllers.EquipedWeapon.Aim.Aim(false);
+            _stateMachine.CombatControllers.EquipedWeapon.Aim.IsInput = false;
         };
     }
     private void SetBlock()
     {
         _playerInputs.Player.Block.started += ctx =>
         {
-            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.Block(true);
-            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.IsInput = true;
+            _stateMachine.CombatControllers.EquipedWeapon.Block.Block(true);
+            _stateMachine.CombatControllers.EquipedWeapon.Block.IsInput = true;
         };
         _playerInputs.Player.Block.canceled += ctx =>
         {
-            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.Block(false);
-            _stateMachine.CombatControllers.Combat.EquipedWeaponController.Block.IsInput = false;
+            _stateMachine.CombatControllers.EquipedWeapon.Block.Block(false);
+            _stateMachine.CombatControllers.EquipedWeapon.Block.IsInput = false;
         };
     }
+    #endregion
+
+    private void SetLean()
+    {
+        _playerInputs.Player.LeanRight.started += ctx => _stateMachine.CombatControllers.Leaning.LeanRight();
+        _playerInputs.Player.LeanLeft.started += ctx => _stateMachine.CombatControllers.Leaning.LeanLeft();
 
 
-
+        _playerInputs.Player.LeanRight.canceled += ctx => _stateMachine.CombatControllers.Leaning.StopLeanRight();
+        _playerInputs.Player.LeanLeft.canceled += ctx => _stateMachine.CombatControllers.Leaning.StopLeanLeft();
+    }
 
 
 

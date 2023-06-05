@@ -143,6 +143,24 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(pressPoint=1.401298E-45,behavior=2)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeanRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""b580c26a-13bf-4a4b-b878-461d3e6a0964"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeanLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""6859802e-a212-49eb-bf41-417826f0b729"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -451,6 +469,28 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed131bc6-fc93-440c-8340-243f3c57e812"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""LeanRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e7fb1c2-f0f8-443e-82fa-4fa31c0cd505"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeanLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1051,6 +1091,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Player_ChangeAimType = m_Player.FindAction("ChangeAimType", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
+        m_Player_LeanRight = m_Player.FindAction("LeanRight", throwIfNotFound: true);
+        m_Player_LeanLeft = m_Player.FindAction("LeanLeft", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1135,6 +1177,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ChangeAimType;
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Block;
+    private readonly InputAction m_Player_LeanRight;
+    private readonly InputAction m_Player_LeanLeft;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1152,6 +1196,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @ChangeAimType => m_Wrapper.m_Player_ChangeAimType;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Block => m_Wrapper.m_Player_Block;
+        public InputAction @LeanRight => m_Wrapper.m_Player_LeanRight;
+        public InputAction @LeanLeft => m_Wrapper.m_Player_LeanLeft;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1200,6 +1246,12 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Block.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlock;
                 @Block.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlock;
                 @Block.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlock;
+                @LeanRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeanRight;
+                @LeanRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeanRight;
+                @LeanRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeanRight;
+                @LeanLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeanLeft;
+                @LeanLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeanLeft;
+                @LeanLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeanLeft;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1243,6 +1295,12 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Block.started += instance.OnBlock;
                 @Block.performed += instance.OnBlock;
                 @Block.canceled += instance.OnBlock;
+                @LeanRight.started += instance.OnLeanRight;
+                @LeanRight.performed += instance.OnLeanRight;
+                @LeanRight.canceled += instance.OnLeanRight;
+                @LeanLeft.started += instance.OnLeanLeft;
+                @LeanLeft.performed += instance.OnLeanLeft;
+                @LeanLeft.canceled += instance.OnLeanLeft;
             }
         }
     }
@@ -1412,6 +1470,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnChangeAimType(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
+        void OnLeanRight(InputAction.CallbackContext context);
+        void OnLeanLeft(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

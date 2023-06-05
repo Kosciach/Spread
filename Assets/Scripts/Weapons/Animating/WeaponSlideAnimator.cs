@@ -15,27 +15,36 @@ public class WeaponSlideAnimator : MonoBehaviour
     [Space(20)]
     [Header("====Settings====")]
     [Range(0, 1)]
-    [SerializeField] float _slideResetTime;
+    [SerializeField] float _slideMoveForwardTime;
     [Range(0, 1)]
     [SerializeField] float _slideMoveBackTime;
 
 
-    private Action[] _slideAnimMethod = new Action[2];
+    private Action[] _slideAnimMethod = new Action[3];
+
+
+
+    public enum SlideAnimType
+    {
+        BackAndForward, Back, Forward
+    }
+
 
 
     private void Awake()
     {
-        _slideAnimMethod[0] = MoveBack;
-        _slideAnimMethod[1] = MoveBackAndForward;
+        _slideAnimMethod[0] = MoveBackAndForward;
+        _slideAnimMethod[1] = MoveBack;
+        _slideAnimMethod[2] = MoveForward;
     }
 
 
 
 
 
-    public void MoveSlide(bool moveForward)
+    public void MoveSlide(SlideAnimType slideAnim)
     {
-        int animIndex = moveForward ? 1 : 0;
+        int animIndex = (int)slideAnim;
         _slideAnimMethod[animIndex]();
     }
 
@@ -44,11 +53,15 @@ public class WeaponSlideAnimator : MonoBehaviour
     {
         _slide.LeanMoveLocal(_firedPosition, _slideMoveBackTime).setOnComplete(() =>
         {
-            _slide.LeanMoveLocal(_defaultPosition, _slideResetTime);
+            _slide.LeanMoveLocal(_defaultPosition, _slideMoveForwardTime);
         });
     }
     private void MoveBack()
     {
         _slide.LeanMoveLocal(_firedPosition, _slideMoveBackTime);
+    }
+    private void MoveForward()
+    {
+        _slide.LeanMoveLocal(_defaultPosition, _slideMoveForwardTime);
     }
 }

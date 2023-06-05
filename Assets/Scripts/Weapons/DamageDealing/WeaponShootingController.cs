@@ -16,6 +16,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     [SerializeField] WeaponSlideAnimator _slideAnimator;
 
     private WeaponBarrelController _barrelController;
+    private BulletShellEjector _bulletShellEjector;
     private WeaponAmmoController _ammoController; public WeaponAmmoController AmmoController { get { return _ammoController; } }
 
 
@@ -42,9 +43,11 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public override void VirtualAwake()
     {
-        _ammoController = GetComponent<WeaponAmmoController>();
         _barrel = transform.GetChild(1);
+
+        _ammoController = GetComponent<WeaponAmmoController>();
         _barrelController = _barrel.GetComponent<WeaponBarrelController>();
+        _bulletShellEjector = transform.GetChild(3).GetComponent<BulletShellEjector>();
 
         _fireModes = GetComponents<BaseFireMode>();
         _currentFireMode = _fireModes[0];
@@ -63,6 +66,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         {
             if (!_reloadToggle) return;
             _ammoController.Reload();
+            _slideAnimator.MoveSlide(WeaponSlideAnimator.SlideAnimType.Forward);
         };
     }
 
@@ -74,11 +78,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     {
         if (!_shootToggle) return;
 
-        if (!_ammoController.IsRoundInChamber)
-        {
-            Debug.Log("No round in the chamber!");
-            return;
-        }
+        if (!_ammoController.IsRoundInChamber) return;
 
         _barrelController.RotateBarrel();
 
@@ -95,7 +95,11 @@ public class WeaponShootingController : WeaponDamageDealingController
         _ammoController.OnShoot();
 
         //AnimateSlide
-        _slideAnimator.MoveSlide(_ammoController.IsRoundInChamber);
+        WeaponSlideAnimator.SlideAnimType slideAnimType = _ammoController.IsRoundInChamber ? WeaponSlideAnimator.SlideAnimType.BackAndForward : WeaponSlideAnimator.SlideAnimType.Back;
+        _slideAnimator.MoveSlide(slideAnimType);
+
+        //EjectShell
+        _bulletShellEjector.EjectShell();
 
         //Recoil
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Recoil.Recoil(_rangeWeaponData.RecoilSettings);

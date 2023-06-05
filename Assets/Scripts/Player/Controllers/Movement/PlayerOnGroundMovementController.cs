@@ -85,8 +85,8 @@ public class PlayerOnGroundMovementController : MonoBehaviour
         _movementType = MovementTypeEnum.Walk;
         if (canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Walk();
         if (!isRunInput || movementInputVector.z <= 0
-            || _movementController.PlayerStateMachine.CombatControllers.Combat.EquipedWeaponController.Aim.IsAim
-            || _movementController.PlayerStateMachine.CombatControllers.Combat.EquipedWeaponController.Block.IsBlock) return;
+            || _movementController.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim
+            || _movementController.PlayerStateMachine.CombatControllers.EquipedWeapon.Block.IsBlock) return;
 
 
         _movementType = MovementTypeEnum.Run;

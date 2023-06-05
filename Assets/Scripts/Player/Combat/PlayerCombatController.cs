@@ -8,14 +8,12 @@ public class PlayerCombatController : MonoBehaviour
 {
     [Header("====Reference====")]
     [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
-    [SerializeField] PlayerEquipedWeaponController _equipedWeaponController; public PlayerEquipedWeaponController EquipedWeaponController { get { return _equipedWeaponController; } }
     [SerializeField] PlayerWeaponWallDetector _weaponWallDetector; public PlayerWeaponWallDetector WeaponWallDetector { get { return _weaponWallDetector;} }
     [Space(5)]
     [SerializeField] Transform _rightHandWeaponHolder;
     [SerializeField] PlayerWeaponOriginController _weaponOrigin;
     [Space(5)]
     [SerializeField] Transform _rightHand; public Transform RightHand { get { return _rightHand; } }
-    [SerializeField] Transform _leftHand; public Transform LeftHand { get { return _leftHand; } }
 
 
 
@@ -75,7 +73,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeaponIndex = choosenWeaponIndex;
         _equipedWeapon = equipedWeaponNew;
         _equipedWeaponData = equipedWeaponDataNew;
-        _equipedWeaponController.Aim.ResetAimType(_equipedWeapon.AimIndexHolder.WeaponAimIndex);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ResetAimType(_equipedWeapon.AimIndexHolder.WeaponAimIndex);
 
 
 
@@ -145,9 +143,9 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
 
         _equipedWeapon.DamageDealingController.Toggle(false);
-        _equipedWeaponController.Aim.ToggleAimBool(false);
-        _equipedWeaponController.Block.ToggleBlockBool(false);
-        _equipedWeaponController.Run.ToggleRunBool(false);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
 
 
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
@@ -211,8 +209,8 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
 
         _equipedWeapon.DamageDealingController.Toggle(false);
-        _equipedWeaponController.Aim.ToggleAimBool(false);
-        _equipedWeaponController.Block.ToggleBlockBool(false);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
         //_equipedWeaponController.Run.ToggleRunBool(false);
 
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
@@ -268,8 +266,8 @@ public class PlayerCombatController : MonoBehaviour
 
         _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
         _equipedWeapon.DamageDealingController.Toggle(false);
-        _equipedWeaponController.Aim.ToggleAimBool(false);
-        _equipedWeaponController.Block.ToggleBlockBool(false);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
         //_equipedWeaponController.Run.ToggleRunBool(false);
 
         _equipedWeapon.DamageDealingController.WeaponUnEquiped();

@@ -9,10 +9,8 @@ public class PlayerRunState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.AnimatingControllers.Weapon.Bobbing.Base.ChangeBobbingType(WeaponBaseBobbing.BobbingTypeEnum.Run);
-
-        _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRun(true);
-        _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRunBool(true);
+        _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(true);
+        _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(true);
 
         _ctx.CameraControllers.Cine.Fov.SetFov(15, 2);
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
@@ -36,7 +34,7 @@ public class PlayerRunState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-        _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRun(true);
+        _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(true);
 
         _ctx.MovementControllers.Rotation.RotateToCanera();
         _ctx.MovementControllers.Movement.OnGround.Movement();
@@ -54,29 +52,29 @@ public class PlayerRunState : PlayerBaseState
     }
     public override void StateCheckChange()
     {
-        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || _ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle) || _ctx.CombatControllers.Combat.EquipedWeaponController.Wall.IsWall)
+        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || _ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle) || _ctx.CombatControllers.EquipedWeapon.Wall.IsWall)
         {
-            _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRun(false);
-            _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRunBool(false);
+            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);
+            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
             StateChange(_factory.Walk());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump))
         {
-            _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRun(false);
-            _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRunBool(false);
+            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);
+            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
             StateChange(_factory.Jump());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
         {
-            _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRun(false);
-            _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRunBool(false);
+            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);
+            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
             _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", true);
             StateChange(_factory.Fall());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch))
         {
-            _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRun(false);
-            _ctx.CombatControllers.Combat.EquipedWeaponController.Run.ToggleRunBool(false);
+            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);
+            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
             StateChange(_factory.Crouch());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Climb)) StateChange(_factory.Climb());

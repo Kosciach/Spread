@@ -62,6 +62,14 @@ public class BulletController : MonoBehaviour
 
     private void ObjectHit()
     {
+        ForBulletColliderInfo forBulletColliderInfo = _hit.transform.GetComponent<ForBulletColliderInfo>();
+        if (forBulletColliderInfo != null)
+        {
+            if (forBulletColliderInfo.HitEffect == null) return;
+
+            _hitEffect = forBulletColliderInfo.HitEffect;
+        }
+
         Instantiate(_hitEffect, _hit.point, Quaternion.LookRotation(_hit.normal));
 
         _hit.rigidbody?.AddForceAtPosition(-_hit.normal * _weaponData.RangeStats.CarredForce * 10, _hit.point);

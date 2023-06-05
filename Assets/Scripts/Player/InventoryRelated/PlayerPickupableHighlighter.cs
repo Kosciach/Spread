@@ -13,6 +13,7 @@ public class PlayerPickupableHighlighter : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("afsfas");
         Highlight(2, other);
     }
     private void OnTriggerExit(Collider other)

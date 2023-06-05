@@ -9,8 +9,6 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.AnimatingControllers.Weapon.Bobbing.Base.ChangeBobbingType(WeaponBaseBobbing.BobbingTypeEnum.Walk);
-
         _ctx.CameraControllers.Cine.Fov.SetFov(5, 2);
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Walk, 5);
@@ -49,7 +47,7 @@ public class PlayerWalkState : PlayerBaseState
     }
     public override void StateCheckChange()
     {
-        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) && !_ctx.CombatControllers.Combat.EquipedWeaponController.Wall.IsWall) StateChange(_factory.Run());
+        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run) && !_ctx.CombatControllers.EquipedWeapon.Wall.IsWall) StateChange(_factory.Run());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)) StateChange(_factory.Idle());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump)) StateChange(_factory.Jump());

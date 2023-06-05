@@ -12,8 +12,8 @@ public class PlayerHandsCameraRotateController : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] HandsCameraRotationsEnum _handsCameraRotationType;
+    [SerializeField] Vector3 _currentRotation; public Vector3 CurrentRotation { get { return _currentRotation; } }
     [SerializeField] Vector3 _desiredRotation;
-    [SerializeField] Vector3 _currentRotation;
     [SerializeField] float _rotateSpeed;
 
 
@@ -45,7 +45,6 @@ public class PlayerHandsCameraRotateController : MonoBehaviour
         if (_poseMode) return;
 
         _currentRotation = Vector3.Lerp(_currentRotation, _desiredRotation, _rotateSpeed * Time.deltaTime);
-        _cameraController.HandsCamera.transform.localRotation = Quaternion.Euler(_currentRotation);
     }
 
 

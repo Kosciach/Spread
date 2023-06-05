@@ -13,7 +13,6 @@ public class WeaponBaseBobbing : MonoBehaviour
     [Header("====Debugs====")]
     [SerializeField] WeaponAnimator.PosRotStruct _currentVectors; public WeaponAnimator.PosRotStruct CurrentVectors { get { return _currentVectors; } }
     [SerializeField] WeaponAnimator.PosRotStruct _desiredVectors; public WeaponAnimator.PosRotStruct DesiredVectors { get { return _desiredVectors; } }
-    [SerializeField] BobbingTypeEnum _bobbingType;
     [SerializeField] bool _toggle;
 
     [Space(20)]
@@ -33,13 +32,9 @@ public class WeaponBaseBobbing : MonoBehaviour
     [SerializeField] float _bobbingSmoothSpeed;
 
 
-    private int _bobbingTypeIndex;
+    private int _bobbingTypeIndex => (int)(_bobbingController.WeaponAnimator.PlayerStateMachine.MovementControllers.Movement.OnGround.CurrentMovementVector.magnitude / 4 + 0.3f);
 
 
-    public enum BobbingTypeEnum
-    {
-        Idle,Walk,Run
-    }
     [System.Serializable]
     public struct BaseBobPosSettings
     {
@@ -104,11 +99,6 @@ public class WeaponBaseBobbing : MonoBehaviour
 
 
 
-    public void ChangeBobbingType(BobbingTypeEnum bobbingType)
-    {
-        _bobbingType = bobbingType;
-        _bobbingTypeIndex = (int)_bobbingType;
-    }
     public void Toggle(bool toggle)
     {
         _toggle = toggle;
