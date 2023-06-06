@@ -20,7 +20,10 @@ public class PlayerEquipedWeaponHoldController : MonoBehaviour
     public void ChangeEquipedHoldMode()
     {
         if (_equipedWeaponController.Run.IsRun) return;
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim || _equipedWeaponController.Block.IsBlock) return;
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
+            || _equipedWeaponController.Aim.IsAim
+            || _equipedWeaponController.Block.IsBlock
+            || _equipedWeaponController.Wall.IsWall) return;
 
         WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeapon.HoldController;
         WeaponHoldController.HoldModeEnum equipedMode = equipedWeaponHoldController.IsHoldMode(WeaponHoldController.HoldModeEnum.Hip) ? WeaponHoldController.HoldModeEnum.Rest : WeaponHoldController.HoldModeEnum.Hip;

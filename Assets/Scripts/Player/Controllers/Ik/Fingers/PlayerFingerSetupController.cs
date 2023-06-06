@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerFingerSetupController : MonoBehaviour
@@ -38,6 +39,7 @@ public class PlayerFingerSetupController : MonoBehaviour
 
         SetUpFingers();
         _setFingers = false;
+        _fingerPresetType = FingerPresetType.None;
     }
 
 
@@ -65,6 +67,11 @@ public class PlayerFingerSetupController : MonoBehaviour
 
             break;
         }
+
+        EditorUtility.SetDirty(_fingerPreset);
+
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 
 

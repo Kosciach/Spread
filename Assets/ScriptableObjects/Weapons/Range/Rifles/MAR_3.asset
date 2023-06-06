@@ -23,11 +23,11 @@ MonoBehaviour:
   FingersPreset: {fileID: 11400000, guid: cb28fa8f993c726459f02f4b099b57c9, type: 2}
   LeftHandTransforms:
     Base:
-      LeftHand_Position: {x: 0.2581, y: 0.3429, z: 0.1082}
-      LeftHand_Rotation: {x: 347.4245, y: 55.767937, z: 358.26215}
+      LeftHand_Position: {x: 0.2686, y: 0.3404, z: 0.1009}
+      LeftHand_Rotation: {x: 344.20404, y: 46.925465, z: 6.96815}
     Block:
-      LeftHand_Position: {x: 0.2581, y: 0.3429, z: 0.1082}
-      LeftHand_Rotation: {x: 347.4245, y: 55.767937, z: 358.26215}
+      LeftHand_Position: {x: 0.2686, y: 0.3404, z: 0.1009}
+      LeftHand_Rotation: {x: 344.20404, y: 46.925465, z: 6.96815}
   WeaponTransforms:
     Block:
       RightHand_Position: {x: 0.222, y: -0.362, z: 0.583}
@@ -57,6 +57,8 @@ MonoBehaviour:
     Range: 5
     FireRate: 8
     CarredForce: 15
+    AccuracyOffset: 0
+    PenetrationForce: 23
   RecoilSettings:
     Speed: 1
     BackPush: 0.1

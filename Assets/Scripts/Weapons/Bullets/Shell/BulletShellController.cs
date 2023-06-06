@@ -29,7 +29,10 @@ public class BulletShellController : MonoBehaviour
         _rotation = Random.Range(-_rotationStrength, _rotationStrength);
         transform.LeanScale(Vector3.zero, 1);
     }
-
+    private void Start()
+    {
+        Destroy(gameObject, 3);
+    }
     private void Update()
     {
         Rotate();
@@ -45,9 +48,16 @@ public class BulletShellController : MonoBehaviour
 
 
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.transform.CompareTag("Weapon")) return;
+        if (other.CompareTag("Weapon") || other.CompareTag("Player")) return;
         Destroy(gameObject);
+    }
+
+
+
+    private void OnDestroy()
+    {
+        
     }
 }

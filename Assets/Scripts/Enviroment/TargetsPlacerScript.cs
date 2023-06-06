@@ -69,16 +69,16 @@ public class TargetsPlacerScript : MonoBehaviour
 
         for (int column = 0; column < _columnCount; column++)
         {
-            position.x += _columnSpacing;
             for (int row = 0; row < _rowCount; row++)
             {
-                position.z += _rowSpacing;
-                offset = new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3));
-
                 Transform newTarget = Instantiate(_targetPrefab, transform);
                 newTarget.localPosition = position + offset;
                 _targets.Add(newTarget);
+
+                position.z += _rowSpacing;
+                offset = new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3));
             }
+            position.x += _columnSpacing;
             position.z = 0;
         }
     }
@@ -88,15 +88,15 @@ public class TargetsPlacerScript : MonoBehaviour
 
         for (int column = 0; column < _columnCount; column++)
         {
-            position.x += _columnSpacing;
             for (int row = 0; row < _rowCount; row++)
             {
-                position.z += _rowSpacing;
-
                 Transform newTarget = Instantiate(_targetPrefab, transform);
                 newTarget.localPosition = position;
                 _targets.Add(newTarget);
+
+                position.z += _rowSpacing;
             }
+            position.x += _columnSpacing;
             position.z = 0;
         }
     }

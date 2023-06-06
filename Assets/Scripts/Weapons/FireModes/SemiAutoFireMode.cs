@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SemiAutoFireMode : BaseFireMode
 {
-    private RangeWeaponData _weaponData;
-
     private float _timeToShoot = 10;
     private float _currentTimeToShoot;
 
@@ -15,7 +13,6 @@ public class SemiAutoFireMode : BaseFireMode
     protected override void VirtualAwake()
     {
         _fireModeType = WeaponShootingController.FireModeTypeEnum.Semi;
-        _weaponData = GetComponent<WeaponDataHolder>().WeaponData as RangeWeaponData;
     }
     private void Start()
     {
@@ -36,7 +33,7 @@ public class SemiAutoFireMode : BaseFireMode
     }
 
 
-    public void CheckTimeToShoot()
+    private void CheckTimeToShoot()
     {
         _currentTimeToShoot -= _weaponData.RangeStats.FireRate * 10 * Time.deltaTime;
         _currentTimeToShoot = Mathf.Clamp(_currentTimeToShoot, 0, _timeToShoot);

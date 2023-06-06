@@ -6,7 +6,6 @@ using UnityEngine;
 public class FullAutoFireMode : BaseFireMode
 {
     [SerializeField] bool _isShootingInput;
-    private RangeWeaponData _weaponData;
 
     private float _timeToShoot = 10;
     private float _currentTimeToShoot;
@@ -17,7 +16,6 @@ public class FullAutoFireMode : BaseFireMode
     protected override void VirtualAwake()
     {
         _fireModeType = WeaponShootingController.FireModeTypeEnum.Auto;
-        _weaponData = GetComponent<WeaponDataHolder>().WeaponData as RangeWeaponData;
     }
     private void Start()
     {
@@ -37,7 +35,7 @@ public class FullAutoFireMode : BaseFireMode
     }
 
 
-    public bool CheckTimeToShoot()
+    private bool CheckTimeToShoot()
     {
         _currentTimeToShoot -= _weaponData.RangeStats.FireRate * 10 * Time.deltaTime;
         _currentTimeToShoot = Mathf.Clamp(_currentTimeToShoot, 0, _timeToShoot);

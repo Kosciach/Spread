@@ -203,15 +203,17 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
 
+        //Disable fingers
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 4);
+        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 4);
 
-
+        //Disable bobbing/sway
         _playerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
         _playerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
 
         _equipedWeapon.DamageDealingController.Toggle(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
-        //_equipedWeaponController.Run.ToggleRunBool(false);
 
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
@@ -255,9 +257,11 @@ public class PlayerCombatController : MonoBehaviour
         //Toggle layers
         ToggleCombatLayersPreset(false, false, false, false, false, 10);
 
+
         //Disable fingers
         _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 5);
         _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 5);
+
 
         //Prepare hands camera
         _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
@@ -268,7 +272,6 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeapon.DamageDealingController.Toggle(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
-        //_equipedWeaponController.Run.ToggleRunBool(false);
 
         _equipedWeapon.DamageDealingController.WeaponUnEquiped();
 

@@ -38,8 +38,8 @@ public class AmmoHudController : MonoBehaviour
     {
         int roundInChamberColorIndex = isRoundInChamber ? 1 : 0;
 
-        foreach (Image roundImage in _roundImages)
-            roundImage.color = _roundInChamberColors[roundInChamberColorIndex];
+        //foreach (Image roundImage in _roundImages)
+        _roundImages[_roundImages.Length-1].color = _roundInChamberColors[roundInChamberColorIndex];
     }
     public void ChangeRoundIcon(Sprite roundIcon)
     {

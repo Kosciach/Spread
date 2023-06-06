@@ -36,7 +36,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     private RangeWeaponData _rangeWeaponData => (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
     public enum FireModeTypeEnum
     {
-        Safety, Semi, Auto,
+        Safety, Semi, Auto, Burst
     }
 
 

@@ -31,6 +31,7 @@ public class BulletController : MonoBehaviour
     private float _time;
     private RaycastHit _hit;
 
+    private float _currentBulletPenetrationForce;
 
 
     public void PassData(WeaponData weaponData)
@@ -43,6 +44,8 @@ public class BulletController : MonoBehaviour
 
         _rayStartPoint = transform.position;
         _rayTargetPoint = _rayStartPoint + transform.forward * _raylength;
+
+        _currentBulletPenetrationForce = _weaponData.RangeStats.PenetrationForce;
 
         Destroy(gameObject, _weaponData.RangeStats.Range);
     }
@@ -62,18 +65,29 @@ public class BulletController : MonoBehaviour
 
     private void ObjectHit()
     {
-        ForBulletColliderInfo forBulletColliderInfo = _hit.transform.GetComponent<ForBulletColliderInfo>();
-        if (forBulletColliderInfo != null)
-        {
-            if (forBulletColliderInfo.HitEffect == null) return;
-
-            _hitEffect = forBulletColliderInfo.HitEffect;
-        }
-
-        Instantiate(_hitEffect, _hit.point, Quaternion.LookRotation(_hit.normal));
-
+        //Apply force
         _hit.rigidbody?.AddForceAtPosition(-_hit.normal * _weaponData.RangeStats.CarredForce * 10, _hit.point);
         _hit.transform.GetComponent<IDamageable>()?.TakeDamage(_weaponData.RangeStats.Damage);
+
+
+
+
+        //Collider info related
+        ForBulletColliderInfo forBulletColliderInfo = _hit.transform.GetComponent<ForBulletColliderInfo>();
+        if (forBulletColliderInfo == null)
+        {
+            Instantiate(_hitEffect, _hit.point, Quaternion.LookRotation(_hit.normal));
+            Destroy(gameObject);
+            return;
+        }
+
+        //Hit effect
+        if (forBulletColliderInfo.HitEffect != null) _hitEffect = forBulletColliderInfo.HitEffect;
+        Instantiate(_hitEffect, _hit.point, Quaternion.LookRotation(_hit.normal));
+
+        //Penetration
+        _currentBulletPenetrationForce -= forBulletColliderInfo.BulletResistance;
+        if (_currentBulletPenetrationForce <= 0) Destroy(gameObject);
     }
 
 
@@ -91,11 +105,7 @@ public class BulletController : MonoBehaviour
     private void ShootRay()
     {
         Debug.DrawLine(_rayStartPoint, _rayTargetPoint, Color.green, _delayBetweenRays);
-        if(Physics.Linecast(_rayStartPoint, _rayTargetPoint, out _hit, ~_ignoreMask))
-        {
-            ObjectHit();
-            Destroy(gameObject);
-        }
+        if(Physics.Linecast(_rayStartPoint, _rayTargetPoint, out _hit, ~_ignoreMask)) ObjectHit();
 
 
         SetRayPoints();
