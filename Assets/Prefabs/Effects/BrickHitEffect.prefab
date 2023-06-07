@@ -141,7 +141,7 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.31132078, y: 0.085413724, z: 0.06314526, w: 1}
+      - m_Value: {x: 0.45078585, y: 0.1811643, z: 0.12477186, w: 1}
         m_Name: SmokeColor
         m_Overridden: 1
     m_Uint:

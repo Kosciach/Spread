@@ -12,8 +12,9 @@ public class BulletShellEjector : MonoBehaviour
 
 
 
-    public void EjectShell()
+    public void EjectShell(float playerSideMovement)
     {
-        Instantiate(_shellPrefab, transform.position, transform.rotation);
+       BulletShellController shellController = Instantiate(_shellPrefab, transform.position, transform.rotation).GetComponent<BulletShellController>();
+       shellController.PassData(playerSideMovement);
     }
 }

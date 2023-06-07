@@ -25,7 +25,6 @@ public class BulletShellController : MonoBehaviour
 
     private void Awake()
     {
-        _rigidbody.AddForce((-transform.up * _ejectRightForce) + (transform.right * _ejectBackForce), ForceMode.Impulse);
         _rotation = Random.Range(-_rotationStrength, _rotationStrength);
         transform.LeanScale(Vector3.zero, 1);
     }
@@ -40,6 +39,14 @@ public class BulletShellController : MonoBehaviour
 
 
 
+    public void PassData(float playerSideMovement)
+    {
+        playerSideMovement = Mathf.Clamp(playerSideMovement, 0, 1);
+        Vector3 additionalEjectVector = -transform.up * playerSideMovement * 5;
+
+        Vector3 ejectVector = (-transform.up * _ejectRightForce + additionalEjectVector) + (transform.right * _ejectBackForce);
+        _rigidbody.AddForce(ejectVector, ForceMode.Impulse);
+    }
     private void Rotate()
     {
         transform.Rotate(transform.forward, _rotation * 10 * Time.deltaTime);
@@ -58,6 +65,6 @@ public class BulletShellController : MonoBehaviour
 
     private void OnDestroy()
     {
-        
+        //Play sound
     }
 }

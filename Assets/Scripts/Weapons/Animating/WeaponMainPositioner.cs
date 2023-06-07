@@ -21,6 +21,8 @@ public class WeaponMainPositioner : MonoBehaviour
     [SerializeField] bool _isHandAtPos; public bool IsHandAtPos { get { return _isHandAtPos; } }
     [SerializeField] bool _isHandAtRot; public bool IsHandAtRot { get { return _isHandAtRot; } }
 
+
+
     [Space(20)]
     [Header("====Settings====")]
     [SerializeField] float _posVectorSmoothSpeed;
@@ -106,9 +108,8 @@ public class WeaponMainPositioner : MonoBehaviour
 
 
 
-    public void CurrentLerpFinished(System.Action afterDelay)
+    public void CurrentLerpFinished(Action afterDelay)
     {
-        
         if (_lerpFinishCoroutine != null) StopCoroutine(_lerpFinishCoroutine);
 
         float timeToFinishLerp = Vector3.Distance(_desiredMainVectors.Pos, _currentMainVectors.Pos) * _posVectorSmoothSpeed * Time.deltaTime;
@@ -116,7 +117,7 @@ public class WeaponMainPositioner : MonoBehaviour
         _lerpFinishCoroutine = SetLerpFinishDelay(timeToFinishLerp, afterDelay);
         StartCoroutine(_lerpFinishCoroutine);
     }
-    private IEnumerator SetLerpFinishDelay(float delay, System.Action afterDelay)
+    private IEnumerator SetLerpFinishDelay(float delay, Action afterDelay)
     {
         yield return new WaitForSeconds(delay);
 

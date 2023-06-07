@@ -99,7 +99,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _slideAnimator.MoveSlide(slideAnimType);
 
         //EjectShell
-        _bulletShellEjector.EjectShell();
+        _bulletShellEjector.EjectShell(_stateMachine.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x);
 
         //Recoil
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Recoil.Recoil(_rangeWeaponData.RecoilSettings);
