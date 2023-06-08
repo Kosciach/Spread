@@ -3,26 +3,18 @@ using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerIkLayerController : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] PlayerStateMachine _playerStateMachine;
-    [SerializeField] Rig[] _ikLayers;
-
 
 
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] int _layerCount;
-    [SerializeField] float[] _ikLayerCurrentWeights;
-    [SerializeField] float[] _ikLayerLerpSpeeds;
-
-
-    [Space(20)]
-    [Header("====Settings====")]
-    [SerializeField] float[] _ikLayerDesiredWeights;
-
+    [SerializeField] LayerData[] _layerData;
 
     public enum LayerEnum
     {
@@ -36,42 +28,64 @@ public class PlayerIkLayerController : MonoBehaviour
 
     private void Awake()
     {
-        _layerCount = _ikLayers.Length;
-        _ikLayerCurrentWeights = new float[_layerCount];
+        _layerCount = _layerData.Length;
     }
-    private void Update()
+    private void Start()
     {
-        LerpRigWeights();
+        //Enable SpineLock, Body and Head
+        StartCoroutine(_layerData[0].Lerp(0, 1, 1));
+        StartCoroutine(_layerData[1].Lerp(0, 1, 1));
+        StartCoroutine(_layerData[2].Lerp(0, 1, 1));
     }
 
 
 
-
-
-
-    private void LerpRigWeights()
+    public void ToggleLayer(LayerEnum layer, bool enable, float duration)
     {
-        for(int i=0; i<_layerCount; i++)
+        float weight = enable ? 1 : 0;
+        LayerData currentLayerData = _layerData[(int)layer];
+
+
+        if (currentLayerData.LerpCoroutine != null) StopCoroutine(currentLayerData.LerpCoroutine);
+
+        currentLayerData.LerpCoroutine = currentLayerData.Lerp(currentLayerData.LayerWeight, weight, duration);
+        StartCoroutine(currentLayerData.LerpCoroutine);
+    }
+
+
+
+}
+
+
+[System.Serializable]
+public class LayerData
+{
+    public string name;
+    public Rig Layer;
+
+    [Range(0, 1)]
+    public float LayerWeight;
+    public IEnumerator LerpCoroutine;
+
+
+    public IEnumerator Lerp(float startValue, float endValue, float duration)
+    {
+        float timeElapsed = 0;
+
+        while (timeElapsed < duration)
         {
-            _ikLayerCurrentWeights[i] = Mathf.Lerp(_ikLayerCurrentWeights[i], _ikLayerDesiredWeights[i], _ikLayerLerpSpeeds[i] * Time.deltaTime);
-            _ikLayerCurrentWeights[i] = Mathf.Clamp(_ikLayerCurrentWeights[i], 0, 1);
+            float time = timeElapsed / duration;
 
-            _ikLayers[i].weight = _ikLayerCurrentWeights[i];
+            LayerWeight = Mathf.Lerp(startValue, endValue, time);
+            Layer.weight = LayerWeight;
+
+            timeElapsed += Time.deltaTime;
+
+
+            yield return null;
         }
-    }
 
-
-    public void SetLayerWeight(LayerEnum layer, bool enable, float lerpSpeed)
-    {
-        int index = (int)layer;
-        float weight = enable ? 1.1f : -0.1f;
-
-        _ikLayerDesiredWeights[index] = weight;
-        _ikLayerLerpSpeeds[index] = lerpSpeed;
-    }
-    public float GetLayerWeight(LayerEnum layer)
-    {
-        int index = (int)layer;
-        return _ikLayerCurrentWeights[index];
+        LayerWeight = endValue;
+        Layer.weight = LayerWeight;
     }
 }

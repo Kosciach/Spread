@@ -35,7 +35,7 @@ public class WeaponReloadAnimator : MonoBehaviour
         SetPreAnimIkTransforms();
 
         _isReloading = true;
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.WeaponReload, true, 10);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.WeaponReload, true, 0.1f);
         _playerStateMachine.AnimatingControllers.Animator.OverrideAnimationClip(reloadAnimOveride);
         _playerStateMachine.AnimatingControllers.Animator.SetBool("Reload", true);
     }
@@ -46,7 +46,7 @@ public class WeaponReloadAnimator : MonoBehaviour
     {
         _isReloading = false;
 
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.WeaponReload, false, 5);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.WeaponReload, false, 5);
 
         _playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_fingerPreset.Base);
 

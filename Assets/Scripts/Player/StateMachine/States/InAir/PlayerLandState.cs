@@ -52,7 +52,7 @@ public class PlayerLandState : PlayerBaseState
 
         if (_ctx.WasHardLanding) _ctx.CombatControllers.Combat.TemporaryUnEquip();
         _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(!_ctx.WasHardLanding);
-        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 6);
-        _ctx.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, !_ctx.WasHardLanding, 6);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 1);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, !_ctx.WasHardLanding, 1);
     }
 }

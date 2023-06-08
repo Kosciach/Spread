@@ -89,14 +89,14 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Toggle layers
-        ToggleCombatLayersPreset(true, false, false, false, true, 3);
+        ToggleCombatLayersPreset(true, false, false, false, true, 10, 0.1f);
 
 
 
 
         //SetupFingers
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 4);
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 4);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 0.1f);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 0.1f);
         _playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset.Base);
 
 
@@ -159,11 +159,11 @@ public class PlayerCombatController : MonoBehaviour
             _weaponWallDetector.ToggleCollider(false);
 
             //Toggle layers
-            ToggleCombatLayersPreset(false, true, true, true, false, 3);
+            ToggleCombatLayersPreset(false, true, true, true, false, 10, 0.1f);
 
             //Disable fingers
-            _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 4);
-            _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 4);
+            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 1);
+            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 1);
 
             //Prepare hands camera
             _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
@@ -193,7 +193,7 @@ public class PlayerCombatController : MonoBehaviour
         _weaponWallDetector.ToggleCollider(false);
 
         //Toggle layers
-        ToggleCombatLayersPreset(false, true, true, true, false, 3);
+        ToggleCombatLayersPreset(false, true, true, true, false, 10, 0.1f);
 
 
 
@@ -204,8 +204,8 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Disable fingers
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 4);
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 4);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 1);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 1);
 
         //Disable bobbing/sway
         _playerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
@@ -255,12 +255,12 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Toggle layers
-        ToggleCombatLayersPreset(false, false, false, false, false, 10);
+        ToggleCombatLayersPreset(false, false, false, false, false, 10, 0.1f);
 
 
         //Disable fingers
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 5);
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 5);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 1);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 1);
 
 
         //Prepare hands camera
@@ -284,13 +284,13 @@ public class PlayerCombatController : MonoBehaviour
     }
 
 
-    public void ToggleCombatLayersPreset(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float speed)
+    public void ToggleCombatLayersPreset(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float speed, float ikDuration)
     {
         _playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, combatAnim, speed);
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.SpineLock, spineLock, speed);
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Body, body, speed);
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.Head, head, speed);
-        _playerStateMachine.AnimatingControllers.IkLayers.SetLayerWeight(PlayerIkLayerController.LayerEnum.RangeCombat, combat, speed);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, spineLock, ikDuration);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, body, ikDuration);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Head, head, ikDuration);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.RangeCombat, combat, ikDuration);
     }
 
 
