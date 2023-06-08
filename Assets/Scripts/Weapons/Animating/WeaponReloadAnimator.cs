@@ -60,8 +60,8 @@ public class WeaponReloadAnimator : MonoBehaviour
 
     private void SetPreAnimIkTransforms()
     {
-        _rightHandIk.localPosition = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner.CurrentMainVectors.Pos;
-        _rightHandIk.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.Weapon.MainPositioner.CurrentMainVectors.Rot);
+        _rightHandIk.localPosition = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner.PosVector;
+        _rightHandIk.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.Weapon.MainPositioner.RotVector);
 
         _leftHandIk.localPosition = _playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Pos;
         _leftHandIk.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Rot);

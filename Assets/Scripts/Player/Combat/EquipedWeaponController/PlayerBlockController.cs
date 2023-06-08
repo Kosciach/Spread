@@ -23,7 +23,7 @@ public class PlayerBlockController : MonoBehaviour
 
     private void Awake()
     {
-        _combatController = _equipedWeaponController.CombatController;
+        _combatController = _equipedWeaponController.PlayerStateMachine.CombatControllers.Combat;
         _blockMethods[0] = BlockDisable;
         _blockMethods[1] = BlockEnable;
     }
@@ -57,8 +57,10 @@ public class PlayerBlockController : MonoBehaviour
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Run.ToggleRunBool(false);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Position, 6);
-        _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Rotation, 6);
+
+        WeaponMainPositioner mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Rotation, 0.3f);
+        mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Position, 0.3f);
 
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Block.LeftHand_Position, 6);
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Block.LeftHand_Rotation, 6);
@@ -69,6 +71,6 @@ public class PlayerBlockController : MonoBehaviour
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 8);
 
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.HoldController;
-        equipedModeController.MoveHandsToCurrentHoldMode(6, 6);
+        equipedModeController.MoveHandsToCurrentHoldMode(0.3f, 0.3f);
     }
 }

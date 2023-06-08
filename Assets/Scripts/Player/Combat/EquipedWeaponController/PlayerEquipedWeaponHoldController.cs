@@ -11,7 +11,7 @@ public class PlayerEquipedWeaponHoldController : MonoBehaviour
 
     private void Awake()
     {
-        _combatController = _equipedWeaponController.CombatController;
+        _combatController = _equipedWeaponController.PlayerStateMachine.CombatControllers.Combat;
     }
 
 
@@ -29,6 +29,6 @@ public class PlayerEquipedWeaponHoldController : MonoBehaviour
         WeaponHoldController.HoldModeEnum equipedMode = equipedWeaponHoldController.IsHoldMode(WeaponHoldController.HoldModeEnum.Hip) ? WeaponHoldController.HoldModeEnum.Rest : WeaponHoldController.HoldModeEnum.Hip;
 
         equipedWeaponHoldController.ChangeHoldMode(equipedMode);
-        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(6, 6);
+        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(0.3f, 0.3f);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -41,7 +42,7 @@ namespace IkLayers
 
 
 
-        public void ToggleLayer(LayerEnum layer, bool enable, float duration)
+        public PlayerIkLayerController ToggleLayer(LayerEnum layer, bool enable, float duration)
         {
             float weight = enable ? 1 : 0;
             LayerData currentLayerData = _layerData[(int)layer];
@@ -51,10 +52,14 @@ namespace IkLayers
 
             currentLayerData.LerpCoroutine = currentLayerData.Lerp(currentLayerData.LayerWeight, weight, duration);
             StartCoroutine(currentLayerData.LerpCoroutine);
+
+            return this;
         }
 
-
-
+        public void OnLerpFinish(LayerEnum layer, Action toDo)
+        {
+            _layerData[(int)layer].OnFinish = toDo;
+        }
     }
 
 
@@ -67,7 +72,7 @@ namespace IkLayers
         [Range(0, 1)]
         public float LayerWeight;
         public IEnumerator LerpCoroutine;
-
+        public Action OnFinish;
 
         public IEnumerator Lerp(float startValue, float endValue, float duration)
         {
@@ -88,6 +93,8 @@ namespace IkLayers
 
             LayerWeight = endValue;
             Layer.weight = LayerWeight;
+
+            if (OnFinish != null) OnFinish.Invoke();
         }
     }
 }

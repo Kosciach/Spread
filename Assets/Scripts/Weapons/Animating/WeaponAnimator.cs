@@ -68,8 +68,8 @@ public class WeaponAnimator : MonoBehaviour
 
     private void CombineVectorsForBaseTarget()
     {
-        _baseVectors.Pos = _mainPositioner.CurrentMainVectors.Pos + _bobbing.Base.CurrentVectors.Pos;
-        _baseVectors.Rot = _mainPositioner.CurrentMainVectors.Rot + _bobbing.Base.CurrentVectors.Rot;
+        _baseVectors.Pos = _mainPositioner.PosVector + _bobbing.Base.CurrentVectors.Pos;
+        _baseVectors.Rot = _mainPositioner.RotVector + _bobbing.Base.CurrentVectors.Rot;
     }
     private void CombineVectorsForExtraTarget()
     {

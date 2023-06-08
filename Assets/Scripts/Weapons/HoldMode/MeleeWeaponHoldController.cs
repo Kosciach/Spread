@@ -30,8 +30,9 @@ public class MeleeWeaponHoldController : WeaponHoldController
     {
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
 
-        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_meleeWeaponData.Hip.RightHand_Rotation, rotateSpeed);
-        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_meleeWeaponData.Hip.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
+        WeaponMainPositioner mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        mainPositioner.Rotate(_meleeWeaponData.Hip.RightHand_Rotation, 1);
+        mainPositioner.Move(_meleeWeaponData.Hip.RightHand_Position, 1).SetOnMoveFinish(() =>
         {
             _stateMachine.DamageDealingController.Toggle(true);
 

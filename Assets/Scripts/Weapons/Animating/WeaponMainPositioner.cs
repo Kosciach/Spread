@@ -3,125 +3,105 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class WeaponMainPositioner : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] WeaponAnimator _weaponAnimator;
-    [SerializeField] Transform _positioner;
-
 
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] MainVectors _currentMainVectors; public MainVectors CurrentMainVectors { get { return _currentMainVectors; } }
-    [Space(5)]
-    [SerializeField] MainVectors _desiredMainVectors;
-    [Space(5)]
-    [SerializeField] PositioningMode _positioningMode;
-    [SerializeField] bool _isHandAtPos; public bool IsHandAtPos { get { return _isHandAtPos; } }
-    [SerializeField] bool _isHandAtRot; public bool IsHandAtRot { get { return _isHandAtRot; } }
+    [SerializeField] Vector3Lerp _move;
+    [SerializeField] Vector3Lerp _rotate;
+
+    public Vector3 PosVector { get { return _move.Vector; } }
+    public Vector3 RotVector { get { return _rotate.Vector; } }
 
 
 
-    [Space(20)]
-    [Header("====Settings====")]
-    [SerializeField] float _posVectorSmoothSpeed;
-    [SerializeField] float _rotVectorSmoothSpeed;
-
-    [SerializeField] float _isHandAtPosTreshold;
-    [SerializeField] float _isHandAtRotTreshold;
-    private IEnumerator _lerpFinishCoroutine;
-
-
-    private int _positioningMethodIndex => (int)_positioningMode;
-    private Action[] _positioningMethods = new Action[2];
-
-    private enum PositioningMode
-    { 
-        Gameplay, SettingUp
-    }
-
-
-
-    [System.Serializable]
-    public struct MainVectors
+    public WeaponMainPositioner Move(Vector3 startVector, Vector3 endVector, float duration)
     {
-        public Vector3 Pos;
-        public Vector3 Rot;
-    }
+        if (_move.LerpCoroutine != null) StopCoroutine(_move.LerpCoroutine);
 
+        _move.LerpCoroutine = _move.Lerp(startVector, endVector, duration);
+        StartCoroutine(_move.LerpCoroutine);
 
-
-    private void Awake()
-    {
-        _positioningMethods[0] = UpdateTransformVectors;
-        _positioningMethods[1] = SetupTransformVectors;
-    }
-    private void Update()
-    {
-        _positioningMethods[_positioningMethodIndex]();
-    }
-
-
-    private void UpdateTransformVectors()
-    {
-        _currentMainVectors.Pos = Vector3.Lerp(_currentMainVectors.Pos, _desiredMainVectors.Pos, _posVectorSmoothSpeed * Time.deltaTime);
-        _currentMainVectors.Rot = Vector3.Lerp(_currentMainVectors.Rot, _desiredMainVectors.Rot, _rotVectorSmoothSpeed * Time.deltaTime);
-
-        _isHandAtPos = Vector3.Distance(_desiredMainVectors.Pos, _currentMainVectors.Pos) <= _isHandAtPosTreshold;
-        _isHandAtRot = Vector3.Distance(_desiredMainVectors.Rot, _currentMainVectors.Rot) <= _isHandAtRotTreshold;
-
-        _positioner.localPosition = _desiredMainVectors.Pos;
-        _positioner.localRotation = Quaternion.Euler(_desiredMainVectors.Rot);
-    }
-    private void SetupTransformVectors()
-    {
-        _currentMainVectors.Pos = _positioner.localPosition;
-        _currentMainVectors.Rot = _positioner.localRotation.eulerAngles;
-    }
-
-
-    public WeaponMainPositioner SetPos(Vector3 pos, float speed)
-    {
-        _desiredMainVectors.Pos = pos;
-        _posVectorSmoothSpeed = speed;
         return this;
     }
-    public WeaponMainPositioner SetRot(Vector3 rot, float speed)
+    public WeaponMainPositioner Move(Vector3 endVector, float duration)
     {
-        _desiredMainVectors.Rot = rot;
-        _rotVectorSmoothSpeed = speed;
+        if (_move.LerpCoroutine != null) StopCoroutine(_move.LerpCoroutine);
+
+        _move.LerpCoroutine = _move.Lerp(_weaponAnimator.RightHandIk.parent.localPosition, endVector, duration);
+        StartCoroutine(_move.LerpCoroutine);
+
         return this;
     }
 
 
-    public void ResetPosOffset()
+    public WeaponMainPositioner Rotate(Vector3 startVector, Vector3 endVector, float duration)
     {
-        _desiredMainVectors.Pos = Vector3.zero;
+        if (_rotate.LerpCoroutine != null) StopCoroutine(_rotate.LerpCoroutine);
+
+        _rotate.LerpCoroutine = _rotate.Lerp(startVector, endVector, duration);
+        StartCoroutine(_rotate.LerpCoroutine);
+
+        return this;
     }
-    public void ResetRotOffset()
+    public WeaponMainPositioner Rotate(Vector3 endVector, float duration)
     {
-        _desiredMainVectors.Rot = Vector3.zero;
+        if (_rotate.LerpCoroutine != null) StopCoroutine(_rotate.LerpCoroutine);
+
+        _rotate.LerpCoroutine = _rotate.Lerp(_weaponAnimator.RightHandIk.localRotation.eulerAngles, endVector, duration);
+        StartCoroutine(_rotate.LerpCoroutine);
+
+        return this;
     }
 
 
 
 
-
-    public void CurrentLerpFinished(Action afterDelay)
+    public void SetOnMoveFinish(Action toDo)
     {
-        if (_lerpFinishCoroutine != null) StopCoroutine(_lerpFinishCoroutine);
-
-        float timeToFinishLerp = Vector3.Distance(_desiredMainVectors.Pos, _currentMainVectors.Pos) * _posVectorSmoothSpeed * Time.deltaTime;
-
-        _lerpFinishCoroutine = SetLerpFinishDelay(timeToFinishLerp, afterDelay);
-        StartCoroutine(_lerpFinishCoroutine);
+        _move.OnFinish = toDo;
     }
-    private IEnumerator SetLerpFinishDelay(float delay, Action afterDelay)
+    public void SetOnRotationFinish(Action toDo)
     {
-        yield return new WaitForSeconds(delay);
+        _rotate.OnFinish = toDo;
+    }
+}
 
-        afterDelay.Invoke();
+[System.Serializable]
+public class Vector3Lerp
+{
+    [SerializeField] Vector3 _vector; public Vector3 Vector { get { return _vector; } }
+    [SerializeField] bool _isLerping;
+    public Action OnFinish;
+    public IEnumerator LerpCoroutine;
+
+
+    public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration)
+    {
+        float timeElapsed = 0;
+
+        //Start
+
+        _isLerping = true;
+        while (timeElapsed < duration)
+        {
+            float time = timeElapsed / duration;
+
+            _vector = Vector3.Lerp(startVector, endVector, time);
+
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        //Finish
+
+        _vector = endVector;
+        _isLerping = false;
+        if (OnFinish != null) OnFinish.Invoke();
     }
 }

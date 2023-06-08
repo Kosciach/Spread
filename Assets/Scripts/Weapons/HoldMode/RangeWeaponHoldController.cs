@@ -25,14 +25,22 @@ public class RangeWeaponHoldController : WeaponHoldController
     {
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
-        _playerCombatController.RightHand.localPosition = Vector3.zero;
-        _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);
+        Vector3 rot = _rangeWeaponData.HoldTransforms.Rest.RightHand_Rotation;
+        Vector3 pos = _rangeWeaponData.HoldTransforms.Rest.RightHand_Position;
 
-
-        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_rangeWeaponData.HoldTransforms.Rest.RightHand_Rotation, rotateSpeed);
-        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_rangeWeaponData.HoldTransforms.Rest.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
+        //Check if run should be used when equiping weapon
+        if (_playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equip)
+        && _playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsRun)
         {
-            Debug.Log("Finish");
+            rot = _rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation;
+            pos = _rangeWeaponData.WeaponTransforms.Run.RightHand_Position;
+        }
+
+
+        WeaponMainPositioner mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        mainPositioner.Rotate(rot, rotateSpeed);
+        mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
+        {
             _stateMachine.DamageDealingController.Toggle(false);
 
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
@@ -46,12 +54,21 @@ public class RangeWeaponHoldController : WeaponHoldController
     {
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
 
-        _playerCombatController.RightHand.localPosition = Vector3.zero;
-        _playerCombatController.RightHand.parent.localRotation = Quaternion.Euler(Vector3.zero);
+        Vector3 rot = _rangeWeaponData.HoldTransforms.Hip.RightHand_Rotation;
+        Vector3 pos = _rangeWeaponData.HoldTransforms.Hip.RightHand_Position;
+
+        //Check if run should be used when equiping weapon
+        if (_playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equip)
+        && _playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsRun)
+        {
+            rot = _rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation;
+            pos = _rangeWeaponData.WeaponTransforms.Run.RightHand_Position;
+        }
 
 
-        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_rangeWeaponData.HoldTransforms.Hip.RightHand_Rotation, rotateSpeed);
-        _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_rangeWeaponData.HoldTransforms.Hip.RightHand_Position, moveSpeed).CurrentLerpFinished(() =>
+        WeaponMainPositioner mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        mainPositioner.Rotate(rot, rotateSpeed);
+        mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
         {
             _stateMachine.DamageDealingController.Toggle(true);
 

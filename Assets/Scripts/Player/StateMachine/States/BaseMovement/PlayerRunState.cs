@@ -34,8 +34,6 @@ public class PlayerRunState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-        _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(true);
-
         _ctx.MovementControllers.Rotation.RotateToCanera();
         _ctx.MovementControllers.Movement.OnGround.Movement();
         _ctx.MovementControllers.Movement.OnGround.CheckMovementType();

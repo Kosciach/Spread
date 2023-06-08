@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
+using UnityEditor;
 
 public class PlayerCombatController : MonoBehaviour
 {
@@ -24,6 +22,7 @@ public class PlayerCombatController : MonoBehaviour
     [Header("====Debug====")]
     [SerializeField] CombatStateEnum _combatState;
     [SerializeField] int _equipedWeaponIndex;
+    [SerializeField] int _choosenWeaponIndex;
     [SerializeField] WeaponStateMachine _equipedWeapon; public WeaponStateMachine EquipedWeapon { get { return _equipedWeapon; } }
     [SerializeField] WeaponData _equipedWeaponData; public WeaponData EquipedWeaponData { get { return _equipedWeaponData; } }
     [SerializeField] bool _swap;
@@ -40,13 +39,15 @@ public class PlayerCombatController : MonoBehaviour
 
     public void EquipWeapon(int choosenWeaponIndex)
     {
+        WeaponMainPositioner mainPositioner = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+
         if (!_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded) return;
 
         if (!IsState(CombatStateEnum.Equiped) && !IsState(CombatStateEnum.Unarmed)) return;
 
 
 
-
+        _choosenWeaponIndex = choosenWeaponIndex;
         WeaponStateMachine equipedWeaponNew = _playerStateMachine.InventoryControllers.Inventory.Weapon.Weapons[choosenWeaponIndex];
         WeaponData equipedWeaponDataNew = _playerStateMachine.InventoryControllers.Inventory.Weapon.WeaponsData[choosenWeaponIndex];
         if (equipedWeaponNew == null || equipedWeaponDataNew == null)
@@ -56,15 +57,9 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
-
         if (IsState(CombatStateEnum.Equiped))
         {
-            if (choosenWeaponIndex != _equipedWeaponIndex)
-            {
-                if (equipedWeaponDataNew.Fists && _equipedWeaponData.Fists) return;
-                SwapWeapon(choosenWeaponIndex);
-            }
-
+            if (choosenWeaponIndex != _equipedWeaponIndex) SwapWeapon();
             return;
         }
 
@@ -90,10 +85,6 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Combat, 5);
 
 
-        //Toggle layers
-        ToggleCombatLayersPreset(true, false, false, false, true, 0.1f);
-
-
 
 
         //SetupFingers
@@ -104,15 +95,15 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
-        //Move left hand to position
+        //Prepare left hand
         _playerStateMachine.AnimatingControllers.LeftHand.SetPos(_equipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 10);
         _playerStateMachine.AnimatingControllers.LeftHand.SetRot(_equipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 10);
 
 
-        //Move right hand to origin
-        _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
-        _playerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_weaponOrigin.transform.GetChild(0).localRotation.eulerAngles, 10);
-        _playerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_weaponOrigin.transform.localPosition, 10).CurrentLerpFinished(() =>
+        //Toggle layers
+        //_weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
+        ToggleCombatLayersPreset(true, false, false, false, true, 0.4f);
+        _playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
         {
             //Put weapon in hand
             _equipedWeapon.transform.parent = _rightHandWeaponHolder;
@@ -121,7 +112,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
             //Move right hand to correct position
-            _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(5, 6);
+            _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(1, 1);
             _weaponWallDetector.ToggleCollider(true);
 
             _equipedWeapon.DamageDealingController.WeaponEquiped();
@@ -155,13 +146,11 @@ public class PlayerCombatController : MonoBehaviour
 
         //Move right hand to origin
         _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
-        _playerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetRot(_weaponOrigin.transform.GetChild(0).localRotation.eulerAngles, 10);
-        _playerStateMachine.AnimatingControllers.Weapon.MainPositioner.SetPos(_weaponOrigin.transform.localPosition, 10).CurrentLerpFinished(() =>
+        WeaponMainPositioner mainPositioner = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        mainPositioner.Rotate(_weaponOrigin.transform.GetChild(0).localRotation.eulerAngles, 1);
+        mainPositioner.Move(_weaponOrigin.transform.localPosition, 1).SetOnMoveFinish(() => 
         {
             _weaponWallDetector.ToggleCollider(false);
-
-            //Toggle layers
-            ToggleCombatLayersPreset(false, true, true, true, false, 0.1f);
 
             //Disable fingers
             _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 1);
@@ -177,7 +166,20 @@ public class PlayerCombatController : MonoBehaviour
             _equipedWeapon = null;
             _equipedWeaponData = null;
 
-            SetState(CombatStateEnum.Unarmed);
+
+            if (_swap)
+            {
+                SetState(CombatStateEnum.Unarmed);
+                ReEquip(_choosenWeaponIndex);
+                return;
+            }
+
+            //Toggle layers
+            ToggleCombatLayersPreset(false, true, true, true, false, 0.4f);
+            _playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
+            {
+                SetState(CombatStateEnum.Unarmed);
+            });
         });
     }
 
@@ -195,7 +197,7 @@ public class PlayerCombatController : MonoBehaviour
         _weaponWallDetector.ToggleCollider(false);
 
         //Toggle layers
-        ToggleCombatLayersPreset(false, true, true, true, false, 0.1f);
+        ToggleCombatLayersPreset(false, true, true, true, false, 0.2f);
 
 
 
@@ -233,15 +235,13 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
-    private void SwapWeapon(int choosenWeaponIndex)
+    private void SwapWeapon()
     {
         _swap = true;
         UnEquipWeapon(1);
-        StartCoroutine(ReEquip(choosenWeaponIndex));
     }
-    private IEnumerator ReEquip(int choosenWeaponIndex)
+    private void ReEquip(int choosenWeaponIndex)
     {
-        yield return new WaitForSeconds(0.5f);
         EquipWeapon(choosenWeaponIndex);
         _swap = false;
     }
