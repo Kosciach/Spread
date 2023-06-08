@@ -23693,18 +23693,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 3654861958794934898}
-  _currentLayerWeights:
-  - 0
-  - 0
-  - 0
-  _desiredLayerWeights:
-  - -0.1
-  - 1.1
-  - -0.1
-  _lerpWeightLayerSpeed:
-  - 4
-  - 4
-  - 4
+  _layerData:
+  - name: Combat
+    Layer: 0
+    LayerWeight: 0
+  - name: TopBodyStabilizer
+    Layer: 1
+    LayerWeight: 0
+  - name: Crouch
+    Layer: 2
+    LayerWeight: 0
 --- !u!4 &1919329646
 Transform:
   m_ObjectHideFlags: 0

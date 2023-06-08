@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerAnimator;
+using IkLayers;
 
 public class PlayerLandState : PlayerBaseState
 {
@@ -52,7 +54,7 @@ public class PlayerLandState : PlayerBaseState
 
         if (_ctx.WasHardLanding) _ctx.CombatControllers.Combat.TemporaryUnEquip();
         _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(!_ctx.WasHardLanding);
-        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 1);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, !_ctx.WasHardLanding, 1);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 0.1f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, !_ctx.WasHardLanding, 0.1f);
     }
 }

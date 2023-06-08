@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using PlayerAnimator;
+using IkLayers;
 
 public class PlayerCombatController : MonoBehaviour
 {
@@ -89,7 +91,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Toggle layers
-        ToggleCombatLayersPreset(true, false, false, false, true, 10, 0.1f);
+        ToggleCombatLayersPreset(true, false, false, false, true, 0.1f);
 
 
 
@@ -159,7 +161,7 @@ public class PlayerCombatController : MonoBehaviour
             _weaponWallDetector.ToggleCollider(false);
 
             //Toggle layers
-            ToggleCombatLayersPreset(false, true, true, true, false, 10, 0.1f);
+            ToggleCombatLayersPreset(false, true, true, true, false, 0.1f);
 
             //Disable fingers
             _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 1);
@@ -193,7 +195,7 @@ public class PlayerCombatController : MonoBehaviour
         _weaponWallDetector.ToggleCollider(false);
 
         //Toggle layers
-        ToggleCombatLayersPreset(false, true, true, true, false, 10, 0.1f);
+        ToggleCombatLayersPreset(false, true, true, true, false, 0.1f);
 
 
 
@@ -255,7 +257,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Toggle layers
-        ToggleCombatLayersPreset(false, false, false, false, false, 10, 0.1f);
+        ToggleCombatLayersPreset(false, false, false, false, false, 0.1f);
 
 
         //Disable fingers
@@ -284,13 +286,13 @@ public class PlayerCombatController : MonoBehaviour
     }
 
 
-    public void ToggleCombatLayersPreset(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float speed, float ikDuration)
+    public void ToggleCombatLayersPreset(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float duration)
     {
-        _playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, combatAnim, speed);
-        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, spineLock, ikDuration);
-        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, body, ikDuration);
-        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Head, head, ikDuration);
-        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.RangeCombat, combat, ikDuration);
+        _playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, combatAnim, duration);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, spineLock, duration);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, body, duration);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Head, head, duration);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.RangeCombat, combat, duration);
     }
 
 

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerAnimator;
+using IkLayers;
 
 public class WeaponReloadAnimator : MonoBehaviour
 {

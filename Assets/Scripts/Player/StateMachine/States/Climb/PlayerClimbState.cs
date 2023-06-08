@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerAnimator;
+using IkLayers;
 
 public class PlayerClimbState : PlayerBaseState
 {
@@ -41,7 +43,7 @@ public class PlayerClimbState : PlayerBaseState
     private void ClimbEnterExit(bool enable)
     {
         _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(enable);
-        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, enable, 6);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, enable, 0.5f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, enable, 0.1f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, enable, 0.1f);
 

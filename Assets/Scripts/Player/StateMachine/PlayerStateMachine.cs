@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerAnimator;
+using IkLayers;
 using UnityEngine.VFX;
 
 public class PlayerStateMachine : MonoBehaviour

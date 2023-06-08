@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerAnimator;
+using IkLayers;
 
 public class PlayerCrouchState : PlayerBaseState
 {
@@ -15,7 +17,7 @@ public class PlayerCrouchState : PlayerBaseState
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Crouch, 5);
 
-        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, true, 3);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, true, 0.3f);
         _ctx.MovementControllers.Movement.OnGround.SetCrouchSpeed();
     }
     public override void StateUpdate()
@@ -46,7 +48,7 @@ public class PlayerCrouchState : PlayerBaseState
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
             _ctx.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
 
-        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, false, 3);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, false, 0.3f);
 
         _ctx.AnimatingControllers.Weapon.Crouch.Toggle(false);
     }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerAnimator;
+using IkLayers;
 
 public class LandBehaviour : StateMachineBehaviour
 {
@@ -25,7 +27,7 @@ public class LandBehaviour : StateMachineBehaviour
 
 
         playerStateMachine.CameraControllers.Hands.EnableController.ToggleHandsCamera(true);
-        playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 6);
+        playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 1);
 
         playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, !isWeaponEquiped, 1);
         playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, !isWeaponEquiped, 1);
