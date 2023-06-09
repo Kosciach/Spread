@@ -204,7 +204,6 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
-
         //Prepare hands camera
         _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
         _playerStateMachine.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);

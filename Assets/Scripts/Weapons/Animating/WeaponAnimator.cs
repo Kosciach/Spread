@@ -67,13 +67,13 @@ public class WeaponAnimator : MonoBehaviour
 
     private void CombineVectorsForBaseTarget()
     {
-        _baseVectors.Pos = _mainPositioner.Pos + _bobbing.Base.CurrentVectors.Pos;
-        _baseVectors.Rot = _mainPositioner.Rot.eulerAngles + _bobbing.Base.CurrentVectors.Rot;
+        _baseVectors.Pos = _mainPositioner.Pos;
+        _baseVectors.Rot = _mainPositioner.Rot.eulerAngles;
     }
     private void CombineVectorsForExtraTarget()
     {
-        _extraVectors.Pos = _recoil.RecoilVectors.Pos + _sway.CurrentSwayVectors.Pos + _inAir.CurrentVectors.Pos + _crouch.CurrentVectors.Pos + _fireMode.Vectors.Pos;
-        _extraVectors.Rot = _recoil.RecoilVectors.Rot + _sway.CurrentSwayVectors.Rot + _inAir.CurrentVectors.Rot + _crouch.CurrentVectors.Rot + _fireMode.Vectors.Rot + _bobbing.Side.SideMovementRot;
+        _extraVectors.Pos = _bobbing.Base.CurrentVectors.Pos                 +                 _sway.CurrentSwayVectors.Pos + _recoil.RecoilVectors.Pos + _crouch.CurrentVectors.Pos + _inAir.CurrentVectors.Pos + _fireMode.Vectors.Pos;
+        _extraVectors.Rot = _bobbing.Base.CurrentVectors.Rot + _bobbing.Side.SideMovementRot + _sway.CurrentSwayVectors.Rot + _recoil.RecoilVectors.Rot + _crouch.CurrentVectors.Rot + _inAir.CurrentVectors.Rot + _fireMode.Vectors.Rot;
     }
 
 

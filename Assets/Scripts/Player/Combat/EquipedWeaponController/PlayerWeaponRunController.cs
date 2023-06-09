@@ -13,6 +13,7 @@ public class PlayerWeaponRunController : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] bool _isRun; public bool IsRun { get { return _isRun; } }
+    [SerializeField] bool _isInput; public bool IsInput { get { return _isInput; } set { _isInput = value; } }
 
 
 

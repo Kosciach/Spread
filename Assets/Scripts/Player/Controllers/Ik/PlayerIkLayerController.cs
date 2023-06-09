@@ -76,6 +76,7 @@ namespace IkLayers
 
         public IEnumerator Lerp(float startValue, float endValue, float duration)
         {
+            OnFinish = null;
             float timeElapsed = 0;
 
             while (timeElapsed < duration)

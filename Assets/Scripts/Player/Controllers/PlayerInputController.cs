@@ -78,12 +78,20 @@ public class PlayerInputController : MonoBehaviour
     private void SetMoving()
     {
         _playerInputs.Player.Move.started += ctx => { _isMoveInput = true; };
-        _playerInputs.Player.Move.canceled += ctx => { _isMoveInput = false;};
+        _playerInputs.Player.Move.canceled += ctx => { _isMoveInput = false; };
     }
     private void SetRunning()
     {
-        _playerInputs.Player.Run.started += ctx => { _isRunInput = true; };
-        _playerInputs.Player.Run.canceled += ctx => { _isRunInput = false; };
+        _playerInputs.Player.Run.started += ctx =>
+        {
+            _isRunInput = true;
+            _stateMachine.CombatControllers.EquipedWeapon.Run.IsInput = true;
+        };
+        _playerInputs.Player.Run.canceled += ctx =>
+        {
+            _isRunInput = false;
+            _stateMachine.CombatControllers.EquipedWeapon.Run.IsInput = false;
+        };
     }
     private void SetJump()
     {

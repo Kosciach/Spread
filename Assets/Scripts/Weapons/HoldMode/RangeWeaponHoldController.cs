@@ -25,13 +25,15 @@ public class RangeWeaponHoldController : WeaponHoldController
     {
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
+
         Vector3 rot = _rangeWeaponData.HoldTransforms.Rest.RightHand_Rotation;
         Vector3 pos = _rangeWeaponData.HoldTransforms.Rest.RightHand_Position;
 
-        //Check if run should be used when equiping weapon
+        bool wasEquipAndRun = false;
         if (_playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equip)
         && _playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsRun)
         {
+            wasEquipAndRun = true;
             rot = _rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation;
             pos = _rangeWeaponData.WeaponTransforms.Run.RightHand_Position;
         }
@@ -48,19 +50,24 @@ public class RangeWeaponHoldController : WeaponHoldController
 
 
             _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
+
+            if (_playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsInput) return;
+            if (wasEquipAndRun) RestHoldMode(rotateSpeed, moveSpeed);
         });
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
 
+
         Vector3 rot = _rangeWeaponData.HoldTransforms.Hip.RightHand_Rotation;
         Vector3 pos = _rangeWeaponData.HoldTransforms.Hip.RightHand_Position;
 
-        //Check if run should be used when equiping weapon
+        bool wasEquipAndRun = false;
         if (_playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equip)
         && _playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsRun)
         {
+            wasEquipAndRun = true;
             rot = _rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation;
             pos = _rangeWeaponData.WeaponTransforms.Run.RightHand_Position;
         }
@@ -77,6 +84,9 @@ public class RangeWeaponHoldController : WeaponHoldController
 
 
             _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
+
+            if (_playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsInput) return;
+            if (wasEquipAndRun) HipHoldMode(rotateSpeed, moveSpeed);
         });
     }
 }

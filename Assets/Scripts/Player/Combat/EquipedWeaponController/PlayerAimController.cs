@@ -17,6 +17,12 @@ public class PlayerAimController : MonoBehaviour
     [SerializeField] int _aimTypeIndex;
     [SerializeField] AimTypeEnum _aimType;
 
+
+    [Space(20)]
+    [Header("====Settings====")]
+    [SerializeField] AnimationCurve _curve;
+
+
     public enum AimTypeEnum
     {
         ADS, Left
@@ -98,7 +104,7 @@ public class PlayerAimController : MonoBehaviour
     {
         WeaponMainPositioner mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
         mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Aim[_aimTypeIndex].RightHand_Rotation, 0.2f);
-        mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Aim[_aimTypeIndex].RightHand_Position, 0.2f);
+        mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Aim[_aimTypeIndex].RightHand_Position, 0.2f, _curve);
 
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 6);
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 6);
