@@ -15,7 +15,6 @@ MonoBehaviour:
   WeaponName: CPP11
   WeaponHolder: 1
   WeaponType: 0
-  WeaponOriginRotation: {x: 317.5712, y: 206.62067, z: 236.19122}
   Icon: {fileID: 21300000, guid: df745b9b3196937429f2a47c732df67b, type: 3}
   Fists: 0
   InHandPosition: {x: 0.046, y: 0.1557, z: 0.037}
@@ -29,6 +28,9 @@ MonoBehaviour:
       LeftHand_Position: {x: 0.167, y: -0.1, z: 0.267}
       LeftHand_Rotation: {x: 364.4, y: -147.2, z: 345}
   WeaponTransforms:
+    Origin:
+      RightHand_Position: {x: 0.07, y: -0.241, z: 0}
+      RightHand_Rotation: {x: 318.1856, y: 343.8397, z: 207.94754}
     Block:
       RightHand_Position: {x: 0.16, y: 0.1, z: 0.61}
       RightHand_Rotation: {x: 369.7, y: 258.24072, z: 348.9685}

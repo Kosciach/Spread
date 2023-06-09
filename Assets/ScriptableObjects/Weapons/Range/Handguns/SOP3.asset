@@ -15,7 +15,6 @@ MonoBehaviour:
   WeaponName: SOP3
   WeaponHolder: 1
   WeaponType: 0
-  WeaponOriginRotation: {x: 317.5712, y: 206.62067, z: 236.19122}
   Icon: {fileID: 21300000, guid: c7b387dd960ec1f4ba61c6cf9e6fe10f, type: 3}
   Fists: 0
   InHandPosition: {x: 0.0427, y: 0.1524, z: 0.0419}
@@ -29,6 +28,9 @@ MonoBehaviour:
       LeftHand_Position: {x: 0.167, y: 0.1, z: 0.267}
       LeftHand_Rotation: {x: 364.4, y: -147.2, z: 351.85306}
   WeaponTransforms:
+    Origin:
+      RightHand_Position: {x: 0.07, y: -0.241, z: 0}
+      RightHand_Rotation: {x: 318.1856, y: 343.8397, z: 207.94754}
     Block:
       RightHand_Position: {x: 0.16, y: -0.04, z: 0.61}
       RightHand_Rotation: {x: 369.7, y: 258.24072, z: 348.9685}

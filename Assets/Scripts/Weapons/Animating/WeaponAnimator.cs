@@ -65,11 +65,10 @@ public class WeaponAnimator : MonoBehaviour
 
 
 
-
     private void CombineVectorsForBaseTarget()
     {
-        _baseVectors.Pos = _mainPositioner.PosVector + _bobbing.Base.CurrentVectors.Pos;
-        _baseVectors.Rot = _mainPositioner.RotVector + _bobbing.Base.CurrentVectors.Rot;
+        _baseVectors.Pos = _mainPositioner.Pos + _bobbing.Base.CurrentVectors.Pos;
+        _baseVectors.Rot = _mainPositioner.Rot.eulerAngles + _bobbing.Base.CurrentVectors.Rot;
     }
     private void CombineVectorsForExtraTarget()
     {

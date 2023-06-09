@@ -15,7 +15,6 @@ MonoBehaviour:
   WeaponName: TestRifle
   WeaponHolder: 0
   WeaponType: 0
-  WeaponOriginRotation: {x: 343.83, y: 220.50003, z: -0.0000004444702}
   Icon: {fileID: 21300000, guid: 21622dd0a8c47124c802cb8e4770823f, type: 3}
   Fists: 0
   InHandPosition: {x: 0.0465, y: 0.1457, z: 0.0316}
@@ -29,6 +28,9 @@ MonoBehaviour:
       LeftHand_Position: {x: 0.2883, y: 0.4047, z: 0.1141}
       LeftHand_Rotation: {x: 341.73514, y: 55.234917, z: 335.95514}
   WeaponTransforms:
+    Origin:
+      RightHand_Position: {x: 0.214, y: -0.696, z: -0.342}
+      RightHand_Rotation: {x: 344.39374, y: 190.25874, z: 29.754196}
     Block:
       RightHand_Position: {x: 0.222, y: -0.362, z: 0.583}
       RightHand_Rotation: {x: 302.14615, y: 149.3001, z: 363}

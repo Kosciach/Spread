@@ -8,7 +8,7 @@ public class RangeWeaponData : WeaponData
     [Space(5)]
     [Header("====HoldTransforms====")]
     public HoldTransformsStruct HoldTransforms;
- 
+
 
     [Space(20)]
     [Header("====Stats====")]

@@ -49,8 +49,8 @@ public class PlayerWeaponRunController : MonoBehaviour
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
 
         WeaponMainPositioner mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
-        mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Rotation, 0.2f);
-        mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Position, 0.2f);
+        mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Rotation, 0.4f);
+        mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Position, 0.4f);
 
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 6);
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 6);
@@ -77,6 +77,6 @@ public class PlayerWeaponRunController : MonoBehaviour
         WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeapon.HoldController;
 
         equipedWeaponHoldController.ChangeHoldMode(_combatController.EquipedWeapon.HoldController.HoldMode);
-        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(0.2f, 0.2f);
+        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(0.4f, 0.4f);
     }
 }

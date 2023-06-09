@@ -7,15 +7,59 @@ public class WeaponMainPositioner : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] WeaponAnimator _weaponAnimator;
+    [SerializeField] Transform _positioner;
+
+
+    [Space(20)]
+    [Header("====Debugs====")]
+    [SerializeField] VectorUpdateType _vectorUpdateType;
+    [Space(5)]
+    [SerializeField] Vector3 _pos; public Vector3 Pos { get { return _pos; } }
+    [SerializeField] Quaternion _rot; public Quaternion Rot { get { return _rot; } }
 
 
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] Vector3Lerp _move;
-    [SerializeField] Vector3Lerp _rotate;
+    [SerializeField] QuaternionLerp _rotate;
 
-    public Vector3 PosVector { get { return _move.Vector; } }
-    public Vector3 RotVector { get { return _rotate.Vector; } }
+
+    private Action[] _vectorUpdateMethods = new Action[2];
+
+    private enum VectorUpdateType
+    {
+        Gameplay, SettingUp
+    }
+
+
+
+
+
+    private void Awake()
+    {
+        _vectorUpdateMethods[0] = UpdateVectorsGameplay;
+        _vectorUpdateMethods[1] = UpdateVectorsSettingUp;
+    }
+    public void Update()
+    {
+        _vectorUpdateMethods[(int)_vectorUpdateType]();
+    }
+
+
+    private void UpdateVectorsGameplay()
+    {
+        _pos = _move.Vector;
+        _rot = _rotate.Quaternion;
+
+
+        _positioner.localPosition = _pos;
+        _positioner.localRotation = _rot;
+    }
+    private void UpdateVectorsSettingUp()
+    {
+        _pos = _positioner.localPosition;
+        _rot = _positioner.localRotation;
+    }
 
 
 
@@ -37,7 +81,10 @@ public class WeaponMainPositioner : MonoBehaviour
 
         return this;
     }
-
+    public void MoveRaw(Vector3 pos)
+    {
+        _move.SetRaw(pos);
+    }
 
     public WeaponMainPositioner Rotate(Vector3 startVector, Vector3 endVector, float duration)
     {
@@ -57,7 +104,10 @@ public class WeaponMainPositioner : MonoBehaviour
 
         return this;
     }
-
+    public void RotateRaw(Vector3 rot)
+    {
+        _rotate.SetRaw(rot);
+    }
 
 
 
@@ -103,5 +153,63 @@ public class Vector3Lerp
         _vector = endVector;
         _isLerping = false;
         if (OnFinish != null) OnFinish.Invoke();
+    }
+
+    public void SetRaw(Vector3 pos)
+    {
+        _vector = pos;
+
+        _isLerping = false;
+        OnFinish = null;
+        LerpCoroutine = null;
+    }
+}
+
+
+[System.Serializable]
+public class QuaternionLerp
+{
+    [SerializeField] Quaternion _quaternion; public Quaternion Quaternion { get { return _quaternion; } }
+    [SerializeField] bool _isLerping;
+    public Action OnFinish;
+    public IEnumerator LerpCoroutine;
+
+
+    public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration)
+    {
+        float timeElapsed = 0;
+        Quaternion startQuaternion = Quaternion.Euler(startVector);
+        Quaternion endQuaternion = Quaternion.Euler(endVector);
+
+        //Start
+
+        _isLerping = true;
+        while (timeElapsed < duration)
+        {
+            float time = timeElapsed / duration;
+
+            _quaternion = Quaternion.Lerp(startQuaternion, endQuaternion, time);
+
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        //Finish
+
+        _quaternion = endQuaternion;
+        _isLerping = false;
+        if (OnFinish != null) OnFinish.Invoke();
+    }
+
+
+    public void SetRaw(Vector3 rot)
+    {
+        _quaternion = Quaternion.Euler(rot);
+
+
+        _isLerping = false;
+        OnFinish = null;
+        LerpCoroutine = null;
     }
 }

@@ -8,10 +8,8 @@ public class WeaponData : ScriptableObject
     public string WeaponName;
     public WeaponHolderEnum WeaponHolder;
     public WeaponTypeEnum WeaponType;
-    public Vector3 WeaponOriginRotation;
     public Sprite Icon;
     public bool Fists;
-
 
 
 
@@ -56,6 +54,9 @@ public class WeaponData : ScriptableObject
     [System.Serializable]
     public struct WeaponTransformsStruct
     {
+        public WeaponTransform Origin;
+
+        [Space(5)]
         public WeaponTransform Block;
 
         [Space(5)]

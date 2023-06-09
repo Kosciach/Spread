@@ -11,7 +11,6 @@ public class PlayerCombatController : MonoBehaviour
     [SerializeField] PlayerWeaponWallDetector _weaponWallDetector; public PlayerWeaponWallDetector WeaponWallDetector { get { return _weaponWallDetector;} }
     [Space(5)]
     [SerializeField] Transform _rightHandWeaponHolder;
-    [SerializeField] PlayerWeaponOriginController _weaponOrigin;
     [Space(5)]
     [SerializeField] Transform _rightHand; public Transform RightHand { get { return _rightHand; } }
 
@@ -101,7 +100,10 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Toggle layers
-        //_weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
+        mainPositioner.MoveRaw(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Position);
+        mainPositioner.RotateRaw(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Rotation);
+
+        Debug.Log("a");
         ToggleCombatLayersPreset(true, false, false, false, true, 0.4f);
         _playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
         {
@@ -112,7 +114,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
             //Move right hand to correct position
-            _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(1, 1);
+            _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(0.5f, 0.5f);
             _weaponWallDetector.ToggleCollider(true);
 
             _equipedWeapon.DamageDealingController.WeaponEquiped();
@@ -145,10 +147,9 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Move right hand to origin
-        _weaponOrigin.SetRotation(_equipedWeaponData.WeaponOriginRotation);
         WeaponMainPositioner mainPositioner = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner;
-        mainPositioner.Rotate(_weaponOrigin.transform.GetChild(0).localRotation.eulerAngles, 1);
-        mainPositioner.Move(_weaponOrigin.transform.localPosition, 1).SetOnMoveFinish(() => 
+        mainPositioner.Rotate(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Rotation, 0.5f);
+        mainPositioner.Move(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Position, 0.5f).SetOnMoveFinish(() => 
         {
             _weaponWallDetector.ToggleCollider(false);
 
@@ -178,6 +179,8 @@ public class PlayerCombatController : MonoBehaviour
             ToggleCombatLayersPreset(false, true, true, true, false, 0.4f);
             _playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
             {
+                mainPositioner.MoveRaw(Vector3.zero);
+                mainPositioner.RotateRaw(Vector3.zero);
                 SetState(CombatStateEnum.Unarmed);
             });
         });
