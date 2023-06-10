@@ -53,41 +53,6 @@ public class WeaponAmmoController : MonoBehaviour
 
 
 
-
-    public void TriggerReload()
-    {
-        //Check if mag is full
-        int magSize = _weaponData.AmmoSettings.MagSize;
-        if (_ammoInMag >= magSize) return;
-
-
-        //Check if there is ammo in inventory
-        PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
-        int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
-        if (playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex] <= 0) return;
-
-
-        _stateMachine.PlayerStateMachine.AnimatingControllers.Reload.Reload(_reloadAnimOveride, _weaponData.FingersPreset, () =>
-        {
-            //Calculate ammo to reload
-            int ammoToReload = magSize - _ammoInMag;
-            ammoToReload = Mathf.Clamp(ammoToReload, 0, playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
-
-
-            //Choose reload method
-            int reloadMethodIndex = _isRoundInChamber ? 1 : 0;
-            _reloadMethods[reloadMethodIndex](ammoToReload, playerAmmoInventory);
-
-            playerAmmoInventory.RemoveAmmo(_weaponData.AmmoSettings.AmmoType, ammoToReload);
-            CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
-            CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
-            CanvasController.Instance.HudControllers.Ammo.UpdateRoundInChamber(_isRoundInChamber);
-        });
-    }
-
-
-
-
     public void Reload()
     {
         //Check if mag is full
