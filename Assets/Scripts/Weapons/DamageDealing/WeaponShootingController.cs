@@ -12,11 +12,9 @@ public class WeaponShootingController : WeaponDamageDealingController
     [SerializeField] GameObject _muzzleFlashPrefab;
     [Space(5)]
     [SerializeField] Transform _barrel;
-    [SerializeField] WeaponSlideAnimator _slideAnimator;
 
     private WeaponBarrelController _barrelController;
-    private BulletShellEjector _bulletShellEjector;
-    private WeaponAmmoController _ammoController; public WeaponAmmoController AmmoController { get { return _ammoController; } }
+    private BaseWeaponAmmoController _ammoController; public BaseWeaponAmmoController AmmoController { get { return _ammoController; } }
 
 
 
@@ -44,13 +42,12 @@ public class WeaponShootingController : WeaponDamageDealingController
     {
         _barrel = transform.GetChild(1);
 
-        _ammoController = GetComponent<WeaponAmmoController>();
+        _ammoController = GetComponent<BaseWeaponAmmoController>();
         _barrelController = _barrel.GetComponent<WeaponBarrelController>();
-        _bulletShellEjector = transform.GetChild(3).GetComponent<BulletShellEjector>();
+
 
         _fireModes = GetComponents<BaseFireMode>();
         _currentFireMode = _fireModes[0];
-
         foreach (BaseFireMode fireMode in _fireModes)
         {
             fireMode.WeaponShootingController = this;
@@ -64,8 +61,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _inputs.Range.Reload.performed += ctx =>
         {
             if (!_reloadToggle) return;
-            _ammoController.Reload();
-            _slideAnimator.MoveSlide(WeaponSlideAnimator.SlideAnimType.Forward);
+            _ammoController.OnReload();
         };
     }
 
@@ -77,7 +73,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     {
         if (!_shootToggle) return;
 
-        if (!_ammoController.IsRoundInChamber) return;
+        if (!_ammoController.CanWeaponShoot) return;
 
         _barrelController.RotateBarrel();
 
@@ -90,15 +86,12 @@ public class WeaponShootingController : WeaponDamageDealingController
         GameObject muzzleFlash = Instantiate(_muzzleFlashPrefab, _barrel.position, _barrel.rotation);
         muzzleFlash.transform.parent = _barrel;
 
+
         //Ammo
+        //Slide is animated from ammo controller!
+        //Bullet shell is ejected from ammo controller!
         _ammoController.OnShoot();
 
-        //AnimateSlide
-        WeaponSlideAnimator.SlideAnimType slideAnimType = _ammoController.IsRoundInChamber ? WeaponSlideAnimator.SlideAnimType.BackAndForward : WeaponSlideAnimator.SlideAnimType.Back;
-        _slideAnimator.MoveSlide(slideAnimType);
-
-        //EjectShell
-        _bulletShellEjector.EjectShell(_stateMachine.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x);
 
         //Recoil
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Recoil.Recoil(_rangeWeaponData.RecoilSettings);
@@ -128,7 +121,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _currentFireModeType = _currentFireMode.FireModeType;
 
 
-        CanvasController.Instance.HudControllers.Ammo.ChangeFireMode(_currentFireModeType);
+        CanvasController.Instance.HudControllers.Firemodes.ChangeFireMode(_currentFireModeType);
 
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.FireMode.ChangeFireModeAnim();
     }
@@ -154,27 +147,26 @@ public class WeaponShootingController : WeaponDamageDealingController
 
 
 
-    public override void WeaponEquiped()
+    public override void OnWeaponEquip()
     {
         _reloadToggle = true;
         _isEquiped = true;
 
-        _ammoController.CheckAllAmmoUI();
+        _ammoController.OnWeaponEquip();
         CanvasController.Instance.HudControllers.Weapon.UpdateIcon(_stateMachine.DataHolder.WeaponData.Icon);
-        CanvasController.Instance.HudControllers.Ammo.ChangeRoundIcon(_rangeWeaponData.AmmoSettings.AmmoType.SingleRoundIcon);
-        CanvasController.Instance.HudControllers.Ammo.ChangeFireMode(_currentFireModeType);
+        CanvasController.Instance.HudControllers.Firemodes.ChangeFireMode(_currentFireModeType);
 
-        CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
         CanvasController.Instance.HudControllers.Weapon.Toggle(true, 0.1f);
+        CanvasController.Instance.HudControllers.Firemodes.Toggle(true, 0.1f);
 
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Sway.SetWeight(_rangeWeaponData.SwayWeight);
     }
-    public override void WeaponUnEquiped()
+    public override void OnWeaponUnEquip()
     {
         _reloadToggle = false;
         _isEquiped = false;
 
-        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
+        _ammoController.OnWeaponUnEquip();
         CanvasController.Instance.HudControllers.Weapon.Toggle(false, 0.1f);
     }
 }

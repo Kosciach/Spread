@@ -44,8 +44,8 @@ public abstract class WeaponDamageDealingController : MonoBehaviour
 
 
 
-    public abstract void WeaponEquiped();
-    public abstract void WeaponUnEquiped();
+    public abstract void OnWeaponEquip();
+    public abstract void OnWeaponUnEquip();
 
 
 

@@ -81,6 +81,19 @@ public class WeaponStateMachine : MonoBehaviour
                     smallerChild.gameObject.layer = layer;
         }
     }
+
+
+
+
+
+    public void OnWeaponEquip()
+    {
+        _damageDealingController.OnWeaponEquip();
+    }
+    public void OnWeaponUnEquip()
+    {
+        _damageDealingController.OnWeaponUnEquip();
+    }
 }
 
 

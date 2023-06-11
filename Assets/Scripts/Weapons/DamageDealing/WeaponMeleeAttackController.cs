@@ -56,11 +56,11 @@ public class WeaponMeleeAttackController : WeaponDamageDealingController
     }
 
 
-    public override void WeaponEquiped()
+    public override void OnWeaponEquip()
     {
         Debug.Log("Melee E");
     }
-    public override void WeaponUnEquiped()
+    public override void OnWeaponUnEquip()
     {
         Debug.Log("Melee UnE");
     }

@@ -117,7 +117,7 @@ public class PlayerCombatController : MonoBehaviour
             _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(0.5f, 0.5f);
             _weaponWallDetector.ToggleCollider(true);
 
-            _equipedWeapon.DamageDealingController.WeaponEquiped();
+            _equipedWeapon.OnWeaponEquip();
         });
     }
 
@@ -161,7 +161,7 @@ public class PlayerCombatController : MonoBehaviour
             _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
             _playerStateMachine.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
 
-            _equipedWeapon.DamageDealingController.WeaponUnEquiped();
+            _equipedWeapon.OnWeaponUnEquip();
 
             _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
             _equipedWeapon = null;
@@ -223,7 +223,7 @@ public class PlayerCombatController : MonoBehaviour
 
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
 
-        _equipedWeapon.DamageDealingController.WeaponUnEquiped();
+        _equipedWeapon.OnWeaponUnEquip();
 
         _playerStateMachine.InventoryControllers.Inventory.Weapon.DropWeapon(_equipedWeaponIndex);
         _equipedWeapon = null;
@@ -277,7 +277,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
 
-        _equipedWeapon.DamageDealingController.WeaponUnEquiped();
+        _equipedWeapon.OnWeaponUnEquip();
 
         _equipedWeapon = null;
         _equipedWeaponData = null;

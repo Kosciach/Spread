@@ -45,7 +45,7 @@ MonoBehaviour:
     Wall:
       RightHand_Position: {x: 0.088, y: -0.23, z: 0.491}
       RightHand_Rotation: {x: 308.10123, y: 255.36424, z: 263.3697}
-  SwayWeight: 0.6
+  SwayWeight: 1
   BobbingWeight: 0
   HoldTransforms:
     Rest:
