@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b94e7f73a251864ea9c5b8a993ab4d2, type: 3}
   m_Name: NCR1
   m_EditorClassIdentifier: 
-  WeaponName: CPP11
+  WeaponName: NCR1
   WeaponHolder: 1
   WeaponType: 0
   Icon: {fileID: 21300000, guid: df745b9b3196937429f2a47c732df67b, type: 3}

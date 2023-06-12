@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b94e7f73a251864ea9c5b8a993ab4d2, type: 3}
   m_Name: TBGG13
   m_EditorClassIdentifier: 
-  WeaponName: TestRifle
+  WeaponName: TBGG13
   WeaponHolder: 0
   WeaponType: 0
   Icon: {fileID: 21300000, guid: 21622dd0a8c47124c802cb8e4770823f, type: 3}

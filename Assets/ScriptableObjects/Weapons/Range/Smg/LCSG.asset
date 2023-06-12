@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b94e7f73a251864ea9c5b8a993ab4d2, type: 3}
   m_Name: LCSG
   m_EditorClassIdentifier: 
-  WeaponName: MAR_3
+  WeaponName: LCSG
   WeaponHolder: 0
   WeaponType: 0
   Icon: {fileID: 21300000, guid: cc00929a44eac6b419532f0487b5d2ab, type: 3}

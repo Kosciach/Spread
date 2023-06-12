@@ -33,7 +33,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     private RangeWeaponData _rangeWeaponData => (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
     public enum FireModeTypeEnum
     {
-        Safety, Semi, Auto, Burst
+        Safety, Semi, Auto, Burst, Charge
     }
 
 
@@ -168,5 +168,6 @@ public class WeaponShootingController : WeaponDamageDealingController
 
         _ammoController.OnWeaponUnEquip();
         CanvasController.Instance.HudControllers.Weapon.Toggle(false, 0.1f);
+        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
     }
 }
