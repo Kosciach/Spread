@@ -2,21 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
-public class ChamberWeaponAmmoController : BaseWeaponAmmoController
+public class BoltActionAmmoController : BaseWeaponAmmoController
 {
     [Header("====References====")]
-    [SerializeField] WeaponSlideAnimator _slideAnimator;
     [SerializeField] BulletShellEjector _shellEjector;
 
 
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] bool _isRoundInChamber;
+    [SerializeField] int _shootCount;
     [SerializeField] int _ammoInMag;
     [SerializeField] AnimatorOverrideController _reloadAnimOveride;
-
-    private Action<int>[] _reloadMethods = new Action<int>[2];
 
 
 
@@ -24,8 +23,7 @@ public class ChamberWeaponAmmoController : BaseWeaponAmmoController
     protected override void AbsAwake()
     {
         _canWeaponShoot = _isRoundInChamber;
-        _reloadMethods[0] = ReloadWithoutRoundInChamber;
-        _reloadMethods[1] = ReloadWithRoundInChamber;
+        _shootCount = _isRoundInChamber ? _weaponData.AmmoSettings.MagSize - 1 - _ammoInMag : _weaponData.AmmoSettings.MagSize;
     }
 
 
@@ -41,16 +39,10 @@ public class ChamberWeaponAmmoController : BaseWeaponAmmoController
         CheckChamber();
         _ammoInMag = Mathf.Clamp(_ammoInMag, 0, _ammoInMag);
 
-        //Animate slide
-        WeaponSlideAnimator.SlideAnimType slideAnimType = _isRoundInChamber ? WeaponSlideAnimator.SlideAnimType.BackAndForward : WeaponSlideAnimator.SlideAnimType.Back;
-        _slideAnimator.MoveSlide(slideAnimType);
-
-        //Eject shell
-        _shellEjector.EjectShell(_stateMachine.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x);
 
         //Update UI
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
+        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.BoltAction.UpdateRoundInChamberColor(_isRoundInChamber);
     }
 
     private void CheckChamber()
@@ -80,36 +72,33 @@ public class ChamberWeaponAmmoController : BaseWeaponAmmoController
         ammoToReload = Mathf.Clamp(ammoToReload, 0, playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
 
 
-        //Choose reload method
-        int reloadMethodIndex = _isRoundInChamber ? 1 : 0;
-        _reloadMethods[reloadMethodIndex](ammoToReload);
+        //Put ammo into weapon
+        _ammoInMag += (ammoToReload - 1);
+        _isRoundInChamber = true;
+        _canWeaponShoot = true;
 
 
-        //Move slide back to firing position
-        _slideAnimator.MoveSlide(WeaponSlideAnimator.SlideAnimType.Forward);
-
+        _shootCount = 0;
 
         //Remove ammo from inventory and update UI
         playerAmmoInventory.RemoveAmmo(_weaponData.AmmoSettings.AmmoType, ammoToReload);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
+        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.BoltAction.UpdateRoundInChamberColor(_isRoundInChamber);
     }
 
-    private void ReloadWithRoundInChamber(int ammoToReload)
+
+    public void OnCharge()
     {
-        //Put ammo in mag
-        _ammoInMag += ammoToReload;
-    }
-    private void ReloadWithoutRoundInChamber(int ammoToReload)
-    {
-        //Put ammo in mag and place one in the chamber
-        _ammoInMag += (ammoToReload-1);
-        _isRoundInChamber = true;
-        _canWeaponShoot = true;
-    }
+        _shootCount++;
+        _shootCount = Mathf.Clamp(_shootCount, 0, _weaponData.AmmoSettings.MagSize + 2);
 
+        if (_shootCount > _weaponData.AmmoSettings.MagSize) return;
+        Debug.Log("Charge!");
 
+        //Eject shell
+        _shellEjector.EjectShell(_stateMachine.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x);
+    }
 
 
     public override void OnWeaponEquip()
@@ -128,13 +117,13 @@ public class ChamberWeaponAmmoController : BaseWeaponAmmoController
         PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
         int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
 
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
-        CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(AmmoHudController.AmmoHudType.Chamber);
+        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.BoltAction.UpdateRoundInChamberColor(_isRoundInChamber);
+        CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(AmmoHudController.AmmoHudType.BoltAction);
         CanvasController.Instance.HudControllers.Ammo.ChangeRoundIcon(_weaponData.AmmoSettings.AmmoType.SingleRoundIcon);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
 
         CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.Toggle(true, 0.1f);
+        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.BoltAction.Toggle(true, 0.1f);
     }
 }

@@ -60,7 +60,7 @@ MonoBehaviour:
     AccuracyOffset: 0
     PenetrationForce: 30
   RecoilSettings:
-    Speed: 1
+    Speed: 2
     BackPush: 0.2
     RotX: 4
     RotY: 3

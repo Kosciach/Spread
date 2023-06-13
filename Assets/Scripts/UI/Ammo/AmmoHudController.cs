@@ -25,10 +25,11 @@ public class AmmoHudController : MonoBehaviour
     public struct AmmoHudsControllersStruct
     {
         public ChamberAmmoHudController Chamber;
+        public ChamberAmmoHudController BoltAction;
     }
     public enum AmmoHudType
     {
-        Chamber, Cylinder
+        Chamber, Cylinder, BoltAction
     }
 
 
@@ -37,7 +38,7 @@ public class AmmoHudController : MonoBehaviour
     {
         _roundImages = new Image[_roundImages_Shadows.Length];
         for(int i=0; i<_roundImages.Length; i++)
-            _roundImages[i] = _roundImages_Shadows[i].GetComponentInChildren<Image>();
+            _roundImages[i] = _roundImages_Shadows[i].transform.GetChild(0).GetComponent<Image>();
     }
 
 

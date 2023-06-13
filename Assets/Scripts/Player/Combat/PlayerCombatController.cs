@@ -103,7 +103,6 @@ public class PlayerCombatController : MonoBehaviour
         mainPositioner.MoveRaw(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Position);
         mainPositioner.RotateRaw(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Rotation);
 
-        Debug.Log("a");
         ToggleCombatLayersPreset(true, false, false, false, true, 0.4f);
         _playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class WeaponDamageDealingController : MonoBehaviour
 {
-    protected WeaponStateMachine _stateMachine;
+    protected WeaponStateMachine _stateMachine; public WeaponStateMachine StateMachine { get { return _stateMachine; } }
     protected WeaponDamageDealingInputs _inputs; public WeaponDamageDealingInputs Inputs { get { return _inputs; } }
     [SerializeField] protected bool _mainToggle;
 
