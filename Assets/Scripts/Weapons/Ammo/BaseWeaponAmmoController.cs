@@ -7,7 +7,7 @@ public abstract class BaseWeaponAmmoController : MonoBehaviour
     [SerializeField] protected bool _canWeaponShoot; public bool CanWeaponShoot { get { return _canWeaponShoot; } }
     protected WeaponStateMachine _stateMachine;
     protected RangeWeaponData _weaponData;
-
+    protected WeaponShootingController _weaponShootingController;
 
 
     private void Awake()

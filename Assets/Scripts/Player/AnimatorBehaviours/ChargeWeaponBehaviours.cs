@@ -19,7 +19,10 @@ public class ChargeWeaponBehaviours : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponent<PlayerStateMachine>().CombatControllers.Combat.EquipedWeapon.GetComponent<ChargeFireMode>()?.Charge();
+        PlayerCombatController playerCombatController = animator.GetComponent<PlayerStateMachine>().CombatControllers.Combat;
+
+        if (!playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
+        playerCombatController.EquipedWeapon.GetComponent<BoltActionAmmoController>()?.ChargeFinish();
         animator.SetBool("ChargeWeapon", false);
     }
 

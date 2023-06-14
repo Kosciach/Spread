@@ -1,3 +1,4 @@
+using IkLayers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,10 +19,12 @@ public class BoltActionAmmoController : BaseWeaponAmmoController
     [SerializeField] AnimatorOverrideController _reloadAnimOveride;
 
 
+    private ChargeFireMode _chargeFireMode;
 
 
     protected override void AbsAwake()
     {
+        _chargeFireMode = GetComponent<ChargeFireMode>();
         _canWeaponShoot = _isRoundInChamber;
         _shootCount = _isRoundInChamber ? _weaponData.AmmoSettings.MagSize - 1 - _ammoInMag : _weaponData.AmmoSettings.MagSize;
     }
@@ -39,6 +42,8 @@ public class BoltActionAmmoController : BaseWeaponAmmoController
         CheckChamber();
         _ammoInMag = Mathf.Clamp(_ammoInMag, 0, _ammoInMag);
 
+        //Start charge
+        ChargeStart();
 
         //Update UI
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
@@ -88,22 +93,44 @@ public class BoltActionAmmoController : BaseWeaponAmmoController
     }
 
 
-    public void OnCharge()
+    private void ChargeStart()
+    {
+        _chargeFireMode.ToggleIsCharged(false);
+
+        PlayerStateMachine playerStateMachine = _stateMachine.PlayerStateMachine;
+
+        playerStateMachine.AnimatingControllers.WeaponHolder.LeftHand(transform);
+        playerStateMachine.AnimatingControllers.Animator.SetBool("ChargeWeapon", true);
+        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.WeaponReload, true, 0.1f);
+    }
+    public void ChargeFinish()
     {
         _shootCount++;
         _shootCount = Mathf.Clamp(_shootCount, 0, _weaponData.AmmoSettings.MagSize + 2);
 
         if (_shootCount > _weaponData.AmmoSettings.MagSize) return;
-        Debug.Log("Charge!");
 
-        //Eject shell
-        _shellEjector.EjectShell(_stateMachine.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x);
+
+        _chargeFireMode.ToggleIsCharged(true);
+
+        PlayerStateMachine playerStateMachine = _stateMachine.PlayerStateMachine;
+        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.WeaponReload, false, 0.1f);
+        playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_weaponData.FingersPreset.Base);
+
+        Vector3 pos = _weaponData.InHandPosition;
+        Vector3 rot = _weaponData.InHandRotation;
+        playerStateMachine.AnimatingControllers.WeaponHolder.RightHand(transform);
+        playerStateMachine.AnimatingControllers.WeaponHolder.SetWeaponInHandTransform(transform, pos, rot);
+
+
+
     }
 
 
     public override void OnWeaponEquip()
     {
         SetUI();
+        _chargeFireMode.ToggleIsCharged(true);
     }
     public override void OnWeaponUnEquip()
     {

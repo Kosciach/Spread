@@ -21,7 +21,7 @@ namespace PlayerAnimator
 
         public enum LayersEnum
         {
-            Combat, TopBodyStabilizer, Crouch
+            CombatBase, CombatAnimating, TopBodyStabilizer, Crouch
         }
 
 

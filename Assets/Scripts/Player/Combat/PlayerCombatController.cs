@@ -10,8 +10,6 @@ public class PlayerCombatController : MonoBehaviour
     [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
     [SerializeField] PlayerWeaponWallDetector _weaponWallDetector; public PlayerWeaponWallDetector WeaponWallDetector { get { return _weaponWallDetector;} }
     [Space(5)]
-    [SerializeField] Transform _rightHandWeaponHolder;
-    [Space(5)]
     [SerializeField] Transform _rightHand; public Transform RightHand { get { return _rightHand; } }
 
 
@@ -73,6 +71,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
+        _playerStateMachine.AnimatingControllers.Animator.SetBool("WeaponCharge", false);
 
 
         //Change states
@@ -107,9 +106,8 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
         {
             //Put weapon in hand
-            _equipedWeapon.transform.parent = _rightHandWeaponHolder;
-            _equipedWeapon.transform.localPosition = _equipedWeaponData.InHandPosition;
-            _equipedWeapon.transform.localRotation = Quaternion.Euler(_equipedWeaponData.InHandRotation);
+            _playerStateMachine.AnimatingControllers.WeaponHolder.RightHand(_equipedWeapon.transform);
+            _playerStateMachine.AnimatingControllers.WeaponHolder.SetWeaponInHandTransform(_equipedWeapon.transform, _equipedWeaponData.InHandPosition, _equipedWeaponData.InHandRotation);
 
 
             //Move right hand to correct position
@@ -132,6 +130,9 @@ public class PlayerCombatController : MonoBehaviour
 
         SetState(CombatStateEnum.UnEquip);
 
+
+        _playerStateMachine.AnimatingControllers.Animator.SetBool("WeaponCharge", false);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.WeaponReload, false, 0.5f);
 
         _playerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
         _playerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
@@ -289,7 +290,8 @@ public class PlayerCombatController : MonoBehaviour
 
     public void ToggleCombatLayersPreset(bool combatAnim, bool spineLock, bool body, bool head, bool combat, float duration)
     {
-        _playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Combat, combatAnim, duration);
+        _playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatBase, combatAnim, duration);
+        _playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatAnimating, combatAnim, duration);
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, spineLock, duration);
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, body, duration);
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Head, head, duration);
