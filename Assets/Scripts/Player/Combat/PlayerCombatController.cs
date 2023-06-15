@@ -70,10 +70,6 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ResetAimType(_equipedWeapon.AimIndexHolder.WeaponAimIndex);
 
 
-
-        _playerStateMachine.AnimatingControllers.Animator.SetBool("WeaponCharge", false);
-
-
         //Change states
         _equipedWeapon.SwitchController.SwitchTo.Equiped();
 
@@ -88,7 +84,7 @@ public class PlayerCombatController : MonoBehaviour
         //SetupFingers
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 0.1f);
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 0.1f);
-        _playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset.Base);
+        _playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset.Base, 0.01f);
 
 
 
@@ -131,8 +127,8 @@ public class PlayerCombatController : MonoBehaviour
         SetState(CombatStateEnum.UnEquip);
 
 
-        _playerStateMachine.AnimatingControllers.Animator.SetBool("WeaponCharge", false);
-        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.WeaponReload, false, 0.5f);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, false, 0.5f);
+
 
         _playerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
         _playerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
@@ -204,6 +200,9 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, false, 0.5f);
+
+
         //Prepare hands camera
         _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
         _playerStateMachine.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
@@ -260,6 +259,10 @@ public class PlayerCombatController : MonoBehaviour
 
         //Toggle layers
         ToggleCombatLayersPreset(false, false, false, false, false, 0.1f);
+
+
+
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, false, 0.5f);
 
 
         //Disable fingers

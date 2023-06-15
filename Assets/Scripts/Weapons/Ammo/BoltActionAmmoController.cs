@@ -93,15 +93,25 @@ public class BoltActionAmmoController : BaseWeaponAmmoController
     }
 
 
-    private void ChargeStart()
+
+
+
+
+    private IEnumerator ChargeStartAnim()
     {
-        _chargeFireMode.ToggleIsCharged(false);
+        yield return new WaitForSeconds(0.2f);
 
         PlayerStateMachine playerStateMachine = _stateMachine.PlayerStateMachine;
 
+        playerStateMachine.AnimatingControllers.Weapon.BakeTargets.UpdateBakedTransforms();
         playerStateMachine.AnimatingControllers.WeaponHolder.LeftHand(transform);
-        playerStateMachine.AnimatingControllers.Animator.SetBool("ChargeWeapon", true);
-        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.WeaponReload, true, 0.1f);
+        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, true, 0.3f);
+        playerStateMachine.AnimatingControllers.Animator.SetTrigger("ChargeWeapon", false);
+    }
+    private void ChargeStart()
+    {
+        _chargeFireMode.ToggleIsCharged(false);
+        StartCoroutine(ChargeStartAnim());
     }
     public void ChargeFinish()
     {
@@ -114,17 +124,23 @@ public class BoltActionAmmoController : BaseWeaponAmmoController
         _chargeFireMode.ToggleIsCharged(true);
 
         PlayerStateMachine playerStateMachine = _stateMachine.PlayerStateMachine;
-        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.WeaponReload, false, 0.1f);
-        playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_weaponData.FingersPreset.Base);
-
-        Vector3 pos = _weaponData.InHandPosition;
-        Vector3 rot = _weaponData.InHandRotation;
-        playerStateMachine.AnimatingControllers.WeaponHolder.RightHand(transform);
-        playerStateMachine.AnimatingControllers.WeaponHolder.SetWeaponInHandTransform(transform, pos, rot);
-
-
-
+        playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_weaponData.FingersPreset.Base, 0.2f);
+        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, false, 0.3f);
+        playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, () =>
+        {
+            Vector3 pos = _weaponData.InHandPosition;
+            Vector3 rot = _weaponData.InHandRotation;
+            playerStateMachine.AnimatingControllers.WeaponHolder.RightHand(transform);
+            playerStateMachine.AnimatingControllers.WeaponHolder.SetWeaponInHandTransform(transform, pos, rot);
+        });
     }
+
+
+
+
+
+
+
 
 
     public override void OnWeaponEquip()
@@ -134,6 +150,7 @@ public class BoltActionAmmoController : BaseWeaponAmmoController
     }
     public override void OnWeaponUnEquip()
     {
+        StopCoroutine(ChargeStartAnim());
         CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.Toggle(false, 0.1f);
     }
 

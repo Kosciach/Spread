@@ -29,25 +29,27 @@ public class PlayerFingerAnimator : MonoBehaviour
 
 
 
-    public void SetUpAllFingers(FingerPreset.PresetStruct fingerPreset)
+    public void SetUpAllFingers(FingerPreset.PresetStruct fingerPreset, float lerpTime)
     {
-        SetUpHandFingers(_rightHand, fingerPreset.RightHand);
-        SetUpHandFingers(_leftHand, fingerPreset.LeftHand);
+        SetUpHandFingers(_rightHand, fingerPreset.RightHand, lerpTime);
+        SetUpHandFingers(_leftHand, fingerPreset.LeftHand, lerpTime);
     }
-    private void SetUpHandFingers(Hand hand, FingerPreset.Hand fingerPresetHand)
+    private void SetUpHandFingers(Hand hand, FingerPreset.Hand fingerPresetHand, float lerpTime)
     {
-        SetUpOneFinger(hand.Thumb, fingerPresetHand.Thumb);
-        SetUpOneFinger(hand.Index, fingerPresetHand.Index);
-        SetUpOneFinger(hand.Middle, fingerPresetHand.Middle);
-        SetUpOneFinger(hand.Ring, fingerPresetHand.Ring);
-        SetUpOneFinger(hand.Pinky, fingerPresetHand.Pinky);
+        SetUpOneFinger(hand.Thumb, fingerPresetHand.Thumb, lerpTime);
+        SetUpOneFinger(hand.Index, fingerPresetHand.Index, lerpTime);
+        SetUpOneFinger(hand.Middle, fingerPresetHand.Middle, lerpTime);
+        SetUpOneFinger(hand.Ring, fingerPresetHand.Ring, lerpTime);
+        SetUpOneFinger(hand.Pinky, fingerPresetHand.Pinky, lerpTime);
     }
-    private void SetUpOneFinger(Transform finger, FingerPreset.Finger fingerPresets)
+    private void SetUpOneFinger(Transform finger, FingerPreset.Finger fingerPresets, float lerpTime)
     {
-        finger.localPosition = fingerPresets.Target_Position;
-        finger.localRotation = Quaternion.Euler(fingerPresets.Target_Rotation);
+        LeanTween.moveLocal(finger.gameObject, fingerPresets.Target_Position, lerpTime);
+        LeanTween.rotateLocal(finger.gameObject, fingerPresets.Target_Rotation, lerpTime);
 
         int siblingIndex = finger.GetSiblingIndex();
-        finger.parent.GetChild(siblingIndex + 1).localPosition = fingerPresets.Hint_Position;
+
+        Transform currentHint = finger.parent.GetChild(siblingIndex + 1);
+        LeanTween.moveLocal(currentHint.gameObject, fingerPresets.Hint_Position, lerpTime);
     }
 }

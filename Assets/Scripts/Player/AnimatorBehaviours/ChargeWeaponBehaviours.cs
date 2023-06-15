@@ -23,7 +23,6 @@ public class ChargeWeaponBehaviours : StateMachineBehaviour
 
         if (!playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
         playerCombatController.EquipedWeapon.GetComponent<BoltActionAmmoController>()?.ChargeFinish();
-        animator.SetBool("ChargeWeapon", false);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

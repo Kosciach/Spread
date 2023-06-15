@@ -20,7 +20,7 @@ namespace IkLayers
 
         public enum LayerEnum
         {
-            SpineLock, Body, Head, Swim, UnderWater, RangeCombat, FingersRightHand, FingersLeftHand, WeaponReload
+            SpineLock, Body, Head, Swim, UnderWater, RangeCombat, FingersRightHand, FingersLeftHand, BakedWeaponAnimating
         }
 
 
