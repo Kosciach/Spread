@@ -13,6 +13,7 @@ public class WeaponStateMachine : MonoBehaviour
 
     [Space(20)]
     [Header("====References====")]
+    [SerializeField] Animator _animator; public Animator Animator {  get { return _animator; } }
     [SerializeField] Collider _collider; public Collider Collider { get { return _collider; } }
     [SerializeField] Rigidbody _rigidbody; public Rigidbody Rigidbody { get { return _rigidbody; } }
     [SerializeField] Outline _outline; public Outline Outline { get { return _outline; } }

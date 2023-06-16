@@ -107,6 +107,7 @@ public class BoltActionAmmoController : BaseWeaponAmmoController
         playerStateMachine.AnimatingControllers.WeaponHolder.LeftHand(transform);
         playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, true, 0.3f);
         playerStateMachine.AnimatingControllers.Animator.SetTrigger("ChargeWeapon", false);
+        _weaponShootingController.StateMachine.Animator.SetTrigger("BoltCharge");
     }
     private void ChargeStart()
     {
@@ -140,7 +141,11 @@ public class BoltActionAmmoController : BaseWeaponAmmoController
 
 
 
-
+    private void EjectShellAtAnimEvent()
+    {
+        Debug.Log("Eject Eject");
+        _shellEjector.EjectShell(_stateMachine.PlayerStateMachine.MovementControllers.Movement.OnGround.CurrentMovementVector.x);
+    }
 
 
     public override void OnWeaponEquip()

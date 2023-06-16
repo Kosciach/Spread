@@ -13,6 +13,7 @@ public abstract class BaseWeaponAmmoController : MonoBehaviour
     private void Awake()
     {
         _stateMachine = GetComponent<WeaponStateMachine>();
+        _weaponShootingController = (WeaponShootingController)_stateMachine.DamageDealingController;
         _weaponData = (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
 
         AbsAwake();
