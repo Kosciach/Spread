@@ -15,17 +15,17 @@ MonoBehaviour:
   Base:
     RightHand:
       Thumb:
-        Target_Position: {x: 0.041, y: 0.1794, z: 0.1026}
-        Target_Rotation: {x: 310.6, y: 0, z: 0}
-        Hint_Position: {x: 0.12, y: 0.1388, z: 0.1753}
+        Target_Position: {x: 0.0257, y: 0.1678, z: 0.049}
+        Target_Rotation: {x: 296.19998, y: 180, z: 180}
+        Hint_Position: {x: 0.11999999, y: 0.1388, z: 0.1753}
       Index:
-        Target_Position: {x: 0.0588, y: 0.2293, z: -0.0213}
+        Target_Position: {x: 0.0224, y: 0.2276, z: -0.0179}
         Target_Rotation: {x: 325.39996, y: 180, z: 180}
         Hint_Position: {x: -0.0034, y: 0.2508, z: 0.0533}
       Middle:
         Target_Position: {x: 0.0864, y: 0.1772, z: 0.0085}
-        Target_Rotation: {x: 38.29999, y: 180, z: 180}
-        Hint_Position: {x: 0.0008, y: 0.2305, z: -0.0038}
+        Target_Rotation: {x: 38.300003, y: 180, z: 180}
+        Hint_Position: {x: 0.00080000004, y: 0.2305, z: -0.0038}
       Ring:
         Target_Position: {x: 0.0957, y: 0.1494, z: -0.0339}
         Target_Rotation: {x: 304.7, y: 0, z: 0}
@@ -36,39 +36,39 @@ MonoBehaviour:
         Hint_Position: {x: 0.0174, y: 0.2078, z: -0.0816}
     LeftHand:
       Thumb:
-        Target_Position: {x: 0.0279, y: 0.1422, z: 0.0908}
-        Target_Rotation: {x: 309.15, y: 0, z: 0}
-        Hint_Position: {x: 0.0315, y: 0.1596, z: 0.2114}
+        Target_Position: {x: -0.0939, y: 0.1189, z: 0.0863}
+        Target_Rotation: {x: 322.89996, y: 180, z: 180}
+        Hint_Position: {x: 0.0271, y: 0.1908, z: 0.2294}
       Index:
-        Target_Position: {x: -0.1089, y: 0.2035, z: 0.0433}
+        Target_Position: {x: -0.1156, y: 0.2231, z: 0.094699994}
         Target_Rotation: {x: 277.49994, y: 180, z: 180}
-        Hint_Position: {x: -0.035, y: 0.272, z: 0.029}
+        Hint_Position: {x: -0.034999996, y: 0.272, z: 0.029}
       Middle:
-        Target_Position: {x: -0.1196, y: 0.1958, z: 0.007}
-        Target_Rotation: {x: 271.39984, y: 0, z: 0}
-        Hint_Position: {x: 0.0357, y: 0.2769, z: 0.0394}
+        Target_Position: {x: -0.1191, y: 0.2115, z: 0.039800003}
+        Target_Rotation: {x: 290.41998, y: 180, z: 180}
+        Hint_Position: {x: 0.035699993, y: 0.2769, z: 0.0394}
       Ring:
-        Target_Position: {x: -0.1095, y: 0.179, z: -0.0524}
-        Target_Rotation: {x: 271.99997, y: 0, z: 0}
-        Hint_Position: {x: 0.035700094, y: 0.27689853, z: 0.039399818}
+        Target_Position: {x: -0.1094, y: 0.2324, z: -0.0181}
+        Target_Rotation: {x: 279.7, y: 180, z: 180}
+        Hint_Position: {x: 0.03570009, y: 0.27689853, z: 0.039399818}
       Pinky:
-        Target_Position: {x: -0.1253, y: 0.1568, z: -0.0747}
-        Target_Rotation: {x: -0, y: 0, z: 0}
-        Hint_Position: {x: 0.035700094, y: 0.27689853, z: 0.039399818}
+        Target_Position: {x: -0.109, y: 0.2228, z: -0.0592}
+        Target_Rotation: {x: 281, y: 0, z: 0}
+        Hint_Position: {x: 0.035700098, y: 0.27689853, z: 0.03939982}
   Block:
     RightHand:
       Thumb:
-        Target_Position: {x: 0.041, y: 0.1794, z: 0.1026}
-        Target_Rotation: {x: 310.6, y: 0, z: 0}
-        Hint_Position: {x: 0.12, y: 0.1388, z: 0.1753}
+        Target_Position: {x: 0.0257, y: 0.1678, z: 0.049}
+        Target_Rotation: {x: 296.19998, y: 180, z: 180}
+        Hint_Position: {x: 0.11999999, y: 0.1388, z: 0.1753}
       Index:
-        Target_Position: {x: 0.0588, y: 0.2293, z: -0.0213}
+        Target_Position: {x: 0.0224, y: 0.2276, z: -0.0179}
         Target_Rotation: {x: 325.39996, y: 180, z: 180}
         Hint_Position: {x: -0.0034, y: 0.2508, z: 0.0533}
       Middle:
         Target_Position: {x: 0.0864, y: 0.1772, z: 0.0085}
-        Target_Rotation: {x: 38.29999, y: 180, z: 180}
-        Hint_Position: {x: 0.0008, y: 0.2305, z: -0.0038}
+        Target_Rotation: {x: 38.300003, y: 180, z: 180}
+        Hint_Position: {x: 0.00080000004, y: 0.2305, z: -0.0038}
       Ring:
         Target_Position: {x: 0.0957, y: 0.1494, z: -0.0339}
         Target_Rotation: {x: 304.7, y: 0, z: 0}
@@ -79,25 +79,25 @@ MonoBehaviour:
         Hint_Position: {x: 0.0174, y: 0.2078, z: -0.0816}
     LeftHand:
       Thumb:
-        Target_Position: {x: 0.0279, y: 0.1422, z: 0.0908}
-        Target_Rotation: {x: 309.15, y: 0, z: 0}
-        Hint_Position: {x: 0.0315, y: 0.1596, z: 0.2114}
+        Target_Position: {x: -0.0939, y: 0.1189, z: 0.0863}
+        Target_Rotation: {x: 322.89996, y: 180, z: 180}
+        Hint_Position: {x: 0.0271, y: 0.1908, z: 0.2294}
       Index:
-        Target_Position: {x: -0.1089, y: 0.2035, z: 0.0433}
+        Target_Position: {x: -0.1156, y: 0.2231, z: 0.094699994}
         Target_Rotation: {x: 277.49994, y: 180, z: 180}
-        Hint_Position: {x: -0.035, y: 0.272, z: 0.029}
+        Hint_Position: {x: -0.034999996, y: 0.272, z: 0.029}
       Middle:
-        Target_Position: {x: -0.1196, y: 0.1958, z: 0.007}
-        Target_Rotation: {x: 271.39984, y: 0, z: 0}
-        Hint_Position: {x: 0.0357, y: 0.2769, z: 0.0394}
+        Target_Position: {x: -0.1191, y: 0.2115, z: 0.039800003}
+        Target_Rotation: {x: 290.41998, y: 180, z: 180}
+        Hint_Position: {x: 0.035699993, y: 0.2769, z: 0.0394}
       Ring:
-        Target_Position: {x: -0.1095, y: 0.179, z: -0.0524}
-        Target_Rotation: {x: 271.99997, y: 0, z: 0}
-        Hint_Position: {x: 0.035700094, y: 0.27689853, z: 0.039399818}
+        Target_Position: {x: -0.1094, y: 0.2324, z: -0.0181}
+        Target_Rotation: {x: 279.7, y: 180, z: 180}
+        Hint_Position: {x: 0.03570009, y: 0.27689853, z: 0.039399818}
       Pinky:
-        Target_Position: {x: -0.1253, y: 0.1568, z: -0.0747}
-        Target_Rotation: {x: -0, y: 0, z: 0}
-        Hint_Position: {x: 0.035700094, y: 0.27689853, z: 0.039399818}
+        Target_Position: {x: -0.109, y: 0.2228, z: -0.0592}
+        Target_Rotation: {x: 281, y: 0, z: 0}
+        Hint_Position: {x: 0.035700098, y: 0.27689853, z: 0.03939982}
   TriggerDisciplineIndexFinger:
     Target_Position: {x: 0.0483, y: 0.2915, z: 0.0215}
     Target_Rotation: {x: 76.7, y: 0, z: 0}

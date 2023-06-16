@@ -17,16 +17,16 @@ MonoBehaviour:
   WeaponType: 0
   Icon: {fileID: 21300000, guid: df745b9b3196937429f2a47c732df67b, type: 3}
   Fists: 0
-  InHandPosition: {x: 0.046, y: 0.1557, z: 0.037}
-  InHandRotation: {x: 66.22784, y: 298.53564, z: 306.29974}
+  InHandPosition: {x: 0.045, y: 0.153, z: 0.037}
+  InHandRotation: {x: 67.00735, y: 300.1701, z: 307.81314}
   FingersPreset: {fileID: 11400000, guid: 40eb5b3c75a938e4298ad5c67ce66715, type: 2}
   LeftHandTransforms:
     Base:
-      LeftHand_Position: {x: 0.043, y: 0.015, z: -0.039}
-      LeftHand_Rotation: {x: 358.32816, y: 9.452123, z: 326.94086}
+      LeftHand_Position: {x: 0.05, y: -0.01, z: -0.011}
+      LeftHand_Rotation: {x: 345.79205, y: 357.17535, z: 328.5884}
     Block:
-      LeftHand_Position: {x: 0.167, y: -0.1, z: 0.267}
-      LeftHand_Rotation: {x: 364.4, y: -147.2, z: 345}
+      LeftHand_Position: {x: 0.05, y: -0.01, z: -0.011}
+      LeftHand_Rotation: {x: 345.79205, y: 357.17535, z: 328.5884}
   WeaponTransforms:
     Origin:
       RightHand_Position: {x: 0.07, y: -0.241, z: 0}

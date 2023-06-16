@@ -15,18 +15,18 @@ MonoBehaviour:
   WeaponName: NCR1
   WeaponHolder: 1
   WeaponType: 0
-  Icon: {fileID: 21300000, guid: df745b9b3196937429f2a47c732df67b, type: 3}
+  Icon: {fileID: 21300000, guid: 94594266394a08441829d83cf7e254a0, type: 3}
   Fists: 0
   InHandPosition: {x: 0.043, y: 0.161, z: 0.058}
   InHandRotation: {x: 340.33932, y: 257.2401, z: 282.11517}
   FingersPreset: {fileID: 11400000, guid: 9befee1a6d890cc44bd816f83d383ac5, type: 2}
   LeftHandTransforms:
     Base:
-      LeftHand_Position: {x: 0.043, y: 0.015, z: -0.039}
-      LeftHand_Rotation: {x: 358.32816, y: 9.452123, z: 326.94086}
+      LeftHand_Position: {x: 0.0336, y: 0.0091, z: -0.0081}
+      LeftHand_Rotation: {x: 348.9196, y: 13.291287, z: 322.67548}
     Block:
-      LeftHand_Position: {x: 0.03, y: -0.08, z: 0.649}
-      LeftHand_Rotation: {x: 330.88727, y: 174.9816, z: 13.106249}
+      LeftHand_Position: {x: 0.0336, y: 0.0091, z: -0.0081}
+      LeftHand_Rotation: {x: 348.9196, y: 13.291287, z: 322.67548}
   WeaponTransforms:
     Origin:
       RightHand_Position: {x: 0.07, y: -0.241, z: 0}

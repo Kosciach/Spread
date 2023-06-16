@@ -2779,8 +2779,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 24.088, y: 5.1}
-  m_SizeDelta: {x: 262.485, y: 120}
+  m_AnchoredPosition: {x: -83.539, y: 5.1}
+  m_SizeDelta: {x: 477.74, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &237452730
 MonoBehaviour:
@@ -2802,7 +2802,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c7b387dd960ec1f4ba61c6cf9e6fe10f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5f4422cdbecc19345b9f550961aa4a45, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -32389,12 +32389,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'thumb.02.L'\n\tTransform 'forearm.R'\n\tTransform
-    'f_middle.02.R'\n\tTransform 'f_index.02.R'\n\tTransform 'f_ring.03.L'\n\tTransform
-    'f_ring.02.L'\n\tTransform 'thumb.01.R'\n\tTransform 'upper_arm.L'\n\tTransform
-    'f_pinky.01.L'\n\tTransform 'spine.006'\n\tand more ..."
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0

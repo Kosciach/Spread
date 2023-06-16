@@ -15,7 +15,7 @@ MonoBehaviour:
   WeaponName: OBAC54
   WeaponHolder: 0
   WeaponType: 0
-  Icon: {fileID: 21300000, guid: 5f4422cdbecc19345b9f550961aa4a45, type: 3}
+  Icon: {fileID: 21300000, guid: 51a739eb0110eef4ca870505a46f73ed, type: 3}
   Fists: 0
   InHandPosition: {x: 0.06715021, y: 0.16024145, z: -0.013173642}
   InHandRotation: {x: 329.5891, y: 259.24655, z: 253.37482}

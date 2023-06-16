@@ -22,11 +22,11 @@ MonoBehaviour:
   FingersPreset: {fileID: 11400000, guid: 1df3d0668ef36ab4a95ecb7635050e50, type: 2}
   LeftHandTransforms:
     Base:
-      LeftHand_Position: {x: 0.26, y: 0.341, z: 0.121}
-      LeftHand_Rotation: {x: 344.10306, y: 41.25127, z: 346.82492}
+      LeftHand_Position: {x: 0.2713, y: 0.333, z: 0.1459}
+      LeftHand_Rotation: {x: 330.18036, y: 38.21521, z: 350.20395}
     Block:
-      LeftHand_Position: {x: 0.26, y: 0.341, z: 0.121}
-      LeftHand_Rotation: {x: 344.10306, y: 41.25127, z: 346.82492}
+      LeftHand_Position: {x: 0.2713, y: 0.333, z: 0.1459}
+      LeftHand_Rotation: {x: 330.18036, y: 38.21521, z: 350.20395}
   WeaponTransforms:
     Origin:
       RightHand_Position: {x: -0.077, y: -0.459, z: 0.245}
