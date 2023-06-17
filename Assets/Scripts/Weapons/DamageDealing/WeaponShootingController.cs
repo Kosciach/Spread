@@ -88,10 +88,7 @@ public class WeaponShootingController : WeaponDamageDealingController
 
 
         //Ammo
-        //Slide is animated from ammo controller!
-        //Bullet shell is ejected from ammo controller!
         _ammoController.OnShoot();
-
 
         //Recoil
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Recoil.Recoil(_rangeWeaponData.RecoilSettings);

@@ -13,6 +13,6 @@ public class Ammo : ScriptableObject
 
     public enum AmmoTypeEnum
     {
-        Handgun, Smg, Rifle, HeavyRifle
+        Handgun, Smg, Rifle, HeavyRifle, Shotgun
     }
 }
