@@ -11266,6 +11266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be066c1fef497c4e9202d6e5e136fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &667999287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11278,6 +11279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &667999288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11291,6 +11293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canWeaponShoot: 0
+  _isAmmoReadyToBeShoot: 0
   _slideAnimator: {fileID: 1007158874}
   _shellEjector: {fileID: 614478726}
   _isRoundInChamber: 1
@@ -13389,6 +13392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9123a570d057c8c489a05ea47473db39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
   _isShootingInput: 0
 --- !u!114 &877267509
 MonoBehaviour:
@@ -13402,6 +13406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be066c1fef497c4e9202d6e5e136fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &877267510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13414,6 +13419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &877267511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13471,6 +13477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canWeaponShoot: 0
+  _isAmmoReadyToBeShoot: 0
   _slideAnimator: {fileID: 240914526}
   _shellEjector: {fileID: 885534229}
   _isRoundInChamber: 1
@@ -16759,6 +16766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be066c1fef497c4e9202d6e5e136fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &1262656634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16771,6 +16779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &1262656635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16784,6 +16793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canWeaponShoot: 0
+  _isAmmoReadyToBeShoot: 0
   _slideAnimator: {fileID: 39244998}
   _shellEjector: {fileID: 2079957003}
   _isRoundInChamber: 1
@@ -17366,12 +17376,12 @@ GameObject:
   - component: {fileID: 1304322395}
   - component: {fileID: 1304322394}
   - component: {fileID: 1304322393}
-  - component: {fileID: 1304322398}
+  - component: {fileID: 1304322400}
   - component: {fileID: 1304322392}
   - component: {fileID: 1304322391}
   - component: {fileID: 1304322390}
-  - component: {fileID: 1304322389}
-  - component: {fileID: 1304322388}
+  - component: {fileID: 1304322399}
+  - component: {fileID: 1304322398}
   m_Layer: 7
   m_Name: CPP11
   m_TagString: Weapon
@@ -17398,30 +17408,6 @@ Transform:
   m_Father: {fileID: 1101163881}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1304322388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304322386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8be066c1fef497c4e9202d6e5e136fd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1304322389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304322386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1304322390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17565,15 +17551,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 1304322386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f5b511a54f04743805c936916f58e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e98a24f366b97a4e904852ea8bef330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isInputReady: 0
+--- !u!114 &1304322399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304322386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50d19bebf302a88459364ca7fabe55e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isInputReady: 0
+--- !u!114 &1304322400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304322386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd60f9d52fe71dc4791cdc8b7ae8ea9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _canWeaponShoot: 0
-  _slideAnimator: {fileID: 147486570}
-  _shellEjector: {fileID: 1484544833}
+  _isAmmoReadyToBeShoot: 1
   _isRoundInChamber: 1
   _ammoInMag: 0
-  _reloadAnimOveride: {fileID: 22100000, guid: 834372f536bc92b41b4feaaf6687d39d, type: 2}
+  _canHoldExtraRound: 1
 --- !u!1 &1308391446
 GameObject:
   m_ObjectHideFlags: 0
@@ -18178,6 +18189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9123a570d057c8c489a05ea47473db39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
   _isShootingInput: 0
 --- !u!114 &1383456273
 MonoBehaviour:
@@ -18191,6 +18203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be066c1fef497c4e9202d6e5e136fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &1383456274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18203,6 +18216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &1383456275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18260,6 +18274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canWeaponShoot: 0
+  _isAmmoReadyToBeShoot: 0
   _slideAnimator: {fileID: 1864201985}
   _shellEjector: {fileID: 597135554}
   _isRoundInChamber: 1
@@ -18367,6 +18382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfdf4456bd202ed468a2f90f95bd3234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
   _shootCount: 3
   _delayBetweenShoots: 0.1
 --- !u!1 &1405681824
@@ -20155,6 +20171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9123a570d057c8c489a05ea47473db39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
   _isShootingInput: 0
 --- !u!114 &1444911273
 MonoBehaviour:
@@ -20168,6 +20185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be066c1fef497c4e9202d6e5e136fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &1444911274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20180,6 +20198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &1444911275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20193,6 +20212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canWeaponShoot: 0
+  _isAmmoReadyToBeShoot: 0
   _slideAnimator: {fileID: 2016319638}
   _shellEjector: {fileID: 2107425139}
   _isRoundInChamber: 1
@@ -21245,6 +21265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9123a570d057c8c489a05ea47473db39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
   _isShootingInput: 0
 --- !u!114 &1496176315
 MonoBehaviour:
@@ -21258,6 +21279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be066c1fef497c4e9202d6e5e136fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &1496176316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21270,6 +21292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &1496176317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21283,6 +21306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canWeaponShoot: 0
+  _isAmmoReadyToBeShoot: 0
   _slideAnimator: {fileID: 98560188}
   _shellEjector: {fileID: 1296660721}
   _isRoundInChamber: 1
@@ -27940,6 +27964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &544619468279605589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27970,6 +27995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9123a570d057c8c489a05ea47473db39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
   _isShootingInput: 0
 --- !u!114 &544619468279605591
 MonoBehaviour:
@@ -27983,6 +28009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be066c1fef497c4e9202d6e5e136fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &544619468279605592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27996,6 +28023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canWeaponShoot: 0
+  _isAmmoReadyToBeShoot: 0
   _slideAnimator: {fileID: 544619468446724924}
   _shellEjector: {fileID: 1448865843}
   _isRoundInChamber: 1
@@ -32681,6 +32709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!4 &3653281518429324846
 Transform:
   m_ObjectHideFlags: 0
@@ -32715,12 +32744,12 @@ GameObject:
   - component: {fileID: 3653281518429324832}
   - component: {fileID: 3653281518429324833}
   - component: {fileID: 3653281518429324838}
-  - component: {fileID: 3653281518429324849}
+  - component: {fileID: 3653281518429324852}
   - component: {fileID: 3653281518429324836}
   - component: {fileID: 3653281518429324837}
   - component: {fileID: 3653281518429324842}
   - component: {fileID: 3653281518429324843}
-  - component: {fileID: 3653281518429324848}
+  - component: {fileID: 3653281518429324851}
   m_Layer: 7
   m_Name: OBAC54
   m_TagString: Weapon
@@ -32728,38 +32757,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &3653281518429324848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3653281518429324847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8416a2193b2105949b644e68c345c35b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isShootingInput: 0
-  _isCharged: 1
---- !u!114 &3653281518429324849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3653281518429324847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38e3ee9f5f0f5684eafe4ec03c10fd70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _canWeaponShoot: 0
-  _shellEjector: {fileID: 3653281518437589512}
-  _isRoundInChamber: 1
-  _shootCount: 0
-  _ammoInMag: 0
-  _reloadAnimOveride: {fileID: 0}
 --- !u!95 &3653281518429324850
 Animator:
   serializedVersion: 4
@@ -32780,6 +32777,37 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3653281518429324851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3653281518429324847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1e9def092252f4c952a035e95f13ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isInputReady: 0
+  _shootCount: 0
+--- !u!114 &3653281518429324852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3653281518429324847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd60f9d52fe71dc4791cdc8b7ae8ea9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canWeaponShoot: 0
+  _isAmmoReadyToBeShoot: 0
+  _isRoundInChamber: 1
+  _ammoInMag: 0
+  _canHoldExtraRound: 0
 --- !u!114 &3653281518437589512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41072,6 +41100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be066c1fef497c4e9202d6e5e136fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &8754668854395378013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41084,6 +41113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1a4c870bf386f4b9a7f67ac410812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInputReady: 0
 --- !u!114 &8754668854395378014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41128,6 +41158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canWeaponShoot: 1
+  _isAmmoReadyToBeShoot: 0
   _cylinderAnimator: {fileID: 1638166285}
   _ammoInCylinder: 0
 --- !u!4 &8764379391013669680

@@ -11,10 +11,13 @@ public class BaseFireMode : MonoBehaviour
     protected WeaponDamageDealingInputs _inputs;
     protected RangeWeaponData _weaponData;
 
+    [SerializeField] protected bool _isInputReady;
+
     private void Awake()
     {
         _inputs = new WeaponDamageDealingInputs();
         _weaponData = _weaponData = GetComponent<WeaponDataHolder>().WeaponData as RangeWeaponData;
+        _isInputReady = true;
         VirtualAwake();
     }
     protected virtual void VirtualAwake()
@@ -22,7 +25,8 @@ public class BaseFireMode : MonoBehaviour
 
     }
 
-
+    public virtual void OnReload()
+    { }
 
 
     private void OnEnable()

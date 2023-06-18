@@ -69,11 +69,11 @@ public class WeaponShootingController : WeaponDamageDealingController
 
 
 
-    public void Shoot()
+    public bool Shoot()
     {
-        if (!_shootToggle) return;
+        if (!_shootToggle) return false;
 
-        if (!_ammoController.CanWeaponShoot) return;
+        if (!_ammoController.IsAmmoReadyToBeShoot) return false;
 
         _barrelController.RotateBarrel();
 
@@ -95,6 +95,9 @@ public class WeaponShootingController : WeaponDamageDealingController
 
         //Shake
         CameraShake.Instance.Shake(0.5f, 10);
+
+
+        return true;
     }
 
 
@@ -121,6 +124,10 @@ public class WeaponShootingController : WeaponDamageDealingController
         CanvasController.Instance.HudControllers.Firemodes.ChangeFireMode(_currentFireModeType);
 
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.FireMode.ChangeFireModeAnim();
+    }
+    public void CallFireModeOnReload()
+    {
+        _currentFireMode.OnReload();
     }
 
 

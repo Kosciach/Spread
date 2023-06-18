@@ -3,33 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChamberWeaponAmmoController : BaseWeaponAmmoController
+public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
 {
-    [Header("====References====")]
-    [SerializeField] WeaponSlideAnimator _slideAnimator;
-    [SerializeField] BulletShellEjector _shellEjector;
-
-
-    [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] bool _isRoundInChamber;
     [SerializeField] int _ammoInMag;
-    [SerializeField] AnimatorOverrideController _reloadAnimOveride;
+
+
+    [Space(20)]
+    [Header("====Settings====")]
+    [SerializeField] bool _canHoldExtraRound;
+
 
     private Action<int>[] _reloadMethods = new Action<int>[2];
 
 
 
-
     protected override void AbsAwake()
     {
-        _canWeaponShoot = _isRoundInChamber;
-        _reloadMethods[0] = ReloadWithoutRoundInChamber;
-        _reloadMethods[1] = ReloadWithRoundInChamber;
+        //_canWeaponShoot = _isRoundInChamber;
+        _isAmmoReadyToBeShoot = _isRoundInChamber;
+        _reloadMethods[0] = ReloadWhenRoundIsNotInChamber;
+        _reloadMethods[1] = ReloadWhenRoundIsInChamber;
     }
-
-
-
 
 
 
@@ -41,22 +37,15 @@ public class ChamberWeaponAmmoController : BaseWeaponAmmoController
         CheckChamber();
         _ammoInMag = Mathf.Clamp(_ammoInMag, 0, _ammoInMag);
 
-        //Animate slide
-        WeaponSlideAnimator.SlideAnimType slideAnimType = _isRoundInChamber ? WeaponSlideAnimator.SlideAnimType.BackAndForward : WeaponSlideAnimator.SlideAnimType.Back;
-        _slideAnimator.MoveSlide(slideAnimType);
-
-        //Eject shell
-        _shellEjector.EjectShell(_stateMachine.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x);
-
         //Update UI
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
         CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
     }
-
     private void CheckChamber()
     {
         _isRoundInChamber = _ammoInMag > -1;
-        _canWeaponShoot = _isRoundInChamber;
+        _isAmmoReadyToBeShoot = _isRoundInChamber;
+        //_canWeaponShoot = _isRoundInChamber;
     }
 
 
@@ -68,26 +57,23 @@ public class ChamberWeaponAmmoController : BaseWeaponAmmoController
         int magSize = _weaponData.AmmoSettings.MagSize;
         if (_ammoInMag >= magSize) return;
 
-        
         //Check if there is ammo in inventory
         PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
         int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
         if (playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex] <= 0) return;
 
 
+
+        _weaponShootingController.CallFireModeOnReload();
+
         //Calculate ammo to reload
         int ammoToReload = magSize - _ammoInMag;
         ammoToReload = Mathf.Clamp(ammoToReload, 0, playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
 
-
         //Choose reload method
         int reloadMethodIndex = _isRoundInChamber ? 1 : 0;
+        reloadMethodIndex = _canHoldExtraRound ? reloadMethodIndex : 0;
         _reloadMethods[reloadMethodIndex](ammoToReload);
-
-
-        //Move slide back to firing position
-        _slideAnimator.MoveSlide(WeaponSlideAnimator.SlideAnimType.Forward);
-
 
         //Remove ammo from inventory and update UI
         playerAmmoInventory.RemoveAmmo(_weaponData.AmmoSettings.AmmoType, ammoToReload);
@@ -96,19 +82,21 @@ public class ChamberWeaponAmmoController : BaseWeaponAmmoController
         CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
     }
 
-    private void ReloadWithRoundInChamber(int ammoToReload)
+
+    private void ReloadWhenRoundIsInChamber(int ammoToReload)
     {
         //Put ammo in mag
         _ammoInMag += ammoToReload;
+        _isAmmoReadyToBeShoot = true;
     }
-    private void ReloadWithoutRoundInChamber(int ammoToReload)
+    private void ReloadWhenRoundIsNotInChamber(int ammoToReload)
     {
         //Put ammo in mag and place one in the chamber
-        _ammoInMag += (ammoToReload-1);
+        _ammoInMag += (ammoToReload - 1);
+        //_canWeaponShoot = true;
         _isRoundInChamber = true;
-        _canWeaponShoot = true;
+        _isAmmoReadyToBeShoot = true;
     }
-
 
 
 

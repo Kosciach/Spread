@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CylinderWeaponAmmoController : BaseWeaponAmmoController
+public class WeaponAmmoController_Cylinder : BaseWeaponAmmoController
 {
     [Header("====References====")]
     [SerializeField] WeaponCylinderAnimator _cylinderAnimator;
@@ -13,19 +13,22 @@ public class CylinderWeaponAmmoController : BaseWeaponAmmoController
     [SerializeField] int _ammoInCylinder; public int AmmoInCylinder { get { return _ammoInCylinder; } }
 
 
+    private bool _isAmmoReadyToShoot; // <- move to BaseWeaponAmmoController in place of _canWeaponShoot;
+
 
     protected override void AbsAwake()
     {
 
     }
 
+
+
+
     public override void OnShoot()
     {
-        Debug.Log("Shoot R");
-
         //Controll ammo
         _ammoInCylinder--;
-        _canWeaponShoot = _ammoInCylinder > 0;
+        _isAmmoReadyToShoot = _ammoInCylinder > 0;
         _ammoInCylinder = Mathf.Clamp(_ammoInCylinder, 0, _ammoInCylinder);
 
 
@@ -38,8 +41,6 @@ public class CylinderWeaponAmmoController : BaseWeaponAmmoController
     }
     public override void OnReload()
     {
-        Debug.Log("Reload R");
-
         //Check if mag is full
         int magSize = _weaponData.AmmoSettings.MagSize;
         if (_ammoInCylinder >= magSize) return;
@@ -55,10 +56,10 @@ public class CylinderWeaponAmmoController : BaseWeaponAmmoController
         int ammoToReload = magSize - _ammoInCylinder;
         ammoToReload = Mathf.Clamp(ammoToReload, 0, playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
 
-        
+
         //Add ammo to cylinder
         _ammoInCylinder += ammoToReload;
-        _canWeaponShoot = true;
+        _isAmmoReadyToShoot = true;
 
 
         //Animate cylider
@@ -73,6 +74,7 @@ public class CylinderWeaponAmmoController : BaseWeaponAmmoController
 
 
 
+
     public override void OnWeaponEquip()
     {
         SetUI();
@@ -81,7 +83,6 @@ public class CylinderWeaponAmmoController : BaseWeaponAmmoController
     {
         CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.Toggle(false, 0.1f);
     }
-
 
 
     public void SetUI()

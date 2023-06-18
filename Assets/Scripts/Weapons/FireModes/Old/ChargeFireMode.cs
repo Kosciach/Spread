@@ -20,7 +20,7 @@ public class ChargeFireMode : BaseFireMode
         {
             if (!_isCharged) return;
 
-            _weaponShootingController.Shoot();
+            if (!_weaponShootingController.Shoot()) Debug.Log("End");
         };
     }
 

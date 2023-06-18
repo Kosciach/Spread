@@ -64,7 +64,6 @@ public class BoltActionAmmoController : BaseWeaponAmmoController
         //Check if mag is full
         int magSize = _weaponData.AmmoSettings.MagSize;
         if (_ammoInMag >= magSize) return;
-
         
         //Check if there is ammo in inventory
         PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
