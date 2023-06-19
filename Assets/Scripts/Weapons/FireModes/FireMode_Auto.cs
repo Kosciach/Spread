@@ -26,6 +26,8 @@ public class FireMode_Auto : BaseFireMode
 
     private void Update()
     {
+        CheckTimeToShoot();
+
         if (_isShootingInput && _isInputReady)
         {
             _currentTimeToShoot = _timeToShoot;

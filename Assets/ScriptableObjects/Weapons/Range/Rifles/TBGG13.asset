@@ -68,5 +68,5 @@ MonoBehaviour:
     RotY: 0.1
     RotZ: 1.5
   AmmoSettings:
-    MagSize: 1000
+    MagSize: 35
     AmmoType: {fileID: 11400000, guid: 3c45487ce23f68e42806317015a885d8, type: 2}

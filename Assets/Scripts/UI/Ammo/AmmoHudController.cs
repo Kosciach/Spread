@@ -25,11 +25,10 @@ public class AmmoHudController : MonoBehaviour
     public struct AmmoHudsControllersStruct
     {
         public ChamberAmmoHudController Chamber;
-        public ChamberAmmoHudController BoltAction;
     }
     public enum AmmoHudType
     {
-        Chamber, Cylinder, BoltAction
+        Chamber, Cylinder
     }
 
 

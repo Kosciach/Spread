@@ -35,10 +35,10 @@ MonoBehaviour:
       RightHand_Position: {x: 0.16, y: 0.1, z: 0.61}
       RightHand_Rotation: {x: 369.7, y: 258.24072, z: 348.9685}
     Aim:
-    - RightHand_Position: {x: -0.003, y: -0.108, z: 0.833}
-      RightHand_Rotation: {x: 284.59564, y: 218.97803, z: 341.30835}
+    - RightHand_Position: {x: -0.0006, y: -0.108, z: 0.833}
+      RightHand_Rotation: {x: 284.59674, y: 217.96298, z: 341.3117}
     - RightHand_Position: {x: 0.051, y: -0.152, z: 0.582}
-      RightHand_Rotation: {x: 311.14764, y: 252.78094, z: 306.2594}
+      RightHand_Rotation: {x: 311.14825, y: 251.12706, z: 306.26254}
     Run:
       RightHand_Position: {x: 0.1, y: -0.215, z: 0.636}
       RightHand_Rotation: {x: 327.08496, y: 195.22496, z: 364.5}
@@ -50,7 +50,7 @@ MonoBehaviour:
   HoldTransforms:
     Rest:
       RightHand_Position: {x: 0.051, y: -0.151, z: 0.474}
-      RightHand_Rotation: {x: 304.07367, y: 254.5628, z: 280.81818}
+      RightHand_Rotation: {x: 294.11874, y: 249.57668, z: 271.15387}
     Hip:
       RightHand_Position: {x: 0.073, y: -0.157, z: 0.502}
       RightHand_Rotation: {x: 286.21765, y: 227.77518, z: 330.46494}

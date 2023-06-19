@@ -4,21 +4,13 @@ using UnityEngine;
 
 public class WeaponAmmoController_Cylinder : BaseWeaponAmmoController
 {
-    [Header("====References====")]
-    [SerializeField] WeaponCylinderAnimator _cylinderAnimator;
-
-
-    [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] int _ammoInCylinder; public int AmmoInCylinder { get { return _ammoInCylinder; } }
 
 
-    private bool _isAmmoReadyToShoot; // <- move to BaseWeaponAmmoController in place of _canWeaponShoot;
-
-
     protected override void AbsAwake()
     {
-
+        _isAmmoReadyToBeShoot = _ammoInCylinder > 0;
     }
 
 
@@ -28,12 +20,8 @@ public class WeaponAmmoController_Cylinder : BaseWeaponAmmoController
     {
         //Controll ammo
         _ammoInCylinder--;
-        _isAmmoReadyToShoot = _ammoInCylinder > 0;
+        _isAmmoReadyToBeShoot = _ammoInCylinder > 0;
         _ammoInCylinder = Mathf.Clamp(_ammoInCylinder, 0, _ammoInCylinder);
-
-
-        //Animate cylider
-        _cylinderAnimator.RotateOnShoot();
 
 
         //Update UI
@@ -59,11 +47,7 @@ public class WeaponAmmoController_Cylinder : BaseWeaponAmmoController
 
         //Add ammo to cylinder
         _ammoInCylinder += ammoToReload;
-        _isAmmoReadyToShoot = true;
-
-
-        //Animate cylider
-        _cylinderAnimator.ResetRotation();
+        _isAmmoReadyToBeShoot = true;
 
 
         //Remove ammo from inventory and update UI
