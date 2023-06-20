@@ -8,13 +8,13 @@ public class WeaponShootingController : WeaponDamageDealingController
     [Header("====References====")]
     [SerializeField] BaseFireMode[] _fireModes;
     [Space(5)]
-    [SerializeField] GameObject _bulletPrefab;
     [SerializeField] GameObject _muzzleFlashPrefab;
     [Space(5)]
     [SerializeField] Transform _barrel;
 
+    private BaseBulletSpawner _bulletSpawner;
     private WeaponBarrelController _barrelController;
-    private BaseWeaponAmmoController _ammoController; public BaseWeaponAmmoController AmmoController { get { return _ammoController; } }
+    private BaseWeaponAmmoController _ammoController;
 
 
 
@@ -30,7 +30,7 @@ public class WeaponShootingController : WeaponDamageDealingController
 
 
 
-    private RangeWeaponData _rangeWeaponData => (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
+    private RangeWeaponData _rangeWeaponData;
     public enum FireModeTypeEnum
     {
         Safety, Semi, Auto, Burst, Charge
@@ -40,10 +40,13 @@ public class WeaponShootingController : WeaponDamageDealingController
 
     public override void VirtualAwake()
     {
+        _rangeWeaponData = (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
         _barrel = transform.GetChild(1);
 
-        _ammoController = GetComponent<BaseWeaponAmmoController>();
+        _bulletSpawner = _barrel.GetComponent<BaseBulletSpawner>();
         _barrelController = _barrel.GetComponent<WeaponBarrelController>();
+        _ammoController = GetComponent<BaseWeaponAmmoController>();
+
 
 
         _fireModes = GetComponents<BaseFireMode>();
@@ -78,9 +81,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _barrelController.RotateBarrel();
 
         //SpawnBullet
-        GameObject newBullet = Instantiate(_bulletPrefab, _barrel.position, _barrel.rotation);
-        BulletController newBulletController = newBullet.GetComponent<BulletController>();
-        newBulletController.PassData(_stateMachine.DataHolder.WeaponData);
+        _bulletSpawner.SpawnBullet(_rangeWeaponData);
 
         //SpawnMuzzleFlash
         GameObject muzzleFlash = Instantiate(_muzzleFlashPrefab, _barrel.position, _barrel.rotation);

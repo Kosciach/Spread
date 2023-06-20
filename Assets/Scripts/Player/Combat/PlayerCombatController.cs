@@ -69,6 +69,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeaponData = equipedWeaponDataNew;
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ResetAimType(_equipedWeapon.AimIndexHolder.WeaponAimIndex);
 
+        _playerStateMachine.AnimatingControllers.Animator.OverrideAnimator(_equipedWeapon.AnimatorOverride);
 
         //Change states
         _equipedWeapon.SwitchController.SwitchTo.Equiped();

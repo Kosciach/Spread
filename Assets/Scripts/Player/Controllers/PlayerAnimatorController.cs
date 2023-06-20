@@ -61,9 +61,27 @@ namespace PlayerAnimator
 
 
 
-        public void OverrideAnimationClip(AnimatorOverrideController overide)
+        public void OverrideAnimator(AnimatorOverrideController overide)
         {
+            if (overide == null) return;
+
             _animator.runtimeAnimatorController = overide;
+
+            /*AnimatorStateInfo[] layerInfo = new AnimatorStateInfo[_animator.layerCount];
+            for(int i=0; i<_animator.layerCount; i++)
+            {
+                layerInfo[i] = _animator.GetCurrentAnimatorStateInfo(i);
+            }
+
+
+            _animator.runtimeAnimatorController = overide;
+
+            _animator.Update(0.0f);
+
+            for (int i = 0; i < _animator.layerCount; i++)
+            {
+                _animator.Play(layerInfo[i].fullPathHash, i, layerInfo[i].normalizedTime);
+            }*/
         }
 
 

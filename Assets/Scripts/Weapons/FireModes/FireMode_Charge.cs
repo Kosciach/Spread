@@ -5,7 +5,19 @@ using IkLayers;
 
 public class FireMode_Charge : BaseFireMode
 {
-    public int _shootCount;
+    [Header("====References====")]
+    [SerializeField] BulletShellEjector _shellEjector;
+
+
+    [Space(20)]
+    [Header("====Debugs====")]
+    [SerializeField] int _shootCount;
+
+    [Space(20)]
+    [Header("====Settings====")]
+    [SerializeField] bool _chargeWithRightHand;
+
+
     protected override void VirtualAwake()
     {
         _fireModeType = WeaponShootingController.FireModeTypeEnum.Charge;
@@ -48,7 +60,7 @@ public class FireMode_Charge : BaseFireMode
         {
             Vector3 pos = _weaponData.InHandPosition;
             Vector3 rot = _weaponData.InHandRotation;
-            playerStateMachine.AnimatingControllers.WeaponHolder.RightHand(transform);
+            if (_chargeWithRightHand) playerStateMachine.AnimatingControllers.WeaponHolder.RightHand(transform);
             playerStateMachine.AnimatingControllers.WeaponHolder.SetWeaponInHandTransform(transform, pos, rot);
         });
     }
@@ -61,7 +73,7 @@ public class FireMode_Charge : BaseFireMode
         PlayerStateMachine playerStateMachine = _weaponShootingController.StateMachine.PlayerStateMachine;
 
         playerStateMachine.AnimatingControllers.Weapon.BakeTargets.UpdateBakedTransforms();
-        playerStateMachine.AnimatingControllers.WeaponHolder.LeftHand(transform);
+        if(_chargeWithRightHand) playerStateMachine.AnimatingControllers.WeaponHolder.LeftHand(transform);
         playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, true, 0.3f);
         playerStateMachine.AnimatingControllers.Animator.SetTrigger("ChargeWeapon", false);
         _weaponShootingController.StateMachine.Animator.SetTrigger("BoltCharge");
@@ -71,6 +83,6 @@ public class FireMode_Charge : BaseFireMode
 
     private void EjectShellAtAnimationEvent()
     {
-        Debug.Log("Eject! Eject!");
+        _shellEjector.EjectShell(_weaponShootingController.StateMachine.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x);
     }
 }

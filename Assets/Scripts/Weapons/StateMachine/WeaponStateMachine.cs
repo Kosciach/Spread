@@ -24,6 +24,11 @@ public class WeaponStateMachine : MonoBehaviour
     [SerializeField] WeaponAimIndexHolder _aimIndexHolder; public WeaponAimIndexHolder AimIndexHolder { get { return _aimIndexHolder; } }
 
 
+    [Space(20)]
+    [Header("====References====")]
+    [SerializeField] AnimatorOverrideController _animatorOverride; public AnimatorOverrideController AnimatorOverride { get { return _animatorOverride; } }
+
+
     private PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
     private RangeWeaponSwitchController _switchController; public RangeWeaponSwitchController SwitchController { get { return _switchController; } }
 

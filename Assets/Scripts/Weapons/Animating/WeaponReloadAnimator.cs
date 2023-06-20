@@ -38,7 +38,6 @@ public class WeaponReloadAnimator : MonoBehaviour
 
         _isReloading = true;
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, true, 0.1f);
-        _playerStateMachine.AnimatingControllers.Animator.OverrideAnimationClip(reloadAnimOveride);
         _playerStateMachine.AnimatingControllers.Animator.SetBool("Reload", true);
     }
 

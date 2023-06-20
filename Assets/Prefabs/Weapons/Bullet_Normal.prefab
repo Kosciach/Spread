@@ -201,9 +201,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2244699669690929558}
-  - component: {fileID: 1068130541336082033}
+  - component: {fileID: 5023546924772530381}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Bullet_Normal
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +225,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1068130541336082033
+--- !u!114 &5023546924772530381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,12 +234,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2244699669690929549}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e9b0282d702fca4291c56d614c2063d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0923c4402ac041b4fa52a86f46f31dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletVisual: {fileID: 9127270805135621188}
   _hitEffect: {fileID: 3637599948436010562, guid: 03d0758555e9b7144abbffaaecae1ba8,
     type: 3}
+  _damage: 0
+  _range: 0
+  _penetrationForce: 0
+  _carriedForce: 0
   _gravityStrength: 0.1
   _delayBetweenRays: 0
   _raylength: 5

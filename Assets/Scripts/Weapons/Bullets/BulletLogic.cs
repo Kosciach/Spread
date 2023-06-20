@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class BulletLogic : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] Transform _bulletVisual;
     [SerializeField] GameObject _hitEffect;
-    private RangeWeaponData _weaponData;
+
+
+    [Space(20)]
+    [Header("====Debugs====")]
+    [SerializeField] float _damage;
+    [SerializeField] float _range;
+    [SerializeField] float _penetrationForce;
+    [SerializeField] float _carriedForce;
 
 
     [Space(20)]
@@ -23,6 +29,8 @@ public class BulletController : MonoBehaviour
     [SerializeField] LayerMask _ignoreMask;
 
 
+
+
     private Vector3 _rayStartPoint;
     private Vector3 _rayTargetPoint;
     private float _currentGravityStrength = 0;
@@ -34,40 +42,46 @@ public class BulletController : MonoBehaviour
     private float _currentBulletPenetrationForce;
 
 
-    public void PassData(WeaponData weaponData)
-    {
-        _weaponData = weaponData as RangeWeaponData;
-    }
+
+
+
+
     private void Start()
     {
         _time = Time.time;
 
         _rayStartPoint = transform.position;
         _rayTargetPoint = _rayStartPoint + transform.forward * _raylength;
-
-        _currentBulletPenetrationForce = _weaponData.RangeStats.PenetrationForce;
-
-        Destroy(gameObject, _weaponData.RangeStats.Range);
     }
 
     private void Update()
     {
-        if(Time.time >= _time)
+        if (Time.time >= _time)
         {
             ShootRay();
             _time = Time.time + _delayBetweenRays;
         }
     }
 
+    public void PassData(float damage, float range, float penetrationForce, float carriedForce)
+    {
+        _damage = damage;
+        _range = range;
+        _penetrationForce = penetrationForce;
+        _carriedForce = carriedForce;
 
+        _currentBulletPenetrationForce = _penetrationForce;
+
+        Destroy(gameObject, _range);
+    }
 
 
 
     private void ObjectHit()
     {
         //Apply force
-        _hit.rigidbody?.AddForceAtPosition(-_hit.normal * _weaponData.RangeStats.CarredForce * 10, _hit.point);
-        _hit.transform.GetComponent<IDamageable>()?.TakeDamage(_weaponData.RangeStats.Damage);
+        _hit.rigidbody?.AddForceAtPosition(-_hit.normal * _carriedForce * 10, _hit.point);
+        _hit.transform.GetComponent<IDamageable>()?.TakeDamage(_damage);
 
 
 
@@ -97,7 +111,7 @@ public class BulletController : MonoBehaviour
 
     private void SetRayPoints()
     {
-        _currentGravityStrength += _gravityStrength/100;
+        _currentGravityStrength += _gravityStrength / 100;
 
         _rayStartPoint = _rayTargetPoint;
         _rayTargetPoint = _rayStartPoint + transform.forward * _raylength + Vector3.down * _currentGravityStrength;
@@ -105,7 +119,7 @@ public class BulletController : MonoBehaviour
     private void ShootRay()
     {
         Debug.DrawLine(_rayStartPoint, _rayTargetPoint, Color.green, _delayBetweenRays);
-        if(Physics.Linecast(_rayStartPoint, _rayTargetPoint, out _hit, ~_ignoreMask)) ObjectHit();
+        if (Physics.Linecast(_rayStartPoint, _rayTargetPoint, out _hit, ~_ignoreMask)) ObjectHit();
 
 
         SetRayPoints();
