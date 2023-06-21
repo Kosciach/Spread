@@ -4,31 +4,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChamberAmmoHudController : MonoBehaviour
+public class AmmoHudController_DoubleBarrel : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] AmmoHudController _ammoHudController;
-    [SerializeField] Image _roundInChamber;
+    [SerializeField] Image[] _barrelRounds = new Image[2];
     [SerializeField] CanvasGroup _canvasGroup;
 
 
     [Space(20)]
     [Header("====Settings====")]
-    [SerializeField] Color[] _roundInChamberColors;
+    [SerializeField] Color[] _barrelRoundsColors;
 
 
-
-    public void UpdateRoundInChamberColor(bool isRoundInChamber)
+    public void UpdateBarrelRounds(bool barrel0, bool barrel1)
     {
-        int roundInChamberColorIndex = isRoundInChamber ? 1 : 0;
+        int colorIndexes0 = barrel0 ? 1 : 0;
+        int colorIndexes1 = barrel1 ? 1 : 0;
 
-        _roundInChamber.color = _roundInChamberColors[roundInChamberColorIndex];
+        _barrelRounds[0].color = _barrelRoundsColors[colorIndexes0];
+        _barrelRounds[1].color = _barrelRoundsColors[colorIndexes1];
     }
-
-
-
-
-
 
 
 

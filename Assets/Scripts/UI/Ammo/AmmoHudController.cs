@@ -8,11 +8,10 @@ public class AmmoHudController : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] CanvasController _canvasController; public CanvasController CanvasController { get { return _canvasController; } }
-    [SerializeField] AmmoHudsControllersStruct _ammoHudsControllers; public AmmoHudsControllersStruct AmmoHudsControllers { get { return _ammoHudsControllers; } }
+    [SerializeField] AmmoHudsControllersStruct _controllers; public AmmoHudsControllersStruct Controllers { get { return _controllers; } }
     [SerializeField] GameObject[] _ammoHuds;
     [Space(10)]
     [SerializeField] TextMeshProUGUI _ammoInInventory;
-    [SerializeField] TextMeshProUGUI _ammoInMag;
     [Space(5)]
     [SerializeField] Image[] _roundImages;
     [SerializeField] Image[] _roundImages_Shadows;
@@ -24,11 +23,13 @@ public class AmmoHudController : MonoBehaviour
     [System.Serializable]
     public struct AmmoHudsControllersStruct
     {
-        public ChamberAmmoHudController Chamber;
+        public AmmoHudController_Chamber Chamber;
+        public AmmoHudController_Cylinder Cylinder;
+        public AmmoHudController_DoubleBarrel DoubleBarrel;
     }
     public enum AmmoHudType
     {
-        Chamber, Cylinder
+        Chamber, Cylinder, DoubleBarrel
     }
 
 
@@ -53,10 +54,6 @@ public class AmmoHudController : MonoBehaviour
     public void UpdateAmmoInInventory(int ammoInInventory)
     {
         _ammoInInventory.text = ammoInInventory.ToString();
-    }
-    public void UpdateAmmoInMag(int ammoInMag)
-    {
-        _ammoInMag.text = ammoInMag.ToString();
     }
 
     public void ChangeRoundIcon(Sprite roundIcon)

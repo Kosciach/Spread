@@ -21,7 +21,6 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
 
     protected override void AbsAwake()
     {
-        //_canWeaponShoot = _isRoundInChamber;
         _isAmmoReadyToBeShoot = _isRoundInChamber;
         _reloadMethods[0] = ReloadWhenRoundIsNotInChamber;
         _reloadMethods[1] = ReloadWhenRoundIsInChamber;
@@ -38,14 +37,13 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
         _ammoInMag = Mathf.Clamp(_ammoInMag, 0, _ammoInMag);
 
         //Update UI
-        CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateAmmoInMag(_ammoInMag);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
     }
     private void CheckChamber()
     {
         _isRoundInChamber = _ammoInMag > -1;
         _isAmmoReadyToBeShoot = _isRoundInChamber;
-        //_canWeaponShoot = _isRoundInChamber;
     }
 
 
@@ -77,9 +75,9 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
 
         //Remove ammo from inventory and update UI
         playerAmmoInventory.RemoveAmmo(_weaponData.AmmoSettings.AmmoType, ammoToReload);
-        CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateAmmoInMag(_ammoInMag);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
     }
 
 
@@ -106,7 +104,9 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
     }
     public override void OnWeaponUnEquip()
     {
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.Toggle(false, 0.1f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.Toggle(false, 0.1f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.Toggle(false, 0.1f);
+        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.01f);
     }
 
 
@@ -116,13 +116,14 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
         PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
         int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
 
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
         CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(AmmoHudController.AmmoHudType.Chamber);
         CanvasController.Instance.HudControllers.Ammo.ChangeRoundIcon(_weaponData.AmmoSettings.AmmoType.SingleRoundIcon);
-        CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInMag);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateAmmoInMag(_ammoInMag);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
 
         CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.Toggle(true, 0.1f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.Toggle(true, 0.1f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.Toggle(false, 0.1f);
     }
 }

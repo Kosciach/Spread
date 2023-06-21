@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b94e7f73a251864ea9c5b8a993ab4d2, type: 3}
+  m_Name: FAS1
+  m_EditorClassIdentifier: 
+  WeaponName: FAS1
+  WeaponHolder: 0
+  WeaponType: 0
+  Icon: {fileID: 21300000, guid: 4ae9f47b7847463408bf10e3e7e76587, type: 3}
+  Fists: 0
+  InHandPosition: {x: 0.082, y: 0.213, z: 0.057}
+  InHandRotation: {x: 328.3553, y: 259.22763, z: 272.55267}
+  FingersPreset: {fileID: 11400000, guid: 03bb72eb56e41c845bd1d1b6984478b1, type: 2}
+  LeftHandTransforms:
+    Base:
+      LeftHand_Position: {x: 0.3402, y: 0.4461, z: 0.1132}
+      LeftHand_Rotation: {x: 333.3814, y: 51.570698, z: 350.91577}
+    Block:
+      LeftHand_Position: {x: 0.3402, y: 0.4461, z: 0.1132}
+      LeftHand_Rotation: {x: 333.3814, y: 51.570698, z: 350.91577}
+  WeaponTransforms:
+    Origin:
+      RightHand_Position: {x: -0.077, y: -0.459, z: 0.245}
+      RightHand_Rotation: {x: 308.36624, y: 164.2783, z: 260.50064}
+    Block:
+      RightHand_Position: {x: 0.222, y: -0.362, z: 0.583}
+      RightHand_Rotation: {x: 302.14615, y: 149.3001, z: 363}
+    Aim:
+    - RightHand_Position: {x: -0.034, y: -0.142, z: 0.312}
+      RightHand_Rotation: {x: 279.6452, y: 287.598, z: 284.2666}
+    - RightHand_Position: {x: 0.058, y: -0.221, z: 0.341}
+      RightHand_Rotation: {x: 321.04022, y: 271.26474, z: 303.74628}
+    Run:
+      RightHand_Position: {x: 0.052, y: -0.22, z: 0.374}
+      RightHand_Rotation: {x: 292.05298, y: 277.46152, z: 250.96445}
+    Wall:
+      RightHand_Position: {x: 0.088, y: -0.268, z: 0.491}
+      RightHand_Rotation: {x: 308.10123, y: 255.36424, z: 263.3697}
+  SwayWeight: 1
+  BobbingWeight: 0
+  HoldTransforms:
+    Rest:
+      RightHand_Position: {x: 0.0522, y: -0.209, z: 0.374}
+      RightHand_Rotation: {x: 297.04022, y: 280.6047, z: 253.69778}
+    Hip:
+      RightHand_Position: {x: 0.037, y: -0.209, z: 0.374}
+      RightHand_Rotation: {x: 282.83902, y: 275.66812, z: 295.59592}
+  RangeStats:
+    Damage: 70
+    Range: 4
+    FireRate: 3
+    CarredForce: 12
+    AccuracyOffset: 0
+    PenetrationForce: 10
+  RecoilSettings:
+    Speed: 1
+    BackPush: 0.05
+    RotX: 3
+    RotY: 2
+    RotZ: 1
+  AmmoSettings:
+    MagSize: 12
+    AmmoType: {fileID: 11400000, guid: e24677ca959ae0947a9f2edd95fd70d5, type: 2}

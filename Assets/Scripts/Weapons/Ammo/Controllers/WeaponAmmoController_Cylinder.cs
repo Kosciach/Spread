@@ -25,7 +25,7 @@ public class WeaponAmmoController_Cylinder : BaseWeaponAmmoController
 
 
         //Update UI
-        CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInCylinder);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.UpdateAmmoInCylinder(_ammoInCylinder);
     }
     public override void OnReload()
     {
@@ -52,7 +52,7 @@ public class WeaponAmmoController_Cylinder : BaseWeaponAmmoController
 
         //Remove ammo from inventory and update UI
         playerAmmoInventory.RemoveAmmo(_weaponData.AmmoSettings.AmmoType, ammoToReload);
-        CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInCylinder);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.UpdateAmmoInCylinder(_ammoInCylinder);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
     }
 
@@ -65,7 +65,10 @@ public class WeaponAmmoController_Cylinder : BaseWeaponAmmoController
     }
     public override void OnWeaponUnEquip()
     {
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.Toggle(false, 0.1f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.Toggle(false, 0.01f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.Toggle(false, 0.01f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.DoubleBarrel.Toggle(false, 0.01f);
+        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.01f);
     }
 
 
@@ -76,10 +79,11 @@ public class WeaponAmmoController_Cylinder : BaseWeaponAmmoController
 
         CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(AmmoHudController.AmmoHudType.Cylinder);
         CanvasController.Instance.HudControllers.Ammo.ChangeRoundIcon(_weaponData.AmmoSettings.AmmoType.SingleRoundIcon);
-        CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInMag(_ammoInCylinder);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.UpdateAmmoInCylinder(_ammoInCylinder);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
 
-        CanvasController.Instance.HudControllers.Ammo.AmmoHudsControllers.Chamber.Toggle(false, 0.01f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.Toggle(false, 0.01f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.Toggle(true, 0.01f);
         CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
     }
 }

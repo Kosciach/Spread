@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class BaseWeaponAmmoController : MonoBehaviour
 {
-    [SerializeField] protected bool _canWeaponShoot; public bool CanWeaponShoot { get { return _canWeaponShoot; } }
     [SerializeField] protected bool _isAmmoReadyToBeShoot; public bool IsAmmoReadyToBeShoot { get { return _isAmmoReadyToBeShoot; } }
     protected WeaponStateMachine _stateMachine;
     protected RangeWeaponData _weaponData;

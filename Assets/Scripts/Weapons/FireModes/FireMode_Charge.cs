@@ -16,6 +16,8 @@ public class FireMode_Charge : BaseFireMode
     [Space(20)]
     [Header("====Settings====")]
     [SerializeField] bool _chargeWithRightHand;
+    [Range(0, 1)]
+    [SerializeField] int _shootCountOffset;
 
 
     protected override void VirtualAwake()
@@ -51,7 +53,7 @@ public class FireMode_Charge : BaseFireMode
     }
     public void StopCharge()
     {
-        _isInputReady = _shootCount < _weaponData.AmmoSettings.MagSize;
+        _isInputReady = _shootCount < _weaponData.AmmoSettings.MagSize + _shootCountOffset;
 
         PlayerStateMachine playerStateMachine = _weaponShootingController.StateMachine.PlayerStateMachine;
         playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_weaponData.FingersPreset.Base, 0.2f);
