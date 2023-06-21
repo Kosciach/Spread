@@ -64,14 +64,27 @@ After I finish writing a script I thing how to improve it, if I learn something 
 <h3 align="center">Cameras</h3>
 <h2 align="center"> </h2>
 <p align="center">
-  Only main camera uses cinemachine, but both of them have their own controller, seperated into moving, rotating.
-  Each camera has additionall smaller controllers like, toggle or fov.
+  There are two camera:<br>
+  Main - for everything except hands.<br>
+  Hands - just for hands.
 </p>
-  
+<p align="center">
+  Only main camera uses cinemachine, but both of them have their own controller, seperated into moving, rotating.
+  Each camera has additionall smaller controllers like, toggle or fov.<br>
+  Most of the time handsCamera will be enabled, but in states like ladder or swim, hands camera is toggled off to make main camera render hands.<br>
+  Both camera are moved and rotated depending on player states to get as good feeling as possible.<br>
+  Some ik layers and baked animations affect cameras transforms slightly, that happens because both hads and main camera are placed in players head bone.
+</p>
+
+
+
+
 <br>
 <h3 align="center">Movement</h3>
 <h2 align="center"> </h2>
+<p></p>
 
 <br>
 <h3 align="center">Combat</h3>
 <h2 align="center"> </h2>
+<p></p>
