@@ -9,20 +9,18 @@ public class PlayerCineCameraMoveController : MonoBehaviour
     [SerializeField] PlayerCineCameraController _cameraController;
 
 
-
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] CameraPositionsEnum _cameraPositionType;
-    [SerializeField] Vector3 _desiredPosition;
-    [SerializeField] Vector3 _currentPosition;
-    [SerializeField] float _moveSpeed;
-
 
 
     [Space(20)]
     [Header("====Settings====")]
     [SerializeField] Vector3[] _cameraPositions;
-    [SerializeField] bool _poseMode;
+
+
+    private CineCameraMove _cineCameraMove;
+
 
     public enum CameraPositionsEnum
     {
@@ -33,26 +31,51 @@ public class PlayerCineCameraMoveController : MonoBehaviour
 
 
 
-
-    private void Update()
+    private void Awake()
     {
-        Move();
+        _cineCameraMove = new CineCameraMove(_cameraController.MainCameraHolder);
     }
 
-
-    private void Move()
+    public void SetCameraPosition(CameraPositionsEnum cameraPosition, float duration)
     {
-        if (_poseMode) return;
-
-        _currentPosition = Vector3.Lerp(_currentPosition, _desiredPosition, _moveSpeed * Time.deltaTime);
-        _cameraController.MainCameraHolder.transform.localPosition = _currentPosition;
-    }
-
-    public void SetCameraPosition(CameraPositionsEnum cameraPosition, float moveSpeed)
-    {
-        _desiredPosition = _cameraPositions[(int)cameraPosition];
-        _moveSpeed = moveSpeed;
-
         _cameraPositionType  = cameraPosition;
+
+        if (_cineCameraMove.LerpCoroutine != null) StopCoroutine(_cineCameraMove.LerpCoroutine);
+
+        _cineCameraMove.LerpCoroutine = _cineCameraMove.MoveSmooth(_cameraPositions[(int)cameraPosition], duration);
+        StartCoroutine(_cineCameraMove.LerpCoroutine);
+    }
+}
+
+
+
+public class CineCameraMove
+{
+    private Transform _mainCameraHolder;
+    private IEnumerator _lerpCoroutine; public IEnumerator LerpCoroutine { get { return _lerpCoroutine; } set { _lerpCoroutine = value; } }
+
+
+    public CineCameraMove(Transform mainCameraHolder)
+    {
+        _mainCameraHolder = mainCameraHolder;
+    }
+
+
+    public IEnumerator MoveSmooth(Vector3 endPos, float duration)
+    {
+        float timeElapsed = 0;
+
+        while (timeElapsed < duration)
+        {
+            float time = timeElapsed / duration;
+
+            _mainCameraHolder.localPosition = Vector3.Lerp(_mainCameraHolder.localPosition, endPos, time);
+
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        _mainCameraHolder.localPosition = endPos;
     }
 }

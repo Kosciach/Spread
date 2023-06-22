@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb90b913935e644baaa86c076d788e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 0.5
+  m_Weight: 1
   m_Data:
     m_ConstrainedObject: {fileID: 3925787726452457494}
     m_SourceObjects:
@@ -769,6 +769,7 @@ GameObject:
   - component: {fileID: 49409420}
   - component: {fileID: 49409419}
   - component: {fileID: 49409422}
+  - component: {fileID: 49409423}
   m_Layer: 0
   m_Name: PlayerCineCamera
   m_TagString: Untagged
@@ -859,6 +860,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cineCamera: {fileID: 49409420}
+--- !u!114 &49409423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49409418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cac3c1d2b0469f741952aabf776223ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Offset: {x: 0, y: 0, z: 0}
+  m_ApplyAfter: 1
+  m_PreserveComposition: 0
 --- !u!1 &52460342
 GameObject:
   m_ObjectHideFlags: 0
@@ -4059,7 +4075,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322862373}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -16306,7 +16322,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190710518}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -24555,7 +24571,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813359234}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -24605,6 +24621,7 @@ GameObject:
   - component: {fileID: 1837358961}
   - component: {fileID: 1837358959}
   - component: {fileID: 1837358958}
+  - component: {fileID: 1837358962}
   m_Layer: 6
   m_Name: CineCameraController
   m_TagString: Untagged
@@ -24640,9 +24657,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cineCameraController: {fileID: 1837358960}
-  _desiredFov: 90
-  _currentFov: 90
-  _lerpSpeed: 2
   _baseFov: 90
 --- !u!114 &1837358958
 MonoBehaviour:
@@ -24686,6 +24700,7 @@ MonoBehaviour:
   _move: {fileID: 1837358961}
   _horizontal: {fileID: 1837358959}
   _vertical: {fileID: 1837358958}
+  _rotationOffset: {fileID: 1837358962}
   _cineCamera: {fileID: 49409420}
   _cinePOV: {fileID: 0}
   _cineInputs: {fileID: 49409419}
@@ -24706,14 +24721,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraController: {fileID: 1837358960}
   _cameraPositionType: 0
-  _desiredPosition: {x: 0, y: 0.177, z: 0.464}
-  _currentPosition: {x: 0, y: 0, z: 0}
-  _moveSpeed: 5
   _cameraPositions:
   - {x: 0, y: 0.177, z: 0.464}
   - {x: 0, y: 0.04, z: 0.129}
   - {x: 0, y: 0.177, z: 0.244}
-  _poseMode: 0
+--- !u!114 &1837358962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837358955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf9ee6094097354a9c3b96995f09f98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cineCameraController: {fileID: 1837358960}
+  _rotationOffset: {fileID: 49409423}
 --- !u!1 &1840113614
 GameObject:
   m_ObjectHideFlags: 0
@@ -43852,15 +43877,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8754668853532955618}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7779d2e9d5ee83745bc2e6fcfb1610fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 99ab6d7ce11f3a245907fd45ae459b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 2244699669690929549, guid: 1f41fd9a9106de748995d519f7f70fcd,
     type: 3}
-  _count: 10
-  _offsetX: 8
-  _offsetY: 8
-  _offsetZ: 8
 --- !u!114 &8754668854395378000
 MonoBehaviour:
   m_ObjectHideFlags: 0

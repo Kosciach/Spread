@@ -62,6 +62,9 @@ public class RangeWeaponData : WeaponData
         public float RotY;
         [Range(0, 5)]
         public float RotZ;
+        [Space(5)]
+        [Range(0, 5)]
+        public float CameraShake;
     }
 
     [System.Serializable]

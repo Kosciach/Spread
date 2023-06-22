@@ -50,7 +50,7 @@ public class PlayerSwimState : PlayerBaseState
     {
         _ctx.MovementControllers.VerticalVelocity.GravityController.ToggleApplyGravity(enable);
         _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(enable);
-        _ctx.CameraControllers.Cine.Move.SetCameraPosition(cameraPosition, 6);
+        _ctx.CameraControllers.Cine.Move.SetCameraPosition(cameraPosition, 0.2f);
 
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, enable, 0.3f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Swim, !enable, 0.3f);

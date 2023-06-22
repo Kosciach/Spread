@@ -62,11 +62,12 @@ MonoBehaviour:
     AccuracyOffset: 0
     PenetrationForce: 12
   RecoilSettings:
-    Speed: 2
-    BackPush: 0.15
+    Speed: 5
+    BackPush: 0.2
     RotX: 3
-    RotY: 0
+    RotY: 3
     RotZ: 2
+    CameraShake: 1
   AmmoSettings:
     MagSize: 12
     AmmoType: {fileID: 11400000, guid: e4909301d267d854c906fb41fcb3fbff, type: 2}

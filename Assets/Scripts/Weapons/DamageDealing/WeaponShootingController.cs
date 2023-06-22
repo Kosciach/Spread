@@ -95,7 +95,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Recoil.Recoil(_rangeWeaponData.RecoilSettings);
 
         //Shake
-        CameraShake.Instance.Shake(0.5f, 10);
+        CameraShake.Instance.Shake(_rangeWeaponData.RecoilSettings.CameraShake, 10);
 
 
         return true;

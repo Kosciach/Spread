@@ -65,6 +65,7 @@ MonoBehaviour:
     RotX: 4
     RotY: 3
     RotZ: 4
+    CameraShake: 2
   AmmoSettings:
     MagSize: 5
     AmmoType: {fileID: 11400000, guid: 3c45487ce23f68e42806317015a885d8, type: 2}

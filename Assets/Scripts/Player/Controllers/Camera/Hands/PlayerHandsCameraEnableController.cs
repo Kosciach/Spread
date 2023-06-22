@@ -44,7 +44,6 @@ public class PlayerHandsCameraEnableController : MonoBehaviour
 
         int index = enable ? 0 : 1;
 
-        //_handsCamera.transform.parent = _handsCameraParents[index];
         _handsCamera.enabled = enable;
         _enableHandsCamera = enable;
         _handsCameraModeMethod[index]();
