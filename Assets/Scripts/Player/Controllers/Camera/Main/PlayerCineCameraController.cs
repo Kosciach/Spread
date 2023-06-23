@@ -10,7 +10,7 @@ public class PlayerCineCameraController : MonoBehaviour
     [SerializeField] PlayerCineCameraMoveController _move; public PlayerCineCameraMoveController Move { get { return _move; } }
     [SerializeField] PlayerCineCameraHorizontalController _horizontal; public PlayerCineCameraHorizontalController HorizontalController { get { return _horizontal; } }
     [SerializeField] PlayerCineCameraVerticalController _vertical; public PlayerCineCameraVerticalController VerticalController { get { return _vertical; } }
-    [SerializeField] PlayerCineCameraRotationOffsetController _rotationOffset; public PlayerCineCameraRotationOffsetController RotationOffset { get { return _rotationOffset; } }
+    [SerializeField] PlayerCineCameraRecoilController _recoil; public PlayerCineCameraRecoilController Recoil { get { return _recoil; } }
     [Space(5)]
     [SerializeField] CinemachineVirtualCamera _cineCamera; public CinemachineVirtualCamera CineCamera { get { return _cineCamera; } }
     [SerializeField] CinemachinePOV _cinePOV; public CinemachinePOV CinePOV { get { return _cinePOV; } }

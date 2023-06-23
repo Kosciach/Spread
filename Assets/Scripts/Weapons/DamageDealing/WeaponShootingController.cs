@@ -15,6 +15,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     private BaseBulletSpawner _bulletSpawner;
     private WeaponBarrelController _barrelController;
     private BaseWeaponAmmoController _ammoController;
+    private BaseWeaponPartsAnimator _partsAnimator;
 
 
 
@@ -46,6 +47,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _bulletSpawner = _barrel.GetComponent<BaseBulletSpawner>();
         _barrelController = _barrel.GetComponent<WeaponBarrelController>();
         _ammoController = GetComponent<BaseWeaponAmmoController>();
+        _partsAnimator = GetComponent<BaseWeaponPartsAnimator>();
 
 
 
@@ -65,6 +67,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         {
             if (!_reloadToggle) return;
             _ammoController.OnReload();
+            _partsAnimator.OnReload();
         };
     }
 
@@ -90,6 +93,9 @@ public class WeaponShootingController : WeaponDamageDealingController
 
         //Ammo
         _ammoController.OnShoot();
+
+        //Parts anim
+        _partsAnimator.OnShoot(_ammoController.IsAmmoReadyToBeShoot);
 
         //Recoil
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Recoil.Recoil(_rangeWeaponData.RecoilSettings);

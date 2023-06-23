@@ -64,9 +64,11 @@ MonoBehaviour:
   RecoilSettings:
     Speed: 1
     BackPush: 0.1
-    RotX: 2
-    RotY: 1
+    RotX: 1.21
+    RotY: 0
     RotZ: 1
+    Vertical: 1.68
+    Horizontal: 1
     CameraShake: 1
   AmmoSettings:
     MagSize: 27

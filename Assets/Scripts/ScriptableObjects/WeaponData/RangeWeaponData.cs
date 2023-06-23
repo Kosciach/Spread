@@ -51,6 +51,7 @@ public class RangeWeaponData : WeaponData
     [System.Serializable]
     public struct RecoilSettingsStruct
     {
+        [Header("====WeaponRecoil====")]
         [Range(0.1f, 5)]
         public float Speed;
         [Space(5)]
@@ -62,7 +63,14 @@ public class RangeWeaponData : WeaponData
         public float RotY;
         [Range(0, 5)]
         public float RotZ;
+
         [Space(5)]
+        [Header("====CameraRecoil====")]
+        [Range(0, 10)]
+        public float Vertical;
+        [Range(0, 5)]
+        public float Horizontal;
+
         [Range(0, 5)]
         public float CameraShake;
     }

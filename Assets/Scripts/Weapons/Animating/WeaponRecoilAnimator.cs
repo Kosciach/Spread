@@ -15,18 +15,9 @@ public class WeaponRecoilAnimator : MonoBehaviour
     [SerializeField] int _toggle;
 
 
-
     [Space(20)]
     [Header("====Settings====")]
-    [SerializeField] TogglesSettings _toggles;
-    [Space(5)]
-    [Range(0, 10)]
-    [SerializeField] float _resetRecoilPosSpeed;
-    [Range(0, 10)]
-    [SerializeField] float _resetRecoilRotSpeed;
-    [Range(0, 1)]
-    [SerializeField] float _recoilSpeed;
-
+    [SerializeField] RecoilSettings _recoilSettings;
 
     private int zAngleDirection = 1;
     private int yAngleDirection = -1;
@@ -34,13 +25,14 @@ public class WeaponRecoilAnimator : MonoBehaviour
 
 
     [System.Serializable]
-    private struct TogglesSettings
+    private struct RecoilSettings
     {
-        public bool MoveBack;
-        public bool RotX;
-        public bool RotY;
-        public bool RotZ;
+        [Range(0, 10)]
+        public float ResetPosSpeed;
+        [Range(0, 10)]
+        public float ResetRotSpeed;
     }
+
 
 
 
@@ -54,18 +46,20 @@ public class WeaponRecoilAnimator : MonoBehaviour
 
     private void ResetRecoil()
     {
-        _recoilVectors.Pos = Vector3.Lerp(_recoilVectors.Pos, Vector3.zero, _resetRecoilPosSpeed * Time.deltaTime);
-        _recoilVectors.Rot = Vector3.Lerp(_recoilVectors.Rot, Vector3.zero, _resetRecoilRotSpeed * Time.deltaTime);
+        _recoilVectors.Pos = Vector3.Lerp(_recoilVectors.Pos, Vector3.zero, _recoilSettings.ResetPosSpeed * Time.deltaTime);
+        _recoilVectors.Rot = Vector3.Lerp(_recoilVectors.Rot, Vector3.zero, _recoilSettings.ResetRotSpeed * Time.deltaTime);
     }
 
 
 
     public void Recoil(RangeWeaponData.RecoilSettingsStruct recoilSettings)
     {
-        if (_toggles.MoveBack) MoveBack(recoilSettings);
-        if (_toggles.RotX) RotX(recoilSettings);
-        if (_toggles.RotY) RotY(recoilSettings);
-        if (_toggles.RotZ) RotZ(recoilSettings);
+        MoveBack(recoilSettings);
+        RotX(recoilSettings);
+        RotY(recoilSettings);
+        RotZ(recoilSettings);
+
+        _weaponAnimator.PlayerStateMachine.CameraControllers.Cine.Recoil.Recoil(recoilSettings);
     }
 
     private void MoveBack(RangeWeaponData.RecoilSettingsStruct recoilSettings)

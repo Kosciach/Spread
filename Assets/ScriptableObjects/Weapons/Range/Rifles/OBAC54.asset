@@ -63,8 +63,10 @@ MonoBehaviour:
     Speed: 2
     BackPush: 0.2
     RotX: 4
-    RotY: 3
+    RotY: 0
     RotZ: 4
+    Vertical: 2
+    Horizontal: 0.61
     CameraShake: 2
   AmmoSettings:
     MagSize: 5

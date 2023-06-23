@@ -7,7 +7,6 @@ using Cinemachine;
 /// </summary>
 [AddComponentMenu("")] // Hide in menu
 [ExecuteAlways]
-
 [SaveDuringPlay]
 public class CineCameraRotationOffset : CinemachineExtension
 {

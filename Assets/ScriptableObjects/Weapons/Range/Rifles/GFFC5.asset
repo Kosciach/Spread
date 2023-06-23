@@ -65,9 +65,11 @@ MonoBehaviour:
     Speed: 1
     BackPush: 0.113
     RotX: 2.44
-    RotY: 5
+    RotY: 0
     RotZ: 1
-    CameraShake: 1.5
+    Vertical: 0.5
+    Horizontal: 1
+    CameraShake: 1
   AmmoSettings:
     MagSize: 30
     AmmoType: {fileID: 11400000, guid: 3c45487ce23f68e42806317015a885d8, type: 2}
