@@ -85,6 +85,6 @@ public class FireMode_Charge : BaseFireMode
 
     private void EjectShellAtAnimationEvent()
     {
-        _shellEjector.EjectShell(_weaponShootingController.StateMachine.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x);
+        _shellEjector.EjectShell();
     }
 }

@@ -46,6 +46,7 @@ public class PlayerStateMachine : MonoBehaviour
         public PlayerInputController Input;
         public PlayerColliderController Collider;
         public PlayerInteractionController Interaction;
+        public PlayerStatsController Stats;
     }
 
     [System.Serializable]

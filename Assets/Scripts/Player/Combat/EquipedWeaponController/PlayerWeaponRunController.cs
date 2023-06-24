@@ -47,6 +47,8 @@ public class PlayerWeaponRunController : MonoBehaviour
 
     private void EnableRun()
     {
+        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.SetUseStamina();
+
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
 
         WeaponMainPositioner mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;

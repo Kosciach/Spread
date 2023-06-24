@@ -62,6 +62,7 @@ public class PlayerAimController : MonoBehaviour
 
     private void AimEnable()
     {
+        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.SetUseStamina();
         _combatController.EquipedWeapon.DamageDealingController.Toggle(true);
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunBool(false);

@@ -43,6 +43,8 @@ public class RangeWeaponHoldController : WeaponHoldController
         mainPositioner.Rotate(rot, rotateSpeed);
         mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
         {
+            _stateMachine.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.SetRestoreStamina();
+
             _stateMachine.DamageDealingController.Toggle(false);
 
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
@@ -77,6 +79,8 @@ public class RangeWeaponHoldController : WeaponHoldController
         mainPositioner.Rotate(rot, rotateSpeed);
         mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
         {
+            _stateMachine.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.SetUseStamina();
+
             _stateMachine.DamageDealingController.Toggle(true);
 
             _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);

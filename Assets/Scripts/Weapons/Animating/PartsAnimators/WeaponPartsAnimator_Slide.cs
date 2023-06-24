@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponPartsAnimator_Slide : BaseWeaponPartsAnimator
 {
     [Header("====References====")]
+    [SerializeField] BulletShellEjector _shellEjector;
     [SerializeField] Transform _slide;
     [Space(5)]
     [SerializeField] Vector3 _firedPosition;
@@ -45,6 +46,7 @@ public class WeaponPartsAnimator_Slide : BaseWeaponPartsAnimator
         _isSlideForward = false;
         _slide.LeanMoveLocal(_firedPosition, _slideMoveBackTime).setOnComplete(() =>
         {
+            _shellEjector.EjectShell();
             _slide.LeanMoveLocal(_defaultPosition, _slideMoveForwardTime);
             _isSlideForward = true;
         });
@@ -52,7 +54,10 @@ public class WeaponPartsAnimator_Slide : BaseWeaponPartsAnimator
     private void MoveBack()
     {
         _isSlideForward = false;
-        _slide.LeanMoveLocal(_firedPosition, _slideMoveBackTime);
+        _slide.LeanMoveLocal(_firedPosition, _slideMoveBackTime).setOnComplete(() =>
+        {
+            _shellEjector.EjectShell();
+        });
     }
     private void MoveForward()
     {
