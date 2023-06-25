@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
-public class PlayerWeaponWallController : MonoBehaviour
+public class PlayerEquipedWeapon_Wall : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] PlayerEquipedWeaponController _equipedWeaponController;

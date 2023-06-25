@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBlockController : MonoBehaviour
+public class PlayerEquipedWeapon_Block : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] PlayerEquipedWeaponController _equipedWeaponController;

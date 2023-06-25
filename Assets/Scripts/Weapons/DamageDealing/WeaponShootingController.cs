@@ -16,6 +16,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     private WeaponBarrelController _barrelController;
     private BaseWeaponAmmoController _ammoController;
     private BaseWeaponPartsAnimator _partsAnimator;
+    private WeaponFireModesAnimator _fireModesAnimator;
 
 
 
@@ -48,6 +49,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _barrelController = _barrel.GetComponent<WeaponBarrelController>();
         _ammoController = GetComponent<BaseWeaponAmmoController>();
         _partsAnimator = GetComponent<BaseWeaponPartsAnimator>();
+        _fireModesAnimator = GetComponent<WeaponFireModesAnimator>();
 
 
 
@@ -59,6 +61,7 @@ public class WeaponShootingController : WeaponDamageDealingController
             fireMode.enabled = false;
         }
         _currentFireModeType = _currentFireMode.FireModeType;
+        _fireModesAnimator.OnFireModeChange(_currentFireModeIndex);
     }
     private void Start()
     {
@@ -126,7 +129,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _currentFireMode.enabled = true;
 
         _currentFireModeType = _currentFireMode.FireModeType;
-
+        _fireModesAnimator.OnFireModeChange(_currentFireModeIndex);
 
         CanvasController.Instance.HudControllers.Firemodes.ChangeFireMode(_currentFireModeType);
 
@@ -180,5 +183,6 @@ public class WeaponShootingController : WeaponDamageDealingController
         _ammoController.OnWeaponUnEquip();
         CanvasController.Instance.HudControllers.Weapon.Toggle(false, 0.1f);
         CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
+        CanvasController.Instance.HudControllers.Firemodes.Toggle(false, 0.1f);
     }
 }

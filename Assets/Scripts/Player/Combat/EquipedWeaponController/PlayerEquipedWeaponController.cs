@@ -6,9 +6,9 @@ public class PlayerEquipedWeaponController : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
-    [SerializeField] PlayerEquipedWeaponHoldController _hold; public PlayerEquipedWeaponHoldController Hold { get { return _hold; } }
-    [SerializeField] PlayerAimController _aim; public PlayerAimController Aim { get { return _aim; } }
-    [SerializeField] PlayerBlockController _block; public PlayerBlockController Block { get { return _block; } }
-    [SerializeField] PlayerWeaponRunController _run; public PlayerWeaponRunController Run { get { return _run; } }
-    [SerializeField] PlayerWeaponWallController _wall; public PlayerWeaponWallController Wall { get { return _wall; } }
+    [SerializeField] PlayerEquipedWeapon_Hold _hold; public PlayerEquipedWeapon_Hold Hold { get { return _hold; } }
+    [SerializeField] PlayerEquipedWeapon_Aim _aim; public PlayerEquipedWeapon_Aim Aim { get { return _aim; } }
+    [SerializeField] PlayerEquipedWeapon_Block _block; public PlayerEquipedWeapon_Block Block { get { return _block; } }
+    [SerializeField] PlayerEquipedWeapon_Run _run; public PlayerEquipedWeapon_Run Run { get { return _run; } }
+    [SerializeField] PlayerEquipedWeapon_Wall _wall; public PlayerEquipedWeapon_Wall Wall { get { return _wall; } }
 }

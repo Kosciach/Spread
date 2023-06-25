@@ -194,6 +194,7 @@ public class PlayerCombatController : MonoBehaviour
         if (_equipedWeaponData.Fists) return;
 
 
+        SetState(CombatStateEnum.UnEquip);
         _weaponWallDetector.ToggleCollider(false);
 
         //Toggle layers
@@ -254,7 +255,7 @@ public class PlayerCombatController : MonoBehaviour
     {
         if (!IsState(CombatStateEnum.Equiped)) return;
 
-        SetState(CombatStateEnum.Unarmed);
+        SetState(CombatStateEnum.UnEquip);
         _isTemporaryUnEquip = true;
 
 
@@ -285,6 +286,8 @@ public class PlayerCombatController : MonoBehaviour
 
         _equipedWeapon = null;
         _equipedWeaponData = null;
+
+        SetState(CombatStateEnum.Unarmed);
     }
     public void RecoverFromTemporaryUnEquip()
     {
