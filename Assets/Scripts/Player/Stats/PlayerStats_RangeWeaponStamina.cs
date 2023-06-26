@@ -46,5 +46,7 @@ public class PlayerStats_RangeWeaponStamina : MonoBehaviour
     {
         _holdingStamina += _staminaControll * _weaponWeight * 5 * Time.deltaTime;
         _holdingStamina = Mathf.Clamp(_holdingStamina, 0, 100);
+
+        CanvasController.Instance.HudControllers.Stats.UpdateWeaponStamina(_holdingStamina/100);
     }
 }

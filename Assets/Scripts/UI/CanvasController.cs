@@ -14,6 +14,7 @@ public class CanvasController : MonoBehaviour
     [System.Serializable]
     public struct HudControllersStruct
     {
+        public StatsHudController Stats;
         public CrosshairController Crosshair;
         public AmmoHudController Ammo;
         public FiremodesHudController Firemodes;
