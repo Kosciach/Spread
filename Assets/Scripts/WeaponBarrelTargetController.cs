@@ -12,6 +12,8 @@ public class WeaponBarrelTargetController : MonoBehaviour
     [Space(20)]
     [Header("====Settings====")]
     [SerializeField] LayerMask _playerMask;
+    [Range(0, 1)]
+    [SerializeField] float _weaponAnimationsInfluance;
 
     private void Update()
     {
@@ -23,7 +25,7 @@ public class WeaponBarrelTargetController : MonoBehaviour
 
     private void ApplyAdditionalWeaponAnimatorRotation()
     {
-        transform.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.Weapon.ExtraVectors.Rot);
+        transform.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.Weapon.ExtraVectors.Rot * _weaponAnimationsInfluance);
     }
     private void ShootRay()
     {

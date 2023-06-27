@@ -9,6 +9,8 @@ public class PlayerRunState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.CoreControllers.Stats.Stats.Stamina.ToggleUseStamina(true);
+
         _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(true);
         _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(true);
 
@@ -87,5 +89,6 @@ public class PlayerRunState : PlayerBaseState
     public override void StateExit()
     {
         _ctx.AnimatingControllers.Animator.SetBool("Run", false);
+        _ctx.CoreControllers.Stats.Stats.Stamina.ToggleUseStamina(false);
     }
 }

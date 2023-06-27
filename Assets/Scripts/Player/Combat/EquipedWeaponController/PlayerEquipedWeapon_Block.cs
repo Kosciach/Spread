@@ -54,7 +54,7 @@ public class PlayerEquipedWeapon_Block : MonoBehaviour
 
     private void BlockEnable()
     {
-        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.SetUseStamina();
+        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(true);
 
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Run.ToggleRunBool(false);

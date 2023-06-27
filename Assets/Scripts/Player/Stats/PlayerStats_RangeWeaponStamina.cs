@@ -11,10 +11,19 @@ public class PlayerStats_RangeWeaponStamina : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [Range(0, 100)]
-    [SerializeField] float _holdingStamina;
-    [SerializeField] float _weaponWeight = 2;
+    [SerializeField] float _stamina;
+    [SerializeField] float _weaponWeight;
+    [SerializeField] bool _useStamina;
 
-    private int _staminaControll = 1;
+
+    [Space(20)]
+    [Header("====Settings====")]
+    [Range(0, 2)]
+    [SerializeField] float _staminaRecoverSpeed;
+    [Range(0, 2)]
+    [SerializeField] float _staminaUseSpeed;
+
+    private float _staminaControll = 10;
 
 
 
@@ -25,28 +34,17 @@ public class PlayerStats_RangeWeaponStamina : MonoBehaviour
 
 
 
-
-
-    public void SetWeaponWeight(float weaponWeight)
+    public void ToggleUseStamina(bool useStamina)
     {
-        _weaponWeight = weaponWeight;
+        _useStamina = useStamina;
+        _staminaControll = _useStamina ? (-_staminaUseSpeed * _weaponWeight) : (_staminaRecoverSpeed / _weaponWeight);
     }
-
-    public void SetRestoreStamina()
-    {
-        _staminaControll = 1;
-    }
-    public void SetUseStamina()
-    {
-        _staminaControll = -1;
-    }
-
 
     private void UpdateStamina()
     {
-        _holdingStamina += _staminaControll * _weaponWeight * 5 * Time.deltaTime;
-        _holdingStamina = Mathf.Clamp(_holdingStamina, 0, 100);
+        _stamina += _staminaControll * 10 * Time.deltaTime;
+        _stamina = Mathf.Clamp(_stamina, 0, 100);
 
-        CanvasController.Instance.HudControllers.Stats.UpdateWeaponStamina(_holdingStamina/100);
+        CanvasController.Instance.HudControllers.Stats.UpdateWeaponStamina(_stamina / 100);
     }
 }

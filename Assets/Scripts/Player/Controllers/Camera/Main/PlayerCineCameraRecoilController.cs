@@ -22,6 +22,8 @@ public class PlayerCineCameraRecoilController : MonoBehaviour
     [Header("====Settings====")]
     [Range(0, 10)]
     [SerializeField] float _recoilResetSpeed;
+    [Range(0, 1)]
+    [SerializeField] float _weight;
 
 
 
@@ -45,7 +47,7 @@ public class PlayerCineCameraRecoilController : MonoBehaviour
     }
     private void ApplyRecoil()
     {
-        _rotationOffset.m_Offset = _recoil;
+        _rotationOffset.m_Offset = _recoil * _weight;
     }
 
 

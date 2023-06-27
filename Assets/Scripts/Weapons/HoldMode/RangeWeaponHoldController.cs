@@ -43,7 +43,7 @@ public class RangeWeaponHoldController : WeaponHoldController
         mainPositioner.Rotate(rot, rotateSpeed);
         mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
         {
-            _stateMachine.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.SetRestoreStamina();
+            _stateMachine.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
             _stateMachine.DamageDealingController.Toggle(false);
 
@@ -79,7 +79,7 @@ public class RangeWeaponHoldController : WeaponHoldController
         mainPositioner.Rotate(rot, rotateSpeed);
         mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
         {
-            _stateMachine.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.SetUseStamina();
+            _stateMachine.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(true);
 
             _stateMachine.DamageDealingController.Toggle(true);
 

@@ -24,6 +24,8 @@ public class PlayerStats_Health : MonoBehaviour, IDamageable
         _health -= damage;
         _health = Mathf.Clamp(_health, 0, 100);
 
+        CanvasController.Instance.HudControllers.Stats.UpdateHealth(_health / 100);
+
         if(_health == 0)
         {
             Die();
@@ -41,5 +43,7 @@ public class PlayerStats_Health : MonoBehaviour, IDamageable
     {
         _health += heal;
         _health = Mathf.Clamp(_health, 0, 100);
+
+        CanvasController.Instance.HudControllers.Stats.UpdateHealth(_health / 100);
     }
 }

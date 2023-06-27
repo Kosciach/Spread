@@ -6,15 +6,19 @@ using UnityEngine.UI;
 public class StatsHudController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] Image _healthBar;
-    [SerializeField] Image _staminaBar;
-    [SerializeField] Image _weaponStaminaBar;
-    [Space(5)]
-    [SerializeField] Image _healthIcon;
-    [SerializeField] Image _staminasIcon;
+    [SerializeField] BarAndIcon _health;
+    [SerializeField] BarAndIcon _armor;
+    [SerializeField] BarAndIcon _stamina;
+    [SerializeField] BarAndIcon _weaponStamina;
 
 
 
+    [System.Serializable]
+    private struct BarAndIcon
+    {
+        public Image Icon;
+        public Image Bar;
+    }
 
 
 
@@ -22,14 +26,18 @@ public class StatsHudController : MonoBehaviour
 
     public void UpdateHealth(float health)
     {
-        LeanTween.scaleX(_healthBar.gameObject, health, 0.1f);
+        LeanTween.scaleX(_health.Bar.gameObject, health, 0.1f);
+    }
+    public void UpdateArmor(float armor)
+    {
+        LeanTween.scaleX(_armor.Bar.gameObject, armor, 0.1f);
     }
     public void UpdateStamina(float stamina)
     {
-        LeanTween.scaleX(_staminaBar.gameObject, stamina, 0.1f);
+        _stamina.Bar.rectTransform.localScale = new Vector3(stamina, 1, 1);
     }
     public void UpdateWeaponStamina(float weaponStamina)
     {
-        LeanTween.scaleX(_weaponStaminaBar.gameObject, weaponStamina, 0.1f);
+        _weaponStamina.Bar.rectTransform.localScale = new Vector3(1, weaponStamina, 1);
     }
 }

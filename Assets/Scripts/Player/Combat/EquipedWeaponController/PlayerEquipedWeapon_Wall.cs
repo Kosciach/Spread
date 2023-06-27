@@ -44,7 +44,7 @@ public class PlayerEquipedWeapon_Wall : MonoBehaviour
 
     private void WallEnable()
     {
-        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.SetRestoreStamina();
+        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Aim.ToggleAimBool(false);

@@ -57,7 +57,7 @@ MonoBehaviour:
     Range: 6
     FireRate: 30
     CarredForce: 25
-    AccuracyOffset: 0
+    AccuracyOffset: 0.5
     PenetrationForce: 30
   RecoilSettings:
     Speed: 2

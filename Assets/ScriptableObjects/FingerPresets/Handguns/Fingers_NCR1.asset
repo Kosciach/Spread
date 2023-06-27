@@ -100,5 +100,5 @@ MonoBehaviour:
         Hint_Position: {x: 0.035700098, y: 0.27689853, z: 0.03939982}
   TriggerDisciplineIndexFinger:
     Target_Position: {x: 0.0483, y: 0.2915, z: 0.0215}
-    Target_Rotation: {x: 76.7, y: 0, z: 0}
+    Target_Rotation: {x: 283.3, y: 0, z: 0}
     Hint_Position: {x: -0.0014, y: 0.2304, z: 0.0582}

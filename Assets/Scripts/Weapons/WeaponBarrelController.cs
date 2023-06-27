@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class WeaponBarrelController : MonoBehaviour
 {
+    [Header("====Settings====")]
+    [Range(0, 10)]
+    [SerializeField] float _accuracyOffsetWeight;
+
     private WeaponStateMachine _stateMachine;
     private Transform _target;
     private RangeWeaponData _rangeWeaponData;
@@ -23,12 +27,14 @@ public class WeaponBarrelController : MonoBehaviour
         if (distanceToTarget < 2) return;
 
         transform.LookAt(_target);
-
-
+        AddAccuracyOffset();
+    }
+    private void AddAccuracyOffset()
+    {
         Vector3 offset = Vector3.zero;
-        offset.x = Random.Range(-_rangeWeaponData.RangeStats.AccuracyOffset, _rangeWeaponData.RangeStats.AccuracyOffset + 1);
-        offset.y = Random.Range(-_rangeWeaponData.RangeStats.AccuracyOffset, _rangeWeaponData.RangeStats.AccuracyOffset + 1);
-        offset.z = Random.Range(-_rangeWeaponData.RangeStats.AccuracyOffset, _rangeWeaponData.RangeStats.AccuracyOffset + 1);
-        transform.rotation *= Quaternion.Euler(offset);
+        float weaponAccuracyOffset = _rangeWeaponData.RangeStats.AccuracyOffset;
+        offset.x = Random.Range(-weaponAccuracyOffset, weaponAccuracyOffset);
+        offset.y = Random.Range(-weaponAccuracyOffset, weaponAccuracyOffset);
+        transform.rotation *= Quaternion.Euler(offset * _accuracyOffsetWeight);
     }
 }

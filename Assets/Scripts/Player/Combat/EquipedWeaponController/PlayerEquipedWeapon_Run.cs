@@ -47,7 +47,7 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
 
     private void EnableRun()
     {
-        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.SetRestoreStamina();
+        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
 
