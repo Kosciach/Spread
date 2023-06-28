@@ -47,6 +47,8 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
 
     private void EnableRun()
     {
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
+
         _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);

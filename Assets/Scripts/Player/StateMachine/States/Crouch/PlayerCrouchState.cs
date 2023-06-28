@@ -15,7 +15,14 @@ public class PlayerCrouchState : PlayerBaseState
         _ctx.AnimatingControllers.Weapon.Crouch.Toggle(true);
 
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+        {
             _ctx.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Crouch, 5);
+        }
+
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped))
+        {
+            _ctx.CombatControllers.Combat.EquipedWeapon.OnPlayerCrouch();
+        }
 
         _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, true, 0.3f);
         _ctx.MovementControllers.Movement.OnGround.SetCrouchSpeed();

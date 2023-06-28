@@ -16,8 +16,9 @@ public class PlayerRunState : PlayerBaseState
 
         _ctx.CameraControllers.Cine.Fov.SetFov(15, 1f);
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+        {
             _ctx.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Run, 5);
-
+        }
 
 
         _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleJumpReloaded(true);

@@ -73,3 +73,6 @@ MonoBehaviour:
   AmmoSettings:
     MagSize: 27
     AmmoType: {fileID: 11400000, guid: 832717a2cff27324898491caf1dadd79, type: 2}
+  CrosshairSetting:
+    AccuracyOffsetMultiplier: 1
+    CrosshairType: 2

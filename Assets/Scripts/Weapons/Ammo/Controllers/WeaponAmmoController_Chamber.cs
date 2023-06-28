@@ -117,7 +117,7 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
         int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
 
         CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
-        CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(AmmoHudController.AmmoHudType.Chamber);
+        CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(HudController_Ammo.AmmoHudType.Chamber);
         CanvasController.Instance.HudControllers.Ammo.ChangeRoundIcon(_weaponData.AmmoSettings.AmmoType.SingleRoundIcon);
         CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateAmmoInMag(_ammoInMag);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);

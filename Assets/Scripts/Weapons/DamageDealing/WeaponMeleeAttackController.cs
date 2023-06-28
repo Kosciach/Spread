@@ -64,4 +64,22 @@ public class WeaponMeleeAttackController : WeaponDamageDealingController
     {
         Debug.Log("Melee UnE");
     }
+
+    public override void OnPlayerIdle()
+    {
+        Debug.Log("Melee Idle");
+    }
+    public override void OnPlayerWalk()
+    {
+        Debug.Log("Melee Walk");
+    }
+    public override void OnPlayerCrouch()
+    {
+        Debug.Log("Melee Run");
+    }
+
+    public override void OnWeaponAim(bool isAim)
+    {
+        Debug.Log("Melee Aim " + isAim);
+    }
 }

@@ -28,7 +28,7 @@ public class MeleeWeaponHoldController : WeaponHoldController
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
-        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
 
         WeaponMainPositioner mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
         mainPositioner.Rotate(_meleeWeaponData.Hip.RightHand_Rotation, 1);

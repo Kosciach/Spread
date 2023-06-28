@@ -77,7 +77,7 @@ public class WeaponAmmoController_Cylinder : BaseWeaponAmmoController
         PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
         int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
 
-        CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(AmmoHudController.AmmoHudType.Cylinder);
+        CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(HudController_Ammo.AmmoHudType.Cylinder);
         CanvasController.Instance.HudControllers.Ammo.ChangeRoundIcon(_weaponData.AmmoSettings.AmmoType.SingleRoundIcon);
         CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.UpdateAmmoInCylinder(_ammoInCylinder);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);

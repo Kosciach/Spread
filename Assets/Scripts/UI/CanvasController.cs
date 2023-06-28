@@ -14,11 +14,11 @@ public class CanvasController : MonoBehaviour
     [System.Serializable]
     public struct HudControllersStruct
     {
-        public StatsHudController Stats;
-        public CrosshairController Crosshair;
-        public AmmoHudController Ammo;
-        public FiremodesHudController Firemodes;
-        public WeaponHudController Weapon;
+        public HudController_Stats Stats;
+        public HudController_Crosshair Crosshair;
+        public HudController_Ammo Ammo;
+        public HudController_Firemodes Firemodes;
+        public HudController_Weapon Weapon;
     }
 
 

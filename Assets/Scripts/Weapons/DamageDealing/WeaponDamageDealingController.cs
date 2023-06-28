@@ -47,9 +47,11 @@ public abstract class WeaponDamageDealingController : MonoBehaviour
     public abstract void OnWeaponEquip();
     public abstract void OnWeaponUnEquip();
 
+    public abstract void OnPlayerIdle();
+    public abstract void OnPlayerWalk();
+    public abstract void OnPlayerCrouch();
 
-
-
+    public abstract void OnWeaponAim(bool isAim);
 
     private void OnEnable()
     {

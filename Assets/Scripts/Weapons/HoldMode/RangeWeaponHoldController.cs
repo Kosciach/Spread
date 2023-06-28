@@ -5,13 +5,14 @@ using UnityEngine;
 public class RangeWeaponHoldController : WeaponHoldController
 {
     private RangeWeaponData _rangeWeaponData;
-    private WeaponShootingController _shootingController => (WeaponShootingController)_stateMachine.DamageDealingController;
+    private WeaponShootingController _shootingController;
 
 
 
     protected override void VirtualAwake()
     {
         _rangeWeaponData = (RangeWeaponData)_stateMachine.DataHolder.WeaponData;
+        _shootingController = (WeaponShootingController)_stateMachine.DamageDealingController;
     }
 
     public override void ChangeHoldMode(HoldModeEnum mode)
@@ -23,7 +24,7 @@ public class RangeWeaponHoldController : WeaponHoldController
 
     public override void RestHoldMode(float rotateSpeed, float moveSpeed)
     {
-        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
 
 
         Vector3 rot = _rangeWeaponData.HoldTransforms.Rest.RightHand_Rotation;
@@ -59,7 +60,7 @@ public class RangeWeaponHoldController : WeaponHoldController
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
-        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Lines);
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(_rangeWeaponData.CrosshairSetting.CrosshairType);
 
 
         Vector3 rot = _rangeWeaponData.HoldTransforms.Hip.RightHand_Rotation;

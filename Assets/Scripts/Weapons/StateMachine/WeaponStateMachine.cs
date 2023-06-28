@@ -94,11 +94,36 @@ public class WeaponStateMachine : MonoBehaviour
 
     public void OnWeaponEquip()
     {
+        if (_playerStateMachine.CurrentStateName == "Idle") OnPlayerIdle();
+        else if (_playerStateMachine.CurrentStateName == "Walk") OnPlayerWalk();
+        else if (_playerStateMachine.CurrentStateName == "Run") OnPlayerCrouch();
+
+        OnWeaponAim(_playerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim);
+
         _damageDealingController.OnWeaponEquip();
     }
     public void OnWeaponUnEquip()
     {
         _damageDealingController.OnWeaponUnEquip();
+    }
+
+
+    public void OnPlayerIdle()
+    {
+        _damageDealingController.OnPlayerIdle();
+    }
+    public void OnPlayerWalk()
+    {
+        _damageDealingController.OnPlayerWalk();
+    }
+    public void OnPlayerCrouch()
+    {
+        _damageDealingController.OnPlayerCrouch();
+    }
+
+    public void OnWeaponAim(bool isAim)
+    {
+        _damageDealingController.OnWeaponAim(isAim);
     }
 }
 

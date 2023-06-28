@@ -140,7 +140,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
 
 
-        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
 
 
         //Move right hand to origin
@@ -222,7 +222,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
 
-        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(CrosshairController.CrosshairTypeEnum.Dot);
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
 
         _equipedWeapon.OnWeaponUnEquip();
 

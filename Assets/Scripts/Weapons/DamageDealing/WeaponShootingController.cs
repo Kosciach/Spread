@@ -12,6 +12,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     [Space(5)]
     [SerializeField] Transform _barrel;
 
+
     private BaseBulletSpawner _bulletSpawner;
     private WeaponBarrelController _barrelController;
     private BaseWeaponAmmoController _ammoController;
@@ -31,8 +32,10 @@ public class WeaponShootingController : WeaponDamageDealingController
     [SerializeField] bool _isEquiped;
 
 
-
     private RangeWeaponData _rangeWeaponData;
+
+
+
     public enum FireModeTypeEnum
     {
         Safety, Semi, Auto, Burst, Charge
@@ -184,5 +187,26 @@ public class WeaponShootingController : WeaponDamageDealingController
         CanvasController.Instance.HudControllers.Weapon.Toggle(false, 0.1f);
         CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
         CanvasController.Instance.HudControllers.Firemodes.Toggle(false, 0.1f);
+    }
+
+    public override void OnPlayerIdle()
+    {
+        _barrelController.AccuracyOffsetWeight = 1;
+        CanvasController.Instance.HudControllers.Crosshair.ApplyAccuracy(_barrelController.AccuracyOffsetWeight * _rangeWeaponData.CrosshairSetting.AccuracyOffsetMultiplier);
+    }
+    public override void OnPlayerWalk()
+    {
+        _barrelController.AccuracyOffsetWeight = 1.5f;
+        CanvasController.Instance.HudControllers.Crosshair.ApplyAccuracy(_barrelController.AccuracyOffsetWeight * _rangeWeaponData.CrosshairSetting.AccuracyOffsetMultiplier);
+    }
+    public override void OnPlayerCrouch()
+    {
+        _barrelController.AccuracyOffsetWeight = 0.5f;
+        CanvasController.Instance.HudControllers.Crosshair.ApplyAccuracy(_barrelController.AccuracyOffsetWeight * _rangeWeaponData.CrosshairSetting.AccuracyOffsetMultiplier);
+    }
+
+    public override void OnWeaponAim(bool isAim)
+    {
+        _barrelController.AimAccuracyWeight = isAim ? 0.1f : 1;
     }
 }

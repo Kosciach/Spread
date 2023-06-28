@@ -11,9 +11,14 @@ public class PlayerIdleState : PlayerBaseState
     {
         _ctx.CameraControllers.Cine.Fov.SetFov(0, 0.5f);
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+        {
             _ctx.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
+        }
 
-
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped))
+        {
+            _ctx.CombatControllers.Combat.EquipedWeapon.OnPlayerIdle();
+        }
 
         _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleJumpReloaded(true);
         _ctx.CoreControllers.Collider.SetColliderRadius(0.8f);

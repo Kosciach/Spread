@@ -81,7 +81,7 @@ public class WeaponAmmoController_DoubleBarrel : BaseWeaponAmmoController
         PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
         int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
 
-        CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(AmmoHudController.AmmoHudType.DoubleBarrel);
+        CanvasController.Instance.HudControllers.Ammo.SwitchAmmoHud(HudController_Ammo.AmmoHudType.DoubleBarrel);
         CanvasController.Instance.HudControllers.Ammo.ChangeRoundIcon(_weaponData.AmmoSettings.AmmoType.SingleRoundIcon);
         CanvasController.Instance.HudControllers.Ammo.Controllers.DoubleBarrel.UpdateBarrelRounds(_barrels[0], _barrels[1]);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);

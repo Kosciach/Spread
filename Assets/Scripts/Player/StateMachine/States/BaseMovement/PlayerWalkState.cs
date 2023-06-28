@@ -11,9 +11,14 @@ public class PlayerWalkState : PlayerBaseState
     {
         _ctx.CameraControllers.Cine.Fov.SetFov(5, 0.5f);
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+        {
             _ctx.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Walk, 5);
+        }
 
-
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped))
+        {
+            _ctx.CombatControllers.Combat.EquipedWeapon.OnPlayerWalk();
+        }
 
         _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleJumpReloaded(true);
         _ctx.CoreControllers.Collider.SetColliderRadius(0.8f);

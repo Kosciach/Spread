@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class WeaponBarrelController : MonoBehaviour
 {
-    [Header("====Settings====")]
+    [Header("====Debugs====")]
     [Range(0, 10)]
-    [SerializeField] float _accuracyOffsetWeight;
+    [SerializeField] float _accuracyOffsetWeight; public float AccuracyOffsetWeight { get { return _accuracyOffsetWeight; } set { _accuracyOffsetWeight = value; } }
+    [Range(0, 1)]
+    [SerializeField] float _aimAccuracyWeight; public float AimAccuracyWeight { get { return _aimAccuracyWeight; } set { _aimAccuracyWeight = value; } }
 
     private WeaponStateMachine _stateMachine;
     private Transform _target;
     private RangeWeaponData _rangeWeaponData;
+
 
 
     private void Awake()
@@ -35,6 +38,6 @@ public class WeaponBarrelController : MonoBehaviour
         float weaponAccuracyOffset = _rangeWeaponData.RangeStats.AccuracyOffset;
         offset.x = Random.Range(-weaponAccuracyOffset, weaponAccuracyOffset);
         offset.y = Random.Range(-weaponAccuracyOffset, weaponAccuracyOffset);
-        transform.rotation *= Quaternion.Euler(offset * _accuracyOffsetWeight);
+        transform.rotation *= Quaternion.Euler(offset * _accuracyOffsetWeight * _aimAccuracyWeight);
     }
 }

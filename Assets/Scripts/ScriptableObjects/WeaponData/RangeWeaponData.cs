@@ -17,7 +17,8 @@ public class RangeWeaponData : WeaponData
     public RecoilSettingsStruct RecoilSettings;
     [Space(5)]
     public AmmoSettingsStruct AmmoSettings;
-
+    [Space(5)]
+    public CrosshairSettingStruct CrosshairSetting;
 
 
 
@@ -80,5 +81,13 @@ public class RangeWeaponData : WeaponData
     {
         public int MagSize;
         public Ammo AmmoType;
+    }
+
+    [System.Serializable]
+    public struct CrosshairSettingStruct
+    {
+        [Range(0, 5)]
+        public float AccuracyOffsetMultiplier;
+        public HudController_Crosshair.CrosshairTypeEnum CrosshairType;
     }
 }
