@@ -1,4 +1,5 @@
 <h1 align="center">Spread</h1>
+<h3 align="center">Readme not complete!</h3>
 
 <h3 align="center">What is it?</h3>
   <img src="https://github.com/Kosciach/Spread/assets/97178996/54a33a24-7704-496b-9574-55255b869a56" alt="SpreadScreenshot">
