@@ -64,24 +64,24 @@ public class PlayerClimbState : PlayerBaseState
         bool isVault = _ctx.StateControllers.Climb.GetIsVault();
         if(isVault)
         {
-            _ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
+            //_ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
             Vault(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
             return;
         }
 
         if (climbHeight >= 0.2f && climbHeight <= 1.1f)
         {
-            _ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
+            //_ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
             ClimbSmall(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
         }
         else if (climbHeight > 1.1f && climbHeight <= 2)
         {
-            _ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
+            //_ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
             ClimbMid(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
         }
         else if (climbHeight > 2 && climbHeight <= 3.5f)
         {
-            _ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
+            //_ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
             ClimbHigh(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
         }
         else

@@ -12,6 +12,7 @@ public class PlayerStats_RangeWeaponStamina : MonoBehaviour
     [Header("====Debugs====")]
     [Range(0, 100)]
     [SerializeField] float _stamina;
+    [SerializeField] float _lowStaminaBobStrength; public float LowStaminaBobStrength { get { return _lowStaminaBobStrength; } }
     [SerializeField] float _weaponWeight;
     [SerializeField] bool _useStamina;
 
@@ -45,6 +46,14 @@ public class PlayerStats_RangeWeaponStamina : MonoBehaviour
         _stamina += _staminaControll * 10 * Time.deltaTime;
         _stamina = Mathf.Clamp(_stamina, 0, 100);
 
+        CheckStamina();
+
         CanvasController.Instance.HudControllers.Stats.UpdateWeaponStamina(_stamina / 100);
+    }
+
+
+    private void CheckStamina()
+    {
+        _lowStaminaBobStrength = _stamina <= 35 ? (36 - _stamina)/10 : 0;
     }
 }

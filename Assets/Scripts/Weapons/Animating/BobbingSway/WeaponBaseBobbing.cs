@@ -27,6 +27,8 @@ public class WeaponBaseBobbing : MonoBehaviour
     [SerializeField] float[] _speedMultipliers;
     [Range(0, 10)]
     [SerializeField] float[] _distanceMultipliers;
+    [Range(0, 10)]
+    [SerializeField] float[] _staminaBobStrengthMultipliers;
     [Space(10)]
     [Range(0, 10)]
     [SerializeField] float _bobbingSmoothSpeed;
@@ -71,16 +73,22 @@ public class WeaponBaseBobbing : MonoBehaviour
 
     private void SetBaseBobPos()
     {
+        float staminaBobStrength = _bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.LowStaminaBobStrength;
         _desiredVectors.Pos.x = Mathf.Sin(Time.time * _posSettingsX.Speed * _speedMultipliers[_bobbingTypeIndex]) * _posSettingsX.TravelDistance * _distanceMultipliers[_bobbingTypeIndex] / 50;
         _desiredVectors.Pos.y = Mathf.Sin(Time.time * _posSettingsY.Speed * _speedMultipliers[_bobbingTypeIndex]) * _posSettingsY.TravelDistance * _distanceMultipliers[_bobbingTypeIndex] / 50;
+
+
+        _desiredVectors.Pos.x *= (1 + staminaBobStrength) * _staminaBobStrengthMultipliers[_bobbingTypeIndex] / 4;
+        _desiredVectors.Pos.y *= (1 + staminaBobStrength) * _staminaBobStrengthMultipliers[_bobbingTypeIndex];
     }
     private void SetBaseBobRot()
     {
+        float staminaBobStrength = _bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.LowStaminaBobStrength;
         _desiredVectors.Rot.x = Mathf.Cos(Time.time * _rotSettingsX.Speed * _speedMultipliers[_bobbingTypeIndex]) * _rotSettingsX.TravelDistance * _distanceMultipliers[_bobbingTypeIndex];
         _desiredVectors.Rot.y = Mathf.Cos(Time.time * _rotSettingsY.Speed * _speedMultipliers[_bobbingTypeIndex]) * _rotSettingsY.TravelDistance * _distanceMultipliers[_bobbingTypeIndex];
 
-        _desiredVectors.Rot.x *= _rotSettingsX.Strength;
-        _desiredVectors.Rot.y *= _rotSettingsY.Strength;
+        _desiredVectors.Rot.x *= _rotSettingsX.Strength + (1 + staminaBobStrength) * _staminaBobStrengthMultipliers[_bobbingTypeIndex] / 4;
+        _desiredVectors.Rot.y *= _rotSettingsY.Strength + (1 + staminaBobStrength) * _staminaBobStrengthMultipliers[_bobbingTypeIndex];
     }
 
 

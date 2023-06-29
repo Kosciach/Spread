@@ -7315,6 +7315,10 @@ MonoBehaviour:
   - 0.1
   - 1
   - 4
+  _staminaBobStrengthMultipliers:
+  - 5
+  - 0.5
+  - 0
   _bobbingSmoothSpeed: 10
 --- !u!114 &526658079
 MonoBehaviour:
@@ -25367,10 +25371,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statsController: {fileID: 1752407440}
   _stamina: 0
+  _lowStaminaBobStrength: 0
   _weaponWeight: 1
   _useStamina: 0
   _staminaRecoverSpeed: 2
-  _staminaUseSpeed: 0
+  _staminaUseSpeed: 2
 --- !u!114 &1752407438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25388,7 +25393,7 @@ MonoBehaviour:
   _useStamina: 0
   _canUseStamina: 1
   _staminaRecoverSpeed: 2
-  _staminaUseSpeed: 0
+  _staminaUseSpeed: 1
 --- !u!114 &1752407439
 MonoBehaviour:
   m_ObjectHideFlags: 0

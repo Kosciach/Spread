@@ -57,7 +57,7 @@ public class CineCameraRotateVertical
         {
             float time = timeElapsed / duration;
 
-            _cinePov.m_HorizontalAxis.Value = Mathf.Lerp(_cinePov.m_HorizontalAxis.Value, endAngle, time);
+            _cinePov.m_VerticalAxis.Value = Mathf.Lerp(_cinePov.m_VerticalAxis.Value, endAngle, time);
 
             timeElapsed += Time.deltaTime;
 
