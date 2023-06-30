@@ -29,7 +29,7 @@ public class WeaponReloadAnimator : MonoBehaviour
 
     public void Reload(AnimatorOverrideController reloadAnimOveride, FingerPreset fingerPreset, Action reloadMethod)
     {
-        if (!_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded) return;
+        if (!_playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
         if (_playerStateMachine.CombatControllers.EquipedWeapon.Wall.IsWall) return;
 
         _fingerPreset = fingerPreset;
@@ -59,8 +59,8 @@ public class WeaponReloadAnimator : MonoBehaviour
 
     private void SetPreAnimIkTransforms()
     {
-        _rightHandIk.localPosition = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner.Pos;
-        _rightHandIk.localRotation = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner.Rot;
+        _rightHandIk.localPosition = _playerStateMachine.AnimatingControllers.Weapon.MainTransformer.Pos;
+        _rightHandIk.localRotation = _playerStateMachine.AnimatingControllers.Weapon.MainTransformer.Rot;
 
         _leftHandIk.localPosition = _playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Pos;
         _leftHandIk.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Rot);

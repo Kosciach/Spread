@@ -12,7 +12,7 @@ public class PlayerIdleState : PlayerBaseState
         _ctx.CameraControllers.Cine.Fov.SetFov(0, 0.5f);
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
         {
-            _ctx.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
+            _ctx.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Idle, 5);
         }
 
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped))
@@ -20,7 +20,7 @@ public class PlayerIdleState : PlayerBaseState
             _ctx.CombatControllers.Combat.EquipedWeapon.OnPlayerIdle();
         }
 
-        _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleJumpReloaded(true);
+        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleJumpReloaded(true);
         _ctx.CoreControllers.Collider.SetColliderRadius(0.8f);
 
 
@@ -40,7 +40,7 @@ public class PlayerIdleState : PlayerBaseState
         float forwardVelocity = Vector3.Dot(_ctx.MovementControllers.Movement.InAir.CurrentMovementVector, _ctx.transform.forward);
         _ctx.AnimatingControllers.Animator.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
 
-        if (!_ctx.MovementControllers.VerticalVelocity.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
+        if (!_ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
     {

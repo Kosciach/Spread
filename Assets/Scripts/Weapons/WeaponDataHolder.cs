@@ -6,13 +6,13 @@ public class WeaponDataHolder : MonoBehaviour, IPickupable
 {
     [Header("====References====")]
     [SerializeField] WeaponData _weaponData; public WeaponData WeaponData { get { return _weaponData; } }
-    private PlayerInventory _playerInventory;
+    private PlayerInventoryController _playerInventory;
 
 
 
     private void Awake()
     {
-        _playerInventory = FindObjectOfType<PlayerInventory>();
+        _playerInventory = FindObjectOfType<PlayerInventoryController>();
     }
 
     public void Pickup()

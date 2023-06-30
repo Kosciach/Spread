@@ -26,7 +26,7 @@ public class LandBehaviour : StateMachineBehaviour
 
 
 
-        playerStateMachine.CameraControllers.Hands.EnableController.ToggleHandsCamera(true);
+        playerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(true);
         playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 1);
 
         playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, !isWeaponEquiped, 1);

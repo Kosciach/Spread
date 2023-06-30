@@ -14,7 +14,8 @@ public class CineCameraRotationOffset : CinemachineExtension
     /// Offset the camera's position by this much (camera space)
     /// </summary>
     [Tooltip("Offset the camera's position by this much (camera space)")]
-    public Vector3 m_Offset = Vector3.zero;
+    public Vector3 m_RecoilOffset = Vector3.zero;
+    public Vector3 m_BobbingOffset = Vector3.zero;
 
     /// <summary>
     /// When to apply the offset
@@ -43,6 +44,6 @@ public class CineCameraRotationOffset : CinemachineExtension
     {
         if (stage != m_ApplyAfter) return;
 
-        state.RawOrientation = state.RawOrientation.ApplyCameraRotation(m_Offset, state.ReferenceUp);
+        state.RawOrientation = state.RawOrientation.ApplyCameraRotation(m_RecoilOffset + m_BobbingOffset, state.ReferenceUp);
     }
 }

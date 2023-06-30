@@ -14,9 +14,9 @@ public class PlayerJumpState : PlayerBaseState
 
         PrepareAnimatorBools();
 
-        _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleJumpReloaded(false);
-        _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleIsJump(true);
-        _ctx.MovementControllers.VerticalVelocity.JumpController.Jump();
+        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleJumpReloaded(false);
+        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleIsJump(true);
+        _ctx.MovementControllers.VerticalVelocity.Jump.Jump();
 
         _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);
         _ctx.AnimatingControllers.Weapon.InAir.SetRotSpeed(5);
@@ -26,7 +26,7 @@ public class PlayerJumpState : PlayerBaseState
         _ctx.MovementControllers.Rotation.RotateToCanera();
         _ctx.MovementControllers.Movement.InAir.Movement();
 
-        if (_ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
+        if (_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
     }
     public override void StateFixedUpdate()
     {
@@ -42,7 +42,7 @@ public class PlayerJumpState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.MovementControllers.VerticalVelocity.JumpController.ToggleIsJump(false);
+        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleIsJump(false);
         _ctx.AnimatingControllers.Animator.SetBool("Jump", false);
     }
 

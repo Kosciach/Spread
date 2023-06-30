@@ -60,7 +60,7 @@ public class PlayerEquipedWeapon_Block : MonoBehaviour
         _equipedWeaponController.Run.ToggleRunBool(false);
 
 
-        WeaponMainPositioner mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        WeaponAnimator_MainTransformer mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Rotation, 0.3f);
         mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Position, 0.3f);
 

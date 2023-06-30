@@ -41,6 +41,6 @@ public class MainCameraHeadClippingCorrector : MonoBehaviour
     {
         _cameraCorrection += (_isCameraInWall ? 1 : -1) * _cameraCorrectionSpeed;
         _cameraCorrection = Mathf.Clamp(_cameraCorrection, 0, 45);
-        _cineCameraController.VerticalController.SetBorderValues(-70, 70 - _cameraCorrection);
+        _cineCameraController.Vertical.SetBorderValues(-70, 70 - _cameraCorrection);
     }
 }

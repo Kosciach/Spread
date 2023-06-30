@@ -18,13 +18,13 @@ public class PlayerLandState : PlayerBaseState
         CheckHardLanding();
 
         _ctx.CoreControllers.Collider.SetColliderRadius(0.2f);
-        _ctx.MovementControllers.VerticalVelocity.SlopeController.ToggleSlopeAngle(true);
+        _ctx.MovementControllers.VerticalVelocity.Slope.ToggleSlopeAngle(true);
 
-        _ctx.AnimatingControllers.Animator.SetFloat("FallingTime", _ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.SlopeController.SlopeAngle);
+        _ctx.AnimatingControllers.Animator.SetFloat("FallingTime", _ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.Slope.SlopeAngle);
         _ctx.AnimatingControllers.Animator.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
         _ctx.AnimatingControllers.Animator.SetBool("Land", true);
 
-        _ctx.AudioControllers.FootStep.LandFootStep(_ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce);
+        _ctx.AudioControllers.FootStep.LandFootStep(_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce);
 
         _ctx.SwitchController.SwitchTo.Idle();
     }
@@ -50,10 +50,10 @@ public class PlayerLandState : PlayerBaseState
 
     private void CheckHardLanding()
     {
-        _ctx.WasHardLanding = _ctx.MovementControllers.VerticalVelocity.GravityController.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.SlopeController.SlopeAngle <= -12;
+        _ctx.WasHardLanding = _ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.Slope.SlopeAngle <= -12;
 
         if (_ctx.WasHardLanding) _ctx.CombatControllers.Combat.TemporaryUnEquip();
-        _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(!_ctx.WasHardLanding);
+        _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(!_ctx.WasHardLanding);
         _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 0.1f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, !_ctx.WasHardLanding, 0.1f);
     }

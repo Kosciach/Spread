@@ -36,9 +36,9 @@ public class PlayerCombatController : MonoBehaviour
 
     public void EquipWeapon(int choosenWeaponIndex)
     {
-        WeaponMainPositioner mainPositioner = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        WeaponAnimator_MainTransformer mainPositioner = _playerStateMachine.AnimatingControllers.Weapon.MainTransformer;
 
-        if (!_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded) return;
+        if (!_playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
         if (!IsState(CombatStateEnum.Equiped) && !IsState(CombatStateEnum.Unarmed)) return;
 
@@ -76,8 +76,8 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Prepare hands camera
-        _playerStateMachine.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Combat, 5);
-        _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.Combat, 5);
+        _playerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Combat, 5);
+        _playerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.Combat, 5);
 
 
 
@@ -120,7 +120,7 @@ public class PlayerCombatController : MonoBehaviour
 
     public void UnEquipWeapon(float unEquipSpeed)
     {
-        if (!_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded) return;
+        if (!_playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
         
         if (!IsState(CombatStateEnum.Equiped)) return;
@@ -144,7 +144,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Move right hand to origin
-        WeaponMainPositioner mainPositioner = _playerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        WeaponAnimator_MainTransformer mainPositioner = _playerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Rotation, 0.5f);
         mainPositioner.Move(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Position, 0.5f).SetOnMoveFinish(() => 
         {
@@ -155,8 +155,8 @@ public class PlayerCombatController : MonoBehaviour
             _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 1);
 
             //Prepare hands camera
-            _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
-            _playerStateMachine.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
+            _playerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
+            _playerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Idle, 5);
 
             _equipedWeapon.OnWeaponUnEquip();
 
@@ -188,7 +188,7 @@ public class PlayerCombatController : MonoBehaviour
 
     public void DropWeapon()
     {
-        if (!_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded) return;
+        if (!_playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
         if (!IsState(CombatStateEnum.Equiped)) return;
         if (_equipedWeaponData.Fists) return;
@@ -206,8 +206,8 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Prepare hands camera
-        _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
-        _playerStateMachine.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
+        _playerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
+        _playerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Idle, 5);
 
 
         //Disable fingers
@@ -273,8 +273,8 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Prepare hands camera
-        _playerStateMachine.CameraControllers.Hands.RotateController.SetHandsCameraRotation(PlayerHandsCameraRotateController.HandsCameraRotationsEnum.IdleWalkRun, 5);
-        _playerStateMachine.CameraControllers.Hands.MoveController.SetCameraPosition(PlayerHandsCameraMoveController.CameraPositionsEnum.Idle, 5);
+        _playerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
+        _playerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Idle, 5);
 
 
         _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeapon, _equipedWeaponData);

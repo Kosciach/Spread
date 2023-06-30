@@ -7,7 +7,7 @@ public class PlayerStatsController : MonoBehaviour
     [Header("====References====")]
     [SerializeField] PlayerStateMachine _playerStateMachine;
     [Space(5)]
-    [SerializeField] StatsStruct _stats; public StatsStruct Stats { get { return _stats; } }
+    [SerializeField] StatsStruct _stats;                            public StatsStruct Stats { get { return _stats; } }
 
 
 

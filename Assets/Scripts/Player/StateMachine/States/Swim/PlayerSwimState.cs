@@ -14,14 +14,14 @@ public class PlayerSwimState : PlayerBaseState
     {
         _ctx.AnimatingControllers.Animator.SetBool("Swim", true);
 
-        ExitEnter(PlayerCineCameraMoveController.CameraPositionsEnum.Swim, false);
+        ExitEnter(PlayerCineCamera_Move.CameraPositionsEnum.Swim, false);
     }
     public override void StateUpdate()
     {
         _ctx.MovementControllers.Movement.Swim.Movement();
         _ctx.MovementControllers.Rotation.RotateToCanera();
 
-        bool isOutOfSwim = _ctx.StateControllers.Swim.CheckIsOnSurface() && _ctx.MovementControllers.VerticalVelocity.GravityController.IsGrounded && _ctx.StateControllers.Swim.CheckObjectInFront();
+        bool isOutOfSwim = _ctx.StateControllers.Swim.CheckIsOnSurface() && _ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded && _ctx.StateControllers.Swim.CheckObjectInFront();
         if (isOutOfSwim) _ctx.SwitchController.SwitchTo.Walk();
         else if(!_ctx.StateControllers.Swim.CheckIsOnSurface()) _ctx.SwitchController.SwitchTo.UnderWater();
     }
@@ -46,10 +46,10 @@ public class PlayerSwimState : PlayerBaseState
 
 
 
-    private void ExitEnter(PlayerCineCameraMoveController.CameraPositionsEnum cameraPosition, bool enable)
+    private void ExitEnter(PlayerCineCamera_Move.CameraPositionsEnum cameraPosition, bool enable)
     {
-        _ctx.MovementControllers.VerticalVelocity.GravityController.ToggleApplyGravity(enable);
-        _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(enable);
+        _ctx.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(enable);
+        _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(enable);
         _ctx.CameraControllers.Cine.Move.SetCameraPosition(cameraPosition, 0.2f);
 
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, enable, 0.3f);
@@ -65,7 +65,7 @@ public class PlayerSwimState : PlayerBaseState
         _ctx.StateControllers.Swim.ToggleCameraEffect(false);
         _ctx.AnimatingControllers.Animator.SetBool("Swim", false);
 
-        ExitEnter(PlayerCineCameraMoveController.CameraPositionsEnum.OnGround, true);
+        ExitEnter(PlayerCineCamera_Move.CameraPositionsEnum.OnGround, true);
 
         _ctx.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
     }

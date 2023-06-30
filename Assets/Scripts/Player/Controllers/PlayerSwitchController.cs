@@ -60,7 +60,7 @@ public class SwitchToClass
     {
         PlayerVerticalVelocityController verticalVelocityController = _playerStateMachine.MovementControllers.VerticalVelocity;
 
-        bool readyToJump = verticalVelocityController.GravityController.IsGrounded && !verticalVelocityController.JumpController.CheckAboveObsticle() && verticalVelocityController.JumpController.JumpReloaded;
+        bool readyToJump = verticalVelocityController.Gravity.IsGrounded && !verticalVelocityController.Jump.CheckAboveObsticle() && verticalVelocityController.Jump.JumpReloaded;
         if (!readyToJump) return;
 
 
@@ -90,7 +90,7 @@ public class SwitchToClass
 
     public void Crouch()
     {
-        if (!_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded) return;
+        if (!_playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
         if (_playerStateMachine.StateSwitch == PlayerStateMachine.SwitchEnum.Crouch) _playerStateMachine.SwitchController.SwitchTo.Idle();
         else _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Crouch;

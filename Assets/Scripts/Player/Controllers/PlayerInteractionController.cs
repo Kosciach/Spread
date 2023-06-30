@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInteractionController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerInventory _inventory;
+    [SerializeField] PlayerInventoryController _inventory;
     [SerializeField] Transform _playerMainCamera;
 
 

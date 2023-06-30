@@ -51,7 +51,7 @@ public class PlayerEquipedWeapon_Wall : MonoBehaviour
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunBool(false);
 
-        WeaponMainPositioner mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        WeaponAnimator_MainTransformer mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Wall.RightHand_Rotation, 0.2f);
         mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Wall.RightHand_Position, 0.2f);
 

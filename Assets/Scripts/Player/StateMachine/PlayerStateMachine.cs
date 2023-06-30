@@ -97,7 +97,7 @@ public class PlayerStateMachine : MonoBehaviour
     [System.Serializable]
     public struct InventoryControllersStruct
     {
-        public PlayerInventory Inventory;
+        public PlayerInventoryController Inventory;
     }
 
     [System.Serializable]

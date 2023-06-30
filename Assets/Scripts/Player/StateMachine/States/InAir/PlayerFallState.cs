@@ -23,7 +23,7 @@ public class PlayerFallState : PlayerBaseState
 
         CheckClimb();
         if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
-        if (_ctx.MovementControllers.VerticalVelocity.GravityController.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
+        if (_ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
     }
     public override void StateFixedUpdate()
     {

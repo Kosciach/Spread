@@ -56,7 +56,7 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
         if (_ammoInMag >= magSize) return;
 
         //Check if there is ammo in inventory
-        PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
+        PlayerInventory_Ammo playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
         int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
         if (playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex] <= 0) return;
 
@@ -113,7 +113,7 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
 
     public void SetUI()
     {
-        PlayerAmmoInventory playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
+        PlayerInventory_Ammo playerAmmoInventory = _stateMachine.PlayerStateMachine.InventoryControllers.Inventory.Ammo;
         int ammoTypeIndex = (int)_weaponData.AmmoSettings.AmmoType.AmmoType;
 
         CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);

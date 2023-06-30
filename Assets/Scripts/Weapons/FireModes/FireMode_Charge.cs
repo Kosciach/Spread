@@ -74,7 +74,7 @@ public class FireMode_Charge : BaseFireMode
 
         PlayerStateMachine playerStateMachine = _weaponShootingController.StateMachine.PlayerStateMachine;
 
-        playerStateMachine.AnimatingControllers.Weapon.BakeTargets.UpdateBakedTransforms();
+        playerStateMachine.AnimatingControllers.Weapon.BakeTransformer.UpdateBakedTransforms();
         if(_chargeWithRightHand) playerStateMachine.AnimatingControllers.WeaponHolder.LeftHand(transform);
         playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, true, 0.3f);
         playerStateMachine.AnimatingControllers.Animator.SetTrigger("ChargeWeapon", false);

@@ -13,7 +13,6 @@ public class PlayerInAirClimbState : PlayerBaseState
     {
         _ctx.CombatControllers.Combat.TemporaryUnEquip();
         ClimbEnterExit(false);
-        _ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
 
         Climb(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
     }
@@ -40,13 +39,13 @@ public class PlayerInAirClimbState : PlayerBaseState
 
     private void ClimbEnterExit(bool enable)
     {
-        _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(enable);
+        _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(enable);
         _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, enable, 0.5f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, enable, 0.1f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, enable, 0.1f);
 
         _ctx.CoreControllers.Collider.ToggleCollider(enable);
-        _ctx.MovementControllers.VerticalVelocity.GravityController.ToggleApplyGravity(enable);
+        _ctx.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(enable);
         _ctx.CameraControllers.Cine.ToggleCineInput(enable);
     }
 

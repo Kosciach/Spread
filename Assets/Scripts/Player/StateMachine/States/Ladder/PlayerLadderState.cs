@@ -13,13 +13,13 @@ public class PlayerLadderState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.CombatControllers.Combat.TemporaryUnEquip();
-        _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(false);
+        _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
 
         _ctx.StateControllers.Ladder.ResetBools();
 
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, false, 0.5f);
         _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, false, 0.5f);
-        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.Ladder, 0.2f);
+        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.Ladder, 0.2f);
 
         if (_ctx.StateControllers.Ladder.GetLadderType() == PlayerLadderController.LadderEnum.LowerEnter) _ctx.StateControllers.Ladder.LowerLadderEnter();
         else if (_ctx.StateControllers.Ladder.GetLadderType() == PlayerLadderController.LadderEnum.HigherEnter) _ctx.StateControllers.Ladder.HigherLadderEnter();
@@ -42,9 +42,9 @@ public class PlayerLadderState : PlayerBaseState
     {
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, true, 0.5f);
         _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 0.5f);
-        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCameraMoveController.CameraPositionsEnum.OnGround, 0.2f);
+        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.OnGround, 0.2f);
 
-        _ctx.CameraControllers.Hands.EnableController.ToggleHandsCamera(true);
+        _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(true);
 
         _ctx.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
     }

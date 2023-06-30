@@ -40,7 +40,7 @@ public class RangeWeaponHoldController : WeaponHoldController
         }
 
 
-        WeaponMainPositioner mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        WeaponAnimator_MainTransformer mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(rot, rotateSpeed);
         mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
         {
@@ -76,7 +76,7 @@ public class RangeWeaponHoldController : WeaponHoldController
         }
 
 
-        WeaponMainPositioner mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainPositioner;
+        WeaponAnimator_MainTransformer mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(rot, rotateSpeed);
         mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
         {

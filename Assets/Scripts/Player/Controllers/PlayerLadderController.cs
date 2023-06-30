@@ -37,7 +37,7 @@ public class PlayerLadderController : MonoBehaviour
     public void LowerLadderEnter()
     {
         SetLadderCamera();
-        _playerStateMachine.MovementControllers.VerticalVelocity.GravityController.ToggleApplyGravity(false);
+        _playerStateMachine.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(false);
 
         _playerStateMachine.AnimatingControllers.Animator.SetBool("LadderLowerEnter", true);
         transform.LeanRotateY(_currentLadder.rotation.eulerAngles.y + 90, 0.5f);
@@ -46,7 +46,7 @@ public class PlayerLadderController : MonoBehaviour
     public void LowerLadderExit()
     {
         ResetCamera();
-        _playerStateMachine.MovementControllers.VerticalVelocity.GravityController.ToggleApplyGravity(true);
+        _playerStateMachine.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(true);
 
         _playerStateMachine.AnimatingControllers.Animator.SetBool("LadderLowerExit", true);
         _playerStateMachine.CoreControllers.Collider.ToggleCollider(true);
@@ -59,7 +59,7 @@ public class PlayerLadderController : MonoBehaviour
     public void HigherLadderEnter()
     {
         SetLadderCamera();
-        _playerStateMachine.MovementControllers.VerticalVelocity.GravityController.ToggleApplyGravity(false);
+        _playerStateMachine.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(false);
 
 
 
@@ -94,7 +94,7 @@ public class PlayerLadderController : MonoBehaviour
             transform.LeanMove(_currentLadder.GetChild(4).position, 0.5f).setOnComplete(() =>
             {
                 _playerStateMachine.CoreControllers.Collider.ToggleCollider(true);
-                _playerStateMachine.MovementControllers.VerticalVelocity.GravityController.ToggleApplyGravity(true);
+                _playerStateMachine.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(true);
                 ResetCamera();
                 _playerStateMachine.MovementControllers.Movement.Ladder.ToggleMovement(true);
                 _playerStateMachine.SwitchController.SwitchTo.Idle();
@@ -129,7 +129,7 @@ public class PlayerLadderController : MonoBehaviour
 
     public void CheckLadderLowerExit()
     {
-        bool lowerExitLock = !_playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder) || !_playerStateMachine.MovementControllers.VerticalVelocity.GravityController.IsGrounded || _playerStateMachine.CoreControllers.Input.MovementInputVector.z >= 0;
+        bool lowerExitLock = !_playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder) || !_playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded || _playerStateMachine.CoreControllers.Input.MovementInputVector.z >= 0;
         if (lowerExitLock) return;
 
         _ladderType = LadderEnum.LowerExit;
@@ -172,14 +172,14 @@ public class PlayerLadderController : MonoBehaviour
         minAngle = angle - 50;
         maxAngle = angle + 50;
 
-        _playerStateMachine.CameraControllers.Cine.HorizontalController.ToggleWrap(false);
-        _playerStateMachine.CameraControllers.Cine.HorizontalController.RotateToAngle(angle, 0.2f);
-        _playerStateMachine.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.2f);
-        _playerStateMachine.CameraControllers.Cine.HorizontalController.SetBorderValues(minAngle, maxAngle);
+
+        _playerStateMachine.CameraControllers.Cine.Horizontal.RotateToAngle(angle, 0.2f);
+        _playerStateMachine.CameraControllers.Cine.Horizontal.SetBorderValues(minAngle, maxAngle);
+        _playerStateMachine.CameraControllers.Cine.Horizontal.ToggleWrap(false);
     }
     private void ResetCamera()
     {
-        _playerStateMachine.CameraControllers.Cine.HorizontalController.SetBorderValues(-180, 180);
-        _playerStateMachine.CameraControllers.Cine.HorizontalController.ToggleWrap(true);
+        _playerStateMachine.CameraControllers.Cine.Horizontal.SetBorderValues(-180, 180);
+        _playerStateMachine.CameraControllers.Cine.Horizontal.ToggleWrap(true);
     }
 }

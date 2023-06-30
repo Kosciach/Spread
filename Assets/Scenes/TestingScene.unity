@@ -839,7 +839,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49409418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -36.990322, y: 3.2012787, z: 38.496117}
+  m_LocalPosition: {x: -36.37032, y: 3.2012787, z: 39.086117}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -872,7 +872,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac3c1d2b0469f741952aabf776223ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Offset: {x: 0, y: 0, z: 0}
+  m_RecoilOffset: {x: 0, y: 0, z: 0}
+  m_BobbingOffset: {x: 0, y: 0, z: 0}
   m_ApplyAfter: 1
   m_PreserveComposition: 0
 --- !u!1 &52460342
@@ -4405,7 +4406,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -36.990322, y: 3.2012787, z: 38.496117}
+  m_LocalPosition: {x: -36.37032, y: 3.2012787, z: 39.086117}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7256,15 +7257,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65bc5eb11e5b48f4e93d0dab28f102b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerStateMachine: {fileID: 8003831046665861830}
-  _bakeTargets: {fileID: 526658085}
-  _mainPositioner: {fileID: 526658084}
+  _bakeTransformer: {fileID: 526658085}
+  _mainTransformer: {fileID: 526658084}
   _sway: {fileID: 526658072}
   _bobbing: {fileID: 526658071}
   _recoil: {fileID: 526658079}
   _crouch: {fileID: 526658083}
   _inAir: {fileID: 526658082}
   _fireMode: {fileID: 526658080}
+  _playerStateMachine: {fileID: 8003831046665861830}
   _rightHandIk: {fileID: 553561153}
   _baseVectors:
     Pos: {x: 0, y: 0, z: 0}
@@ -7286,10 +7287,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bobbingController: {fileID: 526658071}
-  _currentVectors:
+  _weaponVectors:
     Pos: {x: 0, y: 0, z: 0}
     Rot: {x: 0, y: 0, z: 0}
-  _desiredVectors:
+  _cameraVectors:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
+  _tempVectors:
     Pos: {x: 0, y: 0, z: 0}
     Rot: {x: 0, y: 0, z: 0}
   _toggle: 1
@@ -7315,10 +7319,6 @@ MonoBehaviour:
   - 0.1
   - 1
   - 4
-  _staminaBobStrengthMultipliers:
-  - 5
-  - 0.5
-  - 0
   _bobbingSmoothSpeed: 10
 --- !u!114 &526658079
 MonoBehaviour:
@@ -14453,8 +14453,8 @@ GameObject:
   - component: {fileID: 962897141}
   - component: {fileID: 962897146}
   - component: {fileID: 962897145}
-  - component: {fileID: 962897144}
   - component: {fileID: 962897143}
+  - component: {fileID: 962897144}
   - component: {fileID: 962897142}
   - component: {fileID: 962897147}
   m_Layer: 6
@@ -14560,13 +14560,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e95bf9f0c481a49a31a61954009a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTransform: {fileID: 8003831046665861826}
-  _characterController: {fileID: 8003831046665861813}
-  _playerStateMachine: {fileID: 8003831046665861830}
   _onGround: {fileID: 962897145}
   _ladder: {fileID: 962897143}
   _swim: {fileID: 962897144}
   _inAir: {fileID: 962897142}
+  _playerTransform: {fileID: 8003831046665861826}
+  _characterController: {fileID: 8003831046665861813}
+  _playerStateMachine: {fileID: 8003831046665861830}
 --- !u!114 &962897147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21319,7 +21319,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31460
+  m_Name: pb_Mesh31454
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -26301,6 +26301,7 @@ GameObject:
   - component: {fileID: 1837358959}
   - component: {fileID: 1837358958}
   - component: {fileID: 1837358962}
+  - component: {fileID: 1837358963}
   m_Layer: 6
   m_Name: CineCameraController
   m_TagString: Untagged
@@ -26380,8 +26381,8 @@ MonoBehaviour:
   _horizontal: {fileID: 1837358959}
   _vertical: {fileID: 1837358958}
   _recoil: {fileID: 1837358962}
+  _playerStateMachine: {fileID: 8003831046665861830}
   _cineCamera: {fileID: 49409420}
-  _cinePOV: {fileID: 0}
   _cineInputs: {fileID: 49409419}
   _mainCamera: {fileID: 330585545}
   _mainCameraHolder: {fileID: 1078154645}
@@ -26423,6 +26424,20 @@ MonoBehaviour:
   _resetRecoilTimer: 10
   _recoilResetSpeed: 10
   _weight: 1
+--- !u!114 &1837358963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837358955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5901740454a5a3146b10f0bcfb22ad03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cineCameraController: {fileID: 1837358960}
+  _rotationOffset: {fileID: 49409423}
 --- !u!1 &1840113614
 GameObject:
   m_ObjectHideFlags: 0
@@ -26557,9 +26572,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41daee3e94c353a40b58d42f19714dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 8003831046665861830}
   _weapon: {fileID: 1842551256}
   _ammo: {fileID: 1842551255}
+  _stateMachine: {fileID: 8003831046665861830}
 --- !u!1 &1849235069
 GameObject:
   m_ObjectHideFlags: 0
@@ -26759,7 +26774,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31240
+  m_Name: pb_Mesh31250
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -27113,10 +27128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4d70df747ea184698562f889fa28a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveController: {fileID: 1880217497}
-  _rotateController: {fileID: 1880217496}
+  _move: {fileID: 1880217497}
+  _rotate: {fileID: 1880217496}
   _lean: {fileID: 1880217499}
-  _enableController: {fileID: 1880217495}
+  _enable: {fileID: 1880217495}
   _handsCamera: {fileID: 1777854611}
   _playerStateMachine: {fileID: 8003831046665861830}
 --- !u!114 &1880217499
@@ -27674,7 +27689,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32438
+  m_Name: pb_Mesh32434
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -29367,11 +29382,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerStateMachine: {fileID: 8003831046665861830}
-  _gravityController: {fileID: 2130282952}
-  _jumpController: {fileID: 2130282951}
-  _slopeController: {fileID: 2130282950}
   _playerTransform: {fileID: 8003831046665861826}
   _characterController: {fileID: 8003831046665861813}
+  _gravity: {fileID: 2130282952}
+  _jump: {fileID: 2130282951}
+  _slope: {fileID: 2130282950}
 --- !u!1 &2135617522
 GameObject:
   m_ObjectHideFlags: 0
@@ -44755,7 +44770,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8003831046665861810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -36.99, y: 0, z: 38.07}
+  m_LocalPosition: {x: -36.37, y: 0, z: 38.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

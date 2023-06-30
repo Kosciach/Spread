@@ -5,18 +5,20 @@ using UnityEngine;
 public class PlayerHandsCameraController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerHandsCameraMoveController _moveController; public PlayerHandsCameraMoveController MoveController { get { return _moveController; } }
-    [SerializeField] PlayerHandsCameraRotateController _rotateController; public PlayerHandsCameraRotateController RotateController { get { return _rotateController; } }
-    [SerializeField] PlayerHandsCameraLeanController _lean; public PlayerHandsCameraLeanController Lean { get { return _lean; } }
-    [SerializeField] PlayerHandsCameraEnableController _enableController; public PlayerHandsCameraEnableController EnableController { get { return _enableController; } }
+    [SerializeField] PlayerHandsCamera_Move _move;                  public PlayerHandsCamera_Move Move { get { return _move; } }
+    [SerializeField] PlayerHandsCamera_Rotate _rotate;              public PlayerHandsCamera_Rotate Rotate { get { return _rotate; } }
+    [SerializeField] PlayerHandsCamera_Lean _lean;                  public PlayerHandsCamera_Lean Lean { get { return _lean; } }
+    [SerializeField] PlayerHandsCamera_Enable _enable;              public PlayerHandsCamera_Enable Enable { get { return _enable; } }
     [Space(5)]
-    [SerializeField] Camera _handsCamera; public Camera HandsCamera { get { return _handsCamera; } }
-    [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
+    [SerializeField] Camera _handsCamera;                           public Camera HandsCamera { get { return _handsCamera; } }
+    [SerializeField] PlayerStateMachine _playerStateMachine;        public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
 
 
 
     private Vector3 _pos;
     private Vector3 _rot;
+
+
 
 
     private void Update()
@@ -29,8 +31,8 @@ public class PlayerHandsCameraController : MonoBehaviour
 
     private void CombineVectors()
     {
-        _pos = _moveController.CurrentPosition;
-        _rot = _rotateController.CurrentRotation + _lean.Rotation;
+        _pos = _move.CurrentPosition;
+        _rot = _rotate.CurrentRotation + _lean.Rotation;
     }
     private void ApplyVectors()
     {

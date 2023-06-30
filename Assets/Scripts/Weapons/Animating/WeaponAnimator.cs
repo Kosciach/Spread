@@ -5,18 +5,17 @@ using UnityEngine;
 public class WeaponAnimator : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
+    [SerializeField] WeaponAnimator_BakeTransformer _bakeTransformer;       public WeaponAnimator_BakeTransformer BakeTransformer { get { return _bakeTransformer; } }
+    [SerializeField] WeaponAnimator_MainTransformer _mainTransformer;       public WeaponAnimator_MainTransformer MainTransformer { get { return _mainTransformer; } }
+    [SerializeField] WeaponAnimator_Sway _sway;                             public WeaponAnimator_Sway Sway { get { return _sway; } }
+    [SerializeField] WeaponAnimator_Bobbing _bobbing;                       public WeaponAnimator_Bobbing Bobbing { get { return _bobbing; } }
+    [SerializeField] WeaponAnimator_Recoil _recoil;                         public WeaponAnimator_Recoil Recoil { get { return _recoil; } }
+    [SerializeField] WeaponAnimator_Crouch _crouch;                         public WeaponAnimator_Crouch Crouch { get { return _crouch; } }
+    [SerializeField] WeaponAnimator_InAir _inAir;                           public WeaponAnimator_InAir InAir { get { return _inAir; } }
+    [SerializeField] WeaponAnimator_FireMode _fireMode;                     public WeaponAnimator_FireMode FireMode { get { return _fireMode; } }
     [Space(5)]
-    [SerializeField] WeaponBakeTargetsController _bakeTargets; public WeaponBakeTargetsController BakeTargets { get { return _bakeTargets; } }
-    [SerializeField] WeaponMainPositioner _mainPositioner; public WeaponMainPositioner MainPositioner { get { return _mainPositioner; } }
-    [SerializeField] WeaponSwayController _sway; public WeaponSwayController Sway { get { return _sway; } }
-    [SerializeField] WeaponBobbingController _bobbing; public WeaponBobbingController Bobbing { get { return _bobbing; } }
-    [SerializeField] WeaponRecoilAnimator _recoil; public WeaponRecoilAnimator Recoil { get { return _recoil; } }
-    [SerializeField] WeaponCrouchAnimator _crouch; public WeaponCrouchAnimator Crouch { get { return _crouch; } }
-    [SerializeField] WeaponInAirAnimator _inAir; public WeaponInAirAnimator InAir { get { return _inAir; } }
-    [SerializeField] WeaponFireModeAnimator _fireMode; public WeaponFireModeAnimator FireMode { get { return _fireMode; } }
-    [Space(10)]
-    [SerializeField] Transform _rightHandIk; public Transform RightHandIk { get { return _rightHandIk; } }
+    [SerializeField] PlayerStateMachine _playerStateMachine;                public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
+    [SerializeField] Transform _rightHandIk;                                public Transform RightHandIk { get { return _rightHandIk; } }
 
 
 
@@ -68,13 +67,13 @@ public class WeaponAnimator : MonoBehaviour
 
     private void CombineVectorsForBaseTarget()
     {
-        _baseVectors.Pos = _mainPositioner.Pos;
-        _baseVectors.Rot = _mainPositioner.Rot.eulerAngles;
+        _baseVectors.Pos = _mainTransformer.Pos;
+        _baseVectors.Rot = _mainTransformer.Rot.eulerAngles;
     }
     private void CombineVectorsForExtraTarget()
     {
-        _extraVectors.Pos = _bobbing.Base.CurrentVectors.Pos                 +                 _sway.CurrentSwayVectors.Pos + _recoil.RecoilVectors.Pos + _crouch.CurrentVectors.Pos + _inAir.CurrentVectors.Pos + _fireMode.Vectors.Pos;
-        _extraVectors.Rot = _bobbing.Base.CurrentVectors.Rot + _bobbing.Side.SideMovementRot + _sway.CurrentSwayVectors.Rot + _recoil.RecoilVectors.Rot + _crouch.CurrentVectors.Rot + _inAir.CurrentVectors.Rot + _fireMode.Vectors.Rot;
+        _extraVectors.Pos = _bobbing.Base.WeaponVectors.Pos                 +                 _sway.CurrentSwayVectors.Pos + _recoil.RecoilVectors.Pos + _crouch.CurrentVectors.Pos + _inAir.CurrentVectors.Pos + _fireMode.Vectors.Pos;
+        _extraVectors.Rot = _bobbing.Base.WeaponVectors.Rot + _bobbing.Side.SideMovementRot + _sway.CurrentSwayVectors.Rot + _recoil.RecoilVectors.Rot + _crouch.CurrentVectors.Rot + _inAir.CurrentVectors.Rot + _fireMode.Vectors.Rot;
     }
 
 
