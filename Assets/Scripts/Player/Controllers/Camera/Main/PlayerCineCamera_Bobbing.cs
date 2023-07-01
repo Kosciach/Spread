@@ -31,22 +31,26 @@ public class PlayerCineCamera_Bobbing : MonoBehaviour
 
     private void Update()
     {
-        if (!_cineCameraController.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim) return;
+        float lowStaminaBobStrength = _cineCameraController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.LowStaminaBobStrength;
+        float lowStaminaBobStrengthCorrected = lowStaminaBobStrength == 0 ? 1 : lowStaminaBobStrength;
 
-        SetBobbing();
-        SmoothOutBobbing();
+        if (_cineCameraController.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim || lowStaminaBobStrength > 0)
+        {
+            SetBobbing(lowStaminaBobStrengthCorrected);
+            SmoothOutBobbing();
+        }
     }
 
 
 
-    private void SetBobbing()
+    private void SetBobbing(float lowStaminaBobStrengthCorrected)
     {
         int bobbingTypeIndex = (int)(_cineCameraController.PlayerStateMachine.MovementControllers.Movement.OnGround.CurrentMovementVector.magnitude / 4 + 0.3f);
         bobbingTypeIndex = Mathf.Clamp(bobbingTypeIndex, 0, 1);
 
 
-        _rawRot.x = Mathf.Sin(Time.time * 10 * _speedMultipliers[bobbingTypeIndex]) * (1 * _distanceMultipliers[bobbingTypeIndex]);
-        _rawRot.y = Mathf.Cos(Time.time * 5 * _speedMultipliers[bobbingTypeIndex]) * (2 * _distanceMultipliers[bobbingTypeIndex]);
+        _rawRot.x = Mathf.Sin(Time.time * 10 * _speedMultipliers[bobbingTypeIndex]) * (1 * _distanceMultipliers[bobbingTypeIndex] * lowStaminaBobStrengthCorrected);
+        _rawRot.y = Mathf.Cos(Time.time * 5 * _speedMultipliers[bobbingTypeIndex]) * (2 * _distanceMultipliers[bobbingTypeIndex] * lowStaminaBobStrengthCorrected);
     }
     private void SmoothOutBobbing()
     {

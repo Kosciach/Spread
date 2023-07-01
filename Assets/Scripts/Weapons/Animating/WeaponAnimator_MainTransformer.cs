@@ -195,14 +195,13 @@ public class Vector3Lerp
         float timeElapsed = 0;
 
         //Start
-
         _isLerping = true;
         while (timeElapsed < duration)
         {
             float time = timeElapsed / duration;
-            time = curve.Evaluate(time);
+            float curveTime = curve.Evaluate(time);
 
-            _vector = Vector3.Lerp(startVector, endVector, time);
+            _vector = Vector3.LerpUnclamped(startVector, endVector, curveTime);
 
             timeElapsed += Time.deltaTime;
 
@@ -275,9 +274,9 @@ public class QuaternionLerp
         while (timeElapsed < duration)
         {
             float time = timeElapsed / duration;
-            time = curve.Evaluate(time);
+            float curveTime = curve.Evaluate(time);
 
-            _quaternion = Quaternion.Lerp(startQuaternion, endQuaternion, time);
+            _quaternion = Quaternion.LerpUnclamped(startQuaternion, endQuaternion, curveTime);
 
             timeElapsed += Time.deltaTime;
 

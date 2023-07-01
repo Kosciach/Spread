@@ -22,8 +22,8 @@ MonoBehaviour:
   FingersPreset: {fileID: 11400000, guid: 1df3d0668ef36ab4a95ecb7635050e50, type: 2}
   LeftHandTransforms:
     Base:
-      LeftHand_Position: {x: 0.2713, y: 0.333, z: 0.1459}
-      LeftHand_Rotation: {x: 330.18036, y: 38.21521, z: 350.20395}
+      LeftHand_Position: {x: 0.2821, y: 0.3266, z: 0.1201}
+      LeftHand_Rotation: {x: 334.44574, y: 44.601196, z: 355.1865}
     Block:
       LeftHand_Position: {x: 0.2713, y: 0.333, z: 0.1459}
       LeftHand_Rotation: {x: 330.18036, y: 38.21521, z: 350.20395}

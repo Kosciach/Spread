@@ -16,6 +16,9 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
     [SerializeField] bool _isInput; public bool IsInput { get { return _isInput; } set { _isInput = value; } }
 
 
+    [Space(20)]
+    [Header("====Settings====")]
+    [SerializeField] AnimationCurve _curve;
 
     private Action[] _runMethods = new Action[2];
     private Action _transitionFromRun;
@@ -54,8 +57,8 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
 
         WeaponAnimator_MainTransformer mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
-        mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Rotation, 0.4f);
-        mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Position, 0.4f);
+        mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Rotation, 0.5f, _curve);
+        mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Position, 0.5f, _curve);
 
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 6);
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 6);
@@ -82,6 +85,6 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
         WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeapon.HoldController;
 
         equipedWeaponHoldController.ChangeHoldMode(_combatController.EquipedWeapon.HoldController.HoldMode);
-        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(0.4f, 0.4f);
+        equipedWeaponHoldController.MoveHandsToCurrentHoldMode(0.3f, 0.3f);
     }
 }
