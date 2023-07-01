@@ -46,8 +46,8 @@ public class WeaponAnimator_Bobbing : MonoBehaviour
 
     private void CombineBobbingVectors()
     {
-        _mainBobVectors.Rot = (_side.SideMovementRot + _base.WeaponVectors.Rot) * _bobbingToggle;
-        _mainBobVectors.Pos = (_base.WeaponVectors.Pos) * _bobbingToggle;
+        _mainBobVectors.Pos = (_base.SmoothVectors.Pos                          ) * _bobbingToggle;
+        _mainBobVectors.Rot = (_side.SmoothVectors.Rot + _base.SmoothVectors.Rot) * _bobbingToggle;
     }
 
 

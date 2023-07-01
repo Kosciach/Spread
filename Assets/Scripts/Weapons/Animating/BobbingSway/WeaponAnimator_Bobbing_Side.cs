@@ -11,15 +11,15 @@ public class WeaponAnimator_Bobbing_Side : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] Vector3 _sideMovementRotTarget;
-    [SerializeField] Vector3 _sideMovementRot; public Vector3 SideMovementRot { get { return _sideMovementRot; } }
+    [SerializeField] WeaponAnimator.PosRotStruct _rawVectors;
+    [SerializeField] WeaponAnimator.PosRotStruct _smoothVectors; public WeaponAnimator.PosRotStruct SmoothVectors { get { return _smoothVectors; } }
 
 
 
     [Space(20)]
     [Header("====Settings====")]
     [Range(0, 10)]
-    [SerializeField] float _sideBobbingStrength;
+    [SerializeField] float _strength;
     [Range(0, 10)]
     [SerializeField] float _smoothSpeed;
 
@@ -27,22 +27,22 @@ public class WeaponAnimator_Bobbing_Side : MonoBehaviour
 
     private void Update()
     {
-        SetSideBobbing();
-        SmoothSideBobbing();
+        SetVectors();
+        SmoothOutVectors();
     }
 
 
 
 
-    private void SetSideBobbing()
+    private void SetVectors()
     {
-        int sideMovementX = (int)_bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Input.MovementInputVector.x;
-        int sideMovementZ = (int)_bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Input.MovementInputVector.z;
-        _sideMovementRotTarget = new Vector3(sideMovementZ * _sideBobbingStrength/3, 0, sideMovementX * -_sideBobbingStrength);
+        Vector3 movementInputVector = _bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Input.MovementInputVector;
+        _rawVectors.Rot = new Vector3(movementInputVector.z * _strength / 3, 0, movementInputVector.x * -_strength);
     }
 
-    private void SmoothSideBobbing()
+    private void SmoothOutVectors()
     {
-        _sideMovementRot = Vector3.Lerp(_sideMovementRot, _sideMovementRotTarget, _smoothSpeed * (_sideBobbingStrength/2) * Time.deltaTime);
+        float aimWeight = _bobbingController.WeaponAnimator.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim ? 0.3f : 1;
+        _smoothVectors.Rot = Vector3.Lerp(_smoothVectors.Rot, _rawVectors.Rot * aimWeight, _smoothSpeed * (_strength / 2) * Time.deltaTime);
     }
 }

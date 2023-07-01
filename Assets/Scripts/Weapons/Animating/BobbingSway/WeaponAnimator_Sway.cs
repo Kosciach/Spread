@@ -12,8 +12,8 @@ public class WeaponAnimator_Sway : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] WeaponAnimator.PosRotStruct _currentSwayVectors; public WeaponAnimator.PosRotStruct CurrentSwayVectors { get { return _currentSwayVectors; } }
-    private WeaponAnimator.PosRotStruct _desiredSwayVectors;
+    [SerializeField] WeaponAnimator.PosRotStruct _smoothVectors; public WeaponAnimator.PosRotStruct SmoothVectors { get { return _smoothVectors; } }
+    [SerializeField] WeaponAnimator.PosRotStruct _rawVectors;
     [Range(0, 1)]
     [SerializeField] int _swayToggle;
 
@@ -76,13 +76,13 @@ public class WeaponAnimator_Sway : MonoBehaviour
         //Pos
         float swayPos = (mouseInputVector.x / 1000) * _horizontal.PosStrength;
         swayPos = Mathf.Clamp(swayPos, -_horizontal.PosLimit/20, _horizontal.PosLimit/20);
-        _desiredSwayVectors.Pos.x = -swayPos * _horizontal.Weight;
+        _rawVectors.Pos.x = -swayPos * _horizontal.Weight;
 
         //Rot
         float swayRot = (mouseInputVector.x / 10) * _horizontal.RotStrength;
         swayRot = Mathf.Clamp(swayRot, -_horizontal.RotLimit, _horizontal.RotLimit);
-        _desiredSwayVectors.Rot.y = swayRot * _horizontal.Weight;
-        _desiredSwayVectors.Rot.z = -swayRot * _horizontal.Weight;
+        _rawVectors.Rot.y = swayRot * _horizontal.Weight;
+        _rawVectors.Rot.z = -swayRot * _horizontal.Weight;
     }
 
     private void VerticalSway()
@@ -92,19 +92,19 @@ public class WeaponAnimator_Sway : MonoBehaviour
         //Pos
         float swayPos = (mouseInputVector.y / 1000) * _vertical.PosStrength;
         swayPos = Mathf.Clamp(swayPos, -_vertical.PosLimit / 20, _vertical.PosLimit / 20);
-        _desiredSwayVectors.Pos.y = -swayPos * _vertical.Weight;
+        _rawVectors.Pos.y = -swayPos * _vertical.Weight;
 
 
         //Rot
         float swayRot = (mouseInputVector.y / 10) * _vertical.RotStrength;
         swayRot = Mathf.Clamp(swayRot, -_vertical.RotLimit, _vertical.RotLimit);
-        _desiredSwayVectors.Rot.x = -swayRot * _vertical.Weight;
+        _rawVectors.Rot.x = -swayRot * _vertical.Weight;
     }
 
     private void SmoothOutSway()
     {
-        _currentSwayVectors.Pos = Vector3.Lerp(_currentSwayVectors.Pos, _desiredSwayVectors.Pos, _smoothSpeedPos * Time.deltaTime);
-        _currentSwayVectors.Rot = Vector3.Lerp(_currentSwayVectors.Rot, _desiredSwayVectors.Rot, _smoothSpeedRot * Time.deltaTime);
+        _smoothVectors.Pos = Vector3.Lerp(_smoothVectors.Pos, _rawVectors.Pos, _smoothSpeedPos * Time.deltaTime);
+        _smoothVectors.Rot = Vector3.Lerp(_smoothVectors.Rot, _rawVectors.Rot, _smoothSpeedRot * Time.deltaTime);
     }
 
 

@@ -72,8 +72,8 @@ public class WeaponAnimator : MonoBehaviour
     }
     private void CombineVectorsForExtraTarget()
     {
-        _extraVectors.Pos = _bobbing.Base.WeaponVectors.Pos                 +                 _sway.CurrentSwayVectors.Pos + _recoil.RecoilVectors.Pos + _crouch.CurrentVectors.Pos + _inAir.CurrentVectors.Pos + _fireMode.Vectors.Pos;
-        _extraVectors.Rot = _bobbing.Base.WeaponVectors.Rot + _bobbing.Side.SideMovementRot + _sway.CurrentSwayVectors.Rot + _recoil.RecoilVectors.Rot + _crouch.CurrentVectors.Rot + _inAir.CurrentVectors.Rot + _fireMode.Vectors.Rot;
+        _extraVectors.Pos = _bobbing.Base.SmoothVectors.Pos                 +                   _sway.SmoothVectors.Pos + _recoil.RecoilVectors.Pos + _crouch.CurrentVectors.Pos + _inAir.CurrentVectors.Pos + _fireMode.Vectors.Pos;
+        _extraVectors.Rot = _bobbing.Base.SmoothVectors.Rot + _bobbing.Side.SmoothVectors.Rot + _sway.SmoothVectors.Rot + _recoil.RecoilVectors.Rot + _crouch.CurrentVectors.Rot + _inAir.CurrentVectors.Rot + _fireMode.Vectors.Rot;
     }
 
 
