@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WeaponAnimatorNamespace;
 
 public class PlayerEquipedWeapon_Run : MonoBehaviour
 {
@@ -53,15 +54,16 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
 
         _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
-
+        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_combatController.EquipedWeaponData.FingersPreset.Base, 0.2f);
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
+
 
         WeaponAnimator_MainTransformer mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Rotation, 0.5f, _curve);
         mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Position, 0.5f, _curve);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 6);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 6);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
     }
     private void DisableRun()
     {

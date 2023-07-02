@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WeaponAnimatorNamespace;
 
 public class PlayerEquipedWeapon_Aim : MonoBehaviour
 {
@@ -105,12 +106,14 @@ public class PlayerEquipedWeapon_Aim : MonoBehaviour
 
     private void MoveHandsToAimTransform()
     {
+        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_combatController.EquipedWeaponData.FingersPreset.Base, 0.2f);
+
         WeaponAnimator_MainTransformer mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Aim[_aimTypeIndex].RightHand_Rotation, 0.3f, _curve);
         mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Aim[_aimTypeIndex].RightHand_Position, 0.3f, _curve);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 6);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 6);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);;
 
         if (_aimTypeIndex == 0) _combatController.EquipedWeapon.OnWeaponAim(true);
         else _combatController.EquipedWeapon.OnWeaponAim(false);

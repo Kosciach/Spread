@@ -19,8 +19,8 @@ public class PlayerEquipedWeapon_Hold : MonoBehaviour
 
     public void ChangeEquipedHoldMode()
     {
-        if (_equipedWeaponController.Run.IsRun) return;
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
+            || _equipedWeaponController.Run.IsRun
             || _equipedWeaponController.Aim.IsAim
             || _equipedWeaponController.Block.IsBlock
             || _equipedWeaponController.Wall.IsWall) return;

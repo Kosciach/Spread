@@ -4,6 +4,8 @@ using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
 using UnityEngine.VFX;
+using WeaponAnimatorNamespace;
+using LeftHandAnimatorNamespace;
 
 public class PlayerStateMachine : MonoBehaviour
 {

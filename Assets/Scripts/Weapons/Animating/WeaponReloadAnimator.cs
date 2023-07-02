@@ -62,8 +62,8 @@ public class WeaponReloadAnimator : MonoBehaviour
         _rightHandIk.localPosition = _playerStateMachine.AnimatingControllers.Weapon.MainTransformer.Pos;
         _rightHandIk.localRotation = _playerStateMachine.AnimatingControllers.Weapon.MainTransformer.Rot;
 
-        _leftHandIk.localPosition = _playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Pos;
-        _leftHandIk.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Rot);
+        //_leftHandIk.localPosition = _playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Pos;
+        //_leftHandIk.localRotation = Quaternion.Euler(_playerStateMachine.AnimatingControllers.LeftHand.CurrentTransformVectors.Rot);
     }
 
 

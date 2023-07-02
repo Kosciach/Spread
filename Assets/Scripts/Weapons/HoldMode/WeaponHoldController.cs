@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponHoldController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] protected PlayerCombatController _playerCombatController;
+    protected PlayerCombatController _playerCombatController;
     protected WeaponStateMachine _stateMachine;
 
 

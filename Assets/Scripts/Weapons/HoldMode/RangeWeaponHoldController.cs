@@ -1,6 +1,8 @@
+using LeftHandAnimatorNamespace;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WeaponAnimatorNamespace;
 
 public class RangeWeaponHoldController : WeaponHoldController
 {
@@ -40,6 +42,14 @@ public class RangeWeaponHoldController : WeaponHoldController
         }
 
 
+
+        PlayerFingerAnimator fingerAnimator = _playerCombatController.PlayerStateMachine.AnimatingControllers.Fingers;
+        fingerAnimator.SetUpAllFingers(_rangeWeaponData.FingersPreset.Base, 0.3f);
+
+        LeftHandAnimator leftHandAnimator = _playerCombatController.PlayerStateMachine.AnimatingControllers.LeftHand;
+        leftHandAnimator.Move(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        leftHandAnimator.Rotate(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
+
         WeaponAnimator_MainTransformer mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(rot, rotateSpeed);
         mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
@@ -76,10 +86,19 @@ public class RangeWeaponHoldController : WeaponHoldController
         }
 
 
+
+
+        LeftHandAnimator leftHandAnimator = _playerCombatController.PlayerStateMachine.AnimatingControllers.LeftHand;
+        leftHandAnimator.Move(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.4f);
+        leftHandAnimator.Rotate(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.4f);
+
         WeaponAnimator_MainTransformer mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(rot, rotateSpeed);
         mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
         {
+            PlayerFingerAnimator fingerAnimator = _playerCombatController.PlayerStateMachine.AnimatingControllers.Fingers;
+            fingerAnimator.SetUpAllFingers(_rangeWeaponData.FingersPreset.Base, 0.2f);
+
             _stateMachine.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(true);
 
             _stateMachine.DamageDealingController.Toggle(true);

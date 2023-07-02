@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using WeaponAnimatorNamespace;
 
 public class PlayerEquipedWeapon_Wall : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class PlayerEquipedWeapon_Wall : MonoBehaviour
     private void WallEnable()
     {
         _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
-
+        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_combatController.EquipedWeaponData.FingersPreset.Base, 0.2f);
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Aim.ToggleAimBool(false);
         _equipedWeaponController.Block.ToggleBlockBool(false);
@@ -55,8 +56,8 @@ public class PlayerEquipedWeapon_Wall : MonoBehaviour
         mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Wall.RightHand_Rotation, 0.2f);
         mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Wall.RightHand_Position, 0.2f);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 6);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 6);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
     }
     private void WallDisable()
     {

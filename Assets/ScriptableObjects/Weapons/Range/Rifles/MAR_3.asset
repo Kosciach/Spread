@@ -17,43 +17,43 @@ MonoBehaviour:
   WeaponType: 0
   Icon: {fileID: 21300000, guid: 44355f9b5f0befc47838b7c6aa07cec5, type: 3}
   Fists: 0
-  InHandPosition: {x: 0.0472, y: 0.1454, z: 0.0275}
-  InHandRotation: {x: 328.3553, y: 259.22763, z: 272.5527}
+  InHandPosition: {x: 0.03348885, y: 0.14503928, z: 0.03648301}
+  InHandRotation: {x: 358.21103, y: 264.9974, z: 277.12006}
   FingersPreset: {fileID: 11400000, guid: cb28fa8f993c726459f02f4b099b57c9, type: 2}
   LeftHandTransforms:
     Base:
-      LeftHand_Position: {x: 0.271, y: 0.333, z: 0.133}
-      LeftHand_Rotation: {x: 340.27536, y: 53.626762, z: 344.2019}
+      LeftHand_Position: {x: 0.1674, y: 0.4341, z: 0.0227}
+      LeftHand_Rotation: {x: 317.8956, y: 48.025177, z: 29.997248}
     Block:
-      LeftHand_Position: {x: 0.271, y: 0.333, z: 0.133}
-      LeftHand_Rotation: {x: 340.27536, y: 53.626762, z: 344.2019}
+      LeftHand_Position: {x: 0.1674, y: 0.4341, z: 0.0227}
+      LeftHand_Rotation: {x: 317.8956, y: 48.025177, z: 29.997248}
   WeaponTransforms:
     Origin:
       RightHand_Position: {x: 0.051, y: -0.626, z: -0.134}
       RightHand_Rotation: {x: 305.76892, y: 269.1466, z: 242.0388}
     Block:
-      RightHand_Position: {x: 0.222, y: -0.362, z: 0.583}
-      RightHand_Rotation: {x: 302.14615, y: 149.3001, z: 363}
+      RightHand_Position: {x: 0.139, y: -0.247, z: 0.67}
+      RightHand_Rotation: {x: 306.38693, y: 131.58302, z: 338.9302}
     Aim:
-    - RightHand_Position: {x: -0.034, y: -0.187, z: 0.341}
-      RightHand_Rotation: {x: 279.2062, y: 288.54044, z: 283.3981}
-    - RightHand_Position: {x: 0.106, y: -0.221, z: 0.341}
-      RightHand_Rotation: {x: 331.83337, y: 271.11374, z: 304.01804}
+    - RightHand_Position: {x: 0.0321, y: -0.211, z: 0.342}
+      RightHand_Rotation: {x: 278.62732, y: 215.68062, z: 326.41132}
+    - RightHand_Position: {x: 0.116, y: -0.211, z: 0.343}
+      RightHand_Rotation: {x: 314.88965, y: 256.8952, z: 283.73483}
     Run:
-      RightHand_Position: {x: 0.052, y: -0.22, z: 0.374}
-      RightHand_Rotation: {x: 292.05298, y: 277.46152, z: 250.96445}
+      RightHand_Position: {x: 0.118, y: -0.253, z: 0.475}
+      RightHand_Rotation: {x: 291.6585, y: 242.72017, z: 251.75975}
     Wall:
-      RightHand_Position: {x: 0.088, y: -0.268, z: 0.491}
-      RightHand_Rotation: {x: 308.10123, y: 255.36424, z: 263.3697}
+      RightHand_Position: {x: 0.118, y: -0.253, z: 0.475}
+      RightHand_Rotation: {x: 291.67023, y: 229.64352, z: 251.79367}
   SwayWeight: 1
   BobbingWeight: 0
   HoldTransforms:
     Rest:
-      RightHand_Position: {x: 0.0522, y: -0.209, z: 0.374}
-      RightHand_Rotation: {x: 297.04022, y: 280.6047, z: 253.69778}
+      RightHand_Position: {x: 0.142, y: -0.247, z: 0.383}
+      RightHand_Rotation: {x: 285.50885, y: 272.40533, z: 231.33421}
     Hip:
-      RightHand_Position: {x: 0.0522, y: -0.209, z: 0.374}
-      RightHand_Rotation: {x: 282.83917, y: 276.77246, z: 295.58923}
+      RightHand_Position: {x: 0.142, y: -0.247, z: 0.383}
+      RightHand_Rotation: {x: 282.20483, y: 223.26886, z: 317.14566}
   RangeStats:
     Damage: 30
     Range: 5

@@ -1,3 +1,4 @@
+using IkLayers;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -150,7 +151,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _barrelController.enabled = true;
 
         if (!_isEquiped) return;
-        _stateMachine.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_rangeWeaponData, false);
+        _stateMachine.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, false, 0.2f);
     }
     public override void ToggleOff()
     {
@@ -158,7 +159,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _barrelController.enabled = false;
 
         if (!_isEquiped) return;
-        _stateMachine.PlayerStateMachine.AnimatingControllers.Fingers.TriggerDiscipline.SwitchTriggerDiscipline(_rangeWeaponData, true);
+        _stateMachine.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, true, 0.2f);
     }
 
 

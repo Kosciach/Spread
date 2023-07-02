@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WeaponAnimatorNamespace;
 
 public class PlayerEquipedWeapon_Block : MonoBehaviour
 {
@@ -55,7 +56,7 @@ public class PlayerEquipedWeapon_Block : MonoBehaviour
     private void BlockEnable()
     {
         _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(true);
-
+        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_combatController.EquipedWeaponData.FingersPreset.Block, 0.2f);
         _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Run.ToggleRunBool(false);
 
@@ -64,15 +65,12 @@ public class PlayerEquipedWeapon_Block : MonoBehaviour
         mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Rotation, 0.3f);
         mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Block.RightHand_Position, 0.3f);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Block.LeftHand_Position, 6);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Block.LeftHand_Rotation, 6);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponData.LeftHandTransforms.Block.LeftHand_Position, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponData.LeftHandTransforms.Block.LeftHand_Rotation, 0.2f);
     }
     private void BlockDisable()
     {
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetPos(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 8);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.SetRot(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 8);
-
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.HoldController;
-        equipedModeController.MoveHandsToCurrentHoldMode(0.3f, 0.3f);
+        equipedModeController.MoveHandsToCurrentHoldMode(0.4f, 0.4f);
     }
 }

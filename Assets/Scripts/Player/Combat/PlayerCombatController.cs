@@ -3,6 +3,7 @@ using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
 using UnityEditor;
+using WeaponAnimatorNamespace;
 
 public class PlayerCombatController : MonoBehaviour
 {
@@ -86,19 +87,15 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 0.1f);
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 0.1f);
         _playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset.Base, 0.01f);
+        _playerStateMachine.AnimatingControllers.Fingers.Discipline.SetDisciplineIk(_equipedWeaponData.FingersPreset);
 
 
 
-
-        //Prepare left hand
-        _playerStateMachine.AnimatingControllers.LeftHand.SetPos(_equipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 10);
-        _playerStateMachine.AnimatingControllers.LeftHand.SetRot(_equipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 10);
-
-
-        //Toggle layers
+        //RightHand Transform to origin
         mainPositioner.MoveRaw(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Position);
         mainPositioner.RotateRaw(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Rotation);
 
+        //Change layers
         ToggleCombatLayersPreset(true, false, false, false, true, 0.4f);
         _playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
         {
@@ -151,8 +148,9 @@ public class PlayerCombatController : MonoBehaviour
             _weaponWallDetector.ToggleCollider(false);
 
             //Disable fingers
-            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 1);
-            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 1);
+            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 0.2f);
+            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 0.2f);
+            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, false, 0.2f);
 
             //Prepare hands camera
             _playerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
@@ -211,8 +209,10 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Disable fingers
-        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 1);
-        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 1);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 0.2f);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 0.2f);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, false, 0.2f);
+
 
         //Disable bobbing/sway
         _playerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
@@ -268,8 +268,9 @@ public class PlayerCombatController : MonoBehaviour
 
 
         //Disable fingers
-        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 1);
-        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 1);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 0.2f);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 0.2f);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, false, 0.2f);
 
 
         //Prepare hands camera

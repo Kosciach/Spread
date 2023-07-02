@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class WeaponAnimator_BakeTransformer : MonoBehaviour
+namespace WeaponAnimatorNamespace
 {
-    [Header("====References====")]
-    [SerializeField] WeaponAnimator _weaponAnimator;
-    [Space(5)]
-    [SerializeField] Transform[] _baseIkTransforms;
-    [SerializeField] Transform[] _bakedIkTransforms;
-    [Space(5)]
-    [SerializeField] Rig _bakedWeaponAnimatingLayer;
-
-    [Space(20)]
-    [Header("====Debugs====")]
-    [SerializeField] bool _updateBakedTransforms;
-   
-
-
-
-
-
-    public void UpdateBakedTransforms()
+    public class WeaponAnimator_BakeTransformer : MonoBehaviour
     {
-        for(int i=0; i<4; i++)
+        [Header("====References====")]
+        [SerializeField] WeaponAnimator _weaponAnimator;
+        [Space(5)]
+        [SerializeField] Transform[] _baseIkTransforms;
+        [SerializeField] Transform[] _bakedIkTransforms;
+        [Space(5)]
+        [SerializeField] Rig _bakedWeaponAnimatingLayer;
+
+        [Space(20)]
+        [Header("====Debugs====")]
+        [SerializeField] bool _updateBakedTransforms;
+
+
+
+
+
+
+        public void UpdateBakedTransforms()
         {
-            _bakedIkTransforms[i].position = _baseIkTransforms[i].position;
-            _bakedIkTransforms[i].rotation = _baseIkTransforms[i].rotation;
+            for (int i = 0; i < 4; i++)
+            {
+                _bakedIkTransforms[i].position = _baseIkTransforms[i].position;
+                _bakedIkTransforms[i].rotation = _baseIkTransforms[i].rotation;
+            }
         }
     }
 }
