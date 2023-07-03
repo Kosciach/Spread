@@ -64,6 +64,7 @@ public class WeaponShootingController : WeaponDamageDealingController
             fireMode.WeaponShootingController = this;
             fireMode.enabled = false;
         }
+        _currentFireMode.enabled = true;
         _currentFireModeType = _currentFireMode.FireModeType;
         _fireModesAnimator.OnFireModeChange(_currentFireModeIndex);
     }
@@ -124,6 +125,7 @@ public class WeaponShootingController : WeaponDamageDealingController
     private void ChangeFireMode()
     {
         if (!_isEquiped) return;
+        if (_fireModes.Length <= 1) return;
 
         _currentFireModeIndex++;
         _currentFireModeIndex = _currentFireModeIndex == _fireModes.Length ? 0 : _currentFireModeIndex;

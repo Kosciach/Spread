@@ -11,8 +11,11 @@ public class PlayerFingerAnimator : MonoBehaviour
     [Space(5)]
 
     [SerializeField] PlayerStateMachine _playerStateMachine;
+
+    [Space(5)]
     [SerializeField] Hand _rightHand; public Hand RightHand { get { return _rightHand; } }
     [SerializeField] Hand _leftHand; public Hand LeftHand { get { return _leftHand; } }
+    [SerializeField] Transform _disciplineTarget; public Transform DisciplineTarget { get { return _disciplineTarget; } }
 
 
     [System.Serializable]

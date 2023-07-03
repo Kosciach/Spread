@@ -150,7 +150,6 @@ public class PlayerCombatController : MonoBehaviour
             //Disable fingers
             _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 0.2f);
             _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 0.2f);
-            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, false, 0.2f);
 
             //Prepare hands camera
             _playerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
@@ -172,6 +171,7 @@ public class PlayerCombatController : MonoBehaviour
 
             //Toggle layers
             ToggleCombatLayersPreset(false, true, true, true, false, 0.4f);
+            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, false, 0.2f);
             _playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
             {
                 mainPositioner.MoveRaw(Vector3.zero);

@@ -71,6 +71,6 @@ public class PlayerEquipedWeapon_Block : MonoBehaviour
     private void BlockDisable()
     {
         WeaponHoldController equipedModeController = _combatController.EquipedWeapon.HoldController;
-        equipedModeController.MoveHandsToCurrentHoldMode(0.4f, 0.4f);
+        equipedModeController.MoveHandsToCurrentHoldMode(0.2f, 0.2f);
     }
 }

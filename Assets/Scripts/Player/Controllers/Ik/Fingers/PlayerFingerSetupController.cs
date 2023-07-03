@@ -22,13 +22,13 @@ public class PlayerFingerSetupController : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] bool _setFingers;
-    [SerializeField] FingerPresetType _fingerPresetType;
+    [SerializeField] SetupType _setupType;
 
 
 
-    private enum FingerPresetType
+    private enum SetupType
     {
-        None, Base, Block
+        None, Base, Block, Discipline
     }
 
 
@@ -39,7 +39,7 @@ public class PlayerFingerSetupController : MonoBehaviour
 
         SetUpFingers();
         _setFingers = false;
-        _fingerPresetType = FingerPresetType.None;
+        _setupType = SetupType.None;
     }
 
 
@@ -49,21 +49,26 @@ public class PlayerFingerSetupController : MonoBehaviour
         Debug.Log(1);
 
 
-        switch(_fingerPresetType)
+        switch(_setupType)
         {
-            case FingerPresetType.None: break;
+            case SetupType.None: break;
 
 
-            case FingerPresetType.Base:
+            case SetupType.Base:
 
                 SetUpHand(ref _fingerPreset.Base.RightHand, _fingerAnimator.RightHand);
                 SetUpHand(ref _fingerPreset.Base.LeftHand, _fingerAnimator.LeftHand);
 
             break;
-            case FingerPresetType.Block:
+            case SetupType.Block:
 
                 SetUpHand(ref _fingerPreset.Block.RightHand, _fingerAnimator.RightHand);
                 SetUpHand(ref _fingerPreset.Block.LeftHand, _fingerAnimator.LeftHand);
+
+            break;
+            case SetupType.Discipline:
+
+                SetUpTriggerDiscipline(ref _fingerPreset.TriggerDisciplineIndexFinger);
 
             break;
         }
@@ -94,7 +99,14 @@ public class PlayerFingerSetupController : MonoBehaviour
         SetUpFinger(ref scriptableHand.Pinky, hand.Pinky);
     }
 
+    private void SetUpTriggerDiscipline(ref FingerPreset.Finger scriptableFinger)
+    {
+        scriptableFinger.Target_Position = _fingerAnimator.DisciplineTarget.localPosition;
+        scriptableFinger.Target_Rotation = _fingerAnimator.DisciplineTarget.localRotation.eulerAngles;
 
+        int fingerIndex = _fingerAnimator.DisciplineTarget.GetSiblingIndex();
+        scriptableFinger.Hint_Position = _fingerAnimator.DisciplineTarget.parent.GetChild(fingerIndex + 1).localPosition;
+    }
 
 
 
