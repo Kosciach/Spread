@@ -8,7 +8,7 @@ namespace PlayerAnimator
     public class PlayerAnimatorController : MonoBehaviour
     {
         [Header("====References====")]
-        [SerializeField] Animator _animator;
+        [SerializeField] Animator _animator;        public Animator Animator { get { return _animator; } }
 
 
 

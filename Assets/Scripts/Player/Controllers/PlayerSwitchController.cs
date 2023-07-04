@@ -65,7 +65,6 @@ public class SwitchToClass
 
 
         //Dash();
-
         //if (_stateMachine.MovementController.IsDashDirection()) return;
 
         _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Jump;
@@ -73,7 +72,6 @@ public class SwitchToClass
 
 
         if (!_playerStateMachine.StateControllers.Climb.CanClimbWall()) return;
-
         Climb();
     }
     public void Fall()

@@ -45,8 +45,9 @@ public class PlayerVerticalVelocity_Jump : MonoBehaviour
     }
     public bool CheckAboveObsticle()
     {
+        RaycastHit hit = new RaycastHit();
         Debug.DrawRay(transform.position, Vector3.up * 4, Color.cyan, 5);
-        return Physics.Raycast(transform.position, Vector3.up, 4, ~_playerMask);
+        return Physics.Raycast(transform.position, Vector3.up, out hit, 4, ~_playerMask);
     }
 
 
