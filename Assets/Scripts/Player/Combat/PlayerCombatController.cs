@@ -203,6 +203,9 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, false, 0.5f);
 
 
+        _equipedWeapon.OnWeaponUnEquip();
+
+
         //Prepare hands camera
         _playerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
         _playerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Idle, 5);
@@ -224,7 +227,6 @@ public class PlayerCombatController : MonoBehaviour
 
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
 
-        _equipedWeapon.OnWeaponUnEquip();
 
         _playerStateMachine.InventoryControllers.Inventory.Weapon.DropWeapon(_equipedWeaponIndex);
         _equipedWeapon = null;
@@ -263,8 +265,10 @@ public class PlayerCombatController : MonoBehaviour
         ToggleCombatLayersPreset(false, false, false, false, false, 0.1f);
 
 
-
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, false, 0.5f);
+
+
+        _equipedWeapon.OnWeaponUnEquip();
 
 
         //Disable fingers
@@ -282,8 +286,6 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeapon.DamageDealingController.Toggle(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
-
-        _equipedWeapon.OnWeaponUnEquip();
 
         _equipedWeapon = null;
         _equipedWeaponData = null;

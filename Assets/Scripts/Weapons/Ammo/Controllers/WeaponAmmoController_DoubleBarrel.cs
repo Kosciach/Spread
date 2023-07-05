@@ -69,10 +69,10 @@ public class WeaponAmmoController_DoubleBarrel : BaseWeaponAmmoController
     }
     public override void OnWeaponUnEquip()
     {
-        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.Toggle(false, 0.01f);
-        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.Toggle(false, 0.01f);
-        CanvasController.Instance.HudControllers.Ammo.Controllers.DoubleBarrel.Toggle(false, 0.01f);
-        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.01f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.Toggle.Toggle(false);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.Toggle.Toggle(false);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.DoubleBarrel.Toggle.Toggle(false);
+        CanvasController.Instance.HudControllers.Ammo.Toggle.Toggle(false);
     }
 
 
@@ -86,9 +86,9 @@ public class WeaponAmmoController_DoubleBarrel : BaseWeaponAmmoController
         CanvasController.Instance.HudControllers.Ammo.Controllers.DoubleBarrel.UpdateBarrelRounds(_barrels[0], _barrels[1]);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
 
-        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.Toggle(false, 0.01f);
-        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.Toggle(false, 0.01f);
-        CanvasController.Instance.HudControllers.Ammo.Controllers.DoubleBarrel.Toggle(true, 0.01f);
-        CanvasController.Instance.HudControllers.Ammo.Toggle(true, 0.1f);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.Toggle.Toggle(false);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.Cylinder.Toggle.Toggle(false);
+        CanvasController.Instance.HudControllers.Ammo.Controllers.DoubleBarrel.Toggle.Toggle(true);
+        CanvasController.Instance.HudControllers.Ammo.Toggle.Toggle(true);
     }
 }

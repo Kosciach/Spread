@@ -7,8 +7,7 @@ public class CanvasController : MonoBehaviour
     public static CanvasController Instance { get; private set; }
 
     [Header("====References====")]
-    [SerializeField] HudControllersStruct _hudControllers; public HudControllersStruct HudControllers { get { return _hudControllers; } }
-
+    [SerializeField] HudControllersStruct _hudControllers;          public HudControllersStruct HudControllers { get { return _hudControllers; } }
 
 
     [System.Serializable]
@@ -19,6 +18,7 @@ public class CanvasController : MonoBehaviour
         public HudController_Ammo Ammo;
         public HudController_Firemodes Firemodes;
         public HudController_Weapon Weapon;
+        public HudController_Interaction Interaction;
     }
 
 

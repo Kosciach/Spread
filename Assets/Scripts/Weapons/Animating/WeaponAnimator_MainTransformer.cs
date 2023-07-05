@@ -105,9 +105,15 @@ namespace WeaponAnimatorNamespace
         {
             _move.SetRaw(pos);
         }
-        public void SetOnMoveFinish(Action toDo)
+        public WeaponAnimator_MainTransformer SetOnMoveFinish(Action toDo)
         {
             _move.OnFinish = toDo;
+            return this;
+        }
+        public WeaponAnimator_MainTransformer SetOnMoveUpdate(Action toDo)
+        {
+            _move.OnUpdate = toDo;
+            return this;
         }
 
 
@@ -163,17 +169,19 @@ namespace WeaponAnimatorNamespace
         [SerializeField] Vector3 _vector; public Vector3 Vector { get { return _vector; } }
         [SerializeField] bool _isLerping;
         public Action OnFinish;
+        public Action OnUpdate;
         public IEnumerator LerpCoroutine;
 
 
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration)
         {
+            //Start
             OnFinish = null;
+            OnUpdate = null;
+            _isLerping = true;
             float timeElapsed = 0;
 
-            //Start
-
-            _isLerping = true;
+            //Update
             while (timeElapsed < duration)
             {
                 float time = timeElapsed / duration;
@@ -182,22 +190,26 @@ namespace WeaponAnimatorNamespace
 
                 timeElapsed += Time.deltaTime;
 
+                if (OnUpdate != null) OnUpdate.Invoke();
+
                 yield return null;
             }
 
             //Finish
-
             _vector = endVector;
             _isLerping = false;
+            OnUpdate = null;
             if (OnFinish != null) OnFinish.Invoke();
         }
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration, AnimationCurve curve)
         {
+            //Start
             OnFinish = null;
+            OnUpdate = null;
+            _isLerping = true;
             float timeElapsed = 0;
 
-            //Start
-            _isLerping = true;
+            //Update
             while (timeElapsed < duration)
             {
                 float time = timeElapsed / duration;
@@ -207,13 +219,15 @@ namespace WeaponAnimatorNamespace
 
                 timeElapsed += Time.deltaTime;
 
+                if (OnUpdate != null) OnUpdate.Invoke();
+
                 yield return null;
             }
 
             //Finish
-
             _vector = endVector;
             _isLerping = false;
+            OnUpdate = null;
             if (OnFinish != null) OnFinish.Invoke();
         }
         public void SetRaw(Vector3 pos)
@@ -238,14 +252,14 @@ namespace WeaponAnimatorNamespace
 
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration)
         {
+            //Start
             OnFinish = null;
+            _isLerping = true;
             float timeElapsed = 0;
             Quaternion startQuaternion = Quaternion.Euler(startVector);
             Quaternion endQuaternion = Quaternion.Euler(endVector);
 
-            //Start
-
-            _isLerping = true;
+            //Update
             while (timeElapsed < duration)
             {
                 float time = timeElapsed / duration;
@@ -258,21 +272,20 @@ namespace WeaponAnimatorNamespace
             }
 
             //Finish
-
             _quaternion = endQuaternion;
             _isLerping = false;
             if (OnFinish != null) OnFinish.Invoke();
         }
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration, AnimationCurve curve)
         {
+            //Start
             OnFinish = null;
+            _isLerping = true;
             float timeElapsed = 0;
             Quaternion startQuaternion = Quaternion.Euler(startVector);
             Quaternion endQuaternion = Quaternion.Euler(endVector);
 
-            //Start
-
-            _isLerping = true;
+            //Update
             while (timeElapsed < duration)
             {
                 float time = timeElapsed / duration;
@@ -286,7 +299,6 @@ namespace WeaponAnimatorNamespace
             }
 
             //Finish
-
             _quaternion = endQuaternion;
             _isLerping = false;
             if (OnFinish != null) OnFinish.Invoke();

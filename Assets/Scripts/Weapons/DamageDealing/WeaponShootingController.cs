@@ -176,8 +176,8 @@ public class WeaponShootingController : WeaponDamageDealingController
         CanvasController.Instance.HudControllers.Weapon.UpdateIcon(_stateMachine.DataHolder.WeaponData.Icon);
         CanvasController.Instance.HudControllers.Firemodes.ChangeFireMode(_currentFireModeType);
 
-        CanvasController.Instance.HudControllers.Weapon.Toggle(true, 0.1f);
-        CanvasController.Instance.HudControllers.Firemodes.Toggle(true, 0.1f);
+        CanvasController.Instance.HudControllers.Weapon.Toggle.Toggle(true);
+        CanvasController.Instance.HudControllers.Firemodes.Toggle.Toggle(true);
 
         _stateMachine.PlayerStateMachine.AnimatingControllers.Weapon.Sway.SetWeight(_rangeWeaponData.SwayWeight);
     }
@@ -187,9 +187,9 @@ public class WeaponShootingController : WeaponDamageDealingController
         _isEquiped = false;
 
         _ammoController.OnWeaponUnEquip();
-        CanvasController.Instance.HudControllers.Weapon.Toggle(false, 0.1f);
-        CanvasController.Instance.HudControllers.Ammo.Toggle(false, 0.1f);
-        CanvasController.Instance.HudControllers.Firemodes.Toggle(false, 0.1f);
+        CanvasController.Instance.HudControllers.Weapon.Toggle.Toggle(false);
+        CanvasController.Instance.HudControllers.Ammo.Toggle.Toggle(false);
+        CanvasController.Instance.HudControllers.Firemodes.Toggle.Toggle(false);
     }
 
     public override void OnPlayerIdle()
