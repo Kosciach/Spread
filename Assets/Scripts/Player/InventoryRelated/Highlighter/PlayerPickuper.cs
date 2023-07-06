@@ -8,6 +8,7 @@ public class PlayerPickuper : MonoBehaviour
     [SerializeField] Collider[] _allPickupsDetected;
     [SerializeField] Collider _closestPickup; public Collider ClosestPickup { get { return _closestPickup; } }
 
+
     [Space(20)]
     [Header("====Settings====")]
     [SerializeField] LayerMask _pickupMask;
@@ -16,17 +17,13 @@ public class PlayerPickuper : MonoBehaviour
 
 
 
-
-
-
-
     private void Update()
     {
         _allPickupsDetected = Physics.OverlapSphere(transform.position, _detectionRange, _pickupMask);
-        if (_closestPickup != null) _closestPickup.GetComponent<Outline>().OutlineWidth = 0;
+        if (_closestPickup != null) _closestPickup.GetComponent<IHighlightable>().UnHighlight();
         if (_allPickupsDetected.Length <= 0)
         {
-
+            CanvasController.Instance.HudControllers.Interaction.Pickup.Toggle.Toggle(false);
             return;
         }
 
@@ -44,8 +41,8 @@ public class PlayerPickuper : MonoBehaviour
 
         if (_closestPickup != null)
         {
-
-            _closestPickup.GetComponent<Outline>().OutlineWidth = 2;
+            CanvasController.Instance.HudControllers.Interaction.Pickup.Toggle.Toggle(true);
+            _closestPickup.GetComponent<IHighlightable>().Highlight();
         }
     }
 }

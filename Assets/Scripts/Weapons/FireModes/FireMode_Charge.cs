@@ -1,3 +1,4 @@
+using SimpleMan.CoroutineExtensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,7 +50,16 @@ public class FireMode_Charge : BaseFireMode
     {
         _isInputReady = false;
         _shootCount++;
-        StartCoroutine(StartChargeAnimation());
+        this.Delay(0.2f, () =>
+        {
+            PlayerStateMachine playerStateMachine = _weaponShootingController.StateMachine.PlayerStateMachine;
+
+            playerStateMachine.AnimatingControllers.Weapon.BakeTransformer.UpdateBakedTransforms();
+            if (_chargeWithRightHand) playerStateMachine.AnimatingControllers.WeaponHolder.LeftHand(transform);
+            playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, true, 0.3f);
+            playerStateMachine.AnimatingControllers.Animator.SetTrigger("ChargeWeapon", false);
+            _weaponShootingController.StateMachine.Animator.SetTrigger("BoltCharge");
+        });
     }
     public void StopCharge()
     {
@@ -65,20 +75,6 @@ public class FireMode_Charge : BaseFireMode
             if (_chargeWithRightHand) playerStateMachine.AnimatingControllers.WeaponHolder.RightHand(transform);
             playerStateMachine.AnimatingControllers.WeaponHolder.SetWeaponInHandTransform(transform, pos, rot);
         });
-    }
-
-
-    private IEnumerator StartChargeAnimation()
-    {
-        yield return new WaitForSeconds(0.2f);
-
-        PlayerStateMachine playerStateMachine = _weaponShootingController.StateMachine.PlayerStateMachine;
-
-        playerStateMachine.AnimatingControllers.Weapon.BakeTransformer.UpdateBakedTransforms();
-        if(_chargeWithRightHand) playerStateMachine.AnimatingControllers.WeaponHolder.LeftHand(transform);
-        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, true, 0.3f);
-        playerStateMachine.AnimatingControllers.Animator.SetTrigger("ChargeWeapon", false);
-        _weaponShootingController.StateMachine.Animator.SetTrigger("BoltCharge");
     }
 
 
