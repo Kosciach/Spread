@@ -20,7 +20,11 @@ public class PlayerPickuper : MonoBehaviour
     private void Update()
     {
         _allPickupsDetected = Physics.OverlapSphere(transform.position, _detectionRange, _pickupMask);
-        if (_closestPickup != null) _closestPickup.GetComponent<IHighlightable>().UnHighlight();
+        if (_closestPickup != null)
+        {
+            _closestPickup.GetComponent<IHighlightable>().UnHighlight();
+            _closestPickup = null;
+        }
         if (_allPickupsDetected.Length <= 0)
         {
             CanvasController.Instance.HudControllers.Interaction.Pickup.Toggle.Toggle(false);

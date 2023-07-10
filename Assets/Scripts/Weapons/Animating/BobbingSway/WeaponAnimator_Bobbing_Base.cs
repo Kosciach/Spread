@@ -46,15 +46,15 @@ namespace WeaponAnimatorNamespace
 
         private void SetRawVectors()
         {
-            float lowStaminaBobStrength = _bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.LowStaminaBobStrength;
-            float lowStaminaBobStrengthCorrected = lowStaminaBobStrength == 0 ? 1 : lowStaminaBobStrength;
+            //float lowStaminaBobStrength = _bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.LowStaminaBobStrength;
+            //float lowStaminaBobStrengthCorrected = lowStaminaBobStrength == 0 ? 1 : lowStaminaBobStrength;
 
             //Pos
-            _rawVectors.Pos.x = Mathf.Sin(Time.time * 3 * _speedMultipliers[_bobbingTypeIndex]) * 0.5f * (_distanceMultipliers[_bobbingTypeIndex] * lowStaminaBobStrengthCorrected) / 50;
-            _rawVectors.Pos.y = Mathf.Sin(Time.time * 6 * _speedMultipliers[_bobbingTypeIndex]) * 0.25f * (_distanceMultipliers[_bobbingTypeIndex] * lowStaminaBobStrengthCorrected) / 50;
+            _rawVectors.Pos.x = Mathf.Sin(Time.time * 3 * _speedMultipliers[_bobbingTypeIndex]) * 0.5f * (_distanceMultipliers[_bobbingTypeIndex]) / 50;
+            _rawVectors.Pos.y = Mathf.Sin(Time.time * 6 * _speedMultipliers[_bobbingTypeIndex]) * 0.25f * (_distanceMultipliers[_bobbingTypeIndex]) / 50;
 
             //Rot
-            _rawVectors.Rot.y = Mathf.Cos(Time.time * 3 * _speedMultipliers[_bobbingTypeIndex]) * 0.2f * (_distanceMultipliers[_bobbingTypeIndex] * lowStaminaBobStrengthCorrected);
+            _rawVectors.Rot.y = Mathf.Cos(Time.time * 3 * _speedMultipliers[_bobbingTypeIndex]) * 0.2f * (_distanceMultipliers[_bobbingTypeIndex]);
             _rawVectors.Rot.y *= 2;
         }
         private void SmoothOutVectors()

@@ -224,6 +224,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeapon.DamageDealingController.Toggle(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
 
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
 
@@ -286,6 +287,7 @@ public class PlayerCombatController : MonoBehaviour
         _equipedWeapon.DamageDealingController.Toggle(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
 
         _equipedWeapon = null;
         _equipedWeaponData = null;

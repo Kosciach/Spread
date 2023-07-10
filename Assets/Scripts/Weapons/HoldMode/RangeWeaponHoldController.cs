@@ -67,6 +67,7 @@ public class RangeWeaponHoldController : WeaponHoldController
             {
                 mainPositioner.Rotate(_rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation, rotateSpeed);
                 mainPositioner.Move(_rangeWeaponData.WeaponTransforms.Run.RightHand_Position, moveSpeed);
+                _stateMachine.DamageDealingController.Toggle(false);
             }
         });
     }
@@ -83,7 +84,6 @@ public class RangeWeaponHoldController : WeaponHoldController
         {
             rot = _rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation;
             pos = _rangeWeaponData.WeaponTransforms.Run.RightHand_Position;
-            Debug.Log("Go to run!");
         }
 
 
@@ -115,6 +115,7 @@ public class RangeWeaponHoldController : WeaponHoldController
             {
                 mainPositioner.Rotate(_rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation, rotateSpeed);
                 mainPositioner.Move(_rangeWeaponData.WeaponTransforms.Run.RightHand_Position, moveSpeed);
+                _stateMachine.DamageDealingController.Toggle(false);
             }
         });
     }

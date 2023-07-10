@@ -19,7 +19,7 @@ public class PlayerCrouchState : PlayerBaseState
             _ctx.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.Crouch, 5);
         }
 
-        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped))
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped) && _ctx.CombatControllers.Combat.EquipedWeapon != null)
         {
             _ctx.CombatControllers.Combat.EquipedWeapon.OnPlayerCrouch();
         }

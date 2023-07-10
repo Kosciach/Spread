@@ -15,7 +15,7 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
     [SerializeField] bool _canHoldExtraRound;
 
 
-    private Action<int>[] _reloadMethods = new Action<int>[2];
+    private Action<int, PlayerInventory_Ammo>[] _reloadMethods = new Action<int, PlayerInventory_Ammo>[2];
 
 
 
@@ -71,29 +71,37 @@ public class WeaponAmmoController_Chamber : BaseWeaponAmmoController
         //Choose reload method
         int reloadMethodIndex = _isRoundInChamber ? 1 : 0;
         reloadMethodIndex = _canHoldExtraRound ? reloadMethodIndex : 0;
-        _reloadMethods[reloadMethodIndex](ammoToReload);
+        _reloadMethods[reloadMethodIndex](ammoToReload, playerAmmoInventory);
 
-        //Remove ammo from inventory and update UI
-        playerAmmoInventory.RemoveAmmo(_weaponData.AmmoSettings.AmmoType, ammoToReload);
+        //Update UI
         CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateAmmoInMag(_ammoInMag);
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(playerAmmoInventory.AmmoTypesAmmount[ammoTypeIndex]);
         CanvasController.Instance.HudControllers.Ammo.Controllers.Chamber.UpdateRoundInChamberColor(_isRoundInChamber);
     }
 
 
-    private void ReloadWhenRoundIsInChamber(int ammoToReload)
+    private void ReloadWhenRoundIsNotInChamber(int ammoToReload, PlayerInventory_Ammo playerAmmoInventory)
     {
-        //Put ammo in mag
-        _ammoInMag += ammoToReload;
-        _isAmmoReadyToBeShoot = true;
-    }
-    private void ReloadWhenRoundIsNotInChamber(int ammoToReload)
-    {
+        if (_ammoInMag == (_weaponData.AmmoSettings.MagSize - 1)) return;
+
+
         //Put ammo in mag and place one in the chamber
         _ammoInMag += (ammoToReload - 1);
         //_canWeaponShoot = true;
         _isRoundInChamber = true;
         _isAmmoReadyToBeShoot = true;
+
+        //Remove Ammo from inventory
+        playerAmmoInventory.RemoveAmmo(_weaponData.AmmoSettings.AmmoType, ammoToReload);
+    }
+    private void ReloadWhenRoundIsInChamber(int ammoToReload, PlayerInventory_Ammo playerAmmoInventory)
+    {
+        //Put ammo in mag
+        _ammoInMag += ammoToReload;
+        _isAmmoReadyToBeShoot = true;
+
+        //Remove Ammo from inventory
+        playerAmmoInventory.RemoveAmmo(_weaponData.AmmoSettings.AmmoType, ammoToReload);
     }
 
 

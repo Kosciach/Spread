@@ -23,10 +23,11 @@ public class PlayerCineCamera_Bobbing : MonoBehaviour
     [SerializeField] float[] _speedMultipliers;
     [Range(0, 10)]
     [SerializeField] float[] _distanceMultipliers;
+    [Range(0, 10)]
+    [SerializeField] float[] _distanceMultipliers_Stamina;
     [Space(10)]
     [Range(0, 10)]
     [SerializeField] float _smoothSpeed;
-
 
 
     private void Update()
@@ -49,8 +50,8 @@ public class PlayerCineCamera_Bobbing : MonoBehaviour
         bobbingTypeIndex = Mathf.Clamp(bobbingTypeIndex, 0, 1);
 
 
-        _rawRot.x = Mathf.Sin(Time.time * 10 * _speedMultipliers[bobbingTypeIndex]) * (1 * _distanceMultipliers[bobbingTypeIndex] * lowStaminaBobStrengthCorrected);
-        _rawRot.y = Mathf.Cos(Time.time * 5 * _speedMultipliers[bobbingTypeIndex]) * (2 * _distanceMultipliers[bobbingTypeIndex] * lowStaminaBobStrengthCorrected);
+        _rawRot.x = Mathf.Sin(Time.time * 10 * _speedMultipliers[bobbingTypeIndex]) * (1 * _distanceMultipliers[bobbingTypeIndex] * (_distanceMultipliers_Stamina[bobbingTypeIndex] * lowStaminaBobStrengthCorrected));
+        _rawRot.y = Mathf.Cos(Time.time * 5 * _speedMultipliers[bobbingTypeIndex]) * (2 * _distanceMultipliers[bobbingTypeIndex] * (_distanceMultipliers_Stamina[bobbingTypeIndex] * lowStaminaBobStrengthCorrected));
     }
     private void SmoothOutBobbing()
     {
