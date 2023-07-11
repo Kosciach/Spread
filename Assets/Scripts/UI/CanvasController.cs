@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CanvasController : MonoBehaviour
 {
     public static CanvasController Instance { get; private set; }
 
     [Header("====References====")]
-    [SerializeField] HudControllersStruct _hudControllers;          public HudControllersStruct HudControllers { get { return _hudControllers; } }
+    [SerializeField] Volume _blur;
+    [Space(5)]
+    [SerializeField] HudControllersStruct _hudControllers;              public HudControllersStruct HudControllers { get { return _hudControllers; } }
+    [SerializeField] AttachmentTableUIController _attachmentTable;      public AttachmentTableUIController AttachmentTable { get { return _attachmentTable; } }
 
 
     [System.Serializable]
@@ -28,6 +32,16 @@ public class CanvasController : MonoBehaviour
     }
 
 
+    public void ToggleBloom(bool enable)
+    {
+        int weight = enable ? 1 : 0;
 
+        LeanTween.value(_blur.weight, weight, 0.1f).setOnUpdate((float val) => { _blur.weight = val; });
+    }
+    public void ToggleBloom(bool enable, float transitionDuration)
+    {
+        int weight = enable ? 1 : 0;
 
+        LeanTween.value(_blur.weight, weight, transitionDuration).setOnUpdate((float val) => { _blur.weight = val; });
+    }
 }

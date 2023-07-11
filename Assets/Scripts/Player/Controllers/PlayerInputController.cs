@@ -12,6 +12,8 @@ public class PlayerInputController : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
+    [SerializeField] bool _enabled;
+    [Space(5)]
     [SerializeField] Vector2 _mouseInputVector; public Vector2 MouseInputVector { get { return _mouseInputVector; } }
     [SerializeField] Vector3 _movementInputVector; public Vector3 MovementInputVector { get { return _movementInputVector; } }
     [SerializeField] Vector3 _movementInputVectorNormalized; public Vector3 MovementInputVectorNormalized { get { return _movementInputVectorNormalized; } }
@@ -58,7 +60,13 @@ public class PlayerInputController : MonoBehaviour
 
 
 
+    public void Toggle(bool enable)
+    {
+        _enabled = enable;
 
+        if (enable) _playerInputs.Enable();
+        else _playerInputs.Disable();
+    }
 
 
     #region InputVectors
@@ -189,10 +197,10 @@ public class PlayerInputController : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerInputs.Enable();
+        Toggle(true);
     }
     private void OnDisable()
     {
-        _playerInputs.Disable();
+        Toggle(false);
     }
 }

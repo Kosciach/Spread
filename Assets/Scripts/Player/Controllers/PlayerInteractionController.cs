@@ -5,13 +5,23 @@ using UnityEngine;
 public class PlayerInteractionController : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] PlayerPickuper _pickuper;
+    [SerializeField] PlayerInteractableDetector _interactableDetector;
 
 
 
     public void Interaction()
     {
-        if (_pickuper.ClosestPickup == null) return;
-        _pickuper.ClosestPickup.GetComponent<IPickupable>().Pickup();
+        if (_interactableDetector.ClosestInteractable == null) return;
+
+
+        IInteractable interactable = _interactableDetector.ClosestInteractable.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            interactable.Interact();
+            return;
+        }
+
+
+        Debug.Log("No Interaction!");
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Outline))]
-public class WeaponDataHolder : MonoBehaviour, IPickupable, IHighlightable
+public class WeaponDataHolder : MonoBehaviour, IInteractable, IHighlightable
 {
     [Header("====References====")]
     [SerializeField] WeaponData _weaponData; public WeaponData WeaponData { get { return _weaponData; } }
@@ -22,7 +22,7 @@ public class WeaponDataHolder : MonoBehaviour, IPickupable, IHighlightable
 
 
 
-    public void Pickup()
+    public void Interact()
     {
         _playerInventory.Weapon.AddWeapon(gameObject.GetComponent<WeaponStateMachine>(), _weaponData);
     }

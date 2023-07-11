@@ -12,6 +12,8 @@ public class HudController_Stats : MonoBehaviour
     [SerializeField] BarAndIcon _weaponStamina;
 
 
+    private CanvasGroupToggle _toggle; public CanvasGroupToggle Toggle { get { return _toggle; } }
+
 
     [System.Serializable]
     private struct BarAndIcon
@@ -22,6 +24,11 @@ public class HudController_Stats : MonoBehaviour
 
 
 
+
+    private void Awake()
+    {
+        _toggle = new CanvasGroupToggle(GetComponent<CanvasGroup>());
+    }
 
 
     public void UpdateHealth(float health)

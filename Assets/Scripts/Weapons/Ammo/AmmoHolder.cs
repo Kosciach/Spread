@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Outline))]
-public class AmmoHolder : MonoBehaviour, IPickupable, IHighlightable
+public class AmmoHolder : MonoBehaviour, IInteractable, IHighlightable
 {
     [Header("====Settings====")]
     [SerializeField] Ammo _ammo;
@@ -22,7 +22,7 @@ public class AmmoHolder : MonoBehaviour, IPickupable, IHighlightable
 
 
 
-    public void Pickup()
+    public void Interact()
     {
         _playerStateMachine.InventoryControllers.Inventory.Ammo.AddAmmo(_ammo, _ammoCount);
     }

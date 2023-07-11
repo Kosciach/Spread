@@ -1,0 +1,34 @@
+{
+    "name": "UIDisableInputs",
+    "maps": [
+        {
+            "name": "AttachmentTable",
+            "id": "1088b5a9-c6ec-4f7e-816f-2cdf07c1c177",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "842be4de-e249-44a3-b446-ed486456420c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "62b316d3-55e0-4b40-a299-f1579212e824",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
