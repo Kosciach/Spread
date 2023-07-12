@@ -16,6 +16,10 @@ public class HudController_Crosshair : MonoBehaviour
     [SerializeField] CrosshairTypeEnum _crosshairType;
 
 
+    private CanvasGroupToggle _toggle; public CanvasGroupToggle Toggle { get { return _toggle; } }
+
+
+
     [System.Serializable]
     private struct CrosshairControllers
     {
@@ -32,6 +36,7 @@ public class HudController_Crosshair : MonoBehaviour
 
     private void Awake()
     {
+        _toggle = new CanvasGroupToggle(GetComponent<CanvasGroup>());
         SwitchCrosshair(_crosshairType);
     }
 

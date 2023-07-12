@@ -12,37 +12,22 @@ public class PlayerColliderController : MonoBehaviour
 
 
     [Space(20)]
-    [Header("====Debugs====")]
-    [SerializeField] Vector3 _velocity; public Vector3 Velocity { get { return _velocity; } }
-    [SerializeField] float _desiredColliderRadius;
-
-
-
-    [Space(20)]
     [Header("====Settings====")]
-    [Range(0, 10)]
-    [SerializeField] float _colliderRadiusChangeSpeed;
     [SerializeField] Vector3 _colliderCenterOffset;
 
 
+    private ColliderRadiusLerper _colliderRadiusLerper;
 
 
-
+    private void Awake()
+    {
+        _colliderRadiusLerper = new ColliderRadiusLerper(_characterController);
+    }
     private void Update()
     {
         FitColliderToPlayer();
-        LerpColliderRadius();
-
-
-        _velocity = _characterController.velocity;
     }
 
-
-
-    private void LerpColliderRadius()
-    {
-        _characterController.radius = Mathf.Lerp(_characterController.radius, _desiredColliderRadius, _colliderRadiusChangeSpeed * Time.deltaTime);
-    }
 
     private void FitColliderToPlayer()
     {
@@ -58,8 +43,42 @@ public class PlayerColliderController : MonoBehaviour
     {
         _characterController.detectCollisions = enable;
     }
-    public void SetColliderRadius(float radius)
+    public void SetColliderRadius(float radius, float lerpDuration)
     {
-        _desiredColliderRadius = radius;
+        if (_colliderRadiusLerper.LerpCoroutine != null) StopCoroutine(_colliderRadiusLerper.LerpCoroutine);
+
+        _colliderRadiusLerper.LerpCoroutine = _colliderRadiusLerper.Lerp(radius, lerpDuration);
+        StartCoroutine(_colliderRadiusLerper.LerpCoroutine);
+    }
+}
+
+
+public class ColliderRadiusLerper
+{
+    private CharacterController _characterController;
+    public IEnumerator LerpCoroutine;
+
+    public ColliderRadiusLerper(CharacterController characterController)
+    {
+        _characterController = characterController;
+    }
+
+
+    public IEnumerator Lerp(float endRadius, float duration)
+    {
+        float timeElapsed = 0;
+
+        while (timeElapsed < duration)
+        {
+            float time = timeElapsed / duration;
+
+            _characterController.radius = Mathf.Lerp(_characterController.radius, endRadius, time);
+
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        _characterController.radius = endRadius;
     }
 }

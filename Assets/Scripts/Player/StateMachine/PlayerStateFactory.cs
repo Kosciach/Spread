@@ -76,4 +76,9 @@ public class PlayerStateFactory
     {
         return new PlayerDashState(_playerStateMachine, this, MethodBase.GetCurrentMethod().Name);
     }
+
+    public PlayerBaseState AttachmentTable()
+    {
+        return new PlayerAttachmentTableState(_playerStateMachine, this, MethodBase.GetCurrentMethod().Name);
+    }
 }

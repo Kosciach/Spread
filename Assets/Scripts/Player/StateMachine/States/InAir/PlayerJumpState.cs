@@ -10,7 +10,7 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
 
         PrepareAnimatorBools();
 

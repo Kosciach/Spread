@@ -133,4 +133,8 @@ public class SwitchToClass
     {
         _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Dash;
     }
+    public void AttachmentTable()
+    {
+        _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.AttachmentTable;
+    }
 }

@@ -156,6 +156,7 @@ public class PlayerCombatController : MonoBehaviour
             _playerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Idle, 5);
 
             _equipedWeapon.OnWeaponUnEquip();
+            _playerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
             _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
             _equipedWeapon = null;
@@ -204,6 +205,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         _equipedWeapon.OnWeaponUnEquip();
+        _playerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
 
         //Prepare hands camera
@@ -270,6 +272,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         _equipedWeapon.OnWeaponUnEquip();
+        _playerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
 
         //Disable fingers

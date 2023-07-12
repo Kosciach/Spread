@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerCineCamera_Vertical : MonoBehaviour
 {
@@ -25,6 +26,12 @@ public class PlayerCineCamera_Vertical : MonoBehaviour
         _cineCameraRotateVertical.LerpCoroutine = _cineCameraRotateVertical.Lerp(angle, duration);
         StartCoroutine(_cineCameraRotateVertical.LerpCoroutine);
     }
+    public void SetRotateOnFinish(Action toDo)
+    {
+        _cineCameraRotateVertical.OnFinish = toDo;
+    }
+
+
     public void ToggleWrap(bool wrap)
     {
         _cineCameraController.CinePOV.m_VerticalAxis.m_Wrap = wrap;
@@ -40,8 +47,8 @@ public class PlayerCineCamera_Vertical : MonoBehaviour
 public class CineCameraRotateVertical
 {
     private CinemachinePOV _cinePov;
-    private IEnumerator _lerpCoroutine; public IEnumerator LerpCoroutine { get { return _lerpCoroutine; } set { _lerpCoroutine = value; } }
-
+    public IEnumerator LerpCoroutine;
+    public Action OnFinish;
 
     public CineCameraRotateVertical(CinemachinePOV cinePov)
     {
@@ -51,6 +58,8 @@ public class CineCameraRotateVertical
 
     public IEnumerator Lerp(float endAngle, float duration)
     {
+        OnFinish = null;
+
         float timeElapsed = 0;
 
         while (timeElapsed < duration)
@@ -65,5 +74,7 @@ public class CineCameraRotateVertical
         }
 
         _cinePov.m_VerticalAxis.Value = endAngle;
+
+        if (OnFinish != null) OnFinish.Invoke();
     }
 }

@@ -17,7 +17,7 @@ public class PlayerLandState : PlayerBaseState
 
         CheckHardLanding();
 
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
         _ctx.MovementControllers.VerticalVelocity.Slope.ToggleSlopeAngle(true);
 
         _ctx.AnimatingControllers.Animator.SetFloat("FallingTime", _ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.Slope.SlopeAngle);

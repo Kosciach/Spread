@@ -21,7 +21,7 @@ public class PlayerIdleState : PlayerBaseState
         }
 
         _ctx.MovementControllers.VerticalVelocity.Jump.ToggleJumpReloaded(true);
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.8f);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.8f, 0.2f);
 
 
 
@@ -58,6 +58,7 @@ public class PlayerIdleState : PlayerBaseState
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch)) StateChange(_factory.Crouch());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Climb)) StateChange(_factory.Climb());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.AttachmentTable)) StateChange(_factory.AttachmentTable());
     }
     public override void StateExit()
     {

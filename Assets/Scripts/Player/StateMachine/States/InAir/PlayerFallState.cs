@@ -10,7 +10,7 @@ public class PlayerFallState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.09f);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.09f, 0.2f);
         _ctx.AnimatingControllers.Animator.SetBool("Land", false);
 
         _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);

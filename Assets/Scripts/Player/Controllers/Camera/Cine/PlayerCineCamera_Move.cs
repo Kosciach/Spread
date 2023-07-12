@@ -24,7 +24,7 @@ public class PlayerCineCamera_Move : MonoBehaviour
 
     public enum CameraPositionsEnum
     {
-        OnGround, Swim, Ladder
+        OnGround, Swim, Ladder, AttachmentTable
     }
 
 

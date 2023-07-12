@@ -118,7 +118,8 @@ public class PlayerStateMachine : MonoBehaviour
         Climb, InAirClimb,
         Ladder,
         Swim, UnderWater,
-        Dash
+        Dash,
+        AttachmentTable
     }
 
 

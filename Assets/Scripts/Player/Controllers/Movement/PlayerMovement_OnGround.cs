@@ -58,7 +58,7 @@ public class PlayerMovement_OnGround : MonoBehaviour
 
         AnimatorMovement();
     }
-    private void AnimatorMovement()
+    public void AnimatorMovement()
     {
         Vector3 inputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVector;
         Vector3 animatorMovementVector = inputVector * _animatorMovementSpeed;

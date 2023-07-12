@@ -22,7 +22,7 @@ public class PlayerRunState : PlayerBaseState
 
 
         _ctx.MovementControllers.VerticalVelocity.Jump.ToggleJumpReloaded(true);
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.8f);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.8f, 0.2f);
 
 
 
@@ -86,6 +86,7 @@ public class PlayerRunState : PlayerBaseState
             StateChange(_factory.Swim());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Dash)) StateChange(_factory.Dash());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.AttachmentTable)) StateChange(_factory.AttachmentTable());
     }
     public override void StateExit()
     {
