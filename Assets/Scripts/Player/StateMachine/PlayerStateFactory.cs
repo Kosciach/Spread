@@ -81,4 +81,9 @@ public class PlayerStateFactory
     {
         return new PlayerAttachmentTableState(_playerStateMachine, this, MethodBase.GetCurrentMethod().Name);
     }
+
+    public PlayerBaseState Inventory()
+    {
+        return new PlayerInventoryState(_playerStateMachine, this, MethodBase.GetCurrentMethod().Name);
+    }
 }

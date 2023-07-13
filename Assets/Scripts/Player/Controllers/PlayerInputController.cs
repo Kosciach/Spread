@@ -50,6 +50,9 @@ public class PlayerInputController : MonoBehaviour
         SetBlock();
         SetChangeAimType();
 
+        SetInventory();
+
+
         SetLean();
     }
     private void Update()
@@ -188,7 +191,10 @@ public class PlayerInputController : MonoBehaviour
         _playerInputs.Player.LeanLeft.canceled += ctx => _stateMachine.CombatControllers.Leaning.StopLeanLeft();
     }
 
-
+    private void SetInventory()
+    {
+        _playerInputs.Player.Inventory.performed += ctx => _stateMachine.SwitchController.SwitchTo.Inventory();
+    }
 
 
 

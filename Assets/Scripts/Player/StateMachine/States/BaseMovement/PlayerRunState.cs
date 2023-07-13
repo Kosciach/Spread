@@ -87,6 +87,7 @@ public class PlayerRunState : PlayerBaseState
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Dash)) StateChange(_factory.Dash());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.AttachmentTable)) StateChange(_factory.AttachmentTable());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Inventory)) StateChange(_factory.Inventory());
     }
     public override void StateExit()
     {

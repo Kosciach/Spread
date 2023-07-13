@@ -17,8 +17,8 @@ MonoBehaviour:
   WeaponType: 0
   Icon: {fileID: 21300000, guid: c7b387dd960ec1f4ba61c6cf9e6fe10f, type: 3}
   Fists: 0
-  InHandPosition: {x: 0.0265, y: 0.176, z: 0.0263}
-  InHandRotation: {x: 75.540665, y: 344.7651, z: 351.80795}
+  InHandPosition: {x: 0.0262, y: 0.188, z: 0.0264}
+  InHandRotation: {x: 358.00296, y: 262.4989, z: 285.98883}
   FingersPreset: {fileID: 11400000, guid: d202a9fc3a1f485499f4d6a27d6ad4aa, type: 2}
   LeftHandTransforms:
     Base:
@@ -35,8 +35,8 @@ MonoBehaviour:
       RightHand_Position: {x: 0.191, y: -0.116, z: 0.61}
       RightHand_Rotation: {x: 17.94911, y: 259.08243, z: 350.80048}
     Aim:
-    - RightHand_Position: {x: 0.0232, y: -0.1189, z: 0.833}
-      RightHand_Rotation: {x: 285.84412, y: 207.2981, z: 335.64386}
+    - RightHand_Position: {x: 0.02192, y: -0.127, z: 0.833}
+      RightHand_Rotation: {x: 287.285, y: 204.96002, z: 338.137}
     - RightHand_Position: {x: 0.037, y: -0.158, z: 0.456}
       RightHand_Rotation: {x: 295.93915, y: 228.80583, z: 313.99265}
     Run:

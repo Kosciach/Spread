@@ -119,7 +119,8 @@ public class PlayerStateMachine : MonoBehaviour
         Ladder,
         Swim, UnderWater,
         Dash,
-        AttachmentTable
+        AttachmentTable,
+        Inventory
     }
 
 

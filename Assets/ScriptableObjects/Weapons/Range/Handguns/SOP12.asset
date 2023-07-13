@@ -17,8 +17,8 @@ MonoBehaviour:
   WeaponType: 0
   Icon: {fileID: 21300000, guid: cf66ccfd16a2e9b4388d91633f078c60, type: 3}
   Fists: 0
-  InHandPosition: {x: 0.0244, y: 0.1673, z: 0.0393}
-  InHandRotation: {x: 75.54069, y: 344.7651, z: 351.80795}
+  InHandPosition: {x: 0.0245, y: 0.1673, z: 0.0393}
+  InHandRotation: {x: 357.99, y: 262.738, z: 284.199}
   FingersPreset: {fileID: 11400000, guid: 003222b5b73aeb043aac0e473811b0a2, type: 2}
   LeftHandTransforms:
     Base:

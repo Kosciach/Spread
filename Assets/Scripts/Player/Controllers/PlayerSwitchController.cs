@@ -137,4 +137,11 @@ public class SwitchToClass
     {
         _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.AttachmentTable;
     }
+    public void Inventory()
+    {
+        if (!_playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
+        
+        if(_switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Inventory)) _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Idle;
+        else _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Inventory;
+    }
 }

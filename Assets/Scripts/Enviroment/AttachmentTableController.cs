@@ -61,7 +61,6 @@ public class AttachmentTableController : MonoBehaviour, IInteractable, IHighligh
         _active = enable;
 
 
-        //_playerStateMachine.CoreControllers.Input.Toggle(!enable);
         _playerStateMachine.CameraControllers.Cine.ToggleCineInput(!enable);
 
 
@@ -77,13 +76,16 @@ public class AttachmentTableController : MonoBehaviour, IInteractable, IHighligh
         toggleMethod();
     }
 
-
-
     private void EnableTable()
     {
         _playerStateMachine.SwitchController.SwitchTo.AttachmentTable();
 
+        Transform weaponTransform = _playerStateMachine.CombatControllers.Combat.EquipedWeapon.transform;
         _playerStateMachine.CombatControllers.Combat.TemporaryUnEquip();
+        weaponTransform.parent = transform.GetChild(2);
+        weaponTransform.localPosition = Vector3.zero;
+        weaponTransform.localRotation = Quaternion.Euler(new Vector3(90, 180, 0));
+
 
         _playerStateMachine.transform.LeanMove(transform.GetChild(0).position, 0.2f);
 
@@ -102,14 +104,16 @@ public class AttachmentTableController : MonoBehaviour, IInteractable, IHighligh
     }
     private void DisableTable()
     {
-        _playerStateMachine.transform.LeanMove(transform.GetChild(1).position, 0.5f);
-        _playerStateMachine.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.OnGround, 0.5f);
         _playerStateMachine.CameraControllers.Cine.Horizontal.ToggleWrap(true);
+
+        _playerStateMachine.transform.LeanMove(transform.GetChild(1).position, 0.5f);
+        _playerStateMachine.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.OnGround, 0.2f);
+
+        _playerStateMachine.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
 
         _playerStateMachine.CameraControllers.Cine.Vertical.RotateToAngle(0, 0.5f);
         _playerStateMachine.CameraControllers.Cine.Vertical.SetRotateOnFinish(() =>
         {
-            _playerStateMachine.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
             _playerStateMachine.SwitchController.SwitchTo.Idle();
         });
     }
