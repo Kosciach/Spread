@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInventory_Items : MonoBehaviour
 {
     [Header("====Debugs====")]
-    [SerializeField] List<ItemInventorySlot> _itemInventorySlot;
+    [SerializeField] List<ItemInventorySlot> _itemInventorySlots;
 
 
 
@@ -20,27 +20,29 @@ public class PlayerInventory_Items : MonoBehaviour
 
     public void AddSlot()
     {
-        _itemInventorySlot.Add(new ItemInventorySlot(CanvasController.Instance.PanelsControllers.Inventory.CreateUISlot()));
+        _itemInventorySlots.Add(new ItemInventorySlot(CanvasController.Instance.PanelsControllers.Inventory.CreateUIItemSlot()));
     }
-    private int GetSmallestIndex()
+    private int GetSmallestEmptyIndex()
     {
-        for(int i=0; i< _itemInventorySlot.Count; i++)
-        {
-            if (_itemInventorySlot[i].ItemData == null) return i;
-        }
+        for(int i=0; i< _itemInventorySlots.Count; i++)
+            if (_itemInventorySlots[i].ItemData == null) return i;
         return -1;
     }
 
-    public void AddItem(Item addedItemData, ItemDataHolder addedItemDataHolder)
+    public void AddItem(ItemData addedItemData, ItemDataHolder addedItemDataHolder)
     {
-        int smallestIndex = GetSmallestIndex();
+        int smallestIndex = GetSmallestEmptyIndex();
         if (smallestIndex < 0) return;
 
-        _itemInventorySlot[smallestIndex].SetItemData(addedItemData);
+        _itemInventorySlots[smallestIndex].FillSlot(addedItemData);
 
 
         addedItemDataHolder.gameObject.layer = 0; 
         Destroy(addedItemDataHolder.gameObject);
+    }
+    public void DropItem()
+    {
+
     }
 }
 
@@ -48,19 +50,33 @@ public class PlayerInventory_Items : MonoBehaviour
 public class ItemInventorySlot
 {
     public string Name;
-    public Item ItemData;
+    public ItemData ItemData;
     public GameObject UISlot;
+    public Image ItemIcon;
 
     public ItemInventorySlot(GameObject uiSlot)
     {
-        Name = "EmptySlot";
         UISlot = uiSlot;
+        ItemIcon = UISlot.transform.GetChild(0).GetComponent<Image>();
+
+        EmptySlot();
     }
 
 
-    public void SetItemData(Item itemData)
+    public void FillSlot(ItemData itemData)
     {
-        Name = itemData.Name;
+        Name = itemData.ItemName;
+        ItemIcon.sprite = itemData.Icon;
+        ItemIcon.color = new Color(1, 1, 1, 1);
+
         ItemData = itemData;
+    }
+    public void EmptySlot()
+    {
+        Name = "EmptySlot";
+        ItemIcon.color = new Color(1, 1, 1, 0);
+        ItemIcon.sprite = null;
+
+        ItemData = null;
     }
 }

@@ -25,7 +25,7 @@ public class PlayerEquipedWeapon_Hold : MonoBehaviour
             || _equipedWeaponController.Block.IsBlock
             || _equipedWeaponController.Wall.IsWall) return;
 
-        WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeapon.HoldController;
+        WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeaponSlot.Weapon.HoldController;
         WeaponHoldController.HoldModeEnum equipedMode = equipedWeaponHoldController.IsHoldMode(WeaponHoldController.HoldModeEnum.Hip) ? WeaponHoldController.HoldModeEnum.Rest : WeaponHoldController.HoldModeEnum.Hip;
 
         equipedWeaponHoldController.ChangeHoldMode(equipedMode);

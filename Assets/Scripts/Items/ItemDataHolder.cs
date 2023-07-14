@@ -6,7 +6,7 @@ using UnityEngine;
 public class ItemDataHolder : MonoBehaviour, IInteractable, IHighlightable
 {
     [Header("====References====")]
-    [SerializeField] Item _itemData; public Item ItemData { get { return _itemData; } }
+    [SerializeField] ItemData _itemData; public ItemData ItemData { get { return _itemData; } }
 
 
     private Outline _outline;

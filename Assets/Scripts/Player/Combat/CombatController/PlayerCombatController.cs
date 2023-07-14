@@ -9,9 +9,6 @@ public class PlayerCombatController : MonoBehaviour
 {
     [Header("====Reference====")]
     [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
-    [SerializeField] PlayerWeaponWallDetector _weaponWallDetector; public PlayerWeaponWallDetector WeaponWallDetector { get { return _weaponWallDetector;} }
-    [Space(5)]
-    [SerializeField] Transform _rightHand; public Transform RightHand { get { return _rightHand; } }
 
 
 
@@ -21,8 +18,7 @@ public class PlayerCombatController : MonoBehaviour
     [SerializeField] CombatStateEnum _combatState;
     [SerializeField] int _equipedWeaponIndex;
     [SerializeField] int _choosenWeaponIndex;
-    [SerializeField] WeaponStateMachine _equipedWeapon; public WeaponStateMachine EquipedWeapon { get { return _equipedWeapon; } }
-    [SerializeField] WeaponData _equipedWeaponData; public WeaponData EquipedWeaponData { get { return _equipedWeaponData; } }
+    [SerializeField] WeaponInventorySlot _equipedWeaponSlot; public WeaponInventorySlot EquipedWeaponSlot { get { return _equipedWeaponSlot; } }
     [SerializeField] bool _swap;
     [SerializeField] bool _isTemporaryUnEquip; public bool IsTemporaryUnEquip { get { return _isTemporaryUnEquip; } }
 
@@ -46,9 +42,8 @@ public class PlayerCombatController : MonoBehaviour
 
 
         _choosenWeaponIndex = choosenWeaponIndex;
-        WeaponStateMachine equipedWeaponNew = _playerStateMachine.InventoryControllers.Inventory.Weapon.Weapons[choosenWeaponIndex];
-        WeaponData equipedWeaponDataNew = _playerStateMachine.InventoryControllers.Inventory.Weapon.WeaponsData[choosenWeaponIndex];
-        if (equipedWeaponNew == null || equipedWeaponDataNew == null)
+        WeaponInventorySlot equipedWeaponSlotNew = _playerStateMachine.InventoryControllers.Inventory.Weapon.WeaponInventorySlots[choosenWeaponIndex];
+        if (equipedWeaponSlotNew.Weapon == null || equipedWeaponSlotNew.WeaponData == null)
         {
             return;
         }
@@ -66,14 +61,13 @@ public class PlayerCombatController : MonoBehaviour
 
         _isTemporaryUnEquip = false;
         _equipedWeaponIndex = choosenWeaponIndex;
-        _equipedWeapon = equipedWeaponNew;
-        _equipedWeaponData = equipedWeaponDataNew;
-        _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ResetAimType(_equipedWeapon.AimIndexHolder.WeaponAimIndex);
+        _equipedWeaponSlot = equipedWeaponSlotNew;
+        _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ResetAimType(_equipedWeaponSlot.Weapon.AimIndexHolder.WeaponAimIndex);
 
-        _playerStateMachine.AnimatingControllers.Animator.OverrideAnimator(_equipedWeapon.AnimatorOverride);
+        _playerStateMachine.AnimatingControllers.Animator.OverrideAnimator(_equipedWeaponSlot.Weapon.AnimatorOverride);
 
         //Change states
-        _equipedWeapon.SwitchController.SwitchTo.Equiped();
+        _equipedWeaponSlot.Weapon.SwitchController.SwitchTo.Equiped();
 
 
         //Prepare hands camera
@@ -86,29 +80,29 @@ public class PlayerCombatController : MonoBehaviour
         //SetupFingers
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 0.1f);
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 0.1f);
-        _playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_equipedWeaponData.FingersPreset.Base, 0.01f);
-        _playerStateMachine.AnimatingControllers.Fingers.Discipline.SetDisciplineIk(_equipedWeaponData.FingersPreset);
+        _playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_equipedWeaponSlot.WeaponData.FingersPreset.Base, 0.01f);
+        _playerStateMachine.AnimatingControllers.Fingers.Discipline.SetDisciplineIk(_equipedWeaponSlot.WeaponData.FingersPreset);
 
 
 
         //RightHand Transform to origin
-        mainPositioner.MoveRaw(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Position);
-        mainPositioner.RotateRaw(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Rotation);
+        mainPositioner.MoveRaw(_equipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Position);
+        mainPositioner.RotateRaw(_equipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Rotation);
 
         //Change layers
         ToggleCombatLayersPreset(true, false, false, false, true, 0.4f);
         _playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
         {
             //Put weapon in hand
-            _playerStateMachine.AnimatingControllers.WeaponHolder.RightHand(_equipedWeapon.transform);
-            _playerStateMachine.AnimatingControllers.WeaponHolder.SetWeaponInHandTransform(_equipedWeapon.transform, _equipedWeaponData.InHandPosition, _equipedWeaponData.InHandRotation);
+            _playerStateMachine.AnimatingControllers.WeaponHolder.RightHand(_equipedWeaponSlot.Weapon.transform);
+            _playerStateMachine.AnimatingControllers.WeaponHolder.SetWeaponInHandTransform(_equipedWeaponSlot.Weapon.transform, _equipedWeaponSlot.WeaponData.InHandPosition, _equipedWeaponSlot.WeaponData.InHandRotation);
 
 
             //Move right hand to correct position
-            _equipedWeapon.HoldController.MoveHandsToCurrentHoldMode(0.5f, 0.5f);
-            _weaponWallDetector.ToggleCollider(true);
+            _equipedWeaponSlot.Weapon.HoldController.MoveHandsToCurrentHoldMode(0.5f, 0.5f);
+            _playerStateMachine.CombatControllers.WallDetector.ToggleCollider(true);
 
-            _equipedWeapon.OnWeaponEquip();
+            _equipedWeaponSlot.Weapon.OnWeaponEquip();
         });
     }
 
@@ -131,7 +125,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
         _playerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
 
-        _equipedWeapon.DamageDealingController.Toggle(false);
+        _equipedWeaponSlot.Weapon.DamageDealingController.Toggle(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
@@ -142,10 +136,10 @@ public class PlayerCombatController : MonoBehaviour
 
         //Move right hand to origin
         WeaponAnimator_MainTransformer mainPositioner = _playerStateMachine.AnimatingControllers.Weapon.MainTransformer;
-        mainPositioner.Rotate(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Rotation, 0.5f);
-        mainPositioner.Move(_equipedWeaponData.WeaponTransforms.Origin.RightHand_Position, 0.5f).SetOnMoveFinish(() => 
+        mainPositioner.Rotate(_equipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Rotation, 0.5f);
+        mainPositioner.Move(_equipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Position, 0.5f).SetOnMoveFinish(() => 
         {
-            _weaponWallDetector.ToggleCollider(false);
+            _playerStateMachine.CombatControllers.WallDetector.ToggleCollider(false);
 
             //Disable fingers
             _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 0.2f);
@@ -155,12 +149,11 @@ public class PlayerCombatController : MonoBehaviour
             _playerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
             _playerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Idle, 5);
 
-            _equipedWeapon.OnWeaponUnEquip();
+            _equipedWeaponSlot.Weapon.OnWeaponUnEquip();
             _playerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
-            _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
-            _equipedWeapon = null;
-            _equipedWeaponData = null;
+            _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeaponSlot.Weapon, _equipedWeaponSlot.WeaponData);
+            _equipedWeaponSlot = null;
 
 
             if (_swap)
@@ -190,11 +183,11 @@ public class PlayerCombatController : MonoBehaviour
         if (!_playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
         if (!IsState(CombatStateEnum.Equiped)) return;
-        if (_equipedWeaponData.Fists) return;
+        if (_equipedWeaponSlot.WeaponData.Fists) return;
 
 
         SetState(CombatStateEnum.UnEquip);
-        _weaponWallDetector.ToggleCollider(false);
+        _playerStateMachine.CombatControllers.WallDetector.ToggleCollider(false);
 
         //Toggle layers
         ToggleCombatLayersPreset(false, true, true, true, false, 0.2f);
@@ -204,7 +197,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, false, 0.5f);
 
 
-        _equipedWeapon.OnWeaponUnEquip();
+        _equipedWeaponSlot.Weapon.OnWeaponUnEquip();
         _playerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
 
@@ -223,7 +216,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
         _playerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
 
-        _equipedWeapon.DamageDealingController.Toggle(false);
+        _equipedWeaponSlot.Weapon.DamageDealingController.Toggle(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
@@ -232,8 +225,7 @@ public class PlayerCombatController : MonoBehaviour
 
 
         _playerStateMachine.InventoryControllers.Inventory.Weapon.DropWeapon(_equipedWeaponIndex);
-        _equipedWeapon = null;
-        _equipedWeaponData = null;
+        _equipedWeaponSlot = null;
 
         SetState(CombatStateEnum.Unarmed);
     }
@@ -271,7 +263,7 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, false, 0.5f);
 
 
-        _equipedWeapon.OnWeaponUnEquip();
+        _equipedWeaponSlot.Weapon.OnWeaponUnEquip();
         _playerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
 
@@ -286,14 +278,13 @@ public class PlayerCombatController : MonoBehaviour
         _playerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Idle, 5);
 
 
-        _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeapon, _equipedWeaponData);
-        _equipedWeapon.DamageDealingController.Toggle(false);
+        _playerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_equipedWeaponSlot.Weapon, _equipedWeaponSlot.WeaponData);
+        _equipedWeaponSlot.Weapon.DamageDealingController.Toggle(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Block.ToggleBlockBool(false);
         _playerStateMachine.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
 
-        _equipedWeapon = null;
-        _equipedWeaponData = null;
+        _equipedWeaponSlot = null;
 
         SetState(CombatStateEnum.Unarmed);
     }

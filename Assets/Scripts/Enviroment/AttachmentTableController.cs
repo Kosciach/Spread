@@ -80,7 +80,7 @@ public class AttachmentTableController : MonoBehaviour, IInteractable, IHighligh
     {
         _playerStateMachine.SwitchController.SwitchTo.AttachmentTable();
 
-        Transform weaponTransform = _playerStateMachine.CombatControllers.Combat.EquipedWeapon.transform;
+        Transform weaponTransform = _playerStateMachine.CombatControllers.Combat.EquipedWeaponSlot.Weapon.transform;
         _playerStateMachine.CombatControllers.Combat.TemporaryUnEquip();
         weaponTransform.parent = transform.GetChild(2);
         weaponTransform.localPosition = Vector3.zero;

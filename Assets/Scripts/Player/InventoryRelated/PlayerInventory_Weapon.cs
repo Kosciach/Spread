@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInventory_Weapon : MonoBehaviour
 {
@@ -14,36 +15,44 @@ public class PlayerInventory_Weapon : MonoBehaviour
 
     [Space(20)]
     [Header("====Debugs====")]
-    [SerializeField] List<WeaponStateMachine> _weapons = new List<WeaponStateMachine>(2); public List<WeaponStateMachine> Weapons { get { return _weapons; } }
-    [SerializeField] List<WeaponData> _weaponsData = new List<WeaponData>(2); public List<WeaponData> WeaponsData { get { return _weaponsData; } }
+    [SerializeField] List<WeaponInventorySlot> _weaponInventorySlots; public List<WeaponInventorySlot> WeaponInventorySlots { get { return _weaponInventorySlots; } }
 
 
 
-
-    public void AddWeapon(WeaponStateMachine newWeapon, WeaponData newWeaponData)
+    private void Awake()
     {
-        int smallestEmptyIndex = FindSmallestEmptyIndex();
+        for (int i = 0; i < 2; i++)
+            AddSlot();
+    }
+
+
+
+    public void AddSlot()
+    {
+        _weaponInventorySlots.Add(new WeaponInventorySlot(CanvasController.Instance.PanelsControllers.Inventory.CreateUIWeaponSlot()));
+    }
+    private int GetSmallestEmptyIndex()
+    {
+        for (int i = 0; i < _weaponInventorySlots.Count; i++)
+            if (_weaponInventorySlots[i].WeaponData == null) return i;
+        return -1;
+    }
+
+    public void AddWeapon(WeaponStateMachine addedWeapon, WeaponData addedWeaponData)
+    {
+        int smallestEmptyIndex = GetSmallestEmptyIndex();
         if (smallestEmptyIndex < 0)
         {
-            if (_inventory.StateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped)) ExchangeWeaponEquiped(newWeapon, newWeaponData);
-            else if (_inventory.StateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) ExchangeWeaponUnarmed(newWeapon, newWeaponData);
+            //if (_inventory.StateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped)) ExchangeWeaponEquiped(addedWeapon, addedWeaponData);
+            //else if (_inventory.StateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) ExchangeWeaponUnarmed(addedWeapon, addedWeaponData);
 
             return;
         }
 
-
-        _weapons[smallestEmptyIndex] = newWeapon;
-        _weaponsData[smallestEmptyIndex] = newWeaponData;
-        HolsterWeapon(newWeapon, newWeaponData);
-
-        CanvasController.Instance.HudControllers.Interaction.Pickup.SetArrowIcon(_weapons[0] != null && _weapons[1] != null);
+        _weaponInventorySlots[smallestEmptyIndex].FillSlot(addedWeapon, addedWeaponData);
+        HolsterWeapon(addedWeapon, addedWeaponData);
     }
-    private int FindSmallestEmptyIndex()
-    {
-        for (int i = 0; i < _weapons.Count; i++)
-            if (_weapons[i] == null) return i;
-        return -1;
-    }
+
     public void HolsterWeapon(WeaponStateMachine weapon, WeaponData weaponData)
     {
         weapon.transform.parent = _weaponsHolders[(int)weaponData.WeaponHolder];
@@ -57,14 +66,15 @@ public class PlayerInventory_Weapon : MonoBehaviour
     {
         CanvasController.Instance.HudControllers.Interaction.Pickup.SetArrowIcon(false);
 
-        _weapons[weaponToDropIndex].transform.parent = null;
-        _weapons[weaponToDropIndex].transform.SetSiblingIndex(0);
-        _weapons[weaponToDropIndex].transform.position = _weaponDropPoint.position;
-        _weapons[weaponToDropIndex].SwitchController.SwitchTo.Ground();
-        _weapons[weaponToDropIndex].Rigidbody.AddForce(_weaponDropPoint.forward * 10);
+        WeaponStateMachine weaponToDrop = _weaponInventorySlots[weaponToDropIndex].Weapon;
+        weaponToDrop.transform.parent = null;
+        weaponToDrop.transform.SetSiblingIndex(0);
+        weaponToDrop.transform.position = _weaponDropPoint.position;
+        weaponToDrop.SwitchController.SwitchTo.Ground();
+        weaponToDrop.Rigidbody.AddForce(_weaponDropPoint.forward * 10);
 
-        _weapons[weaponToDropIndex] = null;
-        _weaponsData[weaponToDropIndex] = null;
+
+        _weaponInventorySlots[weaponToDropIndex].EmptySlot();
     }
 
 
@@ -73,7 +83,9 @@ public class PlayerInventory_Weapon : MonoBehaviour
 
     private void ExchangeWeaponEquiped(WeaponStateMachine newWeapon, WeaponData newWeaponData)
     {
-        _inventory.StateMachine.CombatControllers.Combat.DropWeapon();  int smallestEmptyIndex = FindSmallestEmptyIndex();
+        _inventory.StateMachine.CombatControllers.Combat.DropWeapon();
+
+        int smallestEmptyIndex = GetSmallestEmptyIndex();
         AddWeapon(newWeapon, newWeaponData);
 
         this.Delay(0.2f, () =>
@@ -85,5 +97,43 @@ public class PlayerInventory_Weapon : MonoBehaviour
     {
         DropWeapon(0);
         AddWeapon(newWeapon, newWeaponData);
+    }
+}
+
+[System.Serializable]
+public class WeaponInventorySlot
+{
+    public string Name;
+    public WeaponStateMachine Weapon;
+    public WeaponData WeaponData;
+    public GameObject UISlot;
+    public Image WeaponIcon;
+
+    public WeaponInventorySlot(GameObject uiSlot)
+    {
+        UISlot = uiSlot;
+        WeaponIcon = UISlot.transform.GetChild(0).GetComponent<Image>();
+
+        EmptySlot();
+    }
+
+
+    public void FillSlot(WeaponStateMachine weapon, WeaponData weaponData)
+    {
+        Name = weaponData.WeaponName;
+        WeaponIcon.sprite = weaponData.Icon;
+        WeaponIcon.color = new Color(1, 1, 1, 1);
+
+        Weapon = weapon;
+        WeaponData = weaponData;
+    }
+    public void EmptySlot()
+    {
+        Name = "EmptySlot";
+        WeaponIcon.color = new Color(1, 1, 1, 0);
+        WeaponIcon.sprite = null;
+
+        Weapon = null;
+        WeaponData = null;
     }
 }

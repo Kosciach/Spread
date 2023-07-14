@@ -44,7 +44,7 @@ public class PlayerInventory_Ammo : MonoBehaviour
 
         //Makes sure to update ammo HUD correctly
         if (!_inventory.StateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
-        RangeWeaponData rangeWeaponData = (RangeWeaponData)_inventory.StateMachine.CombatControllers.Combat.EquipedWeapon.DataHolder.WeaponData;
+        RangeWeaponData rangeWeaponData = (RangeWeaponData)_inventory.StateMachine.CombatControllers.Combat.EquipedWeaponSlot.Weapon.DataHolder.WeaponData;
         if(rangeWeaponData.AmmoSettings.AmmoType.AmmoType != newAmmo.AmmoType) return;
         CanvasController.Instance.HudControllers.Ammo.UpdateAmmoInInventory(_ammoTypesAmmount[index]);
     }

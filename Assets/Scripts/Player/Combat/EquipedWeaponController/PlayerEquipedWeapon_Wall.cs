@@ -46,18 +46,18 @@ public class PlayerEquipedWeapon_Wall : MonoBehaviour
     private void WallEnable()
     {
         _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
-        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_combatController.EquipedWeaponData.FingersPreset.Base, 0.2f);
-        _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
+        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_combatController.EquipedWeaponSlot.WeaponData.FingersPreset.Base, 0.2f);
+        _combatController.EquipedWeaponSlot.Weapon.DamageDealingController.Toggle(false);
         _equipedWeaponController.Aim.ToggleAimBool(false);
         _equipedWeaponController.Block.ToggleBlockBool(false);
         _equipedWeaponController.Run.ToggleRunBool(false);
 
         WeaponAnimator_MainTransformer mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
-        mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Wall.RightHand_Rotation, 0.2f);
-        mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Wall.RightHand_Position, 0.2f);
+        mainPositioner.Rotate(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Wall.RightHand_Rotation, 0.2f);
+        mainPositioner.Move(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Wall.RightHand_Position, 0.2f);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
     }
     private void WallDisable()
     {
@@ -79,7 +79,7 @@ public class PlayerEquipedWeapon_Wall : MonoBehaviour
 
     private void TransitionToHold()
     {
-        WeaponHoldController equipedModeController = _combatController.EquipedWeapon.HoldController;
+        WeaponHoldController equipedModeController = _combatController.EquipedWeaponSlot.Weapon.HoldController;
         equipedModeController.MoveHandsToCurrentHoldMode(0.2f, 0.2f);
     }
     private void TransitionToBlock()

@@ -22,7 +22,7 @@ public class ChargeWeaponBehaviours : StateMachineBehaviour
         PlayerCombatController playerCombatController = animator.GetComponent<PlayerStateMachine>().CombatControllers.Combat;
 
         if (!playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) return;
-        playerCombatController.EquipedWeapon.GetComponent<FireMode_Charge>()?.StopCharge();
+        playerCombatController.EquipedWeaponSlot.Weapon.GetComponent<FireMode_Charge>()?.StopCharge();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

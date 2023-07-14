@@ -94,6 +94,7 @@ public class PlayerStateMachine : MonoBehaviour
         public PlayerCombatController Combat;
         public PlayerEquipedWeaponController EquipedWeapon;
         public PlayerLeaningController Leaning;
+        public PlayerWeaponWallDetector WallDetector;
     }
 
     [System.Serializable]

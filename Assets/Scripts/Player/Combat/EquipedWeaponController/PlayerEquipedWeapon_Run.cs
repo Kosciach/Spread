@@ -54,16 +54,16 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
 
         _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
-        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_combatController.EquipedWeaponData.FingersPreset.Base, 0.2f);
-        _combatController.EquipedWeapon.DamageDealingController.Toggle(false);
+        _combatController.PlayerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_combatController.EquipedWeaponSlot.WeaponData.FingersPreset.Base, 0.2f);
+        _combatController.EquipedWeaponSlot.Weapon.DamageDealingController.Toggle(false);
 
 
         WeaponAnimator_MainTransformer mainPositioner = _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
-        mainPositioner.Rotate(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Rotation, 0.5f, _curve);
-        mainPositioner.Move(_combatController.EquipedWeaponData.WeaponTransforms.Run.RightHand_Position, 0.5f, _curve);
+        mainPositioner.Rotate(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Run.RightHand_Rotation, 0.5f, _curve);
+        mainPositioner.Move(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Run.RightHand_Position, 0.5f, _curve);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
     }
     private void DisableRun()
     {
@@ -81,12 +81,12 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
     }
     private void TransitionNormally()
     {
-        _combatController.EquipedWeapon.DamageDealingController.Toggle(true);
+        _combatController.EquipedWeaponSlot.Weapon.DamageDealingController.Toggle(true);
 
 
-        WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeapon.HoldController;
+        WeaponHoldController equipedWeaponHoldController = _combatController.EquipedWeaponSlot.Weapon.HoldController;
 
-        equipedWeaponHoldController.ChangeHoldMode(_combatController.EquipedWeapon.HoldController.HoldMode);
+        equipedWeaponHoldController.ChangeHoldMode(_combatController.EquipedWeaponSlot.Weapon.HoldController.HoldMode);
         equipedWeaponHoldController.MoveHandsToCurrentHoldMode(0.3f, 0.3f);
     }
 }

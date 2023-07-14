@@ -10,6 +10,7 @@ public class PlayerInventoryState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.CombatControllers.Combat.TemporaryUnEquip();
         _ctx.CameraControllers.Cine.ToggleCineInput(false);
         _ctx.CameraControllers.Cine.SetCursorState(CursorLockMode.None, true);
 
@@ -38,5 +39,6 @@ public class PlayerInventoryState : PlayerBaseState
 
         _ctx.CameraControllers.Cine.SetCursorState(CursorLockMode.Locked, false);
         _ctx.CameraControllers.Cine.ToggleCineInput(true);
+        _ctx.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
     }
 }
