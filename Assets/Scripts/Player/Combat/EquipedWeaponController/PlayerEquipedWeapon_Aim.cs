@@ -81,11 +81,10 @@ public class PlayerEquipedWeapon_Aim : MonoBehaviour
     }
 
 
-    public void ResetAimType(int index)
+    public void LoadAimTypeFromWeapon(WeaponStateMachine equipedWeapon)
     {
-        _aimTypeIndex = index;
+        _aimTypeIndex = equipedWeapon.AimIndexHolder.WeaponAimIndex;
         _aimType = (AimTypeEnum)_aimTypeIndex;
-
     }
     public void ChangeAimType()
     {

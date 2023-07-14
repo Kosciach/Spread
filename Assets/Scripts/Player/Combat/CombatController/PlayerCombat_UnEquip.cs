@@ -13,4 +13,11 @@ public class PlayerCombat_UnEquip : MonoBehaviour
     {
         _combatController = GetComponent<PlayerCombatController>();
     }
+
+
+
+    public void UnEquip(float unEquipSpeed)
+    {
+
+    }
 }

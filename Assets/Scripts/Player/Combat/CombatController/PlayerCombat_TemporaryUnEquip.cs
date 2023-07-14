@@ -13,4 +13,11 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
     {
         _combatController = GetComponent<PlayerCombatController>();
     }
+
+
+
+    public void TemporaryUnEquip()
+    {
+
+    }
 }

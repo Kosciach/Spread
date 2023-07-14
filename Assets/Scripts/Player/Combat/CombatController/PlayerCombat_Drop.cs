@@ -13,4 +13,11 @@ public class PlayerCombat_Drop : MonoBehaviour
     {
         _combatController = GetComponent<PlayerCombatController>();
     }
+
+
+
+    public void Drop()
+    {
+
+    }
 }

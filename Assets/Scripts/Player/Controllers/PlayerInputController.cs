@@ -125,7 +125,7 @@ public class PlayerInputController : MonoBehaviour
         _playerInputs.Player.ChooseWeapon.performed += ctx =>
         {
             if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
-            _stateMachine.CombatControllers.Combat.EquipWeapon((int)ctx.ReadValue<float>());
+            _stateMachine.CombatControllers.Combat.SubControllers.Equip.StartEquip((int)ctx.ReadValue<float>());
         };
     }
     private void SetHideWeapon()

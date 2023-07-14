@@ -8,20 +8,30 @@ using WeaponAnimatorNamespace;
 public class PlayerCombatController : MonoBehaviour
 {
     [Header("====Reference====")]
-    [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
-
+    [SerializeField] PlayerStateMachine _playerStateMachine;        public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
+    private SubControllersStruct _subControllers;                   public SubControllersStruct SubControllers { get { return _subControllers; } }
 
 
 
     [Space(20)]
     [Header("====Debug====")]
     [SerializeField] CombatStateEnum _combatState;
-    [SerializeField] int _equipedWeaponIndex;
-    [SerializeField] int _choosenWeaponIndex;
-    [SerializeField] WeaponInventorySlot _equipedWeaponSlot; public WeaponInventorySlot EquipedWeaponSlot { get { return _equipedWeaponSlot; } }
-    [SerializeField] bool _swap;
-    [SerializeField] bool _isTemporaryUnEquip; public bool IsTemporaryUnEquip { get { return _isTemporaryUnEquip; } }
+    [SerializeField] int _equipedWeaponIndex;                       public int EquipedWeaponIndex { get { return _equipedWeaponIndex; } set { _equipedWeaponIndex = value; } }
+    [SerializeField] int _choosenWeaponIndex;                       public int ChoosenWeaponIndex { get { return _choosenWeaponIndex; } set { _choosenWeaponIndex = value; } }
+    [SerializeField] WeaponInventorySlot _equipedWeaponSlot;        public WeaponInventorySlot EquipedWeaponSlot { get { return _equipedWeaponSlot; } set { _equipedWeaponSlot = value;  } }
+    [SerializeField] bool _swap;                                    public bool Swap { get { return _swap; } set { _swap = value; } }
+    [SerializeField] bool _isTemporaryUnEquip;                      public bool IsTemporaryUnEquip { get { return _isTemporaryUnEquip; } set { _isTemporaryUnEquip = value;  } }
 
+
+
+    [System.Serializable]
+    public struct SubControllersStruct
+    {
+        public PlayerCombat_Equip Equip;
+        public PlayerCombat_UnEquip UnEquip;
+        public PlayerCombat_Drop Drop;
+        public PlayerCombat_TemporaryUnEquip TemporaryUnEquip;
+    }
 
     public enum CombatStateEnum
     {
@@ -30,6 +40,13 @@ public class PlayerCombatController : MonoBehaviour
 
 
 
+    private void Awake()
+    {
+        _subControllers.Equip = GetComponent<PlayerCombat_Equip>();
+        _subControllers.UnEquip = GetComponent<PlayerCombat_UnEquip>();
+        _subControllers.Drop = GetComponent<PlayerCombat_Drop>();
+        _subControllers.TemporaryUnEquip = GetComponent<PlayerCombat_TemporaryUnEquip>();
+    }
 
     public void EquipWeapon(int choosenWeaponIndex)
     {
@@ -62,7 +79,7 @@ public class PlayerCombatController : MonoBehaviour
         _isTemporaryUnEquip = false;
         _equipedWeaponIndex = choosenWeaponIndex;
         _equipedWeaponSlot = equipedWeaponSlotNew;
-        _playerStateMachine.CombatControllers.EquipedWeapon.Aim.ResetAimType(_equipedWeaponSlot.Weapon.AimIndexHolder.WeaponAimIndex);
+        _playerStateMachine.CombatControllers.EquipedWeapon.Aim.LoadAimTypeFromWeapon(_equipedWeaponSlot.Weapon);
 
         _playerStateMachine.AnimatingControllers.Animator.OverrideAnimator(_equipedWeaponSlot.Weapon.AnimatorOverride);
 
