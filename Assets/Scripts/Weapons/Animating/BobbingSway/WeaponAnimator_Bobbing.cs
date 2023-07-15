@@ -17,7 +17,6 @@ namespace WeaponAnimatorNamespace
 
         [Space(20)]
         [Header("====Debugs====")]
-        [SerializeField] MainBobVectorsStruct _mainBobVectors; public MainBobVectorsStruct MainBobVectors { get { return _mainBobVectors; } }
         [Range(0, 1)]
         [SerializeField] int _bobbingToggle; public int BobbingToggle { get { return _bobbingToggle; } }
 
@@ -36,21 +35,6 @@ namespace WeaponAnimatorNamespace
             public Vector3 Rot;
         }
 
-
-
-
-
-        private void Update()
-        {
-            CombineBobbingVectors();
-        }
-
-
-        private void CombineBobbingVectors()
-        {
-            _mainBobVectors.Pos = (_base.SmoothVectors.Pos) * _bobbingToggle;
-            _mainBobVectors.Rot = (_side.SmoothVectors.Rot + _base.SmoothVectors.Rot) * _bobbingToggle;
-        }
 
 
         public void Toggle(bool enable)

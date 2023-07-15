@@ -11,7 +11,7 @@ public class PlayerClimbState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatControllers.Combat.TemporaryUnEquip();
+        _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip();
         ClimbEnterExit(false);
 
 
@@ -34,7 +34,7 @@ public class PlayerClimbState : PlayerBaseState
         ClimbEnterExit(true);
 
         _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
-        _ctx.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
+        _ctx.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
     }
 
 

@@ -26,97 +26,56 @@ public class RangeWeaponHoldController : WeaponHoldController
 
     public override void RestHoldMode(float rotateSpeed, float moveSpeed)
     {
-        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
+        PlayerCombatController playerCombatController = _stateMachine.PlayerStateMachine.CombatControllers.Combat;
+        CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(_rangeWeaponData.CrosshairSetting.CrosshairType);
 
 
-        Vector3 rot = _rangeWeaponData.HoldTransforms.Rest.RightHand_Rotation;
-        Vector3 pos = _rangeWeaponData.HoldTransforms.Rest.RightHand_Position;
-
-        if (_playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equip)
-        && _playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsRun)
-        {
-            rot = _rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation;
-            pos = _rangeWeaponData.WeaponTransforms.Run.RightHand_Position;
-        }
-
-
-
-        PlayerFingerAnimator fingerAnimator = _playerCombatController.PlayerStateMachine.AnimatingControllers.Fingers;
-        fingerAnimator.SetUpAllFingers(_rangeWeaponData.FingersPreset.Base, 0.3f);
-
-        LeftHandAnimator leftHandAnimator = _playerCombatController.PlayerStateMachine.AnimatingControllers.LeftHand;
+        LeftHandAnimator leftHandAnimator = playerCombatController.PlayerStateMachine.AnimatingControllers.LeftHand;
         leftHandAnimator.Move(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
         leftHandAnimator.Rotate(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
 
-        WeaponAnimator_MainTransformer mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
-        mainPositioner.Rotate(rot, rotateSpeed);
-        mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
+        PlayerFingerAnimator fingerAnimator = playerCombatController.PlayerStateMachine.AnimatingControllers.Fingers;
+        fingerAnimator.SetUpAllFingers(_rangeWeaponData.FingersPreset.Base, 0.2f);
+
+        WeaponAnimator_MainTransformer mainPositioner = playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
+        mainPositioner.Rotate(_rangeWeaponData.HoldTransforms.Rest.RightHand_Rotation, rotateSpeed);
+        mainPositioner.Move(_rangeWeaponData.HoldTransforms.Rest.RightHand_Position, moveSpeed).SetOnMoveFinish(() =>
         {
             _stateMachine.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
-
+            playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
+            playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
             _stateMachine.DamageDealingController.Toggle(false);
 
-            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
-            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
 
 
-            _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
-
-            if (_playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
-            && _playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsRun)
-            {
-                mainPositioner.Rotate(_rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation, rotateSpeed);
-                mainPositioner.Move(_rangeWeaponData.WeaponTransforms.Run.RightHand_Position, moveSpeed);
-                _stateMachine.DamageDealingController.Toggle(false);
-            }
+            playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
         });
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
+        PlayerCombatController playerCombatController = _stateMachine.PlayerStateMachine.CombatControllers.Combat;
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(_rangeWeaponData.CrosshairSetting.CrosshairType);
 
 
-        Vector3 rot = _rangeWeaponData.HoldTransforms.Hip.RightHand_Rotation;
-        Vector3 pos = _rangeWeaponData.HoldTransforms.Hip.RightHand_Position;
-
-        if (_playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equip)
-        && _playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsRun)
-        {
-            rot = _rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation;
-            pos = _rangeWeaponData.WeaponTransforms.Run.RightHand_Position;
-        }
-
-
-
-
-        LeftHandAnimator leftHandAnimator = _playerCombatController.PlayerStateMachine.AnimatingControllers.LeftHand;
+        LeftHandAnimator leftHandAnimator = playerCombatController.PlayerStateMachine.AnimatingControllers.LeftHand;
         leftHandAnimator.Move(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
         leftHandAnimator.Rotate(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
 
-        PlayerFingerAnimator fingerAnimator = _playerCombatController.PlayerStateMachine.AnimatingControllers.Fingers;
+        PlayerFingerAnimator fingerAnimator = playerCombatController.PlayerStateMachine.AnimatingControllers.Fingers;
         fingerAnimator.SetUpAllFingers(_rangeWeaponData.FingersPreset.Base, 0.2f);
 
-        WeaponAnimator_MainTransformer mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
-        mainPositioner.Rotate(rot, rotateSpeed);
-        mainPositioner.Move(pos, moveSpeed).SetOnMoveFinish(() =>
+        WeaponAnimator_MainTransformer mainPositioner = playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
+        mainPositioner.Rotate(_rangeWeaponData.HoldTransforms.Hip.RightHand_Rotation, rotateSpeed);
+        mainPositioner.Move(_rangeWeaponData.HoldTransforms.Hip.RightHand_Position, moveSpeed).SetOnMoveFinish(() =>
         {
             _stateMachine.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(true);
-
+            playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
+            playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
             _stateMachine.DamageDealingController.Toggle(true);
 
-            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
-            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
 
 
-            _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
-
-            if (_playerCombatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
-            && _playerCombatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Run.IsRun)
-            {
-                mainPositioner.Rotate(_rangeWeaponData.WeaponTransforms.Run.RightHand_Rotation, rotateSpeed);
-                mainPositioner.Move(_rangeWeaponData.WeaponTransforms.Run.RightHand_Position, moveSpeed);
-                _stateMachine.DamageDealingController.Toggle(false);
-            }
+            playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
         });
     }
 }

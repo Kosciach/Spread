@@ -15,7 +15,7 @@ namespace WeaponAnimatorNamespace
         [Space(20)]
         [Header("====Debugs====")]
         [SerializeField] WeaponAnimator.PosRotStruct _smoothVectors; public WeaponAnimator.PosRotStruct SmoothVectors { get { return _smoothVectors; } }
-        [SerializeField] WeaponAnimator.PosRotStruct _rawVectors;
+        private WeaponAnimator.PosRotStruct _rawVectors;
         [Range(0, 1)]
         [SerializeField] int _swayToggle;
 
@@ -105,8 +105,8 @@ namespace WeaponAnimatorNamespace
 
         private void SmoothOutSway()
         {
-            _smoothVectors.Pos = Vector3.Lerp(_smoothVectors.Pos, _rawVectors.Pos, _smoothSpeedPos * Time.deltaTime);
-            _smoothVectors.Rot = Vector3.Lerp(_smoothVectors.Rot, _rawVectors.Rot, _smoothSpeedRot * Time.deltaTime);
+            _smoothVectors.Pos = Vector3.Lerp(_smoothVectors.Pos, _rawVectors.Pos * _swayToggle, _smoothSpeedPos * Time.deltaTime);
+            _smoothVectors.Rot = Vector3.Lerp(_smoothVectors.Rot, _rawVectors.Rot * _swayToggle, _smoothSpeedRot * Time.deltaTime);
         }
 
 

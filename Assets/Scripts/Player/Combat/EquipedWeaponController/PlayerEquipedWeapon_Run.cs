@@ -36,7 +36,9 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
 
     public void ToggleRun(bool enable)
     {
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Aim.IsAim || _equipedWeaponController.Block.IsBlock) return;
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
+        || _equipedWeaponController.Aim.IsAim
+        || _equipedWeaponController.Block.IsBlock) return;
 
         int index = enable ? 1 : 0;
         ToggleRunBool(enable);

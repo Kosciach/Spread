@@ -45,7 +45,7 @@ namespace WeaponAnimatorNamespace
         private void SmoothOutVectors()
         {
             float aimWeight = _bobbingController.WeaponAnimator.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim ? 0.3f : 1;
-            _smoothVectors.Rot = Vector3.Lerp(_smoothVectors.Rot, _rawVectors.Rot * aimWeight, _smoothSpeed * (_strength / 2) * Time.deltaTime);
+            _smoothVectors.Rot = Vector3.Lerp(_smoothVectors.Rot, _rawVectors.Rot * aimWeight * _bobbingController.BobbingToggle, _smoothSpeed * (_strength / 2) * Time.deltaTime);
         }
     }
 }

@@ -12,7 +12,7 @@ public class PlayerLadderState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatControllers.Combat.TemporaryUnEquip();
+        _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip();
         _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
 
         _ctx.StateControllers.Ladder.ResetBools();
@@ -46,6 +46,6 @@ public class PlayerLadderState : PlayerBaseState
 
         _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(true);
 
-        _ctx.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
+        _ctx.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
     }
 }

@@ -47,7 +47,8 @@ public class PlayerEquipedWeapon_Aim : MonoBehaviour
 
     public void Aim(bool aim)
     {
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) || _equipedWeaponController.Wall.IsWall) return;
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
+        || _equipedWeaponController.Wall.IsWall) return;
         if (_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Aim.Length <= 0) return;
 
         ToggleAimBool(aim);

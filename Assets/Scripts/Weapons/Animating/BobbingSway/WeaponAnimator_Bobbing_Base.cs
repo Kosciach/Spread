@@ -46,9 +46,6 @@ namespace WeaponAnimatorNamespace
 
         private void SetRawVectors()
         {
-            //float lowStaminaBobStrength = _bobbingController.WeaponAnimator.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.LowStaminaBobStrength;
-            //float lowStaminaBobStrengthCorrected = lowStaminaBobStrength == 0 ? 1 : lowStaminaBobStrength;
-
             //Pos
             _rawVectors.Pos.x = Mathf.Sin(Time.time * 3 * _speedMultipliers[_bobbingTypeIndex]) * 0.5f * (_distanceMultipliers[_bobbingTypeIndex]) / 50;
             _rawVectors.Pos.y = Mathf.Sin(Time.time * 6 * _speedMultipliers[_bobbingTypeIndex]) * 0.25f * (_distanceMultipliers[_bobbingTypeIndex]) / 50;
@@ -61,8 +58,8 @@ namespace WeaponAnimatorNamespace
         {
             float aimWeight = _bobbingController.WeaponAnimator.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim ? 0.1f : 1;
             int toggleWeight = _toggle ? 1 : 0;
-            _smoothVectors.Pos = Vector3.Lerp(_smoothVectors.Pos, _rawVectors.Pos * aimWeight, _smoothSpeed * Time.deltaTime) * toggleWeight;
-            _smoothVectors.Rot = Vector3.Lerp(_smoothVectors.Rot, _rawVectors.Rot * aimWeight, _smoothSpeed * Time.deltaTime) * toggleWeight;
+            _smoothVectors.Pos = Vector3.Lerp(_smoothVectors.Pos, _rawVectors.Pos * aimWeight * _bobbingController.BobbingToggle, _smoothSpeed * Time.deltaTime) * toggleWeight;
+            _smoothVectors.Rot = Vector3.Lerp(_smoothVectors.Rot, _rawVectors.Rot * aimWeight * _bobbingController.BobbingToggle, _smoothSpeed * Time.deltaTime) * toggleWeight;
         }
 
 

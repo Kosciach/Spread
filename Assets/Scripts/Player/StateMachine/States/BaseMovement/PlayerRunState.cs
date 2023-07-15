@@ -12,7 +12,6 @@ public class PlayerRunState : PlayerBaseState
         _ctx.CoreControllers.Stats.Stats.Stamina.ToggleUseStamina(true);
 
         _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(true);
-        _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(true);
 
         _ctx.CameraControllers.Cine.Fov.SetFov(15, 1f);
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
@@ -56,33 +55,29 @@ public class PlayerRunState : PlayerBaseState
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk) || _ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle) || _ctx.CombatControllers.EquipedWeapon.Wall.IsWall)
         {
             _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);
-            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
             StateChange(_factory.Walk());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump))
         {
             _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);
-            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
             StateChange(_factory.Jump());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
         {
             _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);
-            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
             _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", true);
             StateChange(_factory.Fall());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch))
         {
             _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);
-            _ctx.CombatControllers.EquipedWeapon.Run.ToggleRunBool(false);
             StateChange(_factory.Crouch());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Climb)) StateChange(_factory.Climb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))
         {
-            _ctx.CombatControllers.Combat.TemporaryUnEquip();
+            _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip();
             StateChange(_factory.Swim());
         }
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Dash)) StateChange(_factory.Dash());

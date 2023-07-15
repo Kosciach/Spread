@@ -26,8 +26,6 @@ namespace WeaponAnimatorNamespace
         [Header("====Debugs====")]
         [SerializeField] PosRotStruct _baseVectors;
         [SerializeField] PosRotStruct _extraVectors; public PosRotStruct ExtraVectors { get { return _extraVectors; } }
-        private PosRotStruct _bobSwayVectors;
-        private PosRotStruct _bobSwayVectorsTarget;
 
 
 

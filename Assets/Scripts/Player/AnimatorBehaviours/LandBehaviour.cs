@@ -38,7 +38,7 @@ public class LandBehaviour : StateMachineBehaviour
 
 
         //Check if player should recover from remporary unEquip
-        playerStateMachine.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
+        playerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
 
     }
 

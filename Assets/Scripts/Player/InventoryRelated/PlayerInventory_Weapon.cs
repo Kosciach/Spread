@@ -43,8 +43,9 @@ public class PlayerInventory_Weapon : MonoBehaviour
         int smallestEmptyIndex = GetSmallestEmptyIndex();
         if (smallestEmptyIndex < 0)
         {
-            //if (_inventory.StateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped)) ExchangeWeaponEquiped(addedWeapon, addedWeaponData);
-            //else if (_inventory.StateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) ExchangeWeaponUnarmed(addedWeapon, addedWeaponData);
+            PlayerCombatController combatController = _inventory.StateMachine.CombatControllers.Combat;
+            if (combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)) ExchangeWeaponEquiped(addedWeapon, addedWeaponData);
+            else if (combatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) ExchangeWeaponUnarmed(addedWeapon, addedWeaponData);
 
             return;
         }
@@ -83,14 +84,14 @@ public class PlayerInventory_Weapon : MonoBehaviour
 
     private void ExchangeWeaponEquiped(WeaponStateMachine newWeapon, WeaponData newWeaponData)
     {
-        _inventory.StateMachine.CombatControllers.Combat.DropWeapon();
+        _inventory.StateMachine.CombatControllers.Combat.Drop.StartDrop();
 
         int smallestEmptyIndex = GetSmallestEmptyIndex();
         AddWeapon(newWeapon, newWeaponData);
 
         this.Delay(0.2f, () =>
         {
-            _inventory.StateMachine.CombatControllers.Combat.EquipWeapon(smallestEmptyIndex);
+            _inventory.StateMachine.CombatControllers.Combat.Equip.StartEquip(smallestEmptyIndex);
         });
     }
     private void ExchangeWeaponUnarmed(WeaponStateMachine newWeapon, WeaponData newWeaponData)
@@ -104,6 +105,7 @@ public class PlayerInventory_Weapon : MonoBehaviour
 public class WeaponInventorySlot
 {
     public string Name;
+    public bool Empty;
     public WeaponStateMachine Weapon;
     public WeaponData WeaponData;
     public GameObject UISlot;
@@ -126,6 +128,8 @@ public class WeaponInventorySlot
 
         Weapon = weapon;
         WeaponData = weaponData;
+
+        Empty = false;
     }
     public void EmptySlot()
     {
@@ -135,5 +139,7 @@ public class WeaponInventorySlot
 
         Weapon = null;
         WeaponData = null;
+
+        Empty = true;
     }
 }

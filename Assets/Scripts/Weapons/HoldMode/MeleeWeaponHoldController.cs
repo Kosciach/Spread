@@ -29,18 +29,19 @@ public class MeleeWeaponHoldController : WeaponHoldController
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
     {
+        PlayerCombatController playerCombatController = _stateMachine.PlayerStateMachine.CombatControllers.Combat;
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
 
-        WeaponAnimator_MainTransformer mainPositioner = _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
+        WeaponAnimator_MainTransformer mainPositioner = playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
         mainPositioner.Rotate(_meleeWeaponData.Hip.RightHand_Rotation, 1);
         mainPositioner.Move(_meleeWeaponData.Hip.RightHand_Position, 1).SetOnMoveFinish(() =>
         {
             _stateMachine.DamageDealingController.Toggle(true);
 
-            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
-            _playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
+            playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
+            playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
 
-            _playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
+            playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
         });
     }
 }

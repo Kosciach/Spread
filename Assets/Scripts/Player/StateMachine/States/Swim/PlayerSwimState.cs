@@ -67,6 +67,6 @@ public class PlayerSwimState : PlayerBaseState
 
         ExitEnter(PlayerCineCamera_Move.CameraPositionsEnum.OnGround, true);
 
-        _ctx.CombatControllers.Combat.RecoverFromTemporaryUnEquip();
+        _ctx.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
     }
 }

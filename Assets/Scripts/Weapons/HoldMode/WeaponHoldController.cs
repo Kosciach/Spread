@@ -5,7 +5,6 @@ using UnityEngine;
 public class WeaponHoldController : MonoBehaviour
 {
     [Header("====References====")]
-    protected PlayerCombatController _playerCombatController;
     protected WeaponStateMachine _stateMachine;
 
 
@@ -22,7 +21,6 @@ public class WeaponHoldController : MonoBehaviour
 
     private void Awake()
     {
-        _playerCombatController = FindObjectOfType<PlayerCombatController>();
         _stateMachine = GetComponent<WeaponStateMachine>();
 
         _holdModeChangeMethods[0] = RestHoldMode;

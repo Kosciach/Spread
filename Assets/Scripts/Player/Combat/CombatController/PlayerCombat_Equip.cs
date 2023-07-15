@@ -21,18 +21,18 @@ public class PlayerCombat_Equip : MonoBehaviour
 
     public void StartEquip(int choosenWeaponIndex)
     {
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
-        if (choosenWeaponIndex >= _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.WeaponInventorySlots.Count) return;
-        if (!_combatController.PlayerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed) && !_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
+        || choosenWeaponIndex >= _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.WeaponInventorySlots.Count
+        ||  !_combatController.PlayerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
         _combatController.ChoosenWeaponIndex = choosenWeaponIndex;
         WeaponInventorySlot choosenWeaponInventorySlot = _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.WeaponInventorySlots[choosenWeaponIndex];
-        if (choosenWeaponInventorySlot == null) return;
+        if (choosenWeaponInventorySlot.Empty) return;
 
 
         if(_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped))
         {
-            Swap();
+            if(choosenWeaponIndex != _combatController.EquipedWeaponIndex) Swap();
             return;
         }
         Equip(choosenWeaponIndex, choosenWeaponInventorySlot);
@@ -43,7 +43,6 @@ public class PlayerCombat_Equip : MonoBehaviour
 
     private void Equip(int choosenWeaponIndex, WeaponInventorySlot choosenWeaponInventorySlot)
     {
-        Debug.Log("Equip");
         _combatController.SetState(PlayerCombatController.CombatStateEnum.Equip);
 
         _combatController.IsTemporaryUnEquip = false;
@@ -75,7 +74,6 @@ public class PlayerCombat_Equip : MonoBehaviour
         _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.RangeCombat, true, 0.4f);
         _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
         {
-            Debug.Log("Weapon at origin! Ready to equip.");
             Transform equipedWeaponTransform = _combatController.EquipedWeaponSlot.Weapon.transform;
             WeaponData equipedWeaponData = _combatController.EquipedWeaponSlot.WeaponData;
             _combatController.PlayerStateMachine.AnimatingControllers.WeaponHolder.RightHand(equipedWeaponTransform);
@@ -90,11 +88,12 @@ public class PlayerCombat_Equip : MonoBehaviour
     private void Swap()
     {
         Debug.Log("Swap");
-
-
+        _combatController.Swap = true;
+        _combatController.UnEquip.StartUnEquip(1);
     }
-    private void ReEquip()
+    public void ReEquip(int choosenWeaponIndex)
     {
-
+        StartEquip(choosenWeaponIndex);
+        _combatController.Swap = false;
     }
 }

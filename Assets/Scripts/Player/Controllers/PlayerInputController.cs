@@ -43,7 +43,7 @@ public class PlayerInputController : MonoBehaviour
         SetInteraction();
 
         SetEquipWeapon();
-        SetHideWeapon();
+        SetUnEquipWeapon();
         SetDropWeapon();
         SetChangeWeaponEquipedMode();
         SetAim();
@@ -125,15 +125,15 @@ public class PlayerInputController : MonoBehaviour
         _playerInputs.Player.ChooseWeapon.performed += ctx =>
         {
             if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
-            _stateMachine.CombatControllers.Combat.SubControllers.Equip.StartEquip((int)ctx.ReadValue<float>());
+            _stateMachine.CombatControllers.Combat.Equip.StartEquip((int)ctx.ReadValue<float>());
         };
     }
-    private void SetHideWeapon()
+    private void SetUnEquipWeapon()
     {
         _playerInputs.Player.UnEquipWeapon.performed += ctx =>
         {
             if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
-            _stateMachine.CombatControllers.Combat.UnEquipWeapon(1);
+            _stateMachine.CombatControllers.Combat.UnEquip.StartUnEquip(1);
         };
     }
     private void SetDropWeapon()
@@ -141,7 +141,7 @@ public class PlayerInputController : MonoBehaviour
         _playerInputs.Player.DropWeapon.performed += ctx =>
         {
             if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
-            _stateMachine.CombatControllers.Combat.DropWeapon();
+            _stateMachine.CombatControllers.Combat.Drop.StartDrop();
         };
     }
 
