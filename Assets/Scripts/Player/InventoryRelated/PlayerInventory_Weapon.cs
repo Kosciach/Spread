@@ -9,7 +9,6 @@ public class PlayerInventory_Weapon : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] PlayerInventoryController _inventory;
-    [SerializeField] Transform _weaponDropPoint;
     [SerializeField] Transform[] _weaponsHolders = new Transform[5]; public Transform[] WeaponsHolders { get { return _weaponsHolders; } }
 
 
@@ -19,8 +18,16 @@ public class PlayerInventory_Weapon : MonoBehaviour
 
 
 
+
+    private PlayerInventoryController _inventoryController;
+
+
+
+
     private void Awake()
     {
+        _inventoryController = GetComponent<PlayerInventoryController>();
+
         for (int i = 0; i < 2; i++)
             AddSlot();
     }
@@ -70,9 +77,9 @@ public class PlayerInventory_Weapon : MonoBehaviour
         WeaponStateMachine weaponToDrop = _weaponInventorySlots[weaponToDropIndex].Weapon;
         weaponToDrop.transform.parent = null;
         weaponToDrop.transform.SetSiblingIndex(0);
-        weaponToDrop.transform.position = _weaponDropPoint.position;
+        weaponToDrop.transform.position = _inventoryController.DropPoint.position;
         weaponToDrop.SwitchController.SwitchTo.Ground();
-        weaponToDrop.Rigidbody.AddForce(_weaponDropPoint.forward * 10);
+        weaponToDrop.Rigidbody.AddForce(_inventoryController.DropPoint.forward * 10);
 
 
         _weaponInventorySlots[weaponToDropIndex].EmptySlot();

@@ -64,7 +64,6 @@ public class WeaponShootingController : WeaponDamageDealingController
             fireMode.WeaponShootingController = this;
             fireMode.enabled = false;
         }
-        _currentFireMode.enabled = true;
         _currentFireModeType = _currentFireMode.FireModeType;
         _fireModesAnimator.OnFireModeChange(_currentFireModeIndex);
     }
@@ -172,6 +171,8 @@ public class WeaponShootingController : WeaponDamageDealingController
         _reloadToggle = true;
         _isEquiped = true;
 
+        _currentFireMode.enabled = true;
+
         _ammoController.OnWeaponEquip();
         CanvasController.Instance.HudControllers.Weapon.UpdateIcon(_stateMachine.DataHolder.WeaponData.Icon);
         CanvasController.Instance.HudControllers.Firemodes.ChangeFireMode(_currentFireModeType);
@@ -185,6 +186,8 @@ public class WeaponShootingController : WeaponDamageDealingController
     {
         _reloadToggle = false;
         _isEquiped = false;
+
+        _currentFireMode.enabled = false;
 
         _ammoController.OnWeaponUnEquip();
         CanvasController.Instance.HudControllers.Weapon.Toggle.Toggle(false);

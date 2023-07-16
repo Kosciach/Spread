@@ -11,4 +11,5 @@ public class PlayerInventoryController : MonoBehaviour
     [SerializeField] PlayerInventory_Items _item;           public PlayerInventory_Items Item { get { return _item; } }
     [Space(5)]
     [SerializeField] PlayerStateMachine _stateMachine;      public PlayerStateMachine StateMachine { get { return _stateMachine; } }
+    [SerializeField] Transform _dropPoint;                  public Transform DropPoint { get { return _dropPoint; } }
 }

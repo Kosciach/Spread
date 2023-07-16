@@ -6,21 +6,28 @@ using UnityEngine.UI;
 public class PlayerInventory_Items : MonoBehaviour
 {
     [Header("====Debugs====")]
-    [SerializeField] List<ItemInventorySlot> _itemInventorySlots;
+    [SerializeField] List<ItemInventorySlot> _itemInventorySlots; public List<ItemInventorySlot> ItemInventorySlots { get { return _itemInventorySlots; } }
+
+
+    private PlayerInventoryController _inventoryController;
+
 
 
 
     private void Awake()
     {
-        for (int i = 0; i < 10; i++)
+        _inventoryController = GetComponent<PlayerInventoryController>();
+
+        for (int i = 0; i < 44; i++)
             AddSlot();
     }
 
 
 
+
     public void AddSlot()
     {
-        _itemInventorySlots.Add(new ItemInventorySlot(CanvasController.Instance.PanelsControllers.Inventory.CreateUIItemSlot()));
+        _itemInventorySlots.Add(new ItemInventorySlot(CanvasController.Instance.PanelsControllers.Inventory.CreateUIItemSlot(_inventoryController)));
     }
     private int GetSmallestEmptyIndex()
     {
@@ -40,9 +47,10 @@ public class PlayerInventory_Items : MonoBehaviour
         addedItemDataHolder.gameObject.layer = 0; 
         Destroy(addedItemDataHolder.gameObject);
     }
-    public void DropItem()
+    public void DropItem(int itemToDropIndex)
     {
-
+        Instantiate(_itemInventorySlots[itemToDropIndex].ItemData.ItemPrefab, _inventoryController.DropPoint.position, Quaternion.identity);
+        _itemInventorySlots[itemToDropIndex].EmptySlot();
     }
 }
 
@@ -50,14 +58,15 @@ public class PlayerInventory_Items : MonoBehaviour
 public class ItemInventorySlot
 {
     public string Name;
+    public bool Empty;
     public ItemData ItemData;
-    public GameObject UISlot;
+    public UIItemController UIItemController;
     public Image ItemIcon;
 
-    public ItemInventorySlot(GameObject uiSlot)
+    public ItemInventorySlot(UIItemController uiSlotController)
     {
-        UISlot = uiSlot;
-        ItemIcon = UISlot.transform.GetChild(0).GetComponent<Image>();
+        UIItemController = uiSlotController;
+        ItemIcon = UIItemController.transform.GetComponent<Image>();
 
         EmptySlot();
     }
@@ -70,6 +79,7 @@ public class ItemInventorySlot
         ItemIcon.color = new Color(1, 1, 1, 1);
 
         ItemData = itemData;
+        Empty = false;
     }
     public void EmptySlot()
     {
@@ -78,5 +88,6 @@ public class ItemInventorySlot
         ItemIcon.sprite = null;
 
         ItemData = null;
+        Empty = true;
     }
 }

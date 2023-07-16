@@ -13,6 +13,7 @@ public class CanvasGroupToggle
     public void Toggle(bool enable)
     {
         int weight = enable ? 1 : 0;
+        _canvasGroup.blocksRaycasts = enable;
         LeanTween.alphaCanvas(_canvasGroup, weight, 0.1f);
     }
 }

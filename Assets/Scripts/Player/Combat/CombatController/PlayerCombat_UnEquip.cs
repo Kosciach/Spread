@@ -60,14 +60,15 @@ public class PlayerCombat_UnEquip : MonoBehaviour
 
             _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_combatController.EquipedWeaponSlot.Weapon, _combatController.EquipedWeaponSlot.WeaponData);
 
-            _combatController.EquipedWeaponSlot = null;
-
             if(_combatController.Swap)
             {
                 _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
                 _combatController.Equip.ReEquip(_combatController.ChoosenWeaponIndex);
                 return;
             }
+
+            _combatController.EquipedWeaponSlot.Weapon.OnWeaponUnEquip();
+            _combatController.EquipedWeaponSlot = null;
 
             _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatBase, false, 0.4f);
             _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatAnimating, true, 0.4f);

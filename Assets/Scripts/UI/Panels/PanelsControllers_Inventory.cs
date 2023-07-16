@@ -17,9 +17,11 @@ public class PanelsControllers_Inventory : MonoBehaviour
 
 
 
-    public GameObject CreateUIItemSlot()
+    public UIItemController CreateUIItemSlot(PlayerInventoryController playerInventory)
     {
-        return Instantiate(_itemSlotCreateData.UISlotPrefab, _itemSlotCreateData.UISlotsHolder);
+        UIItemController itemSlotController = Instantiate(_itemSlotCreateData.UISlotPrefab, _itemSlotCreateData.UISlotsHolder).transform.GetChild(0).GetComponent<UIItemController>();
+        itemSlotController.PlayerInventory = playerInventory;
+        return itemSlotController;
     }
     public GameObject CreateUIWeaponSlot()
     {

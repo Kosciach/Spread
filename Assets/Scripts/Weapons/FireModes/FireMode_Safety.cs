@@ -10,6 +10,9 @@ public class FireMode_Safety : BaseFireMode
     }
     private void Start()
     {
-        _inputs.Range.Shoot.performed += ctx => Debug.Log("PifPaf no");
+        _inputs.Range.Shoot.performed += ctx =>
+        {
+                Debug.Log("PifPaf no");
+        };
     }
 }

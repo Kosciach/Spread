@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/Item", fileName = "ItemData")]
 public class ItemData : ScriptableObject
 {
-    [Header("====BaseData====")]
     public string ItemName;
     public Sprite Icon;
+    public GameObject ItemPrefab;
 }
