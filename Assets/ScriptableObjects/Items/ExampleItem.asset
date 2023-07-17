@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1cc0008d290128408f0649abdaf6141, type: 3}
   m_Name: ExampleItem
   m_EditorClassIdentifier: 
-  Name: ExampleItem
+  ItemName: TestItem
+  Icon: {fileID: 0}
+  ItemPrefab: {fileID: 9117216618402346466, guid: 73d0fea1f4efbef489bb176735768c78,
+    type: 3}
+  Stackable: 1
+  MaxCountPerSlot: 2

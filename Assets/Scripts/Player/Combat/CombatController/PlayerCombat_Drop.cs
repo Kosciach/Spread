@@ -61,11 +61,14 @@ public class PlayerCombat_Drop : MonoBehaviour
         _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, true, 0.4f);
         _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, true, 0.4f);
         _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Head, true, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.RangeCombat, false, 0.4f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.RangeCombat, false, 0.1f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
+        {
+            WeaponAnimator_MainTransformer mainTransformer = _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
+            mainTransformer.MoveRaw(Vector3.zero);
+            mainTransformer.RotateRaw(Vector3.zero);
+            _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
+        });
 
-        WeaponAnimator_MainTransformer mainTransformer = _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
-        mainTransformer.MoveRaw(Vector3.zero);
-        mainTransformer.RotateRaw(Vector3.zero);
-        _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
     }
 }

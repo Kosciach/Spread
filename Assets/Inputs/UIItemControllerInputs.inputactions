@@ -1,0 +1,34 @@
+{
+    "name": "UIItemControllerInputs",
+    "maps": [
+        {
+            "name": "Item",
+            "id": "26cdc36a-3323-4c6b-a5c0-ded154764292",
+            "actions": [
+                {
+                    "name": "Drop",
+                    "type": "Button",
+                    "id": "e5ca6e91-a18c-40ca-980d-9e55ab603a75",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "40d1d843-015b-46bd-9f3d-ca76400ab49d",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
