@@ -7,10 +7,13 @@ public class UIItemSlotController : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
+        if (transform.childCount <= 0) return;
+
         UIItemController droppedUIItemController = eventData.pointerDrag.GetComponent<UIItemController>();
         UIItemController childUIItemController = transform.GetChild(0).GetComponent<UIItemController>();
         PlayerInventoryController playerInventoryController = childUIItemController.PlayerInventory;
 
+        if (droppedUIItemController == null) return;
         if(droppedUIItemController.HomeParent == null) return;
 
 

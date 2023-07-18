@@ -6,19 +6,18 @@ using UnityEngine.UI;
 
 public class PlayerInventory_Items : MonoBehaviour
 {
+    [Header("====References====")]
+    [SerializeField] PlayerInventoryController _inventory;
+
+
+    [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] List<ItemInventorySlot> _itemInventorySlots; public List<ItemInventorySlot> ItemInventorySlots { get { return _itemInventorySlots; } }
-
-
-    private PlayerInventoryController _inventoryController;
-
 
 
 
     private void Awake()
     {
-        _inventoryController = GetComponent<PlayerInventoryController>();
-
         for (int i = 0; i < 12; i++)
             AddSlot();
     }
@@ -28,7 +27,7 @@ public class PlayerInventory_Items : MonoBehaviour
 
     public void AddSlot()
     {
-        _itemInventorySlots.Add(new ItemInventorySlot(CanvasController.Instance.PanelsControllers.Inventory.CreateUIItemSlot(_inventoryController)));
+        _itemInventorySlots.Add(new ItemInventorySlot(CanvasController.Instance.PanelsControllers.Inventory.CreateUIItemSlot(_inventory)));
     }
     private int GetSmallestSlotWithSpaceIndex(ItemData itemData)
     {
@@ -80,7 +79,7 @@ public class PlayerInventory_Items : MonoBehaviour
         ItemInventorySlot itemInventorySlot = _itemInventorySlots[itemToDropIndex];
         if (itemInventorySlot.Empty) return;
 
-        Instantiate(itemInventorySlot.ItemData.ItemPrefab, _inventoryController.DropPoint.position, Quaternion.identity);
+        Instantiate(itemInventorySlot.ItemData.ItemPrefab, _inventory.DropPoint.position, Quaternion.identity);
         itemInventorySlot.MaxCountPerSlotReached = false;
 
         Action<ItemInventorySlot> dropItemMethod = itemInventorySlot.ItemData.Stackable ? DropStackable : DropNonStackable;

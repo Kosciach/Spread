@@ -18,17 +18,9 @@ public class PlayerInventory_Weapon : MonoBehaviour
 
 
 
-
-    private PlayerInventoryController _inventoryController;
-
-
-
-
     private void Awake()
     {
-        _inventoryController = GetComponent<PlayerInventoryController>();
-
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 4; i++)
             AddSlot();
     }
 
@@ -36,7 +28,7 @@ public class PlayerInventory_Weapon : MonoBehaviour
 
     public void AddSlot()
     {
-        _weaponInventorySlots.Add(new WeaponInventorySlot(CanvasController.Instance.PanelsControllers.Inventory.CreateUIWeaponSlot()));
+        _weaponInventorySlots.Add(new WeaponInventorySlot(CanvasController.Instance.PanelsControllers.Inventory.CreateUIWeaponSlot(_inventory)));
     }
     private int GetSmallestEmptyIndex()
     {
@@ -77,9 +69,9 @@ public class PlayerInventory_Weapon : MonoBehaviour
         WeaponStateMachine weaponToDrop = _weaponInventorySlots[weaponToDropIndex].Weapon;
         weaponToDrop.transform.parent = null;
         weaponToDrop.transform.SetSiblingIndex(0);
-        weaponToDrop.transform.position = _inventoryController.DropPoint.position;
+        weaponToDrop.transform.position = _inventory.DropPoint.position;
         weaponToDrop.SwitchController.SwitchTo.Ground();
-        weaponToDrop.Rigidbody.AddForce(_inventoryController.DropPoint.forward * 10);
+        weaponToDrop.Rigidbody.AddForce(_inventory.DropPoint.forward * 10);
 
 
         _weaponInventorySlots[weaponToDropIndex].EmptySlot();
@@ -113,19 +105,19 @@ public class WeaponInventorySlot
 {
     public string Name;
     public bool Empty;
+    public bool Equiped;
     public WeaponStateMachine Weapon;
     public WeaponData WeaponData;
-    public GameObject UISlot;
+    public UIWeaponController UIWeaponController;
     public Image WeaponIcon;
 
-    public WeaponInventorySlot(GameObject uiSlot)
+    public WeaponInventorySlot(UIWeaponController uiWeaponController)
     {
-        UISlot = uiSlot;
-        WeaponIcon = UISlot.transform.GetChild(0).GetComponent<Image>();
+        UIWeaponController = uiWeaponController;
+        WeaponIcon = UIWeaponController.transform.GetChild(0).GetComponent<Image>();
 
         EmptySlot();
     }
-
 
     public void FillSlot(WeaponStateMachine weapon, WeaponData weaponData)
     {

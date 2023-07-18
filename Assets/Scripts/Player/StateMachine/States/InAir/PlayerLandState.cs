@@ -52,7 +52,7 @@ public class PlayerLandState : PlayerBaseState
     {
         _ctx.WasHardLanding = _ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.Slope.SlopeAngle <= -12;
 
-        if (_ctx.WasHardLanding) _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip();
+        if (_ctx.WasHardLanding) _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
         _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(!_ctx.WasHardLanding);
         _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 0.1f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, !_ctx.WasHardLanding, 0.1f);

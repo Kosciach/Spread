@@ -9,6 +9,8 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
 {
     private PlayerCombatController _combatController;
 
+    private bool _isTemporaryUnEquip; public bool IsTemporaryUnEquip { get { return _isTemporaryUnEquip; } set { _isTemporaryUnEquip = value; } }
+
 
 
 
@@ -18,17 +20,21 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
     }
 
 
+
+
     public void RecoverFromTemporaryUnEquip()
     {
-        if (!_combatController.IsTemporaryUnEquip) return;
+        if (!_isTemporaryUnEquip) return;
 
-        _combatController.IsTemporaryUnEquip = false;
+        _isTemporaryUnEquip = false;
         _combatController.Equip.StartEquip(_combatController.EquipedWeaponIndex);
     }
-    public void StartTemporaryUnEquip()
+    public void StartTemporaryUnEquip(bool overrideStateValidation)
     {
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
-        || !_combatController.PlayerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
+        if (_combatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
+
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) && !overrideStateValidation) return;
+        if (!_combatController.PlayerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
         TemporaryUnEquip();
     }
@@ -36,7 +42,7 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
     {
         _combatController.SetState(PlayerCombatController.CombatStateEnum.UnEquip);
 
-        _combatController.IsTemporaryUnEquip = true;
+        _isTemporaryUnEquip = true;
         _combatController.EquipedWeaponSlot.Weapon.DamageDealingController.Toggle(false);
 
         _combatController.PlayerStateMachine.CombatControllers.WallDetector.ToggleCollider(false);
@@ -59,6 +65,8 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
         _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
         _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_combatController.EquipedWeaponSlot.Weapon, _combatController.EquipedWeaponSlot.WeaponData);
+
+        _combatController.OnWeaponUnEquip();
 
         _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatBase, false, 0.4f);
         _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatAnimating, true, 0.4f);

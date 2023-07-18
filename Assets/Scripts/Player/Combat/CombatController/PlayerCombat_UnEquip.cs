@@ -67,7 +67,7 @@ public class PlayerCombat_UnEquip : MonoBehaviour
                 return;
             }
 
-            _combatController.EquipedWeaponSlot.Weapon.OnWeaponUnEquip();
+            _combatController.OnWeaponUnEquip();
             _combatController.EquipedWeaponSlot = null;
 
             _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatBase, false, 0.4f);

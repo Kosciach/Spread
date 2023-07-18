@@ -45,7 +45,6 @@ public class PlayerCombat_Equip : MonoBehaviour
     {
         _combatController.SetState(PlayerCombatController.CombatStateEnum.Equip);
 
-        _combatController.IsTemporaryUnEquip = false;
         _combatController.EquipedWeaponIndex = choosenWeaponIndex;
         _combatController.EquipedWeaponSlot = choosenWeaponInventorySlot;
 
@@ -82,7 +81,7 @@ public class PlayerCombat_Equip : MonoBehaviour
             _combatController.PlayerStateMachine.CombatControllers.WallDetector.ToggleCollider(true);
             _combatController.EquipedWeaponSlot.Weapon.HoldController.MoveHandsToCurrentHoldMode(0.5f, 0.5f);
 
-            _combatController.EquipedWeaponSlot.Weapon.OnWeaponEquip();
+            _combatController.OnWeaponEquip();
         });
     }
     private void Swap()

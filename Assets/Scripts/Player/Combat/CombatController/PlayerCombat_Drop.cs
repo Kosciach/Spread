@@ -53,6 +53,7 @@ public class PlayerCombat_Drop : MonoBehaviour
 
         _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.DropWeapon(_combatController.EquipedWeaponIndex);
 
+        _combatController.OnWeaponUnEquip();
         _combatController.EquipedWeaponSlot = null;
 
         _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatBase, false, 0.4f);

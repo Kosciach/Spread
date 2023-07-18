@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 
 [RequireComponent(typeof(UIItem_Count))]
@@ -14,6 +12,7 @@ public class UIItemController : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     private PlayerInventoryController _playerInventory;         public PlayerInventoryController PlayerInventory { get { return _playerInventory; } set { _playerInventory = value; } }
     private Transform _homeParent;                              public Transform HomeParent { get { return _homeParent; } set { _homeParent = value; } }
     private int _indexInInventory;                              public int IndexInInventory { get { return _indexInInventory; } set { _indexInInventory = value; } }
+    
     private bool _isDragged;
 
     private UIItemControllerInputs _inputs;

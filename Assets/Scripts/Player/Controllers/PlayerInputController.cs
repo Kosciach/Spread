@@ -124,7 +124,7 @@ public class PlayerInputController : MonoBehaviour
     {
         _playerInputs.Player.ChooseWeapon.performed += ctx =>
         {
-            if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
+            if (_stateMachine.CombatControllers.Combat.TemporaryUnEquip.IsTemporaryUnEquip) return;
             _stateMachine.CombatControllers.Combat.Equip.StartEquip((int)ctx.ReadValue<float>());
         };
     }
@@ -132,7 +132,7 @@ public class PlayerInputController : MonoBehaviour
     {
         _playerInputs.Player.UnEquipWeapon.performed += ctx =>
         {
-            if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
+            if (_stateMachine.CombatControllers.Combat.TemporaryUnEquip.IsTemporaryUnEquip) return;
             _stateMachine.CombatControllers.Combat.UnEquip.StartUnEquip(1);
         };
     }
@@ -140,7 +140,7 @@ public class PlayerInputController : MonoBehaviour
     {
         _playerInputs.Player.DropWeapon.performed += ctx =>
         {
-            if (_stateMachine.CombatControllers.Combat.IsTemporaryUnEquip) return;
+            if (_stateMachine.CombatControllers.Combat.TemporaryUnEquip.IsTemporaryUnEquip) return;
             _stateMachine.CombatControllers.Combat.Drop.StartDrop();
         };
     }

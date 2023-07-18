@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelsControllers_Inventory : MonoBehaviour
 {
     [Header("====References====")]
+    [SerializeField] Image _equipedWeaponIcon;
     [SerializeField] SlotCreateData _itemSlotCreateData;
     [SerializeField] SlotCreateData _weaponSlotCreateData;
 
@@ -19,12 +21,24 @@ public class PanelsControllers_Inventory : MonoBehaviour
 
     public UIItemController CreateUIItemSlot(PlayerInventoryController playerInventory)
     {
-        UIItemController itemSlotController = Instantiate(_itemSlotCreateData.UISlotPrefab, _itemSlotCreateData.UISlotsHolder).transform.GetChild(0).GetComponent<UIItemController>();
-        itemSlotController.PlayerInventory = playerInventory;
-        return itemSlotController;
+        UIItemController uiItemController = Instantiate(_itemSlotCreateData.UISlotPrefab, _itemSlotCreateData.UISlotsHolder).transform.GetChild(0).GetComponent<UIItemController>();
+        uiItemController.PlayerInventory = playerInventory;
+        return uiItemController;
     }
-    public GameObject CreateUIWeaponSlot()
+    public UIWeaponController CreateUIWeaponSlot(PlayerInventoryController playerInventory)
     {
-        return Instantiate(_weaponSlotCreateData.UISlotPrefab, _weaponSlotCreateData.UISlotsHolder);
+        UIWeaponController uiWeaponController = Instantiate(_weaponSlotCreateData.UISlotPrefab, _weaponSlotCreateData.UISlotsHolder).transform.GetChild(0).GetComponent<UIWeaponController>();
+        uiWeaponController.PlayerInventory = playerInventory;
+        return uiWeaponController;
+    }
+
+
+    public void SetEquipedWeaponIcon(Sprite icon)
+    {
+        _equipedWeaponIcon.sprite = icon;
+    }
+    public void ToggleEquipedWeaponIcon(bool enable)
+    {
+        _equipedWeaponIcon.color = enable ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
     }
 }
