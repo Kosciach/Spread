@@ -51,9 +51,9 @@ public class PlayerCombat_Drop : MonoBehaviour
 
         _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
-        _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.DropWeapon(_combatController.EquipedWeaponIndex);
-
         _combatController.OnWeaponUnEquip();
+
+        _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.DropWeapon(_combatController.EquipedWeaponIndex);
         _combatController.EquipedWeaponSlot = null;
 
         _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatBase, false, 0.4f);

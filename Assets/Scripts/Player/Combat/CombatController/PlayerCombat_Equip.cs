@@ -25,12 +25,17 @@ public class PlayerCombat_Equip : MonoBehaviour
         || choosenWeaponIndex >= _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.WeaponInventorySlots.Count
         ||  !_combatController.PlayerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
+
         _combatController.ChoosenWeaponIndex = choosenWeaponIndex;
         WeaponInventorySlot choosenWeaponInventorySlot = _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.WeaponInventorySlots[choosenWeaponIndex];
-        if (choosenWeaponInventorySlot.Empty) return;
+        if (choosenWeaponInventorySlot.Empty)
+        {
+            _combatController.EquipedWeaponSlot = null;
+            return;
+        }
 
 
-        if(_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped))
+        if (_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped))
         {
             if(choosenWeaponIndex != _combatController.EquipedWeaponIndex) Swap();
             return;

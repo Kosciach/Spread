@@ -15,7 +15,7 @@ public class UIItemController : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     
     private bool _isDragged;
 
-    private UIItemControllerInputs _inputs;
+    private UIItemWeaponInputs _inputs;
 
 
 
@@ -23,13 +23,13 @@ public class UIItemController : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     {
         _count = GetComponent<UIItem_Count>();
 
-        _inputs = new UIItemControllerInputs();
+        _inputs = new UIItemWeaponInputs();
         _inputs.Disable();
     }
     private void Start()
     {
         _indexInInventory = transform.parent.GetSiblingIndex();
-        _inputs.Item.Drop.performed += ctx =>
+        _inputs.Both.Drop.performed += ctx =>
         {
             if (_isDragged) return;
             _playerInventory.Item.DropItem(_indexInInventory);

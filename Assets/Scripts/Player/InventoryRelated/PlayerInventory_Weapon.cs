@@ -140,5 +140,6 @@ public class WeaponInventorySlot
         WeaponData = null;
 
         Empty = true;
+        Equiped = false;
     }
 }

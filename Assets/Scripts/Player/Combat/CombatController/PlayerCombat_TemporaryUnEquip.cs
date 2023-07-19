@@ -9,7 +9,7 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
 {
     private PlayerCombatController _combatController;
 
-    private bool _isTemporaryUnEquip; public bool IsTemporaryUnEquip { get { return _isTemporaryUnEquip; } set { _isTemporaryUnEquip = value; } }
+    [SerializeField] bool _isTemporaryUnEquip; public bool IsTemporaryUnEquip { get { return _isTemporaryUnEquip; } set { _isTemporaryUnEquip = value; } }
 
 
 
