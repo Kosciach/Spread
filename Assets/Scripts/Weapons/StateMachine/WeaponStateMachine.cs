@@ -104,6 +104,7 @@ public class WeaponStateMachine : MonoBehaviour
     }
     public void OnWeaponUnEquip()
     {
+        _playerStateMachine.AnimatingControllers.Weapon.ADSOffset.Toggle(false);
         _damageDealingController.OnWeaponUnEquip();
     }
 

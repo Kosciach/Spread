@@ -76,6 +76,7 @@ public class PlayerEquipedWeapon_Aim : MonoBehaviour
     private void AimDisable()
     {
         _combatController.EquipedWeaponSlot.Weapon.OnWeaponAim(false);
+        _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.ADSOffset.Toggle(false);
 
         WeaponHoldController equipedModeController = _combatController.EquipedWeaponSlot.Weapon.HoldController;
         equipedModeController.MoveHandsToCurrentHoldMode(0.2f, 0.2f);
@@ -115,13 +116,27 @@ public class PlayerEquipedWeapon_Aim : MonoBehaviour
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
         _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);;
 
-        if (_aimTypeIndex == 0) _combatController.EquipedWeaponSlot.Weapon.OnWeaponAim(true);
-        else _combatController.EquipedWeaponSlot.Weapon.OnWeaponAim(false);
+        if (_aimTypeIndex == 0) OnADSAim();
+        else OnCustomAim();
     }
 
     private void CheckCrosshair()
     {
         if (_aimType == AimTypeEnum.Left) CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
         else CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.None);
+    }
+
+
+
+
+    private void OnADSAim()
+    {
+        _combatController.EquipedWeaponSlot.Weapon.OnWeaponAim(true);
+        _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.ADSOffset.Toggle(true);
+    }
+    private void OnCustomAim()
+    {
+        _combatController.EquipedWeaponSlot.Weapon.OnWeaponAim(false);
+        _equipedWeaponController.PlayerStateMachine.AnimatingControllers.Weapon.ADSOffset.Toggle(false);
     }
 }

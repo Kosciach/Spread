@@ -7,17 +7,18 @@ namespace WeaponAnimatorNamespace
     public class WeaponAnimator : MonoBehaviour
     {
         [Header("====References====")]
-        [SerializeField] WeaponAnimator_BakeTransformer _bakeTransformer; public WeaponAnimator_BakeTransformer BakeTransformer { get { return _bakeTransformer; } }
-        [SerializeField] WeaponAnimator_MainTransformer _mainTransformer; public WeaponAnimator_MainTransformer MainTransformer { get { return _mainTransformer; } }
-        [SerializeField] WeaponAnimator_Sway _sway; public WeaponAnimator_Sway Sway { get { return _sway; } }
-        [SerializeField] WeaponAnimator_Bobbing _bobbing; public WeaponAnimator_Bobbing Bobbing { get { return _bobbing; } }
-        [SerializeField] WeaponAnimator_Recoil _recoil; public WeaponAnimator_Recoil Recoil { get { return _recoil; } }
-        [SerializeField] WeaponAnimator_Crouch _crouch; public WeaponAnimator_Crouch Crouch { get { return _crouch; } }
-        [SerializeField] WeaponAnimator_InAir _inAir; public WeaponAnimator_InAir InAir { get { return _inAir; } }
-        [SerializeField] WeaponAnimator_FireMode _fireMode; public WeaponAnimator_FireMode FireMode { get { return _fireMode; } }
+        [SerializeField] WeaponAnimator_BakeTransformer _bakeTransformer;   public WeaponAnimator_BakeTransformer BakeTransformer { get { return _bakeTransformer; } }
+        [SerializeField] WeaponAnimator_MainTransformer _mainTransformer;   public WeaponAnimator_MainTransformer MainTransformer { get { return _mainTransformer; } }
+        [SerializeField] WeaponAnimator_Sway _sway;                         public WeaponAnimator_Sway Sway { get { return _sway; } }
+        [SerializeField] WeaponAnimator_Bobbing _bobbing;                   public WeaponAnimator_Bobbing Bobbing { get { return _bobbing; } }
+        [SerializeField] WeaponAnimator_Recoil _recoil;                     public WeaponAnimator_Recoil Recoil { get { return _recoil; } }
+        [SerializeField] WeaponAnimator_Crouch _crouch;                     public WeaponAnimator_Crouch Crouch { get { return _crouch; } }
+        [SerializeField] WeaponAnimator_InAir _inAir;                       public WeaponAnimator_InAir InAir { get { return _inAir; } }
+        [SerializeField] WeaponAnimator_FireMode _fireMode;                 public WeaponAnimator_FireMode FireMode { get { return _fireMode; } }
+        [SerializeField] WeaponAnimator_ADSOffset _adsOffset;               public WeaponAnimator_ADSOffset ADSOffset { get { return _adsOffset; } }
         [Space(5)]
-        [SerializeField] PlayerStateMachine _playerStateMachine; public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
-        [SerializeField] Transform _rightHandIk; public Transform RightHandIk { get { return _rightHandIk; } }
+        [SerializeField] PlayerStateMachine _playerStateMachine;            public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
+        [SerializeField] Transform _rightHandIk;                            public Transform RightHandIk { get { return _rightHandIk; } }
 
 
 
@@ -72,8 +73,8 @@ namespace WeaponAnimatorNamespace
         }
         private void CombineVectorsForExtraTarget()
         {
-            _extraVectors.Pos = _bobbing.Base.SmoothVectors.Pos + _sway.SmoothVectors.Pos + _recoil.RecoilVectors.Pos + _crouch.CurrentVectors.Pos + _inAir.CurrentVectors.Pos + _fireMode.Vectors.Pos;
-            _extraVectors.Rot = _bobbing.Base.SmoothVectors.Rot + _bobbing.Side.SmoothVectors.Rot + _sway.SmoothVectors.Rot + _recoil.RecoilVectors.Rot + _crouch.CurrentVectors.Rot + _inAir.CurrentVectors.Rot + _fireMode.Vectors.Rot;
+            _extraVectors.Pos = _bobbing.Base.SmoothVectors.Pos + _sway.SmoothVectors.Pos + _recoil.RecoilVectors.Pos + _crouch.CurrentVectors.Pos + _inAir.CurrentVectors.Pos + _fireMode.Vectors.Pos + _adsOffset.OutputVectors.Pos;
+            _extraVectors.Rot = _bobbing.Base.SmoothVectors.Rot + _bobbing.Side.SmoothVectors.Rot + _sway.SmoothVectors.Rot + _recoil.RecoilVectors.Rot + _crouch.CurrentVectors.Rot + _inAir.CurrentVectors.Rot + _fireMode.Vectors.Rot + _adsOffset.OutputVectors.Rot;
         }
 
 
