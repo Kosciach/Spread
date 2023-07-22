@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4915264925744699436}
   - component: {fileID: 859600805137826515}
   - component: {fileID: 5848512366698434868}
-  - component: {fileID: 4173602713394014267}
+  - component: {fileID: 832765174949331200}
   m_Layer: 5
   m_Name: UIItem
   m_TagString: Untagged
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb525beb57ad9e48b29af60b6560578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4173602713394014267
+--- !u!114 &832765174949331200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,10 +267,10 @@ GameObject:
   - component: {fileID: 7771166474024806747}
   - component: {fileID: 7771166474024806746}
   - component: {fileID: 7771166474024806749}
-  - component: {fileID: 8426389193577701381}
+  - component: {fileID: -4141116463239424741}
   - component: {fileID: -3117065310582340292}
   m_Layer: 5
-  m_Name: Slot_Item
+  m_Name: Slot_Throwable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
     _usePolygonMap: 0
   wasConverted: 0
   preConvertedScale: {x: 0, y: 0, z: 0}
---- !u!114 &8426389193577701381
+--- !u!114 &-4141116463239424741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -402,7 +402,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7771166474024806751}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 811df9923b208e64c9f7bd0965fb4e21, type: 3}
+  m_Script: {fileID: 11500000, guid: 3945235f076ed254c81a1683890f221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &-3117065310582340292

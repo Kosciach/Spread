@@ -17,8 +17,6 @@ public class PlayerMovement_OnGround : MonoBehaviour
     [SerializeField] float _speed; public float Speed { get { return _speed; } }
     [Range(0, 1)]
     [SerializeField] int _movementToggle;
-    [Space(5)]
-    [SerializeField] MovementTypeEnum _movementType;
 
 
     [Space(20)]
@@ -77,12 +75,10 @@ public class PlayerMovement_OnGround : MonoBehaviour
                         || _movementController.PlayerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run);
 
 
-        _movementType = MovementTypeEnum.Idle;
         if(canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Idle();
         if (!isMoveInput) return;
 
 
-        _movementType = MovementTypeEnum.Walk;
         if (canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Walk();
         if (!isRunInput || movementInputVector.z <= 0
             || _movementController.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim
@@ -90,7 +86,6 @@ public class PlayerMovement_OnGround : MonoBehaviour
             || !_movementController.PlayerStateMachine.CoreControllers.Stats.Stats.Stamina.CanUseStamina) return;
 
 
-        _movementType = MovementTypeEnum.Run;
         if (canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Run();
     }
 

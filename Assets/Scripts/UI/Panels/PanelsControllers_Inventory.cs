@@ -8,6 +8,7 @@ public class PanelsControllers_Inventory : MonoBehaviour
     [Header("====References====")]
     [SerializeField] Image _equipedWeaponIcon;
     [SerializeField] SlotCreateData _itemSlotCreateData;
+    [SerializeField] SlotCreateData _throwableSlotCreateData;
     [SerializeField] SlotCreateData _weaponSlotCreateData;
 
     [System.Serializable]
@@ -22,6 +23,12 @@ public class PanelsControllers_Inventory : MonoBehaviour
     public UIItemController CreateUIItemSlot(PlayerInventoryController playerInventory)
     {
         UIItemController uiItemController = Instantiate(_itemSlotCreateData.UISlotPrefab, _itemSlotCreateData.UISlotsHolder).transform.GetChild(0).GetComponent<UIItemController>();
+        uiItemController.PlayerInventory = playerInventory;
+        return uiItemController;
+    }
+    public UIItemController CreateUIThrowableSlot(PlayerInventoryController playerInventory)
+    {
+        UIItemController uiItemController = Instantiate(_throwableSlotCreateData.UISlotPrefab, _throwableSlotCreateData.UISlotsHolder).transform.GetChild(0).GetComponent<UIItemController>();
         uiItemController.PlayerInventory = playerInventory;
         return uiItemController;
     }

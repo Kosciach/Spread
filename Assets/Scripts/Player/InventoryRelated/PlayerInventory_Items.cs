@@ -18,7 +18,7 @@ public class PlayerInventory_Items : MonoBehaviour
 
     private void Awake()
     {
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < 2; i++)
             AddSlot();
     }
 

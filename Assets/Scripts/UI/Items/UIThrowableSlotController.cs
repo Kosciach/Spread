@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIItemSlotController : MonoBehaviour, IDropHandler
+public class UIThrowableSlotController : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
@@ -17,11 +17,7 @@ public class UIItemSlotController : MonoBehaviour, IDropHandler
         if (droppedUIItemController == null) return;
         if (droppedUIItemController.HomeParent == null) return;
 
-
-        MoveInUI(droppedUIItemController, childUIItemController, playerInventoryController);
-
-
-        Action<UIItemController, UIItemController, PlayerInventoryController> movedFromMethod = droppedUIItemController.UIOrigin == UIItemController.UIOrigins.Items ? MovedFromTheSameSlotType : MovedFromDiffrentSlotType;
+        Action<UIItemController, UIItemController, PlayerInventoryController> movedFromMethod = droppedUIItemController.UIOrigin == UIItemController.UIOrigins.Throwables ? MovedFromTheSameSlotType : MovedFromDiffrentSlotType;
         movedFromMethod(droppedUIItemController, childUIItemController, playerInventoryController);
 
         droppedUIItemController = null;
@@ -32,15 +28,21 @@ public class UIItemSlotController : MonoBehaviour, IDropHandler
 
     private void MovedFromTheSameSlotType(UIItemController droppedUIItemController, UIItemController childUIItemController, PlayerInventoryController playerInventoryController)
     {
-        ItemInventorySlot tempItemInventorySlot = playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory];
-        playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory] = playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory];
-        playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory] = tempItemInventorySlot;
+        MoveInUI(droppedUIItemController, childUIItemController, playerInventoryController);
+
+        ItemInventorySlot tempItemInventorySlot = playerInventoryController.Throwables.ThrowableInventorySlots[childUIItemController.IndexInInventory];
+        playerInventoryController.Throwables.ThrowableInventorySlots[childUIItemController.IndexInInventory] = playerInventoryController.Throwables.ThrowableInventorySlots[droppedUIItemController.IndexInInventory];
+        playerInventoryController.Throwables.ThrowableInventorySlots[droppedUIItemController.IndexInInventory] = tempItemInventorySlot;
     }
     private void MovedFromDiffrentSlotType(UIItemController droppedUIItemController, UIItemController childUIItemController, PlayerInventoryController playerInventoryController)
     {
-        ItemInventorySlot tempItemInventorySlot = playerInventoryController.Throwables.ThrowableInventorySlots[childUIItemController.IndexInInventory];
-        playerInventoryController.Throwables.ThrowableInventorySlots[childUIItemController.IndexInInventory] = playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory];
-        playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory] = tempItemInventorySlot;
+        if (playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory].ItemData.ItemType != ItemData.ItemTypes.Throwable) return;
+
+        MoveInUI(droppedUIItemController, childUIItemController, playerInventoryController);
+
+        ItemInventorySlot tempItemInventorySlot = playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory];
+        playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory] = playerInventoryController.Throwables.ThrowableInventorySlots[droppedUIItemController.IndexInInventory];
+        playerInventoryController.Throwables.ThrowableInventorySlots[droppedUIItemController.IndexInInventory] = tempItemInventorySlot;
     }
 
 

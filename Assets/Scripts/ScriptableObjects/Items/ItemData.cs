@@ -9,11 +9,17 @@ public class ItemData : ScriptableObject
     public string ItemName;
     public Sprite Icon;
     public GameObject ItemPrefab;
-
+    public ItemTypes ItemType;
 
     [Space(10)]
     [Header("====Stackable====")]
     public bool Stackable;
     [Range(2, 100)]
     public int MaxCountPerSlot = 2;
+
+
+    public enum ItemTypes
+    {
+        Item, Throwable
+    }
 }

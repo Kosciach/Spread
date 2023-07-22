@@ -15,11 +15,6 @@ public class WeaponPartsAnimator_Slide : BaseWeaponPartsAnimator
 
     [Space(20)]
     [Header("====Settings====")]
-    [SerializeField] bool _isSlideForward;
-
-
-    [Space(20)]
-    [Header("====Settings====")]
     [Range(0, 1)]
     [SerializeField] float _slideMoveForwardTime;
     [Range(0, 1)]
@@ -43,17 +38,14 @@ public class WeaponPartsAnimator_Slide : BaseWeaponPartsAnimator
 
     private void MoveBackAndForward()
     {
-        _isSlideForward = false;
         _slide.LeanMoveLocal(_firedPosition, _slideMoveBackTime).setOnComplete(() =>
         {
             _shellEjector.EjectShell();
             _slide.LeanMoveLocal(_defaultPosition, _slideMoveForwardTime);
-            _isSlideForward = true;
         });
     }
     private void MoveBack()
     {
-        _isSlideForward = false;
         _slide.LeanMoveLocal(_firedPosition, _slideMoveBackTime).setOnComplete(() =>
         {
             _shellEjector.EjectShell();
@@ -61,7 +53,6 @@ public class WeaponPartsAnimator_Slide : BaseWeaponPartsAnimator
     }
     private void MoveForward()
     {
-        _isSlideForward = true;
         _slide.LeanMoveLocal(_defaultPosition, _slideMoveForwardTime);
     }
 }

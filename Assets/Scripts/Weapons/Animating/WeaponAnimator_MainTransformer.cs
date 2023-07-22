@@ -167,7 +167,6 @@ namespace WeaponAnimatorNamespace
     public class Vector3Lerp
     {
         [SerializeField] Vector3 _vector; public Vector3 Vector { get { return _vector; } }
-        [SerializeField] bool _isLerping;
         public Action OnFinish;
         public Action OnUpdate;
         public IEnumerator LerpCoroutine;
@@ -178,7 +177,6 @@ namespace WeaponAnimatorNamespace
             //Start
             OnFinish = null;
             OnUpdate = null;
-            _isLerping = true;
             float timeElapsed = 0;
 
             //Update
@@ -197,7 +195,6 @@ namespace WeaponAnimatorNamespace
 
             //Finish
             _vector = endVector;
-            _isLerping = false;
             OnUpdate = null;
             if (OnFinish != null) OnFinish.Invoke();
         }
@@ -206,7 +203,6 @@ namespace WeaponAnimatorNamespace
             //Start
             OnFinish = null;
             OnUpdate = null;
-            _isLerping = true;
             float timeElapsed = 0;
 
             //Update
@@ -226,7 +222,6 @@ namespace WeaponAnimatorNamespace
 
             //Finish
             _vector = endVector;
-            _isLerping = false;
             OnUpdate = null;
             if (OnFinish != null) OnFinish.Invoke();
         }
@@ -234,7 +229,6 @@ namespace WeaponAnimatorNamespace
         {
             _vector = pos;
 
-            _isLerping = false;
             OnFinish = null;
             LerpCoroutine = null;
         }
@@ -245,7 +239,6 @@ namespace WeaponAnimatorNamespace
     public class QuaternionLerp
     {
         [SerializeField] Quaternion _quaternion; public Quaternion Quaternion { get { return _quaternion; } }
-        [SerializeField] bool _isLerping;
         public Action OnFinish;
         public IEnumerator LerpCoroutine;
 
@@ -254,7 +247,6 @@ namespace WeaponAnimatorNamespace
         {
             //Start
             OnFinish = null;
-            _isLerping = true;
             float timeElapsed = 0;
             Quaternion startQuaternion = Quaternion.Euler(startVector);
             Quaternion endQuaternion = Quaternion.Euler(endVector);
@@ -273,14 +265,12 @@ namespace WeaponAnimatorNamespace
 
             //Finish
             _quaternion = endQuaternion;
-            _isLerping = false;
             if (OnFinish != null) OnFinish.Invoke();
         }
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration, AnimationCurve curve)
         {
             //Start
             OnFinish = null;
-            _isLerping = true;
             float timeElapsed = 0;
             Quaternion startQuaternion = Quaternion.Euler(startVector);
             Quaternion endQuaternion = Quaternion.Euler(endVector);
@@ -300,7 +290,6 @@ namespace WeaponAnimatorNamespace
 
             //Finish
             _quaternion = endQuaternion;
-            _isLerping = false;
             if (OnFinish != null) OnFinish.Invoke();
         }
 
@@ -309,7 +298,6 @@ namespace WeaponAnimatorNamespace
             _quaternion = Quaternion.Euler(rot);
 
 
-            _isLerping = false;
             OnFinish = null;
             LerpCoroutine = null;
         }

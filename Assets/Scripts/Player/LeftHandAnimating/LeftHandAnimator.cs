@@ -115,7 +115,6 @@ namespace LeftHandAnimatorNamespace
     public class Vector3Lerp
     {
         [SerializeField] Vector3 _vector; public Vector3 Vector { get { return _vector; } }
-        [SerializeField] bool _isLerping;
         public IEnumerator LerpCoroutine;
 
 
@@ -124,8 +123,6 @@ namespace LeftHandAnimatorNamespace
             float timeElapsed = 0;
 
             //Start
-
-            _isLerping = true;
             while (timeElapsed < duration)
             {
                 float time = timeElapsed / duration;
@@ -138,16 +135,13 @@ namespace LeftHandAnimatorNamespace
             }
 
             //Finish
-
             _vector = endVector;
-            _isLerping = false;
         }
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration, AnimationCurve curve)
         {
             float timeElapsed = 0;
 
             //Start
-            _isLerping = true;
             while (timeElapsed < duration)
             {
                 float time = timeElapsed / duration;
@@ -161,14 +155,11 @@ namespace LeftHandAnimatorNamespace
             }
 
             //Finish
-
             _vector = endVector;
-            _isLerping = false;
         }
         public void SetRaw(Vector3 pos)
         {
             _vector = pos;
-            _isLerping = false;
             LerpCoroutine = null;
         }
     }
@@ -177,7 +168,6 @@ namespace LeftHandAnimatorNamespace
     public class QuaternionLerp
     {
         [SerializeField] Quaternion _quaternion; public Quaternion Quaternion { get { return _quaternion; } }
-        [SerializeField] bool _isLerping;
         public IEnumerator LerpCoroutine;
 
 
@@ -188,8 +178,6 @@ namespace LeftHandAnimatorNamespace
             Quaternion endQuaternion = Quaternion.Euler(endVector);
 
             //Start
-
-            _isLerping = true;
             while (timeElapsed < duration)
             {
                 float time = timeElapsed / duration;
@@ -202,9 +190,7 @@ namespace LeftHandAnimatorNamespace
             }
 
             //Finish
-
             _quaternion = endQuaternion;
-            _isLerping = false;
         }
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration, AnimationCurve curve)
         {
@@ -213,8 +199,6 @@ namespace LeftHandAnimatorNamespace
             Quaternion endQuaternion = Quaternion.Euler(endVector);
 
             //Start
-
-            _isLerping = true;
             while (timeElapsed < duration)
             {
                 float time = timeElapsed / duration;
@@ -228,14 +212,11 @@ namespace LeftHandAnimatorNamespace
             }
 
             //Finish
-
             _quaternion = endQuaternion;
-            _isLerping = false;
         }
         public void SetRaw(Quaternion rot)
         {
             _quaternion = rot;
-            _isLerping = false;
             LerpCoroutine = null;
         }
     }
