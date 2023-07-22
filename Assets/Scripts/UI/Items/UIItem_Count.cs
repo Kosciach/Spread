@@ -23,9 +23,9 @@ public class UIItem_Count : MonoBehaviour
     public void UpdateCount(int count)
     {
         _count.text = count.ToString();
-        _count.color = new Color(1, 1, 1, 1);
+        _count.color = new Color(0, 0, 0, 1);
 
         if (count > 1) return;
-        _count.color = new Color(1, 1, 1, 0);
+        _count.color = new Color(0, 0, 0, 0);
     }
 }

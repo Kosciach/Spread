@@ -17,10 +17,6 @@ public class UIItemSlotController : MonoBehaviour, IDropHandler
         if (droppedUIItemController == null) return;
         if (droppedUIItemController.HomeParent == null) return;
 
-
-        MoveInUI(droppedUIItemController, childUIItemController, playerInventoryController);
-
-
         Action<UIItemController, UIItemController, PlayerInventoryController> movedFromMethod = droppedUIItemController.UIOrigin == UIItemController.UIOrigins.Items ? MovedFromTheSameSlotType : MovedFromDiffrentSlotType;
         movedFromMethod(droppedUIItemController, childUIItemController, playerInventoryController);
 
@@ -32,14 +28,45 @@ public class UIItemSlotController : MonoBehaviour, IDropHandler
 
     private void MovedFromTheSameSlotType(UIItemController droppedUIItemController, UIItemController childUIItemController, PlayerInventoryController playerInventoryController)
     {
+        ItemInventorySlot droppedInventorySlot = playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory];
+        ItemInventorySlot childrenInventorySlot = playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory];
+
+        if (droppedInventorySlot.ItemData == childrenInventorySlot.ItemData && droppedInventorySlot.ItemData.Stackable && !childrenInventorySlot.MaxCountPerSlotReached)
+        {
+            int spaceLeftInSlot = droppedInventorySlot.ItemData.MaxCountPerSlot - childrenInventorySlot.Count;
+            bool shouldEmptyDroppedSlot = spaceLeftInSlot >= droppedInventorySlot.Count;
+
+            int itemCountToAdd = droppedInventorySlot.Count;
+            itemCountToAdd = Mathf.Clamp(itemCountToAdd, itemCountToAdd, spaceLeftInSlot);
+
+            childrenInventorySlot.Count += itemCountToAdd;
+            droppedInventorySlot.Count -= itemCountToAdd;
+
+            childrenInventorySlot.UIItemController.Count.UpdateCount(childrenInventorySlot.Count);
+            droppedInventorySlot.UIItemController.Count.UpdateCount(droppedInventorySlot.Count);
+
+            childrenInventorySlot.MaxCountPerSlotReached = childrenInventorySlot.Count == childrenInventorySlot.ItemData.MaxCountPerSlot;
+            droppedInventorySlot.MaxCountPerSlotReached = false;
+
+            if (!shouldEmptyDroppedSlot) return;
+
+            droppedInventorySlot.EmptySlot();
+            return;
+        }
+
+        Debug.Log("Move slots");
+        MoveInUI(droppedUIItemController, childUIItemController, playerInventoryController);
+
         ItemInventorySlot tempItemInventorySlot = playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory];
         playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory] = playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory];
         playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory] = tempItemInventorySlot;
     }
     private void MovedFromDiffrentSlotType(UIItemController droppedUIItemController, UIItemController childUIItemController, PlayerInventoryController playerInventoryController)
     {
-        ItemInventorySlot tempItemInventorySlot = playerInventoryController.Throwables.ThrowableInventorySlots[childUIItemController.IndexInInventory];
-        playerInventoryController.Throwables.ThrowableInventorySlots[childUIItemController.IndexInInventory] = playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory];
+        MoveInUI(droppedUIItemController, childUIItemController, playerInventoryController);
+
+        ItemInventorySlot tempItemInventorySlot = playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory];
+        playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory] = playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory];
         playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory] = tempItemInventorySlot;
     }
 

@@ -16,5 +16,6 @@ MonoBehaviour:
   Icon: {fileID: 0}
   ItemPrefab: {fileID: 9117216618402346466, guid: 73d0fea1f4efbef489bb176735768c78,
     type: 3}
+  ItemType: 0
   Stackable: 1
-  MaxCountPerSlot: 2
+  MaxCountPerSlot: 5
