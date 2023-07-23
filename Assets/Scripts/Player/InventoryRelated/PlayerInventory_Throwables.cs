@@ -55,4 +55,20 @@ public class PlayerInventory_Throwables : MonoBehaviour
     {
         itemInventorySlot.EmptySlot();
     }
+
+
+
+    private int GetFirstNotEmptySlot()
+    {
+        for (int i = 0; i < _throwableInventorySlots.Count; i++)
+            if (!_throwableInventorySlots[i].Empty) return i;
+        return -1;
+    }
+    public void Throw()
+    {
+        int notEmptySlotIndex = GetFirstNotEmptySlot();
+        if (notEmptySlotIndex < 0) return;
+
+        Debug.Log(notEmptySlotIndex);
+    }
 }

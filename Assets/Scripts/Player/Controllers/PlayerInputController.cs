@@ -14,11 +14,11 @@ public class PlayerInputController : MonoBehaviour
     [Header("====Debugs====")]
     [SerializeField] bool _enabled;
     [Space(5)]
-    [SerializeField] Vector2 _mouseInputVector; public Vector2 MouseInputVector { get { return _mouseInputVector; } }
-    [SerializeField] Vector3 _movementInputVector; public Vector3 MovementInputVector { get { return _movementInputVector; } }
-    [SerializeField] Vector3 _movementInputVectorNormalized; public Vector3 MovementInputVectorNormalized { get { return _movementInputVectorNormalized; } }
-    [SerializeField] bool _isMoveInput; public bool IsMoveInput { get { return _isMoveInput; } }
-    [SerializeField] bool _isRunInput; public bool IsRunInput { get { return _isRunInput; } }
+    [SerializeField] Vector2 _mouseInputVector;                 public Vector2 MouseInputVector { get { return _mouseInputVector; } }
+    [SerializeField] Vector3 _movementInputVector;              public Vector3 MovementInputVector { get { return _movementInputVector; } }
+    [SerializeField] Vector3 _movementInputVectorNormalized;    public Vector3 MovementInputVectorNormalized { get { return _movementInputVectorNormalized; } }
+    [SerializeField] bool _isMoveInput;                         public bool IsMoveInput { get { return _isMoveInput; } }
+    [SerializeField] bool _isRunInput;                          public bool IsRunInput { get { return _isRunInput; } }
 
 
 
@@ -48,6 +48,7 @@ public class PlayerInputController : MonoBehaviour
         SetChangeWeaponEquipedMode();
         SetAim();
         SetBlock();
+        SetThrow();
         SetChangeAimType();
 
         SetInventory();
@@ -178,6 +179,11 @@ public class PlayerInputController : MonoBehaviour
             _stateMachine.CombatControllers.EquipedWeapon.Block.Block(false);
             _stateMachine.CombatControllers.EquipedWeapon.Block.IsInput = false;
         };
+    }
+
+    private void SetThrow()
+    {
+        _playerInputs.Player.Throw.performed += ctx => _stateMachine.CombatControllers.Throw.ManageThrow();
     }
     #endregion
 
