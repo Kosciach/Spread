@@ -18,7 +18,7 @@ public class PlayerInventory_Throwables : MonoBehaviour
 
     private void Awake()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
             AddSlot();
     }
 

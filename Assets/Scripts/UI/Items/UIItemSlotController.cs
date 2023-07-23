@@ -54,7 +54,6 @@ public class UIItemSlotController : MonoBehaviour, IDropHandler
             return;
         }
 
-        Debug.Log("Move slots");
         MoveInUI(droppedUIItemController, childUIItemController, playerInventoryController);
 
         ItemInventorySlot tempItemInventorySlot = playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory];
@@ -65,8 +64,8 @@ public class UIItemSlotController : MonoBehaviour, IDropHandler
     {
         MoveInUI(droppedUIItemController, childUIItemController, playerInventoryController);
 
-        ItemInventorySlot tempItemInventorySlot = playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory];
-        playerInventoryController.Item.ItemInventorySlots[childUIItemController.IndexInInventory] = playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory];
+        ItemInventorySlot tempItemInventorySlot = playerInventoryController.Throwables.ThrowableInventorySlots[childUIItemController.IndexInInventory];
+        playerInventoryController.Throwables.ThrowableInventorySlots[childUIItemController.IndexInInventory] = playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory];
         playerInventoryController.Item.ItemInventorySlots[droppedUIItemController.IndexInInventory] = tempItemInventorySlot;
     }
 

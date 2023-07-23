@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1cc0008d290128408f0649abdaf6141, type: 3}
+  m_Script: {fileID: 11500000, guid: 35ba912462325594aa5bda3ab97da3ff, type: 3}
   m_Name: Grenade
   m_EditorClassIdentifier: 
   ItemName: Grenade
