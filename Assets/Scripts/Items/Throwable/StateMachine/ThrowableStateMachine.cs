@@ -9,8 +9,8 @@ public class ThrowableStateMachine : MonoBehaviour
 
 
     private ThrowableData _throwableData;                       public ThrowableData ThrowableData { get { return _throwableData; } }
+    private Rigidbody _rigidbody; public Rigidbody Rigidbody { get { return _rigidbody; } }
     private BaseThrowableController _throwableController;       public BaseThrowableController ThrowableController { get { return _throwableController; } }
-
 
     public enum StateLabels
     {
@@ -23,6 +23,7 @@ public class ThrowableStateMachine : MonoBehaviour
     private void Awake()
     {
         _throwableData = (ThrowableData)GetComponent<ItemDataHolder>().ItemData;
+        _rigidbody = GetComponent<Rigidbody>();
         _throwableController = GetComponent<BaseThrowableController>();
         PrepareStates();
     }

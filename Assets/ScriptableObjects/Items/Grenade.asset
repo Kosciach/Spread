@@ -19,3 +19,4 @@ MonoBehaviour:
   ItemType: 1
   Stackable: 0
   MaxCountPerSlot: 2
+  ThrowStrenght: 10

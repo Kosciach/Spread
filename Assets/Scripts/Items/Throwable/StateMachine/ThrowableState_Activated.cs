@@ -10,8 +10,8 @@ public class ThrowableState_Activated : ThrowableBaseState
     public override void StateEnter()
     {
         _ctx.ThrowableController.OnActivate();
-
-
+        _ctx.gameObject.layer = 0;
+        _ctx.Rigidbody.AddForce(_ctx.transform.forward * _ctx.ThrowableData.ThrowStrenght, ForceMode.Impulse);
     }
     public override void StateExit()
     {

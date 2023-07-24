@@ -69,6 +69,13 @@ public class PlayerInventory_Throwables : MonoBehaviour
         int notEmptySlotIndex = GetFirstNotEmptySlot();
         if (notEmptySlotIndex < 0) return;
 
-        Debug.Log(notEmptySlotIndex);
+
+        Vector3 itemPosition = _inventory.DropPoint.position;
+        Quaternion itemRotation = _inventory.StateMachine.CameraControllers.Cine.MainCamera.transform.rotation;
+        ThrowableStateMachine throwableStateMachine = Instantiate(_throwableInventorySlots[notEmptySlotIndex].ItemData.ItemPrefab, itemPosition, itemRotation).GetComponent<ThrowableStateMachine>();
+        throwableStateMachine.ChangeState(ThrowableStateMachine.StateLabels.Activated);
+
+        //Disabled for testing
+        //_throwableInventorySlots[notEmptySlotIndex].EmptySlot();
     }
 }

@@ -5,5 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/Throwable", fileName = "ThrowableData")]
 public class ThrowableData : ItemData
 {
-
+    [Header("====Throwable====")]
+    public float ThrowStrenght;
 }
