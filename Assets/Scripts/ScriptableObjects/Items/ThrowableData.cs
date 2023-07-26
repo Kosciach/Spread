@@ -6,5 +6,8 @@ using UnityEngine;
 public class ThrowableData : ItemData
 {
     [Header("====Throwable====")]
+    [Range(0, 30)]
     public float ThrowStrenght;
+    [Range(0, 200)]
+    public float Damage;
 }

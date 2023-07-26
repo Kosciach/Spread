@@ -1,0 +1,34 @@
+{
+    "name": "ThrowableInputs",
+    "maps": [
+        {
+            "name": "RemoteBomb",
+            "id": "161f2dcf-4509-40ca-99fe-51be1a9cf5c6",
+            "actions": [
+                {
+                    "name": "Detonate",
+                    "type": "Button",
+                    "id": "afa4753d-a111-4a1c-b59c-13af30bb8181",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c5efad20-10a1-4692-a6cc-a64484e1d0ba",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Detonate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

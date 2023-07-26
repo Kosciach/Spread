@@ -64,11 +64,15 @@ public class PlayerInventory_Throwables : MonoBehaviour
             if (!_throwableInventorySlots[i].Empty) return i;
         return -1;
     }
+
+    public bool CheckCanThrow()
+    {
+        int notEmptySlotIndex = GetFirstNotEmptySlot();
+        return notEmptySlotIndex >= 0;
+    }
     public void Throw()
     {
         int notEmptySlotIndex = GetFirstNotEmptySlot();
-        if (notEmptySlotIndex < 0) return;
-
 
         Vector3 itemPosition = _inventory.DropPoint.position;
         Quaternion itemRotation = _inventory.StateMachine.CameraControllers.Cine.MainCamera.transform.rotation;

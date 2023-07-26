@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ba912462325594aa5bda3ab97da3ff, type: 3}
+  m_Name: Dynamite
+  m_EditorClassIdentifier: 
+  ItemName: Dynamite
+  Icon: {fileID: 0}
+  ItemPrefab: {fileID: 6655620121263958759, guid: 8c58e97cca44b854f9d3bcee367fbbdc,
+    type: 3}
+  ItemType: 1
+  Stackable: 0
+  MaxCountPerSlot: 2
+  ThrowStrenght: 15
+  Damage: 100

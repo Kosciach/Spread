@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35ba912462325594aa5bda3ab97da3ff, type: 3}
-  m_Name: Grenade
+  m_Name: FragGrenade
   m_EditorClassIdentifier: 
-  ItemName: Grenade
+  ItemName: FragGrenade
   Icon: {fileID: 0}
-  ItemPrefab: {fileID: 491905785586928553, guid: 093c720e2a1b3a6478a0badfab6354cf,
+  ItemPrefab: {fileID: 58139389832427907, guid: 47206a9d96c61074dbd77c8b303d20f7,
     type: 3}
   ItemType: 1
   Stackable: 0
   MaxCountPerSlot: 2
-  ThrowStrenght: 10
+  ThrowStrenght: 15
+  Damage: 90

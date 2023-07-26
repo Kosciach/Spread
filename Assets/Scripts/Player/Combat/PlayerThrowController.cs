@@ -1,3 +1,5 @@
+using IkLayers;
+using SimpleMan.CoroutineExtensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +10,15 @@ public class PlayerThrowController : MonoBehaviour
     [SerializeField] PlayerStateMachine _playerStateMachine;
 
 
+    [Space(20)]
+    [Header("====Debugs====")]
+    [SerializeField] bool _isThrow;
 
 
-
-
-    public void ManageThrow()
+    public void StartThrow()
     {
+        if (_isThrow) return;
+
         if (!_playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)
         && !_playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)
         && !_playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run)
@@ -23,6 +28,11 @@ public class PlayerThrowController : MonoBehaviour
         && _playerStateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equip)) return;
 
 
+        if (!_playerStateMachine.InventoryControllers.Inventory.Throwables.CheckCanThrow()) return;
+
+        _isThrow = true;
         _playerStateMachine.InventoryControllers.Inventory.Throwables.Throw();
+        _isThrow = false;
+
     }
 }
