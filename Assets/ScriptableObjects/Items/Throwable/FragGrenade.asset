@@ -21,3 +21,6 @@ MonoBehaviour:
   MaxCountPerSlot: 2
   ThrowStrenght: 15
   Damage: 90
+  InHand:
+    Pos: {x: 0.0548, y: 0.1766, z: -0.0008}
+    Rot: {x: 342.01883, y: 86.585434, z: 59.201717}

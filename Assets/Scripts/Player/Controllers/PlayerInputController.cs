@@ -183,7 +183,8 @@ public class PlayerInputController : MonoBehaviour
 
     private void SetThrow()
     {
-        _playerInputs.Player.Throw.performed += ctx => _stateMachine.CombatControllers.Throw.StartThrow();
+        _playerInputs.Player.Throw.started += ctx => _stateMachine.CombatControllers.Throw.HoldThrow();
+        _playerInputs.Player.Throw.canceled += ctx => _stateMachine.CombatControllers.Throw.StartThrow();
     }
     #endregion
 

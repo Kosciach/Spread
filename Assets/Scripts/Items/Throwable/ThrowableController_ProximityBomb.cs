@@ -10,16 +10,17 @@ public class ThrowableController_ProximityBomb : BaseThrowableController
     [SerializeField] GameObject _detector;
 
 
-    public override void OnActivate()
-    {
-        this.Delay(1, () =>
-        {
-            _detector.SetActive(true);
-        });
-    }
-
     public override void OnSafe()
     {
+
+    }
+    public override void OnInHand()
+    {
+
+    }
+    public override void OnThrown()
+    {
+        _stateMachine.ChangeLayer(transform, 7);
 
     }
 

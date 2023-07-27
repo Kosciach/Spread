@@ -17,7 +17,8 @@ public abstract class BaseThrowableController : MonoBehaviour
 
     protected virtual void OnAwake() { }
     public abstract void OnSafe();
-    public abstract void OnActivate();
+    public abstract void OnInHand();
+    public abstract void OnThrown();
 
 
 

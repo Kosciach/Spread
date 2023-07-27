@@ -13,5 +13,6 @@ public abstract class ThrowableBaseState
 
 
     public abstract void StateEnter();
+    public abstract void StateUpdate();
     public abstract void StateExit();
 }

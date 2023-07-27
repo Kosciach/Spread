@@ -45,7 +45,7 @@ public class PlayerCombatController : MonoBehaviour
     }
     public void OnWeaponUnEquip()
     {
-        _equipedWeaponSlot.Weapon.OnWeaponUnEquip();
+        if(_equipedWeaponSlot.Weapon != null) _equipedWeaponSlot.Weapon.OnWeaponUnEquip();
 
         if (_temporaryUnEquip.IsTemporaryUnEquip) return;
 

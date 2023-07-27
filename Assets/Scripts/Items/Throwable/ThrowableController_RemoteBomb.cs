@@ -28,13 +28,17 @@ public class ThrowableController_RemoteBomb : BaseThrowableController
     }
 
 
-    public override void OnActivate()
-    {
-        _inputs.Enable();
-    }
-
     public override void OnSafe()
     {
+
+    }
+    public override void OnInHand()
+    {
+
+    }
+    public override void OnThrown()
+    {
+        _stateMachine.ChangeLayer(transform, 7);
 
     }
 }

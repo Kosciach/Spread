@@ -2,24 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowableController_FragGrenade : BaseThrowableController
+public class ThrowableController_Dynamite : BaseThrowableController
 {
     [Header("====References====")]
     [SerializeField] GameObject _explosionParticle;
-    [SerializeField] GameObject _pin;
-    [SerializeField] GameObject _lever;
 
-
-    public override void OnActivate()
-    {
-        _pin.SetActive(false);
-        _lever.SetActive(false);
-
-        StartCoroutine(Explode());
-    }
 
     public override void OnSafe()
     {
+
+    }
+    public override void OnInHand()
+    {
+
+    }
+    public override void OnThrown()
+    {
+        _stateMachine.ChangeLayer(transform, 0);
 
     }
 

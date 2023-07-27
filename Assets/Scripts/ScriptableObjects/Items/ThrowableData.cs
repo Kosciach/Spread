@@ -10,4 +10,16 @@ public class ThrowableData : ItemData
     public float ThrowStrenght;
     [Range(0, 200)]
     public float Damage;
+
+    public PosRotStruct InHand;
+
+
+
+    [System.Serializable]
+    public struct PosRotStruct
+    {
+        public Vector3 Pos;
+        public Vector3 Rot;
+    }
+
 }
