@@ -1,31 +1,30 @@
 <h1 align="center">Spread</h1>
-<h3 align="center">Readme not complete!</h3>
+<h3 align="center">Readme work in progress!(Image is up to date)</h3>
 
-<h3 align="center">What is it?</h3>
-  <img src="https://github.com/Kosciach/Spread/assets/97178996/54a33a24-7704-496b-9574-55255b869a56" alt="SpreadScreenshot">
+<h3 align="center">Currently working on: Throwables animations.</h3>
+  <img src="https://github.com/Kosciach/Spread/assets/97178996/fc92a88d-e0a2-436c-8141-159c41e477ac" alt="SpreadScreenshot">
   <p align="center">
-    Spread is a fullbody, zombie, survival game in early development.
-    Big game being made by single person might sound like a really bad game, but previous experiences taught me to take thing slow and focus on details.
-    Spread and its 2 previos version are a big lesson for me, letting me expand my skills with practical approach and gain experience.
+    Spread is my main project, which is going to be a first person story game.
+    Heavily inspired by other popular games like, Dying Light, Far cry series, Tlou.
+    Since I am the only one creating this game, I like to take my time and polish the new features and make the game feel good and not cheap or crappy.
+    Opposite to what I did with the previous 2 versions.
   </p>
 
 <br>
-<h3 align="center">What was wrong with previous versions?</h3>
+<h3 align="center">2 Previous versions</h3>
   <p align="center">
-    I didn't care about quality while creating previous versions. I wanted to make them fast, this was the very thing that caused these projects to fail.
-    3d models were looking really bad, code was terrible, animations were not working together, there was a lot of bugs.
-The most important thing is that they were made with almost no experience.
-Good thing is that I realized my mistakes and learned from them, looking at these 2 projects as studying material.
+    These versions projects were supposed to be the "dream game", made fast, just make things somewhat work and skip to other things.<br>
+There was no planning and both these games felt terrible, and both were abbandoned.<br>
+But as always, I have learned from my mistakes and these projects taught me a lot.
   </p>
 
 <br>
 <h3 align="center">What I do diffrently now?</h3>
   <p align="center">
-    Now I am taking things slow, not only making the game work but adding detail, little things that make a lot of diffrence.
-I know what my goal is and I know I can't take any shortcuts, it is to make really good game, that I can show people with proud.
-My work is organized, everyday I prepare list of task for the day, after I finish a send them to github.
-    Most of the time as one commit, except the times I do something bigger, this is one of the things I things I need to change, do more commits.
-After I finish writing a script I thing how to improve it, if I learn something new I implement it to my code.
+    This time I decided to take a diffrent approach and make a good game even if it took a looong time.<br>
+Things are planned, and thought out, there is no taking a shortway.<br>
+    To add new features, current state of the game must be tested and all bugs fixed.<br>
+    If some aspect of a game doesnt fell right, I put it on a list of things to change/fix and take care of it as soon as I am done with current feature.
   </p>
 
 <br>
@@ -40,23 +39,22 @@ After I finish writing a script I thing how to improve it, if I learn something 
 <h3 align="center">Fullbody</h3>
 <h2 align="center"> </h2>
 <p align="center">
-  Spread uses fullbody character without seperate hands or legs, however hands are rendered by seperate "handsCamera".
+  Spread uses fullbody character without seperate hands or legs, however hands are rendered by seperate "handsCamera".<br>
   Character is animated using unity animator and animations rigging.
 </p>
 <h4 align="center">--Animator--</h4>
 <p align="center">
-  Animator has 5 layers, Base, CombatBase, CombatAnim, TopBodyStabilizer, Crouch which are all controller from PlayerAnimatorController.<br>
-  Base - Main layer, containing states responsible for ladder, climbing, inAir(jumping, falling, landing), Swim...<br>
-  CombatBase - overrides top body with T-Pose animation.<br>
-  CombatAnim - hold all baked combat animations, like reload and bolt action charge.<br>
-  TopBodyStabilizer - overrides layers in order to make top parts of the body more stable.<br>
-  Crouch - crouch had to be put on seperate layer, to achieve correct player animations.
+  Animator has few layers like  Base, CombatBase, CombatAnim, TopBodyStabilizer, Crouch which are all controller from PlayerAnimatorController.<br>
 </p>
 <h4 align="center">--Ik--</h4>
 <p align="center">
-  Controller by a lot of controllers, like iklayers, weapon, fingers...<br>
-  Ik is only and addition for most of baked animations, but for combat it is opposite.
-  Weapons and hands in combat mode are animated procedulary with mainly WeaponAnimator, which doesn't do much on its own, because it holds references to a lot of smaller scripts, mainPositioner, sway, bobbing...
+  Ik is used to bend player according to where he is looking, but the main use is weapons animatins.<br>
+Making baked animations is not my thing, but weapons have to be animated, so I use procedular animations.<br>
+  Each weapon has its own data(scriptable object), which hold info damage, range etc, and diffrent vectors.<br>
+These vectors are packed in pairs(PosRot) and represent the way player holds the weapons, and are used to move ik target.<br>
+If player chooses to aim weapon, one of WeaponAnimators sub controllers(MainTransformer), lerps targets to aim vectors of equiped weapon.<br>
+To also apply thing like bobbing, sway, jump, crouch WeaponAnimators uses vectors from sub controllers, combining and applying them to targets.<br>
+Right hand Ik target is seperated into base and extra game objects (base for positioning weapon, extra for sway, bob etc).
 </p>
 
 
@@ -70,20 +68,42 @@ After I finish writing a script I thing how to improve it, if I learn something 
   Hands - just for hands.
 </p>
 <p align="center">
-  Only main camera uses cinemachine, but both of them have their own controller, seperated into moving, rotating.
+  Only main camera uses cinemachine, but both of them have their own controller, seperated into moving, rotating.<br>
   Each camera has additionall smaller controllers like, toggle or fov.<br>
   Most of the time handsCamera will be enabled, but in states like ladder or swim, hands camera is toggled off to make main camera render hands.<br>
   Both camera are moved and rotated depending on player states to get as good feeling as possible.<br>
-  Some ik layers and baked animations affect cameras transforms slightly, that happens because both hads and main camera are placed in players head bone.
+  Some ik layers and baked animations affect cameras transforms slightly, that happens because both hads and main camera are placed in players head bone.<br>
+  Of course this is intended, like running animations makes the camera bob slightly, replicating what we see while running.
 </p>
 
 
+
+<br>
+<h3 align="center">PlayerStateMachine</h3>
+<h2 align="center"> </h2>
+<p>
+  The main script of player, serves as boss, holds references to every player script, if anythins wants to access other players scripts, it must have reference to this StateMachine.<br>
+  Controllers are seperated into groups and added into structs to organize the work, combat to combat, animations to animations...<br><br>
+  SwitchController is the one who manages states changing, or more precisely, contains a method for each state, which changes StateMachine switch, which is used by states to decide what states should happen in the current frame. SwitchController also decides if switch can be changed, without this switch could be changed but state not.
+</p>
 
 
 <br>
 <h3 align="center">Movement</h3>
 <h2 align="center"> </h2>
-<p></p>
+<p>
+  Movement is like any other big controller, separeted into a one main and few subcontrollers, in this case, OnGround, Swim Ladder etc.<br>
+Method from subcontrollers are called from PlayerStates(Onground from states like idle, walk, run, crouch, swim from swim and underwater...)<br>
+  To move the player I use character controller, but this doesnt have gravity like rigidbody so VerticalVelocity takes care of it.<br>
+</p>
+
+<br>
+<h3 align="center">VerticalVelocity</h3>
+<h2 align="center"> </h2>
+<p>
+  Another big controller, it purpose is to check ground, slopes, apply gravity, jumps.<br>
+  Most methods are like in movement called from states.
+</p>
 
 <br>
 <h3 align="center">Combat</h3>
