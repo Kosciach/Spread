@@ -12,9 +12,9 @@ public class PlayerInteractionController : MonoBehaviour
 
     public void Interaction()
     {
-        if(_playerStateMachine.CombatControllers.Throw.State == PlayerThrowController.States.Hold)
+        if(_playerStateMachine.CombatControllers.Throw.IsState(PlayerThrowController.ThrowableStates.Hold))
         {
-            _playerStateMachine.CombatControllers.Throw.CancelThrow();
+            _playerStateMachine.CombatControllers.Throw.Cancel.Cancel();
             return;
         }
 

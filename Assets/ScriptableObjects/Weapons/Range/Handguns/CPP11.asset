@@ -57,7 +57,7 @@ MonoBehaviour:
   RangeStats:
     Damage: 15
     Range: 3
-    FireRate: 6
+    FireRate: 8
     CarredForce: 5
     AccuracyOffset: 0.1
     PenetrationForce: 12
