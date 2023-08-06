@@ -65,8 +65,8 @@ public class PlayerEquipedWeapon_Block : MonoBehaviour
         mainPositioner.Rotate(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Block.RightHand_Rotation, 0.3f);
         mainPositioner.Move(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Block.RightHand_Position, 0.3f);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Block.LeftHand_Position, 0.2f);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Block.LeftHand_Rotation, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.MainTransformer.Move(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Block.LeftHand_Position, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.MainTransformer.Rotate(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Block.LeftHand_Rotation, 0.2f);
     }
     private void BlockDisable()
     {

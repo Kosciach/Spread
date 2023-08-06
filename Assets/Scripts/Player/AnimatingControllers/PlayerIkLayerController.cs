@@ -15,7 +15,6 @@ namespace IkLayers
 
         [Space(20)]
         [Header("====Debugs====")]
-        [SerializeField] int _layerCount;
         [SerializeField] LayerData[] _layerData;
 
         public enum LayerEnum
@@ -27,11 +26,6 @@ namespace IkLayers
 
 
 
-
-        private void Awake()
-        {
-            _layerCount = _layerData.Length;
-        }
         private void Start()
         {
             //Enable SpineLock, Body and Head

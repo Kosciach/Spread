@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static PlayerThrowController;
 
-public class PlayerThrow_Cancel : MonoBehaviour
+namespace PlayerThrow
 {
-    [Header("====References====")]
-    [SerializeField] PlayerThrowController _throwController;
-
-
-
-    public void Cancel()
+    public class PlayerThrow_Cancel : MonoBehaviour
     {
-        if (!_throwController.IsState(ThrowableStates.Hold)) return;
-        _throwController.SetState(ThrowableStates.CancelThrow);
+        [Header("====References====")]
+        [SerializeField] PlayerThrowController _throwController;
 
 
 
-        _throwController.SetState(ThrowableStates.ReadyToThrow);
+        public void Cancel()
+        {
+            if (!_throwController.IsState(ThrowableStates.Hold)) return;
+            _throwController.SetState(ThrowableStates.CancelThrow);
+
+
+            _throwController.CurrentThrowable.ChangeState(ThrowableStateMachine.StateLabels.Safe);
+            _throwController.CurrentThrowable = null;
+            _throwController.SetState(ThrowableStates.ReadyToThrow);
+        }
     }
 }

@@ -64,8 +64,8 @@ public class PlayerEquipedWeapon_Run : MonoBehaviour
         mainPositioner.Rotate(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Run.RightHand_Rotation, 0.5f, _curve);
         mainPositioner.Move(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Run.RightHand_Position, 0.5f, _curve);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.MainTransformer.Move(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.MainTransformer.Rotate(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
     }
     private void DisableRun()
     {

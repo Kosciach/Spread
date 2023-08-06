@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerThrow;
 
 public class PlayerInteractionController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerInteractionController : MonoBehaviour
 
     public void Interaction()
     {
-        if(_playerStateMachine.CombatControllers.Throw.IsState(PlayerThrowController.ThrowableStates.Hold))
+        if(_playerStateMachine.CombatControllers.Throw.IsState(ThrowableStates.Hold))
         {
             _playerStateMachine.CombatControllers.Throw.Cancel.Cancel();
             return;

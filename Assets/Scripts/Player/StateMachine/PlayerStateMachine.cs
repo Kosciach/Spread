@@ -6,6 +6,7 @@ using IkLayers;
 using UnityEngine.VFX;
 using WeaponAnimatorNamespace;
 using LeftHandAnimatorNamespace;
+using PlayerThrow;
 
 public class PlayerStateMachine : MonoBehaviour
 {

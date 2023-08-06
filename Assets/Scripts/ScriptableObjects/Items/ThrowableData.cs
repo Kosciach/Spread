@@ -12,6 +12,8 @@ public class ThrowableData : ItemData
     public float Damage;
 
     public PosRotStruct InHand;
+    public PosRotStruct RightHandHold;
+    public PosRotStruct RightHandThrow;
 
 
 

@@ -16,11 +16,13 @@ public class ThrowableController_FragGrenade : BaseThrowableController
     }
     public override void OnInHand()
     {
-
+        _pin.SetActive(false);
+        _lever.SetActive(false);
     }
     public override void OnThrown()
     {
         _stateMachine.ChangeLayer(transform, 0);
+        StartCoroutine(Explode());
 
     }
 

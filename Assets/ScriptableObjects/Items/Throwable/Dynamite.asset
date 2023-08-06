@@ -21,3 +21,12 @@ MonoBehaviour:
   MaxCountPerSlot: 2
   ThrowStrenght: 15
   Damage: 100
+  InHand:
+    Pos: {x: 0, y: 0, z: 0}
+    Rot: {x: 0, y: 0, z: 0}
+  RightHandHold:
+    Pos: {x: 0.2, y: -0.188, z: 0.672}
+    Rot: {x: 310.66003, y: 219.85907, z: 320.0548}
+  RightHandThrow:
+    Pos: {x: 0.112, y: -0.041, z: 0.873}
+    Rot: {x: 4.1610546, y: 264.2237, z: 288.42664}

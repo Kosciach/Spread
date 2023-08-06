@@ -5,56 +5,21 @@ using UnityEngine;
 
 namespace LeftHandAnimatorNamespace
 {
-    public class LeftHandAnimator : MonoBehaviour
+    public class LeftHand_MainTransformer : MonoBehaviour
     {
         [Header("====References====")]
-        [SerializeField] PlayerStateMachine _playerStateMachine;
-        [SerializeField] Transform _leftHandIk;
-        [SerializeField] Transform _positioner;
+        [SerializeField] LeftHandAnimator _leftHandAnimator;
 
-
-        [Space(20)]
-        [Header("====Debugs====")]
-        [SerializeField] VectorUpdateType _vectorUpdateType;
-        [Space(5)]
-        [SerializeField] Vector3Lerp _move;
-        [SerializeField] QuaternionLerp _rotate;
-
-
-        private Action[] _vectorUpdateMethods = new Action[2];
-
-
-        private enum VectorUpdateType
-        {
-            Gameplay, SettingUp
-        }
+        private Vector3Lerp _move;
+        private QuaternionLerp _rotate;
 
 
 
 
         private void Awake()
         {
-            _vectorUpdateMethods[0] = UpdateVectorsGameplay;
-            _vectorUpdateMethods[1] = UpdateVectorsSettingUp;
-        }
-        private void Update()
-        {
-            _vectorUpdateMethods[(int)_vectorUpdateType]();
-        }
-
-
-        private void UpdateVectorsGameplay()
-        {
-            _leftHandIk.localPosition = _move.Vector;
-            _leftHandIk.localRotation = _rotate.Quaternion;
-
-            _positioner.localPosition = _move.Vector;
-            _positioner.localRotation = _rotate.Quaternion;
-        }
-        private void UpdateVectorsSettingUp()
-        {
-            _leftHandIk.localPosition = _positioner.localPosition;
-            _leftHandIk.localRotation = _positioner.localRotation;
+            _move = new Vector3Lerp(_leftHandAnimator);
+            _rotate = new QuaternionLerp(_leftHandAnimator);
         }
 
 
@@ -63,14 +28,14 @@ namespace LeftHandAnimatorNamespace
         {
             if (_move.LerpCoroutine != null) StopCoroutine(_move.LerpCoroutine);
 
-            _move.LerpCoroutine = _move.Lerp(_leftHandIk.localPosition, endPos, duration);
+            _move.LerpCoroutine = _move.Lerp(_leftHandAnimator.LeftHandIk.localPosition, endPos, duration);
             StartCoroutine(_move.LerpCoroutine);
         }
         public void Move(Vector3 endPos, float duration, AnimationCurve curve)
         {
             if (_move.LerpCoroutine != null) StopCoroutine(_move.LerpCoroutine);
 
-            _move.LerpCoroutine = _move.Lerp(_leftHandIk.localPosition, endPos, duration, curve);
+            _move.LerpCoroutine = _move.Lerp(_leftHandAnimator.LeftHandIk.localPosition, endPos, duration, curve);
             StartCoroutine(_move.LerpCoroutine);
         }
         public void MoveRaw(Vector3 pos)
@@ -84,14 +49,14 @@ namespace LeftHandAnimatorNamespace
         {
             if (_rotate.LerpCoroutine != null) StopCoroutine(_rotate.LerpCoroutine);
 
-            _rotate.LerpCoroutine = _rotate.Lerp(_leftHandIk.localRotation.eulerAngles, endRot, duration);
+            _rotate.LerpCoroutine = _rotate.Lerp(_leftHandAnimator.LeftHandIk.localRotation.eulerAngles, endRot, duration);
             StartCoroutine(_rotate.LerpCoroutine);
         }
         public void Rotate(Vector3 endRot, float duration, AnimationCurve curve)
         {
             if (_rotate.LerpCoroutine != null) StopCoroutine(_rotate.LerpCoroutine);
 
-            _rotate.LerpCoroutine = _rotate.Lerp(_leftHandIk.localRotation.eulerAngles, endRot, duration, curve);
+            _rotate.LerpCoroutine = _rotate.Lerp(_leftHandAnimator.LeftHandIk.localRotation.eulerAngles, endRot, duration, curve);
             StartCoroutine(_rotate.LerpCoroutine);
         }
         public void RotateRaw(Vector3 rot)
@@ -111,12 +76,15 @@ namespace LeftHandAnimatorNamespace
 
 
 
-    [System.Serializable]
     public class Vector3Lerp
     {
-        [SerializeField] Vector3 _vector; public Vector3 Vector { get { return _vector; } }
         public IEnumerator LerpCoroutine;
+        public LeftHandAnimator _leftHandAnimator;
 
+        public Vector3Lerp(LeftHandAnimator leftHandAnimator)
+        {
+            _leftHandAnimator = leftHandAnimator;
+        }
 
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration)
         {
@@ -127,7 +95,7 @@ namespace LeftHandAnimatorNamespace
             {
                 float time = timeElapsed / duration;
 
-                _vector = Vector3.Lerp(startVector, endVector, time);
+                _leftHandAnimator.LeftHandIk.localPosition = Vector3.Lerp(startVector, endVector, time);
 
                 timeElapsed += Time.deltaTime;
 
@@ -135,7 +103,7 @@ namespace LeftHandAnimatorNamespace
             }
 
             //Finish
-            _vector = endVector;
+            _leftHandAnimator.LeftHandIk.localPosition = endVector;
         }
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration, AnimationCurve curve)
         {
@@ -147,7 +115,7 @@ namespace LeftHandAnimatorNamespace
                 float time = timeElapsed / duration;
                 float curveTime = curve.Evaluate(time);
 
-                _vector = Vector3.LerpUnclamped(startVector, endVector, curveTime);
+                _leftHandAnimator.LeftHandIk.localPosition = Vector3.LerpUnclamped(startVector, endVector, curveTime);
 
                 timeElapsed += Time.deltaTime;
 
@@ -155,11 +123,11 @@ namespace LeftHandAnimatorNamespace
             }
 
             //Finish
-            _vector = endVector;
+            _leftHandAnimator.LeftHandIk.localPosition = endVector;
         }
         public void SetRaw(Vector3 pos)
         {
-            _vector = pos;
+            _leftHandAnimator.LeftHandIk.localPosition = pos;
             LerpCoroutine = null;
         }
     }
@@ -167,8 +135,13 @@ namespace LeftHandAnimatorNamespace
     [System.Serializable]
     public class QuaternionLerp
     {
-        [SerializeField] Quaternion _quaternion; public Quaternion Quaternion { get { return _quaternion; } }
         public IEnumerator LerpCoroutine;
+        public LeftHandAnimator _leftHandAnimator;
+
+        public QuaternionLerp(LeftHandAnimator leftHandAnimator)
+        {
+            _leftHandAnimator = leftHandAnimator;
+        }
 
 
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration)
@@ -182,7 +155,7 @@ namespace LeftHandAnimatorNamespace
             {
                 float time = timeElapsed / duration;
 
-                _quaternion = Quaternion.Lerp(startQuaternion, endQuaternion, time);
+                _leftHandAnimator.LeftHandIk.localRotation = Quaternion.Lerp(startQuaternion, endQuaternion, time);
 
                 timeElapsed += Time.deltaTime;
 
@@ -190,7 +163,7 @@ namespace LeftHandAnimatorNamespace
             }
 
             //Finish
-            _quaternion = endQuaternion;
+            _leftHandAnimator.LeftHandIk.localRotation = endQuaternion;
         }
         public IEnumerator Lerp(Vector3 startVector, Vector3 endVector, float duration, AnimationCurve curve)
         {
@@ -204,7 +177,7 @@ namespace LeftHandAnimatorNamespace
                 float time = timeElapsed / duration;
                 float curveTime = curve.Evaluate(time);
 
-                _quaternion = Quaternion.LerpUnclamped(startQuaternion, endQuaternion, curveTime);
+                _leftHandAnimator.LeftHandIk.localRotation = Quaternion.LerpUnclamped(startQuaternion, endQuaternion, curveTime);
 
                 timeElapsed += Time.deltaTime;
 
@@ -212,11 +185,11 @@ namespace LeftHandAnimatorNamespace
             }
 
             //Finish
-            _quaternion = endQuaternion;
+            _leftHandAnimator.LeftHandIk.localRotation = endQuaternion;
         }
         public void SetRaw(Quaternion rot)
         {
-            _quaternion = rot;
+            _leftHandAnimator.LeftHandIk.localRotation = rot;
             LerpCoroutine = null;
         }
     }

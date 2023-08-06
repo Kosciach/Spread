@@ -31,8 +31,8 @@ public class RangeWeaponHoldController : WeaponHoldController
 
 
         LeftHandAnimator leftHandAnimator = playerCombatController.PlayerStateMachine.AnimatingControllers.LeftHand;
-        leftHandAnimator.Move(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
-        leftHandAnimator.Rotate(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
+        leftHandAnimator.MainTransformer.Move(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        leftHandAnimator.MainTransformer.Rotate(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
 
         PlayerFingerAnimator fingerAnimator = playerCombatController.PlayerStateMachine.AnimatingControllers.Fingers;
         fingerAnimator.SetUpAllFingers(_rangeWeaponData.FingersPreset.Base, 0.2f);
@@ -58,8 +58,8 @@ public class RangeWeaponHoldController : WeaponHoldController
 
 
         LeftHandAnimator leftHandAnimator = playerCombatController.PlayerStateMachine.AnimatingControllers.LeftHand;
-        leftHandAnimator.Move(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
-        leftHandAnimator.Rotate(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
+        leftHandAnimator.MainTransformer.Move(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        leftHandAnimator.MainTransformer.Rotate(_rangeWeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);
 
         PlayerFingerAnimator fingerAnimator = playerCombatController.PlayerStateMachine.AnimatingControllers.Fingers;
         fingerAnimator.SetUpAllFingers(_rangeWeaponData.FingersPreset.Base, 0.2f);

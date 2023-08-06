@@ -113,8 +113,8 @@ public class PlayerEquipedWeapon_Aim : MonoBehaviour
         mainPositioner.Rotate(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Aim[_aimTypeIndex].RightHand_Rotation, 0.3f, _curve);
         mainPositioner.Move(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Aim[_aimTypeIndex].RightHand_Position, 0.3f, _curve);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Move(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
-        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.Rotate(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);;
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.MainTransformer.Move(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Position, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.LeftHand.MainTransformer.Rotate(_combatController.EquipedWeaponSlot.WeaponData.LeftHandTransforms.Base.LeftHand_Rotation, 0.2f);;
 
         if (_aimTypeIndex == 0) OnADSAim();
         else OnCustomAim();
