@@ -38,5 +38,7 @@ public abstract class BaseThrowableController : MonoBehaviour
             IDamageable damageable = detectedObject.GetComponent<IDamageable>();
             if (damageable != null) damageable.TakeDamage(_stateMachine.ThrowableData.Damage);
         }
+
+        _stateMachine.PlayerStateMachine.CombatControllers.Throw.OnExplode();
     }
 }

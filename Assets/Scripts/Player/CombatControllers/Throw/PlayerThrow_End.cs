@@ -24,21 +24,21 @@ namespace PlayerThrow
             _throwController.SetState(ThrowableStates.EndThrow);
 
 
-            PlayerAnimatorController playerAnimatorController = _throwController.PlayerStateMachine.AnimatingControllers.Animator;
-            playerAnimatorController.ToggleLayer(LayersEnum.CombatBase, false, 0.4f);
-            playerAnimatorController.ToggleLayer(LayersEnum.CombatAnimating, false, 0.4f);
+            ToggleLayers();
 
-            PlayerIkLayerController playerIkLayerController = _throwController.PlayerStateMachine.AnimatingControllers.IkLayers;
-            playerIkLayerController.ToggleLayer(LayerEnum.SpineLock, true, 0.4f);
-            playerIkLayerController.ToggleLayer(LayerEnum.Body, true, 0.2f);
-            playerIkLayerController.ToggleLayer(LayerEnum.Head, true, 0.2f);
-            playerIkLayerController.ToggleLayer(LayerEnum.RangeCombat, false, 0.2f);
-
-            LeftHandAnimator leftHandAnimator = _throwController.PlayerStateMachine.AnimatingControllers.LeftHand;
-            leftHandAnimator.RightHandFollow.Toggle(true);
-
-            _throwController.CurrentThrowable = null;
             _throwController.SetState(ThrowableStates.ReadyToThrow);
+        }
+
+        private void ToggleLayers()
+        {
+            PlayerIkLayerController playerIkLayerController = _throwController.PlayerStateMachine.AnimatingControllers.IkLayers;
+            playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.1f);
+            playerIkLayerController.ToggleLayer(LayerEnum.FingersRightHand, false, 0.1f);
+            playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.1f);
+
+            PlayerAnimatorController playerAnimatorController = _throwController.PlayerStateMachine.AnimatingControllers.Animator;
+            playerAnimatorController.ToggleLayer(LayersEnum.ThrowBase, false, 0.1f);
+            playerAnimatorController.ToggleLayer(LayersEnum.ThrowAnimating, false, 0.1f);
         }
     }
 }

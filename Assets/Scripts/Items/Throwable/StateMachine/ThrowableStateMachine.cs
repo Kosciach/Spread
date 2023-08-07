@@ -12,8 +12,9 @@ public class ThrowableStateMachine : MonoBehaviour
 
 
     private ThrowableData _throwableData;                       public ThrowableData ThrowableData { get { return _throwableData; } }
-    private Rigidbody _rigidbody; public Rigidbody Rigidbody { get { return _rigidbody; } }
+    private Rigidbody _rigidbody;                               public Rigidbody Rigidbody { get { return _rigidbody; } }
     private BaseThrowableController _throwableController;       public BaseThrowableController ThrowableController { get { return _throwableController; } }
+    private PlayerStateMachine _playerStateMachine;             public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
 
     public enum StateLabels
     {
@@ -28,6 +29,7 @@ public class ThrowableStateMachine : MonoBehaviour
         _throwableData = (ThrowableData)GetComponent<ItemDataHolder>().ItemData;
         _rigidbody = GetComponent<Rigidbody>();
         _throwableController = GetComponent<BaseThrowableController>();
+        _playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         PrepareStates();
     }
 

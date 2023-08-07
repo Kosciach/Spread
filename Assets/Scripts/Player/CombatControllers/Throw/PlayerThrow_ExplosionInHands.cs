@@ -8,27 +8,18 @@ using static PlayerAnimator.PlayerAnimatorController;
 using static IkLayers.PlayerIkLayerController;
 using LeftHandAnimatorNamespace;
 
-
 namespace PlayerThrow
 {
-    public class PlayerThrow_Cancel : MonoBehaviour
+    public class PlayerThrow_ExplosionInHands : MonoBehaviour
     {
         [Header("====References====")]
         [SerializeField] PlayerThrowController _throwController;
 
 
 
-        public void Cancel()
+        public void ExplosionInHands()
         {
-            if (!_throwController.IsState(ThrowableStates.Hold)) return;
-            _throwController.SetState(ThrowableStates.CancelThrow);
-
-            ToggleLayers();
-
-            _throwController.CurrentThrowable.ChangeState(ThrowableStateMachine.StateLabels.Safe);
-            Destroy(_throwController.CurrentThrowable.gameObject);
-            _throwController.CurrentThrowable = null;
-            _throwController.SetState(ThrowableStates.ReadyToThrow);
+            Debug.Log("ExplosionInHands");
         }
 
         private void ToggleLayers()

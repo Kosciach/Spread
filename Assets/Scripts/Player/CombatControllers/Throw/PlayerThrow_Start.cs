@@ -6,6 +6,7 @@ using IkLayers;
 using WeaponAnimatorNamespace;
 using static PlayerAnimator.PlayerAnimatorController;
 using static IkLayers.PlayerIkLayerController;
+using SimpleMan.CoroutineExtensions;
 
 namespace PlayerThrow
 {
@@ -22,13 +23,22 @@ namespace PlayerThrow
 
             _throwController.SetState(ThrowableStates.StartThrow);
 
-            WeaponAnimator weaponAnimator = _throwController.PlayerStateMachine.AnimatingControllers.Weapon;
-            weaponAnimator.MainTransformer.Rotate(_throwController.CurrentThrowable.ThrowableData.RightHandThrow.Rot, 0.1f);
-            weaponAnimator.MainTransformer.Move(_throwController.CurrentThrowable.ThrowableData.RightHandThrow.Pos, 0.1f).SetOnMoveFinish(_throwController.Throw.Throw);
 
-            weaponAnimator.Sway.SetWeight(0);
-            weaponAnimator.Sway.Toggle(false);
-            weaponAnimator.Bobbing.Toggle(false);
+            CheckExplosionInHands();
+
+            _throwController.PlayerStateMachine.AnimatingControllers.Animator.SetTrigger("Throw", false);
+
+            this.Delay(0.4f, () => { _throwController.Throw.Throw(); });
+        }
+
+
+        private void CheckExplosionInHands()
+        {
+            if (_throwController.IsState(ThrowableStates.ExplosionInHands))
+            {
+                _throwController.ExplosionInHands.ExplosionInHands();
+                return;
+            }
         }
     }
 }

@@ -29,12 +29,11 @@ namespace PlayerThrow
             _throwController.SetState(ThrowableStates.Hold);
 
 
+            CheckExplosionInHands();
+
             SpawnThrowable(playerInventory);
 
-            LeftHandControll();
-            MoveIk();
             ToggleLayers();
-            ToggleSwayBob();
         }
 
 
@@ -53,6 +52,15 @@ namespace PlayerThrow
         }
 
 
+        private void CheckExplosionInHands()
+        {
+            if (_throwController.IsState(ThrowableStates.ExplosionInHands))
+            {
+                _throwController.ExplosionInHands.ExplosionInHands();
+                return;
+            }
+        }
+
         private void SpawnThrowable(PlayerInventoryController playerInventory)
         {
             //Get index and data
@@ -67,37 +75,16 @@ namespace PlayerThrow
             _throwController.CurrentThrowable.ChangeState(ThrowableStateMachine.StateLabels.InHand);
         }
 
-        private void LeftHandControll()
-        {
-            LeftHandAnimator leftHandAnimator = _throwController.PlayerStateMachine.AnimatingControllers.LeftHand;
-            leftHandAnimator.RightHandFollow.Toggle(false);
-
-            leftHandAnimator.MainTransformer.MoveRaw(Vector3.zero);
-        }
-        private void MoveIk()
-        {
-            WeaponAnimator weaponAnimator = _throwController.PlayerStateMachine.AnimatingControllers.Weapon;
-            weaponAnimator.MainTransformer.MoveRaw(_throwController.CurrentThrowable.ThrowableData.RightHandHold.Pos);
-            weaponAnimator.MainTransformer.RotateRaw(_throwController.CurrentThrowable.ThrowableData.RightHandHold.Rot);
-        }
         private void ToggleLayers()
         {
-            PlayerAnimatorController playerAnimatorController = _throwController.PlayerStateMachine.AnimatingControllers.Animator;
-            playerAnimatorController.ToggleLayer(LayersEnum.CombatBase, true, 0.4f);
-            playerAnimatorController.ToggleLayer(LayersEnum.CombatAnimating, false, 0.4f);
-
             PlayerIkLayerController playerIkLayerController = _throwController.PlayerStateMachine.AnimatingControllers.IkLayers;
-            playerIkLayerController.ToggleLayer(LayerEnum.SpineLock, false, 0.4f);
-            playerIkLayerController.ToggleLayer(LayerEnum.Body, false, 0.2f);
-            playerIkLayerController.ToggleLayer(LayerEnum.Head, false, 0.2f);
-            playerIkLayerController.ToggleLayer(LayerEnum.RangeCombat, true, 0.2f);
-        }
-        private void ToggleSwayBob()
-        {
-            WeaponAnimator weaponAnimator = _throwController.PlayerStateMachine.AnimatingControllers.Weapon;
-            weaponAnimator.Sway.SetWeight(1);
-            weaponAnimator.Sway.Toggle(true);
-            weaponAnimator.Bobbing.Toggle(true);
+            playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, true, 0.1f);
+            playerIkLayerController.ToggleLayer(LayerEnum.FingersRightHand, true, 0.1f);
+            playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, true, 0.1f);
+
+            PlayerAnimatorController playerAnimatorController = _throwController.PlayerStateMachine.AnimatingControllers.Animator;
+            playerAnimatorController.ToggleLayer(LayersEnum.ThrowBase, true, 0.4f);
+            playerAnimatorController.ToggleLayer(LayersEnum.ThrowAnimating, true, 0.4f);
         }
     }
 }
