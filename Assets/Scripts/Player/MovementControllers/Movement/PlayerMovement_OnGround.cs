@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerThrow;
 
 public class PlayerMovement_OnGround : MonoBehaviour
 {
@@ -83,7 +84,9 @@ public class PlayerMovement_OnGround : MonoBehaviour
         if (!isRunInput || movementInputVector.z <= 0
             || _movementController.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim
             || _movementController.PlayerStateMachine.CombatControllers.EquipedWeapon.Block.IsBlock
-            || !_movementController.PlayerStateMachine.CoreControllers.Stats.Stats.Stamina.CanUseStamina) return;
+            || !_movementController.PlayerStateMachine.CoreControllers.Stats.Stats.Stamina.CanUseStamina
+            || _movementController.PlayerStateMachine.CombatControllers.Throw.IsState(ThrowableStates.Hold)
+            || _movementController.PlayerStateMachine.CombatControllers.Throw.IsState(ThrowableStates.StartThrow)) return;
 
 
         if (canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Run();

@@ -14,8 +14,6 @@ namespace PlayerThrow
 
         public void Throw()
         {
-            if (!_throwController.IsState(ThrowableStates.StartThrow)) return;
-
             _throwController.SetState(ThrowableStates.Throw);
 
             ThrowThrowable();

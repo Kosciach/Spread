@@ -19,26 +19,14 @@ namespace PlayerThrow
 
         public void StartThrow()
         {
-            if (!_throwController.IsState(ThrowableStates.Hold)) return;
+            if (!_throwController.IsState(ThrowableStates.Hold) || _throwController.IsState(ThrowableStates.ExplosionInHands)) return;
 
             _throwController.SetState(ThrowableStates.StartThrow);
 
 
-            CheckExplosionInHands();
-
             _throwController.PlayerStateMachine.AnimatingControllers.Animator.SetTrigger("Throw", false);
 
             this.Delay(0.4f, () => { _throwController.Throw.Throw(); });
-        }
-
-
-        private void CheckExplosionInHands()
-        {
-            if (_throwController.IsState(ThrowableStates.ExplosionInHands))
-            {
-                _throwController.ExplosionInHands.ExplosionInHands();
-                return;
-            }
         }
     }
 }
