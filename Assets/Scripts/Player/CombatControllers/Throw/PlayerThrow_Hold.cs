@@ -29,8 +29,9 @@ namespace PlayerThrow
             _throwController.SetState(ThrowableStates.Hold);
 
 
-            CheckExplosionInHands();
-
+            _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Throw, 5);
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.Throw, 5);
             SpawnThrowable(playerInventory);
 
             ToggleLayers();
@@ -51,15 +52,6 @@ namespace PlayerThrow
                     || _throwController.PlayerStateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed);
         }
 
-
-        private void CheckExplosionInHands()
-        {
-            if (_throwController.IsState(ThrowableStates.ExplosionInHands))
-            {
-                _throwController.ExplosionInHands.ExplosionInHands();
-                return;
-            }
-        }
 
         private void SpawnThrowable(PlayerInventoryController playerInventory)
         {

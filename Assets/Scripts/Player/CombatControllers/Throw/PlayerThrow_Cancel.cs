@@ -20,7 +20,6 @@ namespace PlayerThrow
 
         public void Cancel()
         {
-            if (!_throwController.IsState(ThrowableStates.Hold)) return;
             _throwController.SetState(ThrowableStates.CancelThrow);
 
             ToggleLayers();
@@ -28,6 +27,8 @@ namespace PlayerThrow
             _throwController.CurrentThrowable.ChangeState(ThrowableStateMachine.StateLabels.Safe);
             Destroy(_throwController.CurrentThrowable.gameObject);
             _throwController.CurrentThrowable = null;
+
+            _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
             _throwController.SetState(ThrowableStates.ReadyToThrow);
         }
 

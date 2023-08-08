@@ -39,6 +39,6 @@ public abstract class BaseThrowableController : MonoBehaviour
             if (damageable != null) damageable.TakeDamage(_stateMachine.ThrowableData.Damage);
         }
 
-        _stateMachine.PlayerStateMachine.CombatControllers.Throw.OnExplode();
+        _stateMachine.PlayerStateMachine.CombatControllers.Throw.OnExplode(_stateMachine);
     }
 }

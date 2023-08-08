@@ -19,13 +19,12 @@ namespace PlayerThrow
 
         public void End()
         {
-            if (!_throwController.IsState(ThrowableStates.Throw)) return;
-
             _throwController.SetState(ThrowableStates.EndThrow);
 
 
             ToggleLayers();
 
+            _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
             _throwController.SetState(ThrowableStates.ReadyToThrow);
         }
 

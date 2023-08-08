@@ -26,7 +26,7 @@ public class PlayerHandsCamera_Move : MonoBehaviour
 
     public enum CameraPositionsEnum
     {
-        Idle, Walk, Run, Combat
+        Idle, Walk, Run, Combat, Throw
     }
 
 

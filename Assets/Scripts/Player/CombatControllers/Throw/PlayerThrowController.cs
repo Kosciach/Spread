@@ -1,8 +1,13 @@
-using IkLayers;
-using SimpleMan.CoroutineExtensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerAnimator;
+using IkLayers;
+using WeaponAnimatorNamespace;
+using static PlayerAnimator.PlayerAnimatorController;
+using static IkLayers.PlayerIkLayerController;
+using LeftHandAnimatorNamespace;
+
 
 namespace PlayerThrow
 {
@@ -17,7 +22,6 @@ namespace PlayerThrow
         [SerializeField] PlayerThrow_Throw _throw;                          public PlayerThrow_Throw Throw { get { return _throw; } }
         [SerializeField] PlayerThrow_End _end;                              public PlayerThrow_End End { get { return _end; } }
         [SerializeField] PlayerThrow_Cancel _cancel;                        public PlayerThrow_Cancel Cancel { get { return _cancel; } }
-        [SerializeField] PlayerThrow_ExplosionInHands _explosionInHands;    public PlayerThrow_ExplosionInHands ExplosionInHands { get { return _explosionInHands; } }
 
 
         [Space(20)]
@@ -26,11 +30,24 @@ namespace PlayerThrow
         [SerializeField] ThrowableStates _throwableState;
 
 
-        public void OnExplode()
+        public void OnExplode(ThrowableStateMachine throwableStateMachine)
         {
-            if (IsState(ThrowableStates.ReadyToThrow) || IsState(ThrowableStates.Throw) || IsState(ThrowableStates.EndThrow) || IsState(ThrowableStates.CancelThrow)) return;
+            if (_currentThrowable == null) return;
+            if (throwableStateMachine != _currentThrowable) return;
 
             SetState(ThrowableStates.ExplosionInHands);
+
+            PlayerIkLayerController playerIkLayerController = _playerStateMachine.AnimatingControllers.IkLayers;
+            playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.1f);
+            playerIkLayerController.ToggleLayer(LayerEnum.FingersRightHand, false, 0.1f);
+            playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.1f);
+
+            PlayerAnimatorController playerAnimatorController = _playerStateMachine.AnimatingControllers.Animator;
+            playerAnimatorController.ToggleLayer(LayersEnum.ThrowBase, false, 0.1f);
+            playerAnimatorController.ToggleLayer(LayersEnum.ThrowAnimating, false, 0.1f);
+
+            _playerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
+            SetState(ThrowableStates.ReadyToThrow);
         }
 
         public void SetState(ThrowableStates state)
