@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 using WeaponAnimatorNamespace;
 using LeftHandAnimatorNamespace;
 using PlayerThrow;
+using PlayerHandsCamera;
 
 public class PlayerStateMachine : MonoBehaviour
 {
