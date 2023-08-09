@@ -2,21 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHandsCamera_Lean : MonoBehaviour
+namespace PlayerHandsCamera
 {
-    [Header("====References====")]
-    [SerializeField] PlayerHandsCameraController _handCameraController;
-
-
-    [Space(20)]
-    [Header("====Debugs====")]
-    [SerializeField] Vector3 _rotation; public Vector3 Rotation { get { return _rotation; } }
-
-
-
-
-    public void SetRotation(Vector3 rotation)
+    public class PlayerHandsCamera_Lean : MonoBehaviour
     {
-        _rotation = rotation;
+        [Header("====References====")]
+        [SerializeField] PlayerHandsCameraController _handCameraController;
+
+        private Vector3 _rotation; public Vector3 Rotation { get { return _rotation; } }
+
+
+        public void SetRotation(Vector3 rotation)
+        {
+            _rotation = rotation;
+        }
     }
 }

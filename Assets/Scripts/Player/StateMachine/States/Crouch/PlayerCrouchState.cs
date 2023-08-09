@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnimator;
+using PlayerHandsCamera;
 using IkLayers;
 
 public class PlayerCrouchState : PlayerBaseState
@@ -14,9 +15,9 @@ public class PlayerCrouchState : PlayerBaseState
     {
         _ctx.AnimatingControllers.Weapon.Crouch.Toggle(true);
 
-        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed) && _ctx.CombatControllers.Throw.CurrentThrowable == null)
         {
-            _ctx.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.Crouch, 5);
+            _ctx.CameraControllers.Hands.Rotate.ChangePreset(RotationPresetsLabels.Crouch, 0.2f);
         }
 
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped) && _ctx.CombatControllers.Combat.EquipedWeaponSlot != null)
@@ -52,9 +53,6 @@ public class PlayerCrouchState : PlayerBaseState
     }
     public override void StateExit()
     {
-        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
-            _ctx.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
-
         _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, false, 0.3f);
 
         _ctx.AnimatingControllers.Weapon.Crouch.Toggle(false);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerHandsCamera;
 
 public class PlayerRunState : PlayerBaseState
 {
@@ -14,10 +15,10 @@ public class PlayerRunState : PlayerBaseState
         _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(true);
 
         _ctx.CameraControllers.Cine.Fov.SetFov(15, 1f);
-        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed) && _ctx.CombatControllers.Throw.CurrentThrowable == null)
         {
-            _ctx.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Run, 5);
-            _ctx.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
+            _ctx.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Run, 0.2f);
+            _ctx.CameraControllers.Hands.Rotate.ChangePreset(RotationPresetsLabels.IdleWalkRun, 0.2f);
         }
 
 

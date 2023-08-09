@@ -7,6 +7,7 @@ using WeaponAnimatorNamespace;
 using static PlayerAnimator.PlayerAnimatorController;
 using static IkLayers.PlayerIkLayerController;
 using LeftHandAnimatorNamespace;
+using PlayerHandsCamera;
 
 namespace PlayerThrow
 {
@@ -30,8 +31,8 @@ namespace PlayerThrow
 
 
             _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
-            _throwController.PlayerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Throw, 5);
-            _throwController.PlayerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.Throw, 5);
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Throw, 0.1f);
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Rotate.ChangePreset(RotationPresetsLabels.Throw, 0.1f);
             SpawnThrowable(playerInventory);
 
             ToggleLayers();

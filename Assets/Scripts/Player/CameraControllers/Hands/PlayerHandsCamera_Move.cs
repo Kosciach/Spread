@@ -3,55 +3,76 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHandsCamera_Move : MonoBehaviour
+namespace PlayerHandsCamera
 {
-    [Header("====References====")]
-    [SerializeField] PlayerHandsCameraController _cameraController;
+    public class PlayerHandsCamera_Move : MonoBehaviour
+    {
+        [Header("====References====")]
+        [SerializeField] PlayerHandsCameraController _cameraController;
+
+
+        [Space(20)]
+        [Header("====Settings====")]
+        [Tooltip("Idle, Walk, Run, Combat, Throw")]
+        [SerializeField] Vector3[] _presets;
+
+        private LerpPositionPreset _lerpPreset;
 
 
 
-    [Space(20)]
-    [Header("====Debugs====")]
-    [SerializeField] CameraPositionsEnum _cameraPositionType;
-    [SerializeField] Vector3 _currentPosition; public Vector3 CurrentPosition { get { return _currentPosition; } }
-    [SerializeField] Vector3 _desiredPosition;
-    [SerializeField] float _moveSpeed;
+        private void Awake()
+        {
+            _lerpPreset = new LerpPositionPreset(_cameraController.HandsCamera.transform);
+        }
 
 
 
-    [Space(20)]
-    [Header("====Settings====")]
-    [SerializeField] Vector3[] _cameraPositions;
-    [SerializeField] bool _poseMode;
+        public void ChangePreset(PositionsPresetsLabels presetLabel, float duration)
+        {
+            if (_lerpPreset.LerpCoroutine != null) StopCoroutine(_lerpPreset.LerpCoroutine);
 
-    public enum CameraPositionsEnum
+            _lerpPreset.LerpCoroutine = _lerpPreset.LerpPreset(_presets[(int)presetLabel], duration);
+
+            StartCoroutine(_lerpPreset.LerpCoroutine);
+        }
+    }
+
+
+    public class LerpPositionPreset
+    {
+        private Transform _handsCamera;
+        public IEnumerator LerpCoroutine;
+
+
+        public LerpPositionPreset(Transform handsCamera)
+        {
+            _handsCamera = handsCamera;
+        }
+
+
+        public IEnumerator LerpPreset(Vector3 endPosition, float duration)
+        {
+            float timeElapsed = 0;
+            Vector3 startPosition = _handsCamera.localPosition;
+
+            while (timeElapsed < duration)
+            {
+                float time = timeElapsed / duration;
+                _handsCamera.localPosition = Vector3.Lerp(startPosition, endPosition, time);
+
+                timeElapsed += Time.deltaTime;
+
+                yield return null;
+            }
+
+            _handsCamera.localPosition = endPosition;
+        }
+    }
+
+
+
+    public enum PositionsPresetsLabels
     {
         Idle, Walk, Run, Combat, Throw
-    }
-
-
-
-
-
-
-    private void Update()
-    {
-        Move();
-    }
-
-
-    private void Move()
-    {
-        if (_poseMode) return;
-
-        _currentPosition = Vector3.Lerp(_currentPosition, _desiredPosition, _moveSpeed * Time.deltaTime);
-    }
-
-    public void SetCameraPosition(CameraPositionsEnum cameraPosition, float moveSpeed)
-    {
-        _desiredPosition = _cameraPositions[(int)cameraPosition];
-        _moveSpeed = moveSpeed;
-
-        _cameraPositionType = cameraPosition;
     }
 }

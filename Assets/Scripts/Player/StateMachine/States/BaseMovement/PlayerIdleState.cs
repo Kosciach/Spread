@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerHandsCamera;
 
 public class PlayerIdleState : PlayerBaseState
 {
@@ -10,10 +11,10 @@ public class PlayerIdleState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.CameraControllers.Cine.Fov.SetFov(0, 0.5f);
-        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed))
+        if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed) && _ctx.CombatControllers.Throw.CurrentThrowable == null)
         {
-            _ctx.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Idle, 5);
-            _ctx.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.IdleWalkRun, 5);
+            _ctx.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Idle, 0.2f);
+            _ctx.CameraControllers.Hands.Rotate.ChangePreset(RotationPresetsLabels.IdleWalkRun, 0.2f);
         }
 
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equiped) && _ctx.CombatControllers.Combat.EquipedWeaponSlot != null)

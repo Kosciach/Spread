@@ -3,55 +3,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHandsCamera_Rotate : MonoBehaviour
+namespace PlayerHandsCamera
 {
-    [Header("====References====")]
-    [SerializeField] PlayerHandsCameraController _cameraController;
-
-
-    [Space(20)]
-    [Header("====Debugs====")]
-    [SerializeField] HandsCameraRotationsEnum _handsCameraRotationType;
-    [SerializeField] Vector3 _currentRotation; public Vector3 CurrentRotation { get { return _currentRotation; } }
-    [SerializeField] Vector3 _desiredRotation;
-    [SerializeField] float _rotateSpeed;
-
-
-
-    [Space(20)]
-    [Header("====Settings====")]
-    [SerializeField] Vector3[] _handsCameraRotations = new Vector3[4];
-    [SerializeField] bool _poseMode;
-
-
-    public enum HandsCameraRotationsEnum
+    public class PlayerHandsCamera_Rotate : MonoBehaviour
     {
-        IdleWalkRun, Crouch, Climb, Combat, Throw
+        [Header("====References====")]
+        [SerializeField] PlayerHandsCameraController _cameraController;
+
+
+        [Space(20)]
+        [Header("====Settings====")]
+        [Tooltip("IdleWalkRun, Crouch, Combat, Throw")]
+        [SerializeField] Vector3[] _presets;
+
+        private LerpRotationPreset _lerpPreset; public LerpRotationPreset LerpPreset { get { return _lerpPreset; } }
+
+
+        private void Awake()
+        {
+            _lerpPreset = new LerpRotationPreset();
+        }
+
+
+        public void ChangePreset(RotationPresetsLabels presetLabel, float duration)
+        {
+            if (_lerpPreset.LerpCoroutine != null) StopCoroutine(_lerpPreset.LerpCoroutine);
+
+            _lerpPreset.LerpCoroutine = _lerpPreset.LerpPreset(_presets[(int)presetLabel], duration);
+
+            StartCoroutine(_lerpPreset.LerpCoroutine);
+        }
+
+
+
     }
 
-
-
-
-
-
-    private void Update()
+    public class LerpRotationPreset
     {
-        Rotate();
+        public IEnumerator LerpCoroutine;
+        private Vector3 _rotation; public Vector3 Rotation { get { return _rotation; } }
+
+
+        public IEnumerator LerpPreset(Vector3 endRotation, float duration)
+        {
+            float timeElapsed = 0;
+            Vector3 startRotation = _rotation;
+
+            while(timeElapsed < duration)
+            {
+                float time = timeElapsed / duration;
+                _rotation = Vector3.Lerp(startRotation, endRotation, time);
+
+                timeElapsed += Time.deltaTime;
+
+                yield return null;
+            }
+
+            _rotation = endRotation;
+        }
     }
 
-
-    private void Rotate()
+    public enum RotationPresetsLabels
     {
-        if (_poseMode) return;
-
-        _currentRotation = Vector3.Lerp(_currentRotation, _desiredRotation, _rotateSpeed * Time.deltaTime);
-    }
-
-
-    public void SetHandsCameraRotation(HandsCameraRotationsEnum cameraRotation, float rotateSpeed)
-    {
-        _desiredRotation = _handsCameraRotations[(int)cameraRotation];
-        _rotateSpeed = rotateSpeed;
-        _handsCameraRotationType = cameraRotation;
+        IdleWalkRun, Crouch, Combat, Throw
     }
 }

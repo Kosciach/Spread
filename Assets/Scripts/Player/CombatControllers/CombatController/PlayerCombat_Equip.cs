@@ -4,6 +4,7 @@ using UnityEngine;
 using IkLayers;
 using WeaponAnimatorNamespace;
 using PlayerAnimator;
+using PlayerHandsCamera;
 
 public class PlayerCombat_Equip : MonoBehaviour
 {
@@ -58,8 +59,8 @@ public class PlayerCombat_Equip : MonoBehaviour
 
         _combatController.EquipedWeaponSlot.Weapon.SwitchController.SwitchTo.Equiped();
 
-        _combatController.PlayerStateMachine.CameraControllers.Hands.Move.SetCameraPosition(PlayerHandsCamera_Move.CameraPositionsEnum.Combat, 5);
-        _combatController.PlayerStateMachine.CameraControllers.Hands.Rotate.SetHandsCameraRotation(PlayerHandsCamera_Rotate.HandsCameraRotationsEnum.Combat, 5);
+        _combatController.PlayerStateMachine.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Combat, 0.2f);
+        _combatController.PlayerStateMachine.CameraControllers.Hands.Rotate.ChangePreset(RotationPresetsLabels.Combat, 0.2f);
 
         _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 0.1f);
         _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 0.1f);
