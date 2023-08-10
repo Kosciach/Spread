@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
-using WeaponAnimatorNamespace;
-using static PlayerAnimator.PlayerAnimatorController;
-using static IkLayers.PlayerIkLayerController;
-using LeftHandAnimatorNamespace;
-
 
 namespace PlayerThrow
 {
@@ -18,20 +13,30 @@ namespace PlayerThrow
 
 
 
-        public void Cancel()
+        public void StartCancel()
         {
-            _throwController.SetState(ThrowableStates.CancelThrow);
+            if (!_throwController.CanCancel) return;
+            _throwController.CanCancel = false;
+            _throwController.IsHeld = false;
 
+            PlayUnEquip();
+        }
+        public void EndCancel()
+        {
             ToggleLayers();
-
-            _throwController.CurrentThrowable.ChangeState(ThrowableStateMachine.StateLabels.Safe);
-            Destroy(_throwController.CurrentThrowable.gameObject);
-            _throwController.CurrentThrowable = null;
+            RemoveThrowable();
 
             _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
-            _throwController.SetState(ThrowableStates.ReadyToThrow);
+            _throwController.CanThrow = true;
+            _throwController.IsThrow = false;
         }
 
+
+        private void PlayUnEquip()
+        {
+            PlayerAnimatorController playerAnimatorController = _throwController.PlayerStateMachine.AnimatingControllers.Animator;
+            playerAnimatorController.SetTrigger("UnEquipThrow", false);
+        }
         private void ToggleLayers()
         {
             PlayerIkLayerController playerIkLayerController = _throwController.PlayerStateMachine.AnimatingControllers.IkLayers;
@@ -42,6 +47,12 @@ namespace PlayerThrow
             PlayerAnimatorController playerAnimatorController = _throwController.PlayerStateMachine.AnimatingControllers.Animator;
             playerAnimatorController.ToggleLayer(LayersEnum.ThrowBase, false, 0.1f);
             playerAnimatorController.ToggleLayer(LayersEnum.ThrowAnimating, false, 0.1f);
+        }
+        private void RemoveThrowable()
+        {
+            _throwController.CurrentThrowable.ChangeState(ThrowableStateMachine.StateLabels.Safe);
+            Destroy(_throwController.CurrentThrowable.gameObject);
+            _throwController.CurrentThrowable = null;
         }
     }
 }

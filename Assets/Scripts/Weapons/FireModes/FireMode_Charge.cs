@@ -56,7 +56,7 @@ public class FireMode_Charge : BaseFireMode
 
             playerStateMachine.AnimatingControllers.Weapon.BakeTransformer.UpdateBakedTransforms();
             if (_chargeWithRightHand) playerStateMachine.AnimatingControllers.WeaponHolder.LeftHand(transform);
-            playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, true, 0.3f);
+            playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.BakedWeaponAnimating, true, 0.3f);
             playerStateMachine.AnimatingControllers.Animator.SetTrigger("ChargeWeapon", false);
             _weaponShootingController.StateMachine.Animator.SetTrigger("BoltCharge");
         });
@@ -67,8 +67,8 @@ public class FireMode_Charge : BaseFireMode
 
         PlayerStateMachine playerStateMachine = _weaponShootingController.StateMachine.PlayerStateMachine;
         playerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_weaponData.FingersPreset.Base, 0.2f);
-        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, false, 0.3f);
-        playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.BakedWeaponAnimating, () =>
+        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.3f);
+        playerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(LayerEnum.BakedWeaponAnimating, () =>
         {
             Vector3 pos = _weaponData.InHandPosition;
             Vector3 rot = _weaponData.InHandRotation;

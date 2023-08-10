@@ -19,12 +19,6 @@ namespace PlayerAnimator
 
 
 
-        public enum LayersEnum
-        {
-            CombatBase, CombatAnimating, TopBodyStabilizer, Crouch, ThrowBase, ThrowAnimating
-        }
-
-
         private void Start()
         {
             ToggleLayer(LayersEnum.TopBodyStabilizer, true, 0.1f);
@@ -66,22 +60,6 @@ namespace PlayerAnimator
             if (overide == null) return;
 
             _animator.runtimeAnimatorController = overide;
-
-            /*AnimatorStateInfo[] layerInfo = new AnimatorStateInfo[_animator.layerCount];
-            for(int i=0; i<_animator.layerCount; i++)
-            {
-                layerInfo[i] = _animator.GetCurrentAnimatorStateInfo(i);
-            }
-
-
-            _animator.runtimeAnimatorController = overide;
-
-            _animator.Update(0.0f);
-
-            for (int i = 0; i < _animator.layerCount; i++)
-            {
-                _animator.Play(layerInfo[i].fullPathHash, i, layerInfo[i].normalizedTime);
-            }*/
         }
 
 
@@ -104,7 +82,7 @@ namespace PlayerAnimator
     public class LayerData
     {
         public string name;
-        public PlayerAnimatorController.LayersEnum Layer;
+        public LayersEnum Layer;
 
         [Range(0, 1)]
         public float LayerWeight;
@@ -132,5 +110,10 @@ namespace PlayerAnimator
             LayerWeight = endValue;
             animator.SetLayerWeight(layerIndex, LayerWeight);
         }
+    }
+
+    public enum LayersEnum
+    {
+        CombatBase, CombatAnimating, TopBodyStabilizer, Crouch, ThrowBase, ThrowAnimating
     }
 }

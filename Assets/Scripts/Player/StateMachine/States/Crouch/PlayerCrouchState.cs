@@ -25,7 +25,7 @@ public class PlayerCrouchState : PlayerBaseState
             _ctx.CombatControllers.Combat.EquipedWeaponSlot.Weapon.OnPlayerCrouch();
         }
 
-        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, true, 0.3f);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.Crouch, true, 0.3f);
         _ctx.MovementControllers.Movement.OnGround.SetCrouchSpeed();
     }
     public override void StateUpdate()
@@ -53,7 +53,7 @@ public class PlayerCrouchState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.Crouch, false, 0.3f);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.Crouch, false, 0.3f);
 
         _ctx.AnimatingControllers.Weapon.Crouch.Toggle(false);
     }

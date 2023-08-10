@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
-using WeaponAnimatorNamespace;
-using static PlayerAnimator.PlayerAnimatorController;
-using static IkLayers.PlayerIkLayerController;
-using LeftHandAnimatorNamespace;
 using PlayerHandsCamera;
 
 namespace PlayerThrow
@@ -22,20 +18,21 @@ namespace PlayerThrow
         {
             PlayerInventoryController playerInventory = _throwController.PlayerStateMachine.InventoryControllers.Inventory;
 
-            if (!_throwController.IsState(ThrowableStates.ReadyToThrow)) return;
+            if (!_throwController.CanThrow) return;
             if (!IsCorrectPlayerState()) return;
             if (!IsCorrectCombatState()) return;
             if (playerInventory.Throwables.GetFirstNotEmptySlot() < 0) return;
 
-            _throwController.SetState(ThrowableStates.Hold);
+            _throwController.CanCancel = true;
+            _throwController.IsHeld = true;
+            _throwController.IsThrow = true;
+            HandleWeapons();
+            PrepareHandsCamera();
 
-
-            _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
-            _throwController.PlayerStateMachine.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Throw, 0.1f);
-            _throwController.PlayerStateMachine.CameraControllers.Hands.Rotate.ChangePreset(RotationPresetsLabels.Throw, 0.1f);
             SpawnThrowable(playerInventory);
 
             ToggleLayers();
+            PlayEquip();
         }
 
 
@@ -53,7 +50,15 @@ namespace PlayerThrow
                     || _throwController.PlayerStateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed);
         }
 
-
+        private void HandleWeapons()
+        {
+            _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
+        }
+        private void PrepareHandsCamera()
+        {
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Throw, 0.1f);
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Rotate.ChangePreset(RotationPresetsLabels.Throw, 0.1f);
+        }
         private void SpawnThrowable(PlayerInventoryController playerInventory)
         {
             //Get index and data
@@ -78,6 +83,11 @@ namespace PlayerThrow
             PlayerAnimatorController playerAnimatorController = _throwController.PlayerStateMachine.AnimatingControllers.Animator;
             playerAnimatorController.ToggleLayer(LayersEnum.ThrowBase, true, 0.4f);
             playerAnimatorController.ToggleLayer(LayersEnum.ThrowAnimating, true, 0.4f);
+        }
+        private void PlayEquip()
+        {
+            PlayerAnimatorController playerAnimatorController = _throwController.PlayerStateMachine.AnimatingControllers.Animator;
+            playerAnimatorController.SetTrigger("EquipThrow", false);
         }
     }
 }

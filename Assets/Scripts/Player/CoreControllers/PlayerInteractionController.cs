@@ -13,9 +13,9 @@ public class PlayerInteractionController : MonoBehaviour
 
     public void Interaction()
     {
-        if(_playerStateMachine.CombatControllers.Throw.IsState(ThrowableStates.Hold))
+        if(_playerStateMachine.CombatControllers.Throw.CanCancel)
         {
-            _playerStateMachine.CombatControllers.Throw.Cancel.Cancel();
+            _playerStateMachine.CombatControllers.Throw.Cancel.StartCancel();
             return;
         }
 

@@ -152,7 +152,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _barrelController.enabled = true;
 
         if (!_isEquiped) return;
-        _stateMachine.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, false, 0.2f);
+        _stateMachine.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.TriggerDiscipline, false, 0.2f);
     }
     public override void ToggleOff()
     {
@@ -160,7 +160,7 @@ public class WeaponShootingController : WeaponDamageDealingController
         _barrelController.enabled = false;
 
         if (!_isEquiped) return;
-        _stateMachine.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, true, 0.2f);
+        _stateMachine.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.TriggerDiscipline, true, 0.2f);
     }
 
 

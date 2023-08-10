@@ -13,8 +13,8 @@ public class PlayerUnderWaterState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.StateControllers.Swim.ToggleCameraEffect(true);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Swim, false, 1);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.UnderWater, true, 1);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Swim, false, 1);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.UnderWater, true, 1);
     }
     public override void StateUpdate()
     {
@@ -34,7 +34,7 @@ public class PlayerUnderWaterState : PlayerBaseState
     public override void StateExit()
     {
         _ctx.StateControllers.Swim.ToggleCameraEffect(false);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Swim, true, 1);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.UnderWater, false, 1);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Swim, true, 1);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.UnderWater, false, 1);
     }
 }

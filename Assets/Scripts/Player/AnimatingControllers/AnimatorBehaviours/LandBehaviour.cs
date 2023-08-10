@@ -27,11 +27,11 @@ public class LandBehaviour : StateMachineBehaviour
 
 
         playerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(true);
-        playerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.TopBodyStabilizer, true, 1);
+        playerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, true, 1);
 
-        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, !isWeaponEquiped, 1);
-        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, !isWeaponEquiped, 1);
-        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Head, !isWeaponEquiped, 1);
+        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, !isWeaponEquiped, 1);
+        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, !isWeaponEquiped, 1);
+        playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, !isWeaponEquiped, 1);
 
         playerStateMachine.WasHardLanding = false;
 
