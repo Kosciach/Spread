@@ -52,9 +52,9 @@ public class PlayerSwimState : PlayerBaseState
         _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(enable);
         _ctx.CameraControllers.Cine.Move.SetCameraPosition(cameraPosition, 0.2f);
 
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, enable, 0.3f);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Swim, !enable, 0.3f);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, enable, 0.3f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, enable, 0.3f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Swim, !enable, 0.3f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, enable, 0.3f);
     }
 
 

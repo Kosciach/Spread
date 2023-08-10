@@ -85,8 +85,7 @@ public class PlayerMovement_OnGround : MonoBehaviour
             || _movementController.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim
             || _movementController.PlayerStateMachine.CombatControllers.EquipedWeapon.Block.IsBlock
             || !_movementController.PlayerStateMachine.CoreControllers.Stats.Stats.Stamina.CanUseStamina
-            || _movementController.PlayerStateMachine.CombatControllers.Throw.IsState(ThrowableStates.Hold)
-            || _movementController.PlayerStateMachine.CombatControllers.Throw.IsState(ThrowableStates.StartThrow)) return;
+            || !_movementController.PlayerStateMachine.CombatControllers.Throw.CanThrow) return;
 
 
         if (canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Run();

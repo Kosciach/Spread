@@ -10,7 +10,6 @@ public class ThrowableState_Safe : ThrowableBaseState
     public override void StateEnter()
     {
         _ctx.ChangeLayer(_ctx.transform, 7);
-
         _ctx.ThrowableController.OnSafe();
     }
     public override void StateUpdate()

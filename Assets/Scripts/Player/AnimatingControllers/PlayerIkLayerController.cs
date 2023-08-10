@@ -17,12 +17,6 @@ namespace IkLayers
         [Header("====Debugs====")]
         [SerializeField] LayerData[] _layerData;
 
-        public enum LayerEnum
-        {
-            SpineLock, Body, Head, Swim, UnderWater, FingersRightHand, FingersLeftHand, TriggerDiscipline, RangeCombat, BakedWeaponAnimating
-        }
-
-
 
 
 
@@ -91,5 +85,10 @@ namespace IkLayers
 
             if (OnFinish != null) OnFinish.Invoke();
         }
+    }
+
+    public enum LayerEnum
+    {
+        SpineLock, Body, Head, Swim, UnderWater, FingersRightHand, FingersLeftHand, TriggerDiscipline, RangeCombat, BakedWeaponAnimating
     }
 }

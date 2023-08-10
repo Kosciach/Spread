@@ -50,8 +50,8 @@ public class PlayerCombat_UnEquip : MonoBehaviour
         mainTransformer.Rotate(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Rotation, 0.3f);
         mainTransformer.Move(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Position,  0.5f).SetOnMoveFinish(() =>
         {
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, false, 0.2f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, false, 0.2f);
+            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.FingersRightHand, false, 0.2f);
+            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.2f);
 
             _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
@@ -67,14 +67,14 @@ public class PlayerCombat_UnEquip : MonoBehaviour
             _combatController.OnWeaponUnEquip();
             _combatController.EquipedWeaponSlot = null;
 
-            _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatBase, false, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatAnimating, true, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.TriggerDiscipline, false, 0.2f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, true, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, true, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Head, true, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.RangeCombat, false, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
+            _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatBase, false, 0.4f);
+            _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatAnimating, true, 0.4f);
+            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.TriggerDiscipline, false, 0.2f);
+            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, true, 0.4f);
+            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, true, 0.4f);
+            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, true, 0.4f);
+            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.RangeCombat, false, 0.4f);
+            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(LayerEnum.RangeCombat, () =>
             {
                 mainTransformer.MoveRaw(Vector3.zero);
                 mainTransformer.RotateRaw(Vector3.zero);

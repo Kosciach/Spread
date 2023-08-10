@@ -23,6 +23,7 @@ public class PlayerCombat_Equip : MonoBehaviour
     public void StartEquip(int choosenWeaponIndex)
     {
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed) && !_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
+        || _combatController.PlayerStateMachine.CombatControllers.Throw.IsThrow
         || choosenWeaponIndex >= _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.WeaponInventorySlots.Count
         ||  !_combatController.PlayerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
@@ -62,8 +63,8 @@ public class PlayerCombat_Equip : MonoBehaviour
         _combatController.PlayerStateMachine.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Combat, 0.2f);
         _combatController.PlayerStateMachine.CameraControllers.Hands.Rotate.ChangePreset(RotationPresetsLabels.Combat, 0.2f);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersRightHand, true, 0.1f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.FingersLeftHand, true, 0.1f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.FingersRightHand, true, 0.1f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.FingersLeftHand, true, 0.1f);
         _combatController.PlayerStateMachine.AnimatingControllers.Fingers.SetUpAllFingers(_combatController.EquipedWeaponSlot.WeaponData.FingersPreset.Base, 0.01f);
         _combatController.PlayerStateMachine.AnimatingControllers.Fingers.Discipline.SetDisciplineIk(_combatController.EquipedWeaponSlot.WeaponData.FingersPreset);
 
@@ -71,13 +72,13 @@ public class PlayerCombat_Equip : MonoBehaviour
         mainTransformer.MoveRaw(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Position);
         mainTransformer.RotateRaw(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Rotation);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatBase, true, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(PlayerAnimatorController.LayersEnum.CombatAnimating, false, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.SpineLock, false, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Body, false, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.Head, false, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(PlayerIkLayerController.LayerEnum.RangeCombat, true, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(PlayerIkLayerController.LayerEnum.RangeCombat, () =>
+        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatBase, true, 0.4f);
+        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatAnimating, false, 0.4f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, false, 0.4f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, false, 0.4f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, false, 0.4f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.RangeCombat, true, 0.4f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(LayerEnum.RangeCombat, () =>
         {
             Transform equipedWeaponTransform = _combatController.EquipedWeaponSlot.Weapon.transform;
             WeaponData equipedWeaponData = _combatController.EquipedWeaponSlot.WeaponData;

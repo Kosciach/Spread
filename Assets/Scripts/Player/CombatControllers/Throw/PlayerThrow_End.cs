@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
-using WeaponAnimatorNamespace;
-using static PlayerAnimator.PlayerAnimatorController;
-using static IkLayers.PlayerIkLayerController;
-using LeftHandAnimatorNamespace;
 
 namespace PlayerThrow
 {
@@ -19,13 +15,11 @@ namespace PlayerThrow
 
         public void End()
         {
-            _throwController.SetState(ThrowableStates.EndThrow);
-
-
             ToggleLayers();
 
             _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
-            _throwController.SetState(ThrowableStates.ReadyToThrow);
+            _throwController.CanThrow = true;
+            _throwController.IsThrow = false;
         }
 
         private void ToggleLayers()
