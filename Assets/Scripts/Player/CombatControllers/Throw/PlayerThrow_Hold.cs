@@ -31,6 +31,7 @@ namespace PlayerThrow
 
             SpawnThrowable(playerInventory);
 
+            SetThrowableTypeAnims();
             ToggleLayers();
             PlayEquip();
         }
@@ -72,7 +73,12 @@ namespace PlayerThrow
             //Change throwable state
             _throwController.CurrentThrowable.ChangeState(ThrowableStateMachine.StateLabels.InHand);
         }
-
+        private void SetThrowableTypeAnims()
+        {
+            int throwableTypeInt = (int)_throwController.CurrentThrowable.ThrowableData.ThrowableType;
+            PlayerAnimatorController playerAnimatorController = _throwController.PlayerStateMachine.AnimatingControllers.Animator;
+            playerAnimatorController.SetFloat("ThrowableType", throwableTypeInt);
+        }
         private void ToggleLayers()
         {
             PlayerIkLayerController playerIkLayerController = _throwController.PlayerStateMachine.AnimatingControllers.IkLayers;
