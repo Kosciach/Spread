@@ -7,32 +7,32 @@ public class ThrowableController_Dynamite : BaseThrowableController
     [Header("====References====")]
     [SerializeField] GameObject _explosionParticle;
 
+    private float _timerToggle = 0;
+    private float _timeToExplosion = 10;
+    public float _currentTimeToExplosion = 10;
 
     public override void OnSafe()
     {
-
+        _timerToggle = 0;
+        _currentTimeToExplosion = _timeToExplosion;
     }
     public override void OnInHand()
     {
-
+        _timerToggle = -2;
     }
     public override void OnThrown()
     {
         _stateMachine.ChangeLayer(transform, 0);
-
     }
 
 
-
-
-
-    private IEnumerator Explode()
+    private void Update()
     {
-        yield return new WaitForSeconds(3);
+        _currentTimeToExplosion += _timerToggle * Time.deltaTime;
+        _currentTimeToExplosion = Mathf.Clamp(_currentTimeToExplosion, 0, _timeToExplosion);
+        if (_currentTimeToExplosion > 0) return;
 
-
-        Explode(_explosionParticle, 6, 8, 1100);
-
+        Explode(_explosionParticle, 5, 7, 1000);
         Destroy(gameObject);
     }
 }

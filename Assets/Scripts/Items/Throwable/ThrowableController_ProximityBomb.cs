@@ -12,7 +12,7 @@ public class ThrowableController_ProximityBomb : BaseThrowableController
 
     public override void OnSafe()
     {
-
+        _detector.SetActive(false);
     }
     public override void OnInHand()
     {
@@ -21,7 +21,8 @@ public class ThrowableController_ProximityBomb : BaseThrowableController
     public override void OnThrown()
     {
         _stateMachine.ChangeLayer(transform, 7);
-
+        _detector.gameObject.layer = 0;
+        this.Delay(1, () => { _detector.SetActive(true); });
     }
 
 

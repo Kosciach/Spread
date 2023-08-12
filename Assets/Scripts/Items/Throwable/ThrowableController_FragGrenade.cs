@@ -28,8 +28,6 @@ public class ThrowableController_FragGrenade : BaseThrowableController
     public override void OnThrown()
     {
         _stateMachine.ChangeLayer(transform, 0);
-
-
     }
 
 
