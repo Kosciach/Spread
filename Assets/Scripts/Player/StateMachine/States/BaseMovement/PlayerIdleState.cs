@@ -22,15 +22,9 @@ public class PlayerIdleState : PlayerBaseState
             _ctx.CombatControllers.Combat.EquipedWeaponSlot.Weapon.OnPlayerIdle();
         }
 
-        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleJumpReloaded(true);
         _ctx.CoreControllers.Collider.SetColliderRadius(0.8f, 0.2f);
 
-
-
         _ctx.AnimatingControllers.Animator.SetBool("Idle", true);
-        _ctx.AnimatingControllers.Animator.SetBool("Land", true);
-        _ctx.AnimatingControllers.Animator.SetInt("JumpType", 0);
-        _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", false);
     }
     public override void StateUpdate()
     {

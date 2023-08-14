@@ -10,20 +10,15 @@ public class PlayerFallState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.09f, 0.2f);
-        _ctx.AnimatingControllers.Animator.SetBool("Land", false);
-
-        _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);
-        _ctx.AnimatingControllers.Weapon.InAir.SetRotSpeed(5);
+        _ctx.AnimatingControllers.Animator.SetTrigger("Fall", false);
     }
     public override void StateUpdate()
     {
         _ctx.MovementControllers.Rotation.RotateToCanera();
         _ctx.MovementControllers.Movement.InAir.Movement();
 
-        CheckClimb();
-        if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
         if (_ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
+        //if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
     }
     public override void StateFixedUpdate()
     {
@@ -41,20 +36,12 @@ public class PlayerFallState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.AnimatingControllers.Animator.SetBool("Fall", false);
-        _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", false);
-
-        _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(10);
-        _ctx.AnimatingControllers.Weapon.InAir.SetRotSpeed(20);
     }
 
 
 
     private void CheckClimb()
     {
-        if (_ctx.StateControllers.Climb.CheckFallingClimb())
-        {
-            _ctx.SwitchController.SwitchTo.InAirClimb();
-        }
+        if (_ctx.StateControllers.Climb.CheckFallingClimb()) _ctx.SwitchController.SwitchTo.InAirClimb();
     }
 }

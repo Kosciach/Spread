@@ -34,7 +34,7 @@ namespace PlayerHandsCamera
         {
             _handsCameraModeMethod[0] = EnableHandsCamera;//True
             _handsCameraModeMethod[1] = DisableHandsCamera;//False
-            ToggleHandsCamera(true);
+            ToggleHandsCamera(false);
         }
 
 

@@ -59,20 +59,11 @@ public class SwitchToClass
     public void Jump()
     {
         PlayerVerticalVelocityController verticalVelocityController = _playerStateMachine.MovementControllers.VerticalVelocity;
-
-        bool readyToJump = verticalVelocityController.Gravity.IsGrounded && !verticalVelocityController.Jump.CheckAboveObsticle() && verticalVelocityController.Jump.JumpReloaded;
-        if (!readyToJump) return;
-
-
-        //Dash();
-        //if (_stateMachine.MovementController.IsDashDirection()) return;
+        if (!verticalVelocityController.Gravity.IsGrounded) return;
 
         _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Jump;
 
-
-
-        if (!_playerStateMachine.StateControllers.Climb.CanClimbWall()) return;
-        Climb();
+        //if (_playerStateMachine.StateControllers.Climb.CanClimbWall()) Climb();
     }
     public void Fall()
     {

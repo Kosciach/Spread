@@ -12,49 +12,28 @@ public class PlayerLandState : PlayerBaseState
 
     public override void StateEnter()
     {
-        float forwardVelocity = Vector3.Dot(_ctx.MovementControllers.Movement.InAir.CurrentMovementVector, _ctx.transform.forward);
+        Debug.Log("Land");
+        Debug.Log(_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce);
+        _ctx.AnimatingControllers.Animator.SetTrigger("Land", false);
 
-
-        CheckHardLanding();
-
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
-        _ctx.MovementControllers.VerticalVelocity.Slope.ToggleSlopeAngle(true);
-
-        _ctx.AnimatingControllers.Animator.SetFloat("FallingTime", _ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.Slope.SlopeAngle);
-        _ctx.AnimatingControllers.Animator.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
-        _ctx.AnimatingControllers.Animator.SetBool("Land", true);
-
-        _ctx.AudioControllers.FootStep.LandFootStep(_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce);
 
         _ctx.SwitchController.SwitchTo.Idle();
     }
     public override void StateUpdate()
     {
-        _ctx.MovementControllers.Rotation.RotateToCanera();
     }
     public override void StateFixedUpdate()
     {
-
+        _ctx.MovementControllers.Rotation.RotateToCanera();
     }
     public override void StateCheckChange()
     {
-        if (_ctx.WasHardLanding) return;
-
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)) StateChange(_factory.Idle());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)) StateChange(_factory.Walk());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run)) StateChange(_factory.Run());
     }
     public override void StateExit()
     {
-        _ctx.AnimatingControllers.Animator.SetBool("Land", false);
-    }
-
-
-    private void CheckHardLanding()
-    {
-        _ctx.WasHardLanding = _ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.Slope.SlopeAngle <= -12;
-
-        if (_ctx.WasHardLanding) _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
-        _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(!_ctx.WasHardLanding);
-        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 0.1f);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, !_ctx.WasHardLanding, 0.1f);
+        _ctx.AnimatingControllers.Animator.SetTrigger("Fall", true);
     }
 }
