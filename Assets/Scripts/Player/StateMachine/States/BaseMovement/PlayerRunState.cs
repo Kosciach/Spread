@@ -22,17 +22,9 @@ public class PlayerRunState : PlayerBaseState
         }
 
 
-        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleJumpReloaded(true);
         _ctx.CoreControllers.Collider.SetColliderRadius(0.8f, 0.2f);
 
-
-
         _ctx.AnimatingControllers.Animator.SetBool("Run", true);
-        _ctx.AnimatingControllers.Animator.SetBool("Land", true);
-        _ctx.AnimatingControllers.Animator.SetInt("JumpType", 2);
-        _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", false);
-
-
 
         _ctx.MovementControllers.Movement.OnGround.SetRunSpeed();
     }

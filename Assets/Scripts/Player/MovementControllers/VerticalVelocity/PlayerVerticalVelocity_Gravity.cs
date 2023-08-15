@@ -64,12 +64,6 @@ public class PlayerVerticalVelocity_Gravity : MonoBehaviour
 
         _currentGravityForce *= _applyGravityToggle;
     }
-    private void ApplyGravity()
-    {
-        if (!_applyGravity) return;
-
-        _verticalVelocityController.CharacterController.Move(new Vector3(0f, _currentGravityForce * Time.deltaTime, 0f));
-    }
     private void CheckGround()
     {
         bool groundDetected = Physics.CheckSphere(_groundCheckPoint.position, _groundCheckRadius, _groundMask);
@@ -84,20 +78,14 @@ public class PlayerVerticalVelocity_Gravity : MonoBehaviour
             if (_notGroundedTime > 0.5f) _isGrounded = false;
         }
     }
-
-
-
-    public float GetCurrentGravity()
+    private void ApplyGravity()
     {
-        return _currentGravityForce;
+        if (!_applyGravity) return;
+
+        _verticalVelocityController.CharacterController.Move(new Vector3(0f, _currentGravityForce * Time.deltaTime, 0f));
     }
 
 
-
-    public void SetCurrentGravity(float gravity)
-    {
-        _currentGravityForce = gravity;
-    }
     public void ToggleApplyGravity(bool enabled)
     {
         _applyGravity = enabled;

@@ -4,29 +4,19 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerBaseState
 {
-    private bool _isClimb;
     public PlayerJumpState(PlayerStateMachine ctx, PlayerStateFactory factory, string stateName) : base(ctx, factory, stateName) { }
 
 
     public override void StateEnter()
     {
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
-
-        PrepareAnimatorBools();
-
-        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleJumpReloaded(false);
-        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleIsJump(true);
-        _ctx.MovementControllers.VerticalVelocity.Jump.Jump();
-
-        _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);
-        _ctx.AnimatingControllers.Weapon.InAir.SetRotSpeed(5);
+        Jump();
     }
     public override void StateUpdate()
     {
         _ctx.MovementControllers.Rotation.RotateToCanera();
         _ctx.MovementControllers.Movement.InAir.Movement();
 
-        if (_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
+        CheckFall();
     }
     public override void StateFixedUpdate()
     {
@@ -34,24 +24,23 @@ public class PlayerJumpState : PlayerBaseState
     }
     public override void StateCheckChange()
     {
-        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
-        {
-            _ctx.AnimatingControllers.Animator.SetBool("Fall", true);
-            StateChange(_factory.Fall());
-        }
+        if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall)) StateChange(_factory.Fall());
     }
     public override void StateExit()
     {
-        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleIsJump(false);
-        _ctx.AnimatingControllers.Animator.SetBool("Jump", false);
+        _ctx.MovementControllers.VerticalVelocity.Jump.IsJump = false;
     }
 
 
-
-    private void PrepareAnimatorBools()
+    private void Jump()
     {
-        _ctx.AnimatingControllers.Animator.SetBool("Jump", true);
-        _ctx.AnimatingControllers.Animator.SetBool("Fall", false);
-        _ctx.AnimatingControllers.Animator.SetBool("Land", false);
+        _ctx.AnimatingControllers.Animator.SetTrigger("Land", true);
+        _ctx.AnimatingControllers.Animator.SetTrigger("Jump", false);
+        _ctx.MovementControllers.VerticalVelocity.Jump.Jump();
+    }
+
+    private void CheckFall()
+    {
+        if (_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
     }
 }

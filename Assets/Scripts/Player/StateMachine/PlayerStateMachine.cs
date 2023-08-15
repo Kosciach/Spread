@@ -37,13 +37,6 @@ public class PlayerStateMachine : MonoBehaviour
 
 
 
-    [Space(20)]
-    [Header("====Debugs====")]
-    [SerializeField] bool _wasHardLanding; public bool WasHardLanding { get { return _wasHardLanding; } set { _wasHardLanding = value; } }
-
-
-
-
     [System.Serializable]
     public struct CoreControllersStruct
     {

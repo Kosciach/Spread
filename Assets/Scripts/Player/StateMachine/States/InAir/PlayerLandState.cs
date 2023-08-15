@@ -3,58 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
+using System;
 
 public class PlayerLandState : PlayerBaseState
 {
-
+    private bool _isHardLanding;
     public PlayerLandState(PlayerStateMachine ctx, PlayerStateFactory factory, string stateName) : base(ctx, factory, stateName) { }
 
 
     public override void StateEnter()
     {
-        float forwardVelocity = Vector3.Dot(_ctx.MovementControllers.Movement.InAir.CurrentMovementVector, _ctx.transform.forward);
-
-
-        CheckHardLanding();
-
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
-        _ctx.MovementControllers.VerticalVelocity.Slope.ToggleSlopeAngle(true);
-
-        _ctx.AnimatingControllers.Animator.SetFloat("FallingTime", _ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.Slope.SlopeAngle);
-        _ctx.AnimatingControllers.Animator.SetFloat("FallForwardVelocity", forwardVelocity, 0.1f);
-        _ctx.AnimatingControllers.Animator.SetBool("Land", true);
-
-        _ctx.AudioControllers.FootStep.LandFootStep(_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce);
-
-        _ctx.SwitchController.SwitchTo.Idle();
+        _isHardLanding = false;
+        CheckLandingType();
+        _ctx.AnimatingControllers.Animator.SetTrigger("Land", false);
     }
     public override void StateUpdate()
     {
-        _ctx.MovementControllers.Rotation.RotateToCanera();
     }
     public override void StateFixedUpdate()
     {
-
+        _ctx.MovementControllers.Rotation.RotateToCanera();
     }
     public override void StateCheckChange()
     {
-        if (_ctx.WasHardLanding) return;
-
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)) StateChange(_factory.Idle());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)) StateChange(_factory.Walk());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run)) StateChange(_factory.Run());
     }
     public override void StateExit()
     {
-        _ctx.AnimatingControllers.Animator.SetBool("Land", false);
+        _ctx.AnimatingControllers.Animator.SetTrigger("Fall", true);
     }
 
 
-    private void CheckHardLanding()
+    private void CheckLandingType()
     {
-        _ctx.WasHardLanding = _ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce + _ctx.MovementControllers.VerticalVelocity.Slope.SlopeAngle <= -12;
+        _isHardLanding = (-_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce) >= 10.5f;
+        _ctx.AnimatingControllers.Animator.SetBool("HardLanding", _isHardLanding);
+        Action landingType = _isHardLanding ? HardLanding : NormalLanding;
+        landingType();
+    }
+    private void NormalLanding()
+    {
+        float fallingForwardVelocity = Vector3.Dot(_ctx.MovementControllers.Velocity.Velocity, _ctx.transform.forward);
 
-        if (_ctx.WasHardLanding) _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
-        _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(!_ctx.WasHardLanding);
-        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, !_ctx.WasHardLanding, 0.1f);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, !_ctx.WasHardLanding, 0.1f);
+        _ctx.AnimatingControllers.Animator.SetFloat("FallingVelocity", -_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce);
+        _ctx.AnimatingControllers.Animator.SetFloat("FallingForwardVelocity", fallingForwardVelocity);
+        _ctx.SwitchController.SwitchTo.Idle();
+    }
+    private void HardLanding()
+    {
+        _ctx.AnimatingControllers.Animator.SetFloat("MovementX", 0);
+        _ctx.AnimatingControllers.Animator.SetFloat("MovementZ", 0);
+
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, false, 0.1f);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, false, 0.1f);
     }
 }

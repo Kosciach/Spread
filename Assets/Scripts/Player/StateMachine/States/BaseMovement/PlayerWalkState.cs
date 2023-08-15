@@ -22,17 +22,9 @@ public class PlayerWalkState : PlayerBaseState
             _ctx.CombatControllers.Combat.EquipedWeaponSlot.Weapon.OnPlayerWalk();
         }
 
-        _ctx.MovementControllers.VerticalVelocity.Jump.ToggleJumpReloaded(true);
         _ctx.CoreControllers.Collider.SetColliderRadius(0.8f, 0.2f);
 
-
-
         _ctx.AnimatingControllers.Animator.SetBool("Walk", true);
-        _ctx.AnimatingControllers.Animator.SetBool("Land", true);
-        _ctx.AnimatingControllers.Animator.SetInt("JumpType", 1);
-        _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", false);
-
-
 
         _ctx.MovementControllers.Movement.OnGround.SetWalkSpeed();
     }
@@ -58,11 +50,7 @@ public class PlayerWalkState : PlayerBaseState
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)) StateChange(_factory.Idle());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump)) StateChange(_factory.Jump());
-        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall))
-        {
-            _ctx.AnimatingControllers.Animator.SetBool("FallFromGround", true);
-            StateChange(_factory.Fall());
-        }
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall)) StateChange(_factory.Fall());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Crouch)) StateChange(_factory.Crouch());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Climb)) StateChange(_factory.Climb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))

@@ -17,14 +17,6 @@ namespace PlayerAnimator
         [SerializeField] LayerData[] _layerData;
 
 
-
-
-        private void Start()
-        {
-            ToggleLayer(LayersEnum.TopBodyStabilizer, true, 0.1f);
-        }
-
-
         public void SetInt(string name, int value)
         {
             _animator.SetInteger(name, value);
