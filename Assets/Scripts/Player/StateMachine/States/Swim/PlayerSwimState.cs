@@ -49,7 +49,6 @@ public class PlayerSwimState : PlayerBaseState
     private void ExitEnter(PlayerCineCamera_Move.CameraPositionsEnum cameraPosition, bool enable)
     {
         _ctx.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(enable);
-        _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(enable);
         _ctx.CameraControllers.Cine.Move.SetCameraPosition(cameraPosition, 0.2f);
 
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, enable, 0.3f);

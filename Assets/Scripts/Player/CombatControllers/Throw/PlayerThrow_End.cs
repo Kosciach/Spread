@@ -17,6 +17,7 @@ namespace PlayerThrow
         {
             ToggleLayers();
 
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
             _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
             _throwController.CanThrow = true;
             _throwController.IsThrow = false;
