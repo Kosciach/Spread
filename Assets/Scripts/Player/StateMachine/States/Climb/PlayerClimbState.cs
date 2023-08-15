@@ -42,7 +42,6 @@ public class PlayerClimbState : PlayerBaseState
 
     private void ClimbEnterExit(bool enable)
     {
-        _ctx.CameraControllers.Hands.Enable.ToggleHandsCamera(enable);
         _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, enable, 0.5f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, enable, 0.1f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, enable, 0.1f);

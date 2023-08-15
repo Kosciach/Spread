@@ -30,6 +30,7 @@ namespace PlayerThrow
             playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.1f);
 
 
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
             _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
 
             _throwController.CanThrow = true;

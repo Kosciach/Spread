@@ -68,7 +68,7 @@ public class SwitchToClass
 
         _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Jump;
 
-        //if (_playerStateMachine.StateControllers.Climb.CanClimbWall()) Climb();
+        if (_playerStateMachine.StateControllers.Climb.CanClimbWall()) Climb();
     }
     public void Fall()
     {

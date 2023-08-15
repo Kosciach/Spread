@@ -65,6 +65,7 @@ public class PlayerCombat_Drop : MonoBehaviour
             WeaponAnimator_MainTransformer mainTransformer = _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
             mainTransformer.MoveRaw(Vector3.zero);
             mainTransformer.RotateRaw(Vector3.zero);
+            _combatController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
             _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
         });
 

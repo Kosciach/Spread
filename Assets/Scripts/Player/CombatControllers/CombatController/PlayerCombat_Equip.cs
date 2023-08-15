@@ -52,6 +52,8 @@ public class PlayerCombat_Equip : MonoBehaviour
     {
         _combatController.SetState(PlayerCombatController.CombatStateEnum.Equip);
 
+        _combatController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(true);
+
         _combatController.EquipedWeaponIndex = choosenWeaponIndex;
         _combatController.EquipedWeaponSlot = choosenWeaponInventorySlot;
 

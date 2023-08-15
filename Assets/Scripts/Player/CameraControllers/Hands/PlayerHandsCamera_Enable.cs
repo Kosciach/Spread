@@ -42,8 +42,6 @@ namespace PlayerHandsCamera
 
         public void ToggleHandsCamera(bool enable)
         {
-            if (!_stateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
-
             int index = enable ? 0 : 1;
 
             _handsCamera.enabled = enable;
@@ -53,6 +51,7 @@ namespace PlayerHandsCamera
 
         private void EnableHandsCamera()
         {
+            Debug.Log("Elo320");
             _mainCamera.cullingMask = _noHandsMask;
         }
         private void DisableHandsCamera()

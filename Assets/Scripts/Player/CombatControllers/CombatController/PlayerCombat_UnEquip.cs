@@ -78,6 +78,7 @@ public class PlayerCombat_UnEquip : MonoBehaviour
             {
                 mainTransformer.MoveRaw(Vector3.zero);
                 mainTransformer.RotateRaw(Vector3.zero);
+                _combatController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
                 _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
             });
         });

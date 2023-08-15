@@ -17,8 +17,7 @@ public class PlayerFallState : PlayerBaseState
         _ctx.MovementControllers.Rotation.RotateToCanera();
         _ctx.MovementControllers.Movement.InAir.Movement();
 
-        if (_ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
-        //if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
+        CheckSwitches();
     }
     public override void StateFixedUpdate()
     {
@@ -40,8 +39,10 @@ public class PlayerFallState : PlayerBaseState
 
 
 
-    private void CheckClimb()
+    private void CheckSwitches()
     {
+        if (_ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
         if (_ctx.StateControllers.Climb.CheckFallingClimb()) _ctx.SwitchController.SwitchTo.InAirClimb();
+        if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
     }
 }

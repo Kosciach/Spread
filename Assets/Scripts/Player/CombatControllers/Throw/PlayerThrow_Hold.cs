@@ -57,6 +57,7 @@ namespace PlayerThrow
         }
         private void PrepareHandsCamera()
         {
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(true);
             _throwController.PlayerStateMachine.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Throw, 0.1f);
             _throwController.PlayerStateMachine.CameraControllers.Hands.Rotate.ChangePreset(RotationPresetsLabels.Throw, 0.1f);
         }
