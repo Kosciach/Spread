@@ -59,7 +59,12 @@ public class SwitchToClass
     public void Jump()
     {
         PlayerVerticalVelocityController verticalVelocityController = _playerStateMachine.MovementControllers.VerticalVelocity;
-        if (!verticalVelocityController.Gravity.IsGrounded) return;
+        bool areSwitchesGood = _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)
+                            || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)
+                            || _switchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run);
+        
+        
+        if (!verticalVelocityController.Gravity.IsGrounded || !areSwitchesGood || verticalVelocityController.Jump.CheckAboveObsticle()) return;
 
         _playerStateMachine.StateSwitch = PlayerStateMachine.SwitchEnum.Jump;
 

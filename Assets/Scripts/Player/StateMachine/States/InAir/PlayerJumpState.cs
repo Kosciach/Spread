@@ -9,15 +9,14 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.AnimatingControllers.Animator.SetTrigger("Jump", false);
-       _ctx.MovementControllers.VerticalVelocity.Jump.Jump();
+        Jump();
     }
     public override void StateUpdate()
     {
         _ctx.MovementControllers.Rotation.RotateToCanera();
         _ctx.MovementControllers.Movement.InAir.Movement();
 
-        if (_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
+        CheckFall();
     }
     public override void StateFixedUpdate()
     {
@@ -30,5 +29,18 @@ public class PlayerJumpState : PlayerBaseState
     public override void StateExit()
     {
         _ctx.MovementControllers.VerticalVelocity.Jump.IsJump = false;
+    }
+
+
+    private void Jump()
+    {
+        _ctx.AnimatingControllers.Animator.SetTrigger("Land", true);
+        _ctx.AnimatingControllers.Animator.SetTrigger("Jump", false);
+        _ctx.MovementControllers.VerticalVelocity.Jump.Jump();
+    }
+
+    private void CheckFall()
+    {
+        if (_ctx.MovementControllers.VerticalVelocity.Gravity.CurrentGravityForce <= 0) _ctx.SwitchController.SwitchTo.Fall();
     }
 }

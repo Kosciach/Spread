@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1bf81059da0a0674d821e18294d2ef98
+guid: e7b4442756e74464785a421b5ba4ef94
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,13 +33,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: J2
+      name: Land_Mid_Idle
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 12
+      lastFrame: 24
       wrapMode: 0
-      orientationOffsetY: 35
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
@@ -47,13 +47,13 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 1
       keepOriginalOrientation: 1
       keepOriginalPositionY: 0
       keepOriginalPositionXZ: 1
       heightFromFeet: 1
-      mirror: 0
+      mirror: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
