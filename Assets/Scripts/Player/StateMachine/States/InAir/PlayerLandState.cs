@@ -16,6 +16,7 @@ public class PlayerLandState : PlayerBaseState
         _isHardLanding = false;
         CheckLandingType();
         _ctx.AnimatingControllers.Animator.SetTrigger("Land", false);
+        SetWeaponInAirSmooth();
     }
     public override void StateUpdate()
     {
@@ -33,6 +34,7 @@ public class PlayerLandState : PlayerBaseState
     public override void StateExit()
     {
         _ctx.AnimatingControllers.Animator.SetTrigger("Fall", true);
+        SetWeaponInAirSmooth();
     }
 
 
@@ -56,7 +58,19 @@ public class PlayerLandState : PlayerBaseState
         _ctx.AnimatingControllers.Animator.SetFloat("MovementX", 0);
         _ctx.AnimatingControllers.Animator.SetFloat("MovementZ", 0);
 
+        _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
+
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, false, 0.1f);
         _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, false, 0.1f);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatBase, false, 0.1f);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatAnimating, false, 0.1f);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.ThrowBase, false, 0.1f);
+        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.ThrowAnimating, false, 0.1f);
+    }
+
+    private void SetWeaponInAirSmooth()
+    {
+        _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(20);
+        _ctx.AnimatingControllers.Weapon.InAir.SetRotSpeed(20);
     }
 }

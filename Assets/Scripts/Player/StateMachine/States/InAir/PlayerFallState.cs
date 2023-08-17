@@ -11,6 +11,7 @@ public class PlayerFallState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.AnimatingControllers.Animator.SetTrigger("Fall", false);
+        SetWeaponInAirSmooth();
     }
     public override void StateUpdate()
     {
@@ -38,7 +39,11 @@ public class PlayerFallState : PlayerBaseState
     }
 
 
-
+    private void SetWeaponInAirSmooth()
+    {
+        _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);
+        _ctx.AnimatingControllers.Weapon.InAir.SetRotSpeed(5);
+    }
     private void CheckSwitches()
     {
         if (_ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded) _ctx.SwitchController.SwitchTo.Land();

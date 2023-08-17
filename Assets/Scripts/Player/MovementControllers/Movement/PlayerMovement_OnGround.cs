@@ -68,24 +68,27 @@ public class PlayerMovement_OnGround : MonoBehaviour
 
     public void CheckMovementType()
     {
-        bool isMoveInput = _movementController.PlayerStateMachine.CoreControllers.Input.IsMoveInput;
-        bool isRunInput = _movementController.PlayerStateMachine.CoreControllers.Input.IsRunInput;
-        Vector3 movementInputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVector;
-        bool canSwitch = _movementController.PlayerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)
-                        || _movementController.PlayerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)
-                        || _movementController.PlayerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run);
+        PlayerStateMachine playerStateMachine = _movementController.PlayerStateMachine;
+        bool isMoveInput = playerStateMachine.CoreControllers.Input.IsMoveInput;
+        bool isRunInput = playerStateMachine.CoreControllers.Input.IsRunInput;
+        Vector3 movementInputVector = playerStateMachine.CoreControllers.Input.MovementInputVector;
+        bool canSwitch = playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Idle)
+                        || playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Walk)
+                        || playerStateMachine.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Run);
 
 
-        if(canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Idle();
+        if(canSwitch) playerStateMachine.SwitchController.SwitchTo.Idle();
         if (!isMoveInput) return;
 
 
-        if (canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Walk();
+        if (canSwitch) playerStateMachine.SwitchController.SwitchTo.Walk();
         if (!isRunInput || movementInputVector.z <= 0
-            || _movementController.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim
-            || _movementController.PlayerStateMachine.CombatControllers.EquipedWeapon.Block.IsBlock
-            || !_movementController.PlayerStateMachine.CoreControllers.Stats.Stats.Stamina.CanUseStamina
-            || !_movementController.PlayerStateMachine.CombatControllers.Throw.CanThrow) return;
+            || playerStateMachine.CombatControllers.EquipedWeapon.Aim.IsAim
+            || playerStateMachine.CombatControllers.EquipedWeapon.Block.IsBlock
+            || !playerStateMachine.CoreControllers.Stats.Stats.Stamina.CanUseStamina
+            || !playerStateMachine.CombatControllers.Throw.CanThrow
+            || playerStateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Equip)
+            || playerStateMachine.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.UnEquip)) return;
 
 
         if (canSwitch) _movementController.PlayerStateMachine.SwitchController.SwitchTo.Run();

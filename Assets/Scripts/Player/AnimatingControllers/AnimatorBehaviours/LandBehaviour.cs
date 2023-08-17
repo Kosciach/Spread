@@ -27,6 +27,7 @@ public class LandBehaviour : StateMachineBehaviour
         playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, true, 0.1f);
         playerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, true, 0.1f);
         playerStateMachine.SwitchController.SwitchTo.Idle();
+        playerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
