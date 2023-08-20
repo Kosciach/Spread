@@ -45,10 +45,6 @@ public class RangeWeaponHoldController : WeaponHoldController
             playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
             playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
             _stateMachine.DamageDealingController.Toggle(false);
-
-
-
-            playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
         });
     }
     public override void HipHoldMode(float rotateSpeed, float moveSpeed)
@@ -72,10 +68,6 @@ public class RangeWeaponHoldController : WeaponHoldController
             playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(true);
             playerCombatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(true);
             _stateMachine.DamageDealingController.Toggle(true);
-
-
-
-            playerCombatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
         });
     }
 }

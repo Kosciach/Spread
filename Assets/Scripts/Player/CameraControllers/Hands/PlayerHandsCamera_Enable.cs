@@ -51,7 +51,6 @@ namespace PlayerHandsCamera
 
         private void EnableHandsCamera()
         {
-            Debug.Log("Elo320");
             _mainCamera.cullingMask = _noHandsMask;
         }
         private void DisableHandsCamera()
