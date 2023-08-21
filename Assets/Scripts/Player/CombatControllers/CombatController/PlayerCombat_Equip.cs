@@ -8,10 +8,10 @@ using PlayerHandsCamera;
 using LeftHandAnimatorNamespace;
 using SimpleMan.CoroutineExtensions;
 
+
 public class PlayerCombat_Equip : MonoBehaviour
 {
     private PlayerCombatController _combatController;
-
 
 
 
@@ -62,7 +62,7 @@ public class PlayerCombat_Equip : MonoBehaviour
         SetAllIks();
         ToggleLayers();
         PlayAnimation();
-        PutWeaponIntoRightHand();
+        this.Delay(0.5f, PutWeaponIntoRightHand);
     }
 
     private void SetWeaponSlotAndIndex(int choosenWeaponIndex, WeaponInventorySlot choosenWeaponInventorySlot)
@@ -106,16 +106,18 @@ public class PlayerCombat_Equip : MonoBehaviour
     }
     private void ToggleLayers()
     {
-        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatBase, true, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatAnimating, true, 0.4f);
+        PlayerAnimatorController playerAnimatorController = _combatController.PlayerStateMachine.AnimatingControllers.Animator;
+        playerAnimatorController.ToggleLayer(LayersEnum.CombatBase, true, 0.4f);
+        playerAnimatorController.ToggleLayer(LayersEnum.CombatAnimating, true, 0.4f);
 
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.BakedWeaponAnimating, true, 0.1f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.FingersRightHand, true, 0.1f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.FingersLeftHand, true, 0.1f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, false, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, false, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, false, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.RangeCombat, true, 0.4f);
+        PlayerIkLayerController playerIkLayerController = _combatController.PlayerStateMachine.AnimatingControllers.IkLayers;
+        playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, true, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.FingersRightHand, true, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, true, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.SpineLock, false, 0.4f);
+        playerIkLayerController.ToggleLayer(LayerEnum.Body, false, 0.4f);
+        playerIkLayerController.ToggleLayer(LayerEnum.Head, false, 0.4f);
+        playerIkLayerController.ToggleLayer(LayerEnum.RangeCombat, true, 0.4f);
     }
     private void PlayAnimation()
     {

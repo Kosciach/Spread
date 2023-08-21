@@ -4,6 +4,7 @@ using UnityEngine;
 using IkLayers;
 using WeaponAnimatorNamespace;
 using PlayerAnimator;
+using SimpleMan.CoroutineExtensions;
 
 public class PlayerCombat_UnEquip : MonoBehaviour
 {
@@ -33,7 +34,31 @@ public class PlayerCombat_UnEquip : MonoBehaviour
     {
         _combatController.SetState(PlayerCombatController.CombatStateEnum.UnEquip);
 
+        float unEquipSmoothTime = 0.2f;
+        EnableBakedLayer(unEquipSmoothTime);
+        this.Delay(unEquipSmoothTime, () =>
+        {
+            PlayUnEquipAnimation();
+            DisableWeaponControllers();
+            SetDotCrosshair();
+            ResetIksTransform();
+        });
+
+    }
+
+    private void EnableBakedLayer(float unEquipSmoothTime)
+    {
+        PlayerIkLayerController playerIkLayerController = _combatController.PlayerStateMachine.AnimatingControllers.IkLayers;
+        playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, true, unEquipSmoothTime);
+    }
+    private void PlayUnEquipAnimation()
+    {
+        _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetBool("UnEquipWeapon", true);
+    }
+    private void DisableWeaponControllers()
+    {
         _combatController.EquipedWeaponSlot.Weapon.DamageDealingController.Toggle(false);
+        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
         _combatController.PlayerStateMachine.CombatControllers.WallDetector.ToggleCollider(false);
         _combatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
@@ -43,44 +68,72 @@ public class PlayerCombat_UnEquip : MonoBehaviour
 
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
-
+    }
+    private void SetDotCrosshair()
+    {
         CanvasController.Instance.HudControllers.Crosshair.SwitchCrosshair(HudController_Crosshair.CrosshairTypeEnum.Dot);
-
+    }
+    private void ResetIksTransform()
+    {
         WeaponAnimator_MainTransformer mainTransformer = _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
-        mainTransformer.Rotate(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Rotation, 0.3f);
-        mainTransformer.Move(_combatController.EquipedWeaponSlot.WeaponData.WeaponTransforms.Origin.RightHand_Position,  0.5f).SetOnMoveFinish(() =>
+        mainTransformer.MoveRaw(new Vector3(0, -1, 0));
+        mainTransformer.RotateRaw(Vector3.zero);
+    }
+
+
+
+
+    public void OnUnEquipAnimationEnd()
+    {
+        ResetUnEquipAnimBool();
+        HolsterWeapon();
+
+        if (_combatController.Swap)
         {
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.FingersRightHand, false, 0.2f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.2f);
+            Swap(); return;
+        }
 
-            _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
+        ClearWeaponSlot();
+        ToggleLayers();
+    }
 
-            _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_combatController.EquipedWeaponSlot.Weapon, _combatController.EquipedWeaponSlot.WeaponData);
+    private void ResetUnEquipAnimBool()
+    {
+        _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetBool("UnEquipWeapon", false);
+    }
+    private void HolsterWeapon()
+    {
+        _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_combatController.EquipedWeaponSlot.Weapon, _combatController.EquipedWeaponSlot.WeaponData);
+    }
+    private void Swap()
+    {
+        _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
+        _combatController.Equip.ReEquip(_combatController.ChoosenWeaponIndex);
+    }
+    private void ClearWeaponSlot()
+    {
+        _combatController.OnWeaponUnEquip();
+        _combatController.EquipedWeaponSlot = null;
+    }
+    private void ToggleLayers()
+    {
+        PlayerAnimatorController playerAnimatorController = _combatController.PlayerStateMachine.AnimatingControllers.Animator;
+        playerAnimatorController.ToggleLayer(LayersEnum.CombatBase, false, 0.4f);
+        playerAnimatorController.ToggleLayer(LayersEnum.CombatAnimating, false, 0.4f);
 
-            if(_combatController.Swap)
-            {
-                _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
-                _combatController.Equip.ReEquip(_combatController.ChoosenWeaponIndex);
-                return;
-            }
-
-            _combatController.OnWeaponUnEquip();
-            _combatController.EquipedWeaponSlot = null;
-
-            _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatBase, false, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatAnimating, true, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.TriggerDiscipline, false, 0.2f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, true, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, true, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, true, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.RangeCombat, false, 0.4f);
-            _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(LayerEnum.RangeCombat, () =>
-            {
-                mainTransformer.MoveRaw(Vector3.zero);
-                mainTransformer.RotateRaw(Vector3.zero);
-                _combatController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
-                _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
-            });
+        PlayerIkLayerController playerIkLayerController = _combatController.PlayerStateMachine.AnimatingControllers.IkLayers;
+        playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.FingersRightHand, false, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.TriggerDiscipline, false, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.SpineLock, true, 0.4f);
+        playerIkLayerController.ToggleLayer(LayerEnum.Body, true, 0.4f);
+        playerIkLayerController.ToggleLayer(LayerEnum.Head, true, 0.4f);
+        playerIkLayerController.ToggleLayer(LayerEnum.RangeCombat, false, 0.4f);
+        playerIkLayerController.OnLerpFinish(LayerEnum.RangeCombat, () =>
+        {
+            _combatController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
+            _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
         });
     }
 }

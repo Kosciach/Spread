@@ -53,18 +53,19 @@ public class PlayerCombat_Drop : MonoBehaviour
         _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.DropWeapon(_combatController.EquipedWeaponIndex);
         _combatController.EquipedWeaponSlot = null;
 
-        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatBase, false, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatAnimating, true, 0.4f);
+        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatBase, false, 0.2f);
+        _combatController.PlayerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.CombatAnimating, true, 0.2f);
         _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.TriggerDiscipline, false, 0.2f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, true, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, true, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, true, 0.4f);
-        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.RangeCombat, false, 0.1f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, true, 0.1f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, true, 0.1f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, true, 0.1f);
+        _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.RangeCombat, false, 0.2f);
         _combatController.PlayerStateMachine.AnimatingControllers.IkLayers.OnLerpFinish(LayerEnum.RangeCombat, () =>
         {
             WeaponAnimator_MainTransformer mainTransformer = _combatController.PlayerStateMachine.AnimatingControllers.Weapon.MainTransformer;
             mainTransformer.MoveRaw(Vector3.zero);
             mainTransformer.RotateRaw(Vector3.zero);
+
             _combatController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
             _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
         });
