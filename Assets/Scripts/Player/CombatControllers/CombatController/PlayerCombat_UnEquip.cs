@@ -58,7 +58,6 @@ public class PlayerCombat_UnEquip : MonoBehaviour
     private void DisableWeaponControllers()
     {
         _combatController.EquipedWeaponSlot.Weapon.DamageDealingController.Toggle(false);
-        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
 
         _combatController.PlayerStateMachine.CombatControllers.WallDetector.ToggleCollider(false);
         _combatController.PlayerStateMachine.CombatControllers.EquipedWeapon.Aim.ToggleAimBool(false);
@@ -68,6 +67,8 @@ public class PlayerCombat_UnEquip : MonoBehaviour
 
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.Sway.Toggle(false);
         _combatController.PlayerStateMachine.AnimatingControllers.Weapon.Bobbing.Toggle(false);
+
+        _combatController.PlayerStateMachine.CoreControllers.Stats.Stats.RangeWeaponStamina.ToggleUseStamina(false);
     }
     private void SetDotCrosshair()
     {
