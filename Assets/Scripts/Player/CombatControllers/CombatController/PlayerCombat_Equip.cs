@@ -61,6 +61,7 @@ public class PlayerCombat_Equip : MonoBehaviour
         PrepareHandsCamera();
         SetAllIks();
         ToggleLayers();
+
         PlayAnimation();
         this.Delay(0.5f, PutWeaponIntoRightHand);
     }
@@ -160,11 +161,11 @@ public class PlayerCombat_Equip : MonoBehaviour
     private void DisableBakedLayer()
     {
         PlayerIkLayerController playerIkLayerController = _combatController.PlayerStateMachine.AnimatingControllers.IkLayers;
-        playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.2f);
+        playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.1f);
     }
     private void ResetEquipAnimBool()
     {
-        this.Delay(0.3f, () => { _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetBool("EquipWeapon", false); });
+        this.Delay(0.5f, () => { _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetBool("EquipWeapon", false); });
     }
 
 

@@ -33,17 +33,16 @@ public class PlayerCombat_UnEquip : MonoBehaviour
     private void UnEquip()
     {
         _combatController.SetState(PlayerCombatController.CombatStateEnum.UnEquip);
+;
+        PlayUnEquipAnimation();
+        EnableBakedLayer(0.4f);
 
-        float unEquipSmoothTime = 0.2f;
-        EnableBakedLayer(unEquipSmoothTime);
-        this.Delay(unEquipSmoothTime, () =>
+        this.Delay(0.4f, () =>
         {
-            PlayUnEquipAnimation();
             DisableWeaponControllers();
             SetDotCrosshair();
             ResetIksTransform();
         });
-
     }
 
     private void EnableBakedLayer(float unEquipSmoothTime)
