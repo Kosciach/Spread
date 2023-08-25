@@ -8,9 +8,12 @@ using PlayerHandsCamera;
 using LeftHandAnimatorNamespace;
 using SimpleMan.CoroutineExtensions;
 
-
 public class PlayerCombat_Equip : MonoBehaviour
 {
+    [Header("====Settings====")]
+    [Tooltip("Toggle if you want to create animations for the weapon. This will prevent animation from playing, but will prepare most of things for animating.")]
+    [SerializeField] bool _animatingMode;
+
     private PlayerCombatController _combatController;
 
 
@@ -62,7 +65,7 @@ public class PlayerCombat_Equip : MonoBehaviour
         SetAllIks();
         ToggleLayers();
 
-        PlayAnimation();
+        if(!_animatingMode) PlayAnimation();
         this.Delay(0.5f, PutWeaponIntoRightHand);
     }
 
