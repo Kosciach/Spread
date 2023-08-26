@@ -65,8 +65,8 @@ public class PlayerCombat_Equip : MonoBehaviour
         SetAllIks();
         ToggleLayers();
 
-        if(!_animatingMode) PlayAnimation();
-        this.Delay(0.5f, PutWeaponIntoRightHand);
+        if (!_animatingMode) PlayAnimation();
+        else PutWeaponIntoRightHand();
     }
 
     private void SetWeaponSlotAndIndex(int choosenWeaponIndex, WeaponInventorySlot choosenWeaponInventorySlot)
@@ -128,7 +128,7 @@ public class PlayerCombat_Equip : MonoBehaviour
         _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetInt("WeaponHoldType", (int)_combatController.EquipedWeaponSlot.Weapon.HoldController.HoldMode);
         _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetBool("EquipWeapon", true);
     }
-    private void PutWeaponIntoRightHand()
+    public void PutWeaponIntoRightHand()
     {
         Transform equipedWeaponTransform = _combatController.EquipedWeaponSlot.Weapon.transform;
         WeaponData equipedWeaponData = _combatController.EquipedWeaponSlot.WeaponData;

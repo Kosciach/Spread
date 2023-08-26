@@ -18,4 +18,10 @@ public class PlayerWeaponAnimationsEventsReceiver : MonoBehaviour
     {
         _playerStateMachine.CombatControllers.Combat.UnEquip.OnUnEquipAnimationEnd();
     }
+
+    public void WeaponPutInHand()
+    {
+        Debug.Log(1);
+        _playerStateMachine.CombatControllers.Combat.Equip.PutWeaponIntoRightHand();
+    }
 }
