@@ -78,18 +78,18 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
     private void ToggleLayers()
     {
         PlayerAnimatorController playerAnimatorController = _combatController.PlayerStateMachine.AnimatingControllers.Animator;
-        playerAnimatorController.ToggleLayer(LayersEnum.CombatBase, false, 0.5f);
-        playerAnimatorController.ToggleLayer(LayersEnum.CombatAnimating, false, 0.5f);
+        playerAnimatorController.ToggleLayer(LayersEnum.CombatBase, false, 0.1f);
+        playerAnimatorController.ToggleLayer(LayersEnum.CombatAnimating, false, 0.1f);
 
         PlayerIkLayerController playerIkLayerController = _combatController.PlayerStateMachine.AnimatingControllers.IkLayers;
-        playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.5f);
-        playerIkLayerController.ToggleLayer(LayerEnum.FingersRightHand, false, 0.5f);
-        playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.5f);
-        playerIkLayerController.ToggleLayer(LayerEnum.TriggerDiscipline, false, 0.5f);
-        playerIkLayerController.ToggleLayer(LayerEnum.SpineLock, true, 0.5f);
-        playerIkLayerController.ToggleLayer(LayerEnum.Body, true, 0.5f);
-        playerIkLayerController.ToggleLayer(LayerEnum.Head, true, 0.5f);
-        playerIkLayerController.ToggleLayer(LayerEnum.RangeCombat, false, 0.5f);
+        playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.FingersRightHand, false, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.TriggerDiscipline, false, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.SpineLock, true, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.Body, true, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.Head, true, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.RangeCombat, false, 0.1f);
         playerIkLayerController.OnLerpFinish(LayerEnum.RangeCombat, () =>
         {
             ResetIksTransform();

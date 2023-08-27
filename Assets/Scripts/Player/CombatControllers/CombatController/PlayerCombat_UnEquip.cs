@@ -33,7 +33,7 @@ public class PlayerCombat_UnEquip : MonoBehaviour
     private void UnEquip()
     {
         _combatController.SetState(PlayerCombatController.CombatStateEnum.UnEquip);
-;
+
         PlayUnEquipAnimation();
         EnableBakedLayer(0.4f);
 
@@ -45,14 +45,14 @@ public class PlayerCombat_UnEquip : MonoBehaviour
         });
     }
 
+    private void PlayUnEquipAnimation()
+    {
+        _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetBool("UnEquipWeapon", true);
+    }
     private void EnableBakedLayer(float unEquipSmoothTime)
     {
         PlayerIkLayerController playerIkLayerController = _combatController.PlayerStateMachine.AnimatingControllers.IkLayers;
         playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, true, unEquipSmoothTime);
-    }
-    private void PlayUnEquipAnimation()
-    {
-        _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetBool("UnEquipWeapon", true);
     }
     private void DisableWeaponControllers()
     {

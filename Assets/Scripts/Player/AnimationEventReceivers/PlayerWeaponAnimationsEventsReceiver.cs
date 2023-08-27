@@ -11,7 +11,6 @@ public class PlayerWeaponAnimationsEventsReceiver : MonoBehaviour
     public void WeaponEquipAnimEnd()
     {
         _playerStateMachine.CombatControllers.Combat.Equip.OnEquipAnimationEnd();
-
     }
 
     public void WeaponUnEquipAnimEnd()
@@ -21,7 +20,6 @@ public class PlayerWeaponAnimationsEventsReceiver : MonoBehaviour
 
     public void WeaponPutInHand()
     {
-        Debug.Log(1);
         _playerStateMachine.CombatControllers.Combat.Equip.PutWeaponIntoRightHand();
     }
 }

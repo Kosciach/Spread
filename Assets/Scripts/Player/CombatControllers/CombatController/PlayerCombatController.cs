@@ -23,6 +23,7 @@ public class PlayerCombatController : MonoBehaviour
     [SerializeField] int _equipedWeaponIndex;                       public int EquipedWeaponIndex { get { return _equipedWeaponIndex; } set { _equipedWeaponIndex = value; } }
     [SerializeField] int _choosenWeaponIndex;                       public int ChoosenWeaponIndex { get { return _choosenWeaponIndex; } set { _choosenWeaponIndex = value; } }
     [SerializeField] bool _swap;                                    public bool Swap { get { return _swap; } set { _swap = value; } }
+    [SerializeField] bool _isEmptyBakedAnimation;                   public bool IsEmptyBakedAnimation { get { return _isEmptyBakedAnimation; } set { _isEmptyBakedAnimation = value; } }
 
 
 
