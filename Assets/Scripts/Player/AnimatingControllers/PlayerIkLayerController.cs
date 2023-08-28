@@ -43,6 +43,10 @@ namespace IkLayers
 
             return this;
         }
+        public float GetLayerWeight(LayerEnum layer)
+        {
+            return _layerData[(int)layer].LayerWeight;
+        }
 
         public void OnLerpFinish(LayerEnum layer, Action toDo)
         {

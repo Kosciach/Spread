@@ -10,6 +10,7 @@ public class PlayerJumpState : PlayerBaseState
     public override void StateEnter()
     {
         Jump();
+        SetWeaponInAirSmooth();
     }
     public override void StateUpdate()
     {
@@ -37,6 +38,11 @@ public class PlayerJumpState : PlayerBaseState
         _ctx.AnimatingControllers.Animator.SetTrigger("Land", true);
         _ctx.AnimatingControllers.Animator.SetTrigger("Jump", false);
         _ctx.MovementControllers.VerticalVelocity.Jump.Jump();
+    }
+    private void SetWeaponInAirSmooth()
+    {
+        _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);
+        _ctx.AnimatingControllers.Weapon.InAir.SetRotSpeed(5);
     }
 
     private void CheckFall()

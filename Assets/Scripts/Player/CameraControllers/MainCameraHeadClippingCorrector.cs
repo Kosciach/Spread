@@ -10,6 +10,7 @@ public class MainCameraHeadClippingCorrector : MonoBehaviour
     [Space(20)]
     [Header("====Debugs====")]
     [SerializeField] bool _isCameraInWall;
+    [SerializeField] int _isCameraInWallInt;
     [SerializeField] float _cameraCorrection;
 
     [Space(20)]
@@ -28,18 +29,20 @@ public class MainCameraHeadClippingCorrector : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("Weapon")) return;
         _isCameraInWall = true;
+        _isCameraInWallInt = 1;
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("Weapon")) return;
         _isCameraInWall = false;
+        _isCameraInWallInt = -1;
     }
 
 
 
     private void CorrectCamera()
     {
-        _cameraCorrection += (_isCameraInWall ? 1 : -1) * _cameraCorrectionSpeed;
+        _cameraCorrection += _isCameraInWallInt * _cameraCorrectionSpeed;
         _cameraCorrection = Mathf.Clamp(_cameraCorrection, 0, 45);
         _cineCameraController.Vertical.SetBorderValues(-70, 70 - _cameraCorrection);
     }

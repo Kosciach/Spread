@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
+using SimpleMan.CoroutineExtensions;
 
 namespace PlayerThrow
 {
@@ -30,11 +31,10 @@ namespace PlayerThrow
             playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.1f);
 
 
-            _throwController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
-            _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
-
             _throwController.CanThrow = true;
             _throwController.IsThrow = false;
+            _throwController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
+            this.Delay(0.2f, () => { _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip(); });
         }
     }
 }

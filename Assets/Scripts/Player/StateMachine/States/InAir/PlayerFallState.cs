@@ -11,6 +11,7 @@ public class PlayerFallState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.AnimatingControllers.Animator.SetTrigger("Fall", false);
+        SetWeaponInAirSmooth();
     }
     public override void StateUpdate()
     {
@@ -29,7 +30,7 @@ public class PlayerFallState : PlayerBaseState
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.InAirClimb)) StateChange(_factory.InAirClimb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))
         {
-            _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
+            _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false, 0.5f);
             StateChange(_factory.Swim());
         }
     }
@@ -38,7 +39,11 @@ public class PlayerFallState : PlayerBaseState
     }
 
 
-
+    private void SetWeaponInAirSmooth()
+    {
+        _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);
+        _ctx.AnimatingControllers.Weapon.InAir.SetRotSpeed(5);
+    }
     private void CheckSwitches()
     {
         if (_ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded) _ctx.SwitchController.SwitchTo.Land();

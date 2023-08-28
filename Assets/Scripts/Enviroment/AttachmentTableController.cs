@@ -81,7 +81,7 @@ public class AttachmentTableController : MonoBehaviour, IInteractable, IHighligh
         _playerStateMachine.SwitchController.SwitchTo.AttachmentTable();
 
         Transform weaponTransform = _playerStateMachine.CombatControllers.Combat.EquipedWeaponSlot.Weapon.transform;
-        _playerStateMachine.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
+        _playerStateMachine.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false, 0.5f);
         weaponTransform.parent = transform.GetChild(2);
         weaponTransform.localPosition = Vector3.zero;
         weaponTransform.localRotation = Quaternion.Euler(new Vector3(90, 180, 0));
