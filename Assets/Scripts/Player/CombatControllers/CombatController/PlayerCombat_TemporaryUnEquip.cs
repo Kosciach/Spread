@@ -29,16 +29,16 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
         _isTemporaryUnEquip = false;
         _combatController.Equip.StartEquip(_combatController.EquipedWeaponIndex);
     }
-    public void StartTemporaryUnEquip(bool overrideStateValidation)
+    public void StartTemporaryUnEquip(bool overrideStateValidation, float unEquipDuration)
     {
         if (_combatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)) return;
 
         if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped) && !overrideStateValidation) return;
         if (!_combatController.PlayerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
 
-        TemporaryUnEquip();
+        TemporaryUnEquip(unEquipDuration);
     }
-    private void TemporaryUnEquip()
+    private void TemporaryUnEquip(float unEquipDuration)
     {
         _combatController.SetState(PlayerCombatController.CombatStateEnum.UnEquip);
 
@@ -47,7 +47,7 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
         DisableWeaponControllers();
         SetDotCrosshair();
         HandleUnEquip();
-        ToggleLayers();
+        ToggleLayers(unEquipDuration);
     }
 
 
@@ -75,27 +75,27 @@ public class PlayerCombat_TemporaryUnEquip : MonoBehaviour
         _combatController.OnWeaponUnEquip();
         _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.HolsterWeapon(_combatController.EquipedWeaponSlot.Weapon, _combatController.EquipedWeaponSlot.WeaponData);
     }
-    private void ToggleLayers()
+    private void ToggleLayers(float unEquipDuration)
     {
         PlayerAnimatorController playerAnimatorController = _combatController.PlayerStateMachine.AnimatingControllers.Animator;
-        playerAnimatorController.ToggleLayer(LayersEnum.CombatBase, false, 0.1f);
-        playerAnimatorController.ToggleLayer(LayersEnum.CombatAnimating, false, 0.1f);
+        playerAnimatorController.ToggleLayer(LayersEnum.CombatBase, false, unEquipDuration);
+        playerAnimatorController.ToggleLayer(LayersEnum.CombatAnimating, false, unEquipDuration);
 
         PlayerIkLayerController playerIkLayerController = _combatController.PlayerStateMachine.AnimatingControllers.IkLayers;
-        playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.1f);
-        playerIkLayerController.ToggleLayer(LayerEnum.FingersRightHand, false, 0.1f);
-        playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, false, 0.1f);
-        playerIkLayerController.ToggleLayer(LayerEnum.TriggerDiscipline, false, 0.1f);
-        playerIkLayerController.ToggleLayer(LayerEnum.SpineLock, true, 0.1f);
-        playerIkLayerController.ToggleLayer(LayerEnum.Body, true, 0.1f);
-        playerIkLayerController.ToggleLayer(LayerEnum.Head, true, 0.1f);
-        playerIkLayerController.ToggleLayer(LayerEnum.RangeCombat, false, 0.1f);
+        playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, unEquipDuration);
+        playerIkLayerController.ToggleLayer(LayerEnum.FingersRightHand, false, unEquipDuration);
+        playerIkLayerController.ToggleLayer(LayerEnum.FingersLeftHand, false, unEquipDuration);
+        playerIkLayerController.ToggleLayer(LayerEnum.TriggerDiscipline, false, unEquipDuration);
+        playerIkLayerController.ToggleLayer(LayerEnum.SpineLock, true, unEquipDuration);
+        playerIkLayerController.ToggleLayer(LayerEnum.Body, true, unEquipDuration);
+        playerIkLayerController.ToggleLayer(LayerEnum.Head, true, unEquipDuration);
+        playerIkLayerController.ToggleLayer(LayerEnum.RangeCombat, false, unEquipDuration);
         playerIkLayerController.OnLerpFinish(LayerEnum.RangeCombat, () =>
         {
             ResetIksTransform();
 
             _combatController.PlayerStateMachine.CameraControllers.Hands.Enable.ToggleHandsCamera(false);
-            _combatController.SetState(PlayerCombatController.CombatStateEnum.Unarmed);
+            _combatController.SetState(PlayerCombatController.CombatStateEnum.UnarmedTemporary);
         });
     }
     private void ResetIksTransform()

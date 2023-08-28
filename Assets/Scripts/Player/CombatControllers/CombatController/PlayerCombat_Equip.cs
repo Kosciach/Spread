@@ -27,7 +27,9 @@ public class PlayerCombat_Equip : MonoBehaviour
 
     public void StartEquip(int choosenWeaponIndex)
     {
-        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed) && !_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
+        if (!_combatController.IsState(PlayerCombatController.CombatStateEnum.Unarmed)
+        && !_combatController.IsState(PlayerCombatController.CombatStateEnum.Equiped)
+        && !_combatController.IsState(PlayerCombatController.CombatStateEnum.UnarmedTemporary)
         || _combatController.PlayerStateMachine.CombatControllers.Throw.IsThrow
         || choosenWeaponIndex >= _combatController.PlayerStateMachine.InventoryControllers.Inventory.Weapon.WeaponInventorySlots.Count
         || !_combatController.PlayerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded) return;
@@ -45,7 +47,6 @@ public class PlayerCombat_Equip : MonoBehaviour
             if(choosenWeaponIndex != _combatController.EquipedWeaponIndex) Swap();
             return;
         }
-
 
         Equip(choosenWeaponIndex, choosenWeaponInventorySlot);
     }
@@ -140,14 +141,21 @@ public class PlayerCombat_Equip : MonoBehaviour
 
     public void OnEquipAnimationEnd()
     {
+        ResetEquipAnimBool();
         SwitchCrosshair();
         ToggleWeaponControllers();
         DisableBakedLayer();
-        ResetEquipAnimBool();
-        _combatController.OnWeaponEquip();
-        _combatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
+        this.Delay(0.2f, () =>
+        {
+            _combatController.OnWeaponEquip();
+            _combatController.SetState(PlayerCombatController.CombatStateEnum.Equiped);
+        });
     }
 
+    private void ResetEquipAnimBool()
+    {
+        _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetBool("EquipWeapon", false);
+    }
     private void SwitchCrosshair()
     {
         RangeWeaponData weaponData = (RangeWeaponData)_combatController.EquipedWeaponSlot.WeaponData;
@@ -165,10 +173,6 @@ public class PlayerCombat_Equip : MonoBehaviour
     {
         PlayerIkLayerController playerIkLayerController = _combatController.PlayerStateMachine.AnimatingControllers.IkLayers;
         playerIkLayerController.ToggleLayer(LayerEnum.BakedWeaponAnimating, false, 0.1f);
-    }
-    private void ResetEquipAnimBool()
-    {
-        this.Delay(0.5f, () => { _combatController.PlayerStateMachine.AnimatingControllers.Animator.SetBool("EquipWeapon", false); });
     }
 
 

@@ -12,7 +12,7 @@ public class PlayerLadderState : PlayerBaseState
 
     public override void StateEnter()
     {
-        _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
+        _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false, 0.5f);
 
         _ctx.StateControllers.Ladder.ResetBools();
 

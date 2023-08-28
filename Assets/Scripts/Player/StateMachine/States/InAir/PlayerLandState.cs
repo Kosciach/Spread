@@ -58,7 +58,7 @@ public class PlayerLandState : PlayerBaseState
         _ctx.AnimatingControllers.Animator.SetFloat("MovementX", 0);
         _ctx.AnimatingControllers.Animator.SetFloat("MovementZ", 0);
 
-        _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
+        _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false, 0.1f);
 
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, false, 0.1f);
         _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, false, 0.1f);

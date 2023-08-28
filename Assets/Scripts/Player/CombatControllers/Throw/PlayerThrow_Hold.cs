@@ -53,7 +53,7 @@ namespace PlayerThrow
 
         private void HandleWeapons()
         {
-            _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false);
+            _throwController.PlayerStateMachine.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false, 0.2f);
         }
         private void PrepareHandsCamera()
         {
