@@ -36,7 +36,7 @@ namespace WeaponAnimatorNamespace
 
 
         private PlayerVerticalVelocityController _verticalVelocity;
-        private float _gravityStrength => _verticalVelocity.Gravity.CurrentGravityForce - _verticalVelocity.Slope.SlopeAngle;
+        private float _gravityStrength => _verticalVelocity.Gravity.CurrentGravityForce * (_verticalVelocity.Gravity.IsGrounded ? 0 : 1);
 
 
 
