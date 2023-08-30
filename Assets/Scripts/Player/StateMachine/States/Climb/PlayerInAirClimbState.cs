@@ -14,7 +14,7 @@ public class PlayerInAirClimbState : PlayerBaseState
         _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false, 0.5f);
         ClimbEnterExit(false);
 
-        Climb(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
+        Climb(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
     }
     public override void StateUpdate()
     {
@@ -37,6 +37,8 @@ public class PlayerInAirClimbState : PlayerBaseState
     }
 
 
+
+
     private void ClimbEnterExit(bool enable)
     {
         _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, enable, 0.5f);
@@ -48,16 +50,12 @@ public class PlayerInAirClimbState : PlayerBaseState
         _ctx.CameraControllers.Cine.ToggleCineInput(enable);
     }
 
-
-
-
     private void Climb(Vector3 finalClimbPosition, Vector3 startClimbPosition)
     {
         _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 2);
+        _ctx.AnimatingControllers.Animator.SetBool("Climb", true);
 
         LeanTween.cancel(_ctx.gameObject);
-
-        _ctx.AnimatingControllers.Animator.SetBool("Climb", true);
         _ctx.transform.LeanMoveY(finalClimbPosition.y - 1.3f, 0.5f).setOnComplete(() =>
         {
             _ctx.transform.LeanMove(finalClimbPosition, 0.5f).setOnComplete(() =>

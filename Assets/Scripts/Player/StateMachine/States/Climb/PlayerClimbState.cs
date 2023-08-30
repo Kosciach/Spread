@@ -14,8 +14,7 @@ public class PlayerClimbState : PlayerBaseState
         _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false, 0.5f);
         ClimbEnterExit(false);
 
-
-        CheckClimbType(_ctx.StateControllers.Climb.GetClimbHeight());
+        CheckClimbType(_ctx.StateControllers.Climb.DetectedWallHeight);
     }
     public override void StateUpdate()
     {
@@ -52,45 +51,35 @@ public class PlayerClimbState : PlayerBaseState
         _ctx.CameraControllers.Cine.ToggleCineInput(enable);
     }
 
-
-
-
-
-
-
     private void CheckClimbType(float climbHeight)
     {
-        bool isVault = _ctx.StateControllers.Climb.GetIsVault();
-        if(isVault)
+        if(_ctx.StateControllers.Climb.IsVault)
         {
-            //_ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
-            Vault(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
+            Vault(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
             return;
         }
 
-        if (climbHeight >= 0.2f && climbHeight <= 1.1f)
-        {
-            //_ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
-            ClimbSmall(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
-        }
-        else if (climbHeight > 1.1f && climbHeight <= 2)
-        {
-            //_ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
-            ClimbMid(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
-        }
-        else if (climbHeight > 2 && climbHeight <= 3.5f)
-        {
-            //_ctx.CameraControllers.Cine.VerticalController.RotateToAngle(0, 0.3f);
-            ClimbHigh(_ctx.StateControllers.Climb.GetFinalClimbPosition(), _ctx.StateControllers.Climb.GetStartClimbPosition());
-        }
-        else
-        {
-            _ctx.SwitchController.SwitchTo.Idle();
-        }
+        if (climbHeight >= 0.2f && climbHeight <= 1.1f) ClimbSmall(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
+        else if (climbHeight > 1.1f && climbHeight <= 2) ClimbMid(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
+        else if (climbHeight > 2 && climbHeight <= 3.5f) ClimbHigh(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
+        else _ctx.SwitchController.SwitchTo.Idle();
     }
 
+    private void Vault(Vector3 finalClimbPosition, Vector3 startClimbPosition)
+    {
+        _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 1);
 
-
+        LeanTween.cancel(_ctx.gameObject);
+        _ctx.transform.LeanMove(startClimbPosition - _ctx.transform.forward / 2, 0.2f).setOnComplete(() =>
+        {
+            _ctx.AnimatingControllers.Animator.SetBool("Climb", true);
+            _ctx.transform.LeanMove(finalClimbPosition - _ctx.transform.forward / 2, 0.3f).setOnComplete(() =>
+            {
+                _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
+                _ctx.SwitchController.SwitchTo.Idle();
+            });
+        });
+    }
     private void ClimbSmall(Vector3 finalClimbPosition, Vector3 startClimbPosition)
     {
         _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 0);
@@ -136,22 +125,6 @@ public class PlayerClimbState : PlayerBaseState
                 {
                     _ctx.SwitchController.SwitchTo.Idle();
                 });
-            });
-        });
-    }
-
-    private void Vault(Vector3 finalClimbPosition, Vector3 startClimbPosition)
-    {
-        _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 1);
-
-        LeanTween.cancel(_ctx.gameObject);
-        _ctx.transform.LeanMove(startClimbPosition - _ctx.transform.forward / 2, 0.2f).setOnComplete(() =>
-        {
-            _ctx.AnimatingControllers.Animator.SetBool("Climb", true);
-            _ctx.transform.LeanMove(finalClimbPosition - _ctx.transform.forward / 2, 0.3f).setOnComplete(() =>
-            {
-                _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
-                _ctx.SwitchController.SwitchTo.Idle();
             });
         });
     }
