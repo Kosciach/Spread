@@ -63,6 +63,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         public PlayerCineCameraController Cine;
         public PlayerHandsCameraController Hands;
+        public MainCameraHeadClippingCorrector HeadClippingCorrector;
     }
 
     [System.Serializable]

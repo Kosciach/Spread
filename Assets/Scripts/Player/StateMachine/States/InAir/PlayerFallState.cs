@@ -11,6 +11,7 @@ public class PlayerFallState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.AnimatingControllers.Animator.SetTrigger("Fall", false);
+        ChangeColliderRadius();
         SetWeaponInAirSmooth();
     }
     public override void StateUpdate()
@@ -39,6 +40,10 @@ public class PlayerFallState : PlayerBaseState
     }
 
 
+    private void ChangeColliderRadius()
+    {
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
+    }
     private void SetWeaponInAirSmooth()
     {
         _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);

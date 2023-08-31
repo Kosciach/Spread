@@ -63,7 +63,7 @@ public class PlayerClimbController : MonoBehaviour
         _finalClimbPosition = topRayHit.point + transform.forward / 2;
         _detectedWallHeight = topRayHit.point.y - transform.position.y + 0.08f;
 
-        return _detectedWallHeight > 0.5f && _detectedWallHeight <= 3.5f;
+        return _detectedWallHeight >= 0.2f && _detectedWallHeight <= 3.5f;
     }
 
 

@@ -10,6 +10,7 @@ public class PlayerJumpState : PlayerBaseState
     public override void StateEnter()
     {
         Jump();
+        ChangeColliderRadius();
         SetWeaponInAirSmooth();
     }
     public override void StateUpdate()
@@ -38,6 +39,10 @@ public class PlayerJumpState : PlayerBaseState
         _ctx.AnimatingControllers.Animator.SetTrigger("Land", true);
         _ctx.AnimatingControllers.Animator.SetTrigger("Jump", false);
         _ctx.MovementControllers.VerticalVelocity.Jump.Jump();
+    }
+    private void ChangeColliderRadius()
+    {
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
     }
     private void SetWeaponInAirSmooth()
     {
