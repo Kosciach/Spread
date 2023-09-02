@@ -62,13 +62,13 @@ public class PlayerClimbState : PlayerBaseState
 
         if (climbHeight >= 0.2f && climbHeight <= 1.1f) ClimbSmall(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
         else if (climbHeight > 1.1f && climbHeight <= 2) ClimbMid(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
-        else if (climbHeight > 2 && climbHeight <= 3.5f) ClimbHigh(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
+        else if (climbHeight > 2 && climbHeight <= 5) ClimbHigh(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
         else _ctx.SwitchController.SwitchTo.Idle();
     }
 
     private void Vault(Vector3 finalClimbPosition, Vector3 startClimbPosition)
     {
-        _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 3);
+        _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 4);
 
         LeanTween.cancel(_ctx.gameObject);
         _ctx.transform.LeanMove(startClimbPosition - _ctx.transform.forward / 2, 0.3f).setOnComplete(() =>

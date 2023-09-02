@@ -52,7 +52,7 @@ public class PlayerFallState : PlayerBaseState
     private void CheckSwitches()
     {
         if (_ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
-        if (_ctx.StateControllers.Climb.CheckFallingClimb()) _ctx.SwitchController.SwitchTo.InAirClimb();
+        if (_ctx.StateControllers.Climb.CheckFallClimb()) _ctx.SwitchController.SwitchTo.InAirClimb();
         if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
     }
 }
