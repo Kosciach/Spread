@@ -11,6 +11,7 @@ public class PlayerFallState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.AnimatingControllers.Animator.SetTrigger("Fall", false);
+        ChangeColliderRadius();
         SetWeaponInAirSmooth();
     }
     public override void StateUpdate()
@@ -39,6 +40,10 @@ public class PlayerFallState : PlayerBaseState
     }
 
 
+    private void ChangeColliderRadius()
+    {
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
+    }
     private void SetWeaponInAirSmooth()
     {
         _ctx.AnimatingControllers.Weapon.InAir.SetPosSpeed(5);
@@ -47,7 +52,7 @@ public class PlayerFallState : PlayerBaseState
     private void CheckSwitches()
     {
         if (_ctx.MovementControllers.VerticalVelocity.Gravity.IsGrounded) _ctx.SwitchController.SwitchTo.Land();
-        if (_ctx.StateControllers.Climb.CheckFallingClimb()) _ctx.SwitchController.SwitchTo.InAirClimb();
+        if (_ctx.StateControllers.Climb.CheckFallClimb()) _ctx.SwitchController.SwitchTo.InAirClimb();
         if (_ctx.StateControllers.Swim.CheckSwimEnter()) _ctx.SwitchController.SwitchTo.Swim();
     }
 }

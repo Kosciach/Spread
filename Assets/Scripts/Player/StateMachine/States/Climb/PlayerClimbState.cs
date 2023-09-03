@@ -42,13 +42,14 @@ public class PlayerClimbState : PlayerBaseState
     private void ClimbEnterExit(bool enable)
     {
         _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, enable, 0.5f);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, enable, 0.1f);
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, enable, 0.1f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, enable, 0.5f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, enable, 0.5f);
 
         _ctx.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(enable);
         _ctx.CoreControllers.Collider.ToggleCollider(enable);
 
         _ctx.CameraControllers.Cine.ToggleCineInput(enable);
+        _ctx.CameraControllers.HeadClippingCorrector.Toggle(enable);
     }
 
     private void CheckClimbType(float climbHeight)
@@ -61,34 +62,38 @@ public class PlayerClimbState : PlayerBaseState
 
         if (climbHeight >= 0.2f && climbHeight <= 1.1f) ClimbSmall(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
         else if (climbHeight > 1.1f && climbHeight <= 2) ClimbMid(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
-        else if (climbHeight > 2 && climbHeight <= 3.5f) ClimbHigh(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
+        else if (climbHeight > 2 && climbHeight <= 5) ClimbHigh(_ctx.StateControllers.Climb.FinalClimbPosition, _ctx.StateControllers.Climb.StartClimbPosition);
         else _ctx.SwitchController.SwitchTo.Idle();
     }
 
     private void Vault(Vector3 finalClimbPosition, Vector3 startClimbPosition)
     {
-        _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 1);
+        _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 4);
 
         LeanTween.cancel(_ctx.gameObject);
-        _ctx.transform.LeanMove(startClimbPosition - _ctx.transform.forward / 2, 0.2f).setOnComplete(() =>
+        _ctx.transform.LeanMove(startClimbPosition - _ctx.transform.forward / 2, 0.3f).setOnComplete(() =>
         {
-            _ctx.AnimatingControllers.Animator.SetBool("Climb", true);
-            _ctx.transform.LeanMove(finalClimbPosition - _ctx.transform.forward / 2, 0.3f).setOnComplete(() =>
+            _ctx.AnimatingControllers.Animator.SetTrigger("Climb", false);
+            _ctx.transform.LeanMove(startClimbPosition + (_ctx.transform.forward -(_ctx.transform.forward/2)) + Vector3.up, 0.4f).setOnComplete(() =>
             {
-                _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
-                _ctx.SwitchController.SwitchTo.Idle();
+                _ctx.transform.LeanMove(startClimbPosition + (_ctx.transform.forward + (_ctx.transform.forward / 1.5f)) + Vector3.up, 0.4f).setOnComplete(() =>
+                {
+                    _ctx.transform.LeanMove(startClimbPosition + _ctx.transform.forward * 2, 0.3f).setOnComplete(() =>
+                    {
+                        _ctx.SwitchController.SwitchTo.Idle();
+                    });
+                });
             });
         });
     }
     private void ClimbSmall(Vector3 finalClimbPosition, Vector3 startClimbPosition)
     {
         _ctx.AnimatingControllers.Animator.SetInt("ClimbType", 0);
-        _ctx.AnimatingControllers.Animator.SetBool("Climb", true);
+        _ctx.AnimatingControllers.Animator.SetTrigger("Climb", false);
 
         LeanTween.cancel(_ctx.gameObject);
         _ctx.transform.LeanMove(startClimbPosition, 0.2f).setOnComplete(() =>
         {
-            _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
             _ctx.transform.LeanMove(finalClimbPosition, 0.5f).setOnComplete(() =>
             {
                 _ctx.SwitchController.SwitchTo.Idle();
@@ -102,10 +107,9 @@ public class PlayerClimbState : PlayerBaseState
         LeanTween.cancel(_ctx.gameObject);
         _ctx.transform.LeanMove(startClimbPosition - _ctx.transform.forward/2, 0.2f).setOnComplete(() =>
         {
-            _ctx.AnimatingControllers.Animator.SetBool("Climb", true);
+            _ctx.AnimatingControllers.Animator.SetTrigger("Climb", false);
             _ctx.transform.LeanMove(finalClimbPosition, 0.5f).setOnComplete(() =>
             {
-                _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
                 _ctx.SwitchController.SwitchTo.Idle();
             });
         });
@@ -117,10 +121,9 @@ public class PlayerClimbState : PlayerBaseState
         LeanTween.cancel(_ctx.gameObject);
         _ctx.transform.LeanMove(startClimbPosition - _ctx.transform.forward / 2, 0.2f).setOnComplete(() =>
         {
-            _ctx.AnimatingControllers.Animator.SetBool("Climb", true);
+            _ctx.AnimatingControllers.Animator.SetTrigger("Climb", false);
             _ctx.transform.LeanMoveY(finalClimbPosition.y / 2, 0.33f).setOnComplete(() =>
             {
-                _ctx.AnimatingControllers.Animator.SetBool("Climb", false);
                 _ctx.transform.LeanMove(finalClimbPosition, 0.66f).setOnComplete(() =>
                 {
                     _ctx.SwitchController.SwitchTo.Idle();

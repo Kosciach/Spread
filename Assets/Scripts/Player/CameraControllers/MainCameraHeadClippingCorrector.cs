@@ -18,6 +18,7 @@ public class MainCameraHeadClippingCorrector : MonoBehaviour
     [Range(0, 5)]
     [SerializeField] float _cameraCorrectionSpeed;
 
+    private int _toggle = 1;
 
 
 
@@ -42,8 +43,13 @@ public class MainCameraHeadClippingCorrector : MonoBehaviour
 
     private void CorrectCamera()
     {
-        _cameraCorrection += _isCameraInWallInt * _cameraCorrectionSpeed;
+        _cameraCorrection += _isCameraInWallInt * _cameraCorrectionSpeed * _toggle;
         _cameraCorrection = Mathf.Clamp(_cameraCorrection, 0, 45);
         _cineCameraController.Vertical.SetBorderValues(-70, 70 - _cameraCorrection);
+    }
+
+    public void Toggle(bool enable)
+    {
+        _toggle = enable ? 1 : 0;
     }
 }
