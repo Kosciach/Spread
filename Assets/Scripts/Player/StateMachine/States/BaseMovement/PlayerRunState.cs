@@ -15,6 +15,8 @@ public class PlayerRunState : PlayerBaseState
         _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(true);
 
         _ctx.CameraControllers.Cine.Fov.SetFov(15, 1f);
+        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.OnGround, 0.5f);
+
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed) && _ctx.CombatControllers.Throw.CurrentThrowable == null)
         {
             _ctx.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Run, 0.2f);
@@ -51,6 +53,7 @@ public class PlayerRunState : PlayerBaseState
             _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);
             StateChange(_factory.Walk());
         }
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Jump))
         {
             _ctx.CombatControllers.EquipedWeapon.Run.ToggleRun(false);

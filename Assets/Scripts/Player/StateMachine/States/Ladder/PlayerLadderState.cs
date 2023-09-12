@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
+using System;
 
 public class PlayerLadderState : PlayerBaseState
 {
@@ -12,22 +13,26 @@ public class PlayerLadderState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(false);
+        _ctx.CoreControllers.Collider.ToggleCollider(false);
+
         _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false, 0.5f);
 
-        _ctx.StateControllers.Ladder.ResetBools();
+        _ctx.AnimatingControllers.IkLayers.SetLayerWeight(LayerEnum.Body, 0.5f, 0.5f);
+        _ctx.AnimatingControllers.IkLayers.SetLayerWeight(LayerEnum.Head, 0.5f, 0.5f);
 
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, false, 0.5f);
-        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, false, 0.5f);
-        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.Ladder, 0.2f);
+        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.Ladder, 0.5f);
 
-        if (_ctx.StateControllers.Ladder.GetLadderType() == PlayerLadderController.LadderEnum.LowerEnter) _ctx.StateControllers.Ladder.LowerLadderEnter();
-        else if (_ctx.StateControllers.Ladder.GetLadderType() == PlayerLadderController.LadderEnum.HigherEnter) _ctx.StateControllers.Ladder.HigherLadderEnter();
+
+        Action enterMethod = _ctx.StateControllers.Ladder.IsOnTop ? EnterTop : EnterNormally;
+        enterMethod();
+
+        _ctx.AnimatingControllers.Animator.SetTrigger("LadderEnter", false);
     }
     public override void StateUpdate()
     {
-        _ctx.StateControllers.Ladder.CheckLadderLowerExit();
-
         _ctx.MovementControllers.Movement.Ladder.Movement();
+        _ctx.StateControllers.Ladder.CheckExit();
     }
     public override void StateFixedUpdate()
     {
@@ -39,10 +44,26 @@ public class PlayerLadderState : PlayerBaseState
     }
     public override void StateExit()
     {
-        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, true, 0.5f);
-        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, true, 0.5f);
-        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.OnGround, 0.2f);
+        _ctx.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(true);
+        _ctx.CoreControllers.Collider.ToggleCollider(true);
 
         _ctx.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
+
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, true, 0.5f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, true, 0.5f);
+
+        _ctx.StateControllers.Ladder.RestoreCameraSettings();
+    }
+
+
+    private void EnterTop()
+    {
+        _ctx.StateControllers.Ladder.RotatePlayerToLadder(1);
+        _ctx.StateControllers.Ladder.MoveToLadderFromTop();
+    }
+    private void EnterNormally()
+    {
+        _ctx.StateControllers.Ladder.RotatePlayerToLadder(0.3f);
+        _ctx.StateControllers.Ladder.MoveToLadderNormally();
     }
 }

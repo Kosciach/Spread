@@ -11,6 +11,8 @@ public class PlayerWalkState : PlayerBaseState
     public override void StateEnter()
     {
         _ctx.CameraControllers.Cine.Fov.SetFov(5, 0.5f);
+        _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.OnGround, 0.5f);
+
         if (_ctx.CombatControllers.Combat.IsState(PlayerCombatController.CombatStateEnum.Unarmed) && _ctx.CombatControllers.Throw.CurrentThrowable == null)
         {
             _ctx.CameraControllers.Hands.Move.ChangePreset(PositionsPresetsLabels.Walk, 0.2f);

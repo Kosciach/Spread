@@ -43,6 +43,19 @@ namespace IkLayers
 
             return this;
         }
+        public PlayerIkLayerController SetLayerWeight(LayerEnum layer, float weight, float duration)
+        {
+            LayerData currentLayerData = _layerData[(int)layer];
+
+
+            if (currentLayerData.LerpCoroutine != null) StopCoroutine(currentLayerData.LerpCoroutine);
+
+            currentLayerData.LerpCoroutine = currentLayerData.Lerp(currentLayerData.LayerWeight, weight, duration);
+            StartCoroutine(currentLayerData.LerpCoroutine);
+
+            return this;
+        }
+
         public float GetLayerWeight(LayerEnum layer)
         {
             return _layerData[(int)layer].LayerWeight;

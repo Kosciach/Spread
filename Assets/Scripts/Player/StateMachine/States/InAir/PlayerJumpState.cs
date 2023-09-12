@@ -27,6 +27,7 @@ public class PlayerJumpState : PlayerBaseState
     public override void StateCheckChange()
     {
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Fall)) StateChange(_factory.Fall());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
     }
     public override void StateExit()
     {
@@ -42,7 +43,7 @@ public class PlayerJumpState : PlayerBaseState
     }
     private void ChangeColliderRadius()
     {
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.8f, 0.2f);
     }
     private void SetWeaponInAirSmooth()
     {

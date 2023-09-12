@@ -28,6 +28,7 @@ public class PlayerFallState : PlayerBaseState
     public override void StateCheckChange()
     {
         if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Land)) StateChange(_factory.Land());
+        else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Ladder)) StateChange(_factory.Ladder());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.InAirClimb)) StateChange(_factory.InAirClimb());
         else if (_ctx.SwitchController.IsSwitch(PlayerStateMachine.SwitchEnum.Swim))
         {
@@ -42,7 +43,7 @@ public class PlayerFallState : PlayerBaseState
 
     private void ChangeColliderRadius()
     {
-        _ctx.CoreControllers.Collider.SetColliderRadius(0.2f, 0.2f);
+        _ctx.CoreControllers.Collider.SetColliderRadius(0.8f, 0.2f);
     }
     private void SetWeaponInAirSmooth()
     {

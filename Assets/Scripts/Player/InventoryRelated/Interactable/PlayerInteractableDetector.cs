@@ -25,26 +25,20 @@ public class PlayerInteractableDetector : MonoBehaviour
             _closestInteractable.GetComponent<IHighlightable>().UnHighlight();
             _closestInteractable = null;
         }
-        if (_allInteractablesDetected.Length <= 0)
-        {
-            return;
-        }
+        if (_allInteractablesDetected.Length <= 0) return;
 
-        float distanceToClosestOutline = 1000;
-        float distanceToCurrentOutline;
+        float distanceToClosestInteractable = 1000;
+        float distanceToCurrentInteractable;
         foreach (Collider interactable in _allInteractablesDetected)
         {
-            distanceToCurrentOutline = Vector3.Distance(interactable.transform.position, transform.position);
-            if(distanceToCurrentOutline < distanceToClosestOutline)
+            distanceToCurrentInteractable = Vector3.Distance(interactable.transform.position, transform.position);
+            if(distanceToCurrentInteractable < distanceToClosestInteractable)
             {
-                distanceToClosestOutline = distanceToCurrentOutline;
+                distanceToClosestInteractable = distanceToCurrentInteractable;
                 _closestInteractable = interactable;
             }
         }
 
-        if (_closestInteractable != null)
-        {
-            _closestInteractable.GetComponent<IHighlightable>().Highlight();
-        }
+        if (_closestInteractable != null) _closestInteractable.GetComponent<IHighlightable>().Highlight();
     }
 }
