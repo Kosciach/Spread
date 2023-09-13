@@ -13,26 +13,30 @@ public class PlayerLadderState : PlayerBaseState
 
     public override void StateEnter()
     {
+        _ctx.StateControllers.Ladder.IsExit = false;
+
         _ctx.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(false);
         _ctx.CoreControllers.Collider.ToggleCollider(false);
 
         _ctx.CombatControllers.Combat.TemporaryUnEquip.StartTemporaryUnEquip(false, 0.5f);
 
-        _ctx.AnimatingControllers.IkLayers.SetLayerWeight(LayerEnum.Body, 0.5f, 0.5f);
-        _ctx.AnimatingControllers.IkLayers.SetLayerWeight(LayerEnum.Head, 0.5f, 0.5f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, false, 0.5f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, false, 0.5f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, false, 0.5f);
 
         _ctx.CameraControllers.Cine.Move.SetCameraPosition(PlayerCineCamera_Move.CameraPositionsEnum.Ladder, 0.5f);
 
 
-        Action enterMethod = _ctx.StateControllers.Ladder.IsOnTop ? EnterTop : EnterNormally;
+        Action enterMethod = _ctx.StateControllers.Ladder.IsEnterTop ? EnterTop : EnterNormally;
         enterMethod();
+
 
         _ctx.AnimatingControllers.Animator.SetTrigger("LadderEnter", false);
     }
     public override void StateUpdate()
     {
         _ctx.MovementControllers.Movement.Ladder.Movement();
-        _ctx.StateControllers.Ladder.CheckExit();
+        if(!_ctx.StateControllers.Ladder.IsExit) _ctx.StateControllers.Ladder.CheckExit();
     }
     public override void StateFixedUpdate()
     {
@@ -49,6 +53,8 @@ public class PlayerLadderState : PlayerBaseState
 
         _ctx.CombatControllers.Combat.TemporaryUnEquip.RecoverFromTemporaryUnEquip();
 
+        _ctx.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, true, 0.5f);
+        _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, true, 0.5f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, true, 0.5f);
         _ctx.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, true, 0.5f);
 
@@ -58,7 +64,7 @@ public class PlayerLadderState : PlayerBaseState
 
     private void EnterTop()
     {
-        _ctx.StateControllers.Ladder.RotatePlayerToLadder(1);
+        _ctx.StateControllers.Ladder.RotatePlayerToLadder(0.5f);
         _ctx.StateControllers.Ladder.MoveToLadderFromTop();
     }
     private void EnterNormally()

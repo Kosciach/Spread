@@ -2,7 +2,8 @@ using SimpleMan.CoroutineExtensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
+using PlayerAnimator;
+using IkLayers;
 
 public class PlayerLadderController : MonoBehaviour
 {
@@ -10,17 +11,21 @@ public class PlayerLadderController : MonoBehaviour
     [SerializeField] PlayerStateMachine _playerStateMachine;
 
 
-    private bool _isOnTop;  public bool IsOnTop { get { return _isOnTop; } }
+    private bool _isEnterTop;  public bool IsEnterTop { get { return _isEnterTop; } }
+    private bool _isExit;  public bool IsExit { get { return _isExit; } set { _isExit = value; } }
+
     private LadderController _currentLadderController; public LadderController CurrentLadderController { get { return _currentLadderController; } }
 
-    public void OnInteract(bool isOnTop, LadderController currentLadderController)
+
+
+
+
+    public void OnInteract(bool isEnterTop, LadderController currentLadderController)
     {
-        _isOnTop = isOnTop;
+        _isEnterTop = isEnterTop;
         _currentLadderController = currentLadderController;
         _playerStateMachine.SwitchController.SwitchTo.Ladder();
     }
-
-
 
     public void RotatePlayerToLadder(float rotationDuration)
     {
@@ -56,17 +61,33 @@ public class PlayerLadderController : MonoBehaviour
     {
         Vector3 pos = _currentLadderController.transform.GetChild(1).position;
 
-        _playerStateMachine.transform.LeanMove(pos, 0.3f);
+        _playerStateMachine.transform.LeanMove(pos, 0.2f);
     }
 
     public void CheckExit()
     {
-        if (_playerStateMachine.CoreControllers.Input.MovementInputVectorNormalized.z > 0)
+        if (_playerStateMachine.CoreControllers.Input.MovementInputVectorNormalized.z > 0 && _playerStateMachine.transform.position.y >= _currentLadderController.transform.GetChild(2).position.y)
         {
+            _isExit = true;
 
+            _playerStateMachine.MovementControllers.Movement.Ladder.ToggleMovement(false);
+            _playerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, false, 0.1f);
+            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, false, 0.1f);
+            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, false, 0.1f);
+            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, false, 0.1f);
+
+
+            _playerStateMachine.AnimatingControllers.Animator.SetTrigger("LadderExitTop", false);
+            _playerStateMachine.transform.LeanMove(_currentLadderController.transform.GetChild(3).position, 1).setOnComplete(() =>
+            {
+                _playerStateMachine.MovementControllers.Movement.Ladder.ToggleMovement(true);
+                _playerStateMachine.SwitchController.SwitchTo.Idle();
+            });
         }
         else if (_playerStateMachine.CoreControllers.Input.MovementInputVectorNormalized.z < 0 && _playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded)
         {
+            _isExit = true;
+
             _playerStateMachine.AnimatingControllers.Animator.SetTrigger("LadderExitNormal", false);
             _playerStateMachine.SwitchController.SwitchTo.Idle();
         }
