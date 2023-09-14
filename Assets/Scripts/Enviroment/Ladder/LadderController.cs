@@ -10,6 +10,7 @@ public class LadderController : MonoBehaviour, IInteractable, IHighlightable
 
 
 
+
     public void Interact()
     {
         _playerStateMachine.StateControllers.Ladder.OnInteract(_playerStateMachine.transform.position.y >= transform.GetChild(0).position.y, this);
