@@ -2,18 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LadderController : MonoBehaviour, IInteractable, IHighlightable
+public class LadderController : LadderCreator, IInteractable, IHighlightable
 {
-    [Header("====References====")]
+    [Space(20)]
+    [Header("====References-LadderController====")]
     [SerializeField] PlayerStateMachine _playerStateMachine;
-    [SerializeField] Outline _outline;
+    private Outline _outline;
 
+    public LadderCreator.LadderParts Parts { get { return _parts; } }
 
+    private new void Awake()
+    {
+        base.Awake();
+        _outline = gameObject.AddComponent<Outline>();
+        _outline.OutlineWidth = 0;
+    }
 
 
     public void Interact()
     {
-        _playerStateMachine.StateControllers.Ladder.OnInteract(_playerStateMachine.transform.position.y >= transform.GetChild(0).position.y, this);
+        _playerStateMachine.StateControllers.Ladder.OnInteract(_playerStateMachine.transform.position.y >= _ladderTop.position.y, this);
     }
 
 

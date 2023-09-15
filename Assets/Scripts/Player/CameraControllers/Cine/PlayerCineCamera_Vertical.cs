@@ -26,6 +26,15 @@ public class PlayerCineCamera_Vertical : MonoBehaviour
         _cineCameraRotateVertical.LerpCoroutine = _cineCameraRotateVertical.Lerp(angle, duration);
         StartCoroutine(_cineCameraRotateVertical.LerpCoroutine);
     }
+    public void RotateToAngleLT(float angle, float duration)
+    {
+        if (_cineCameraRotateVertical.LerpCoroutine != null) StopCoroutine(_cineCameraRotateVertical.LerpCoroutine);
+
+        LeanTween.value(_cineCameraController.CinePOV.m_VerticalAxis.Value, angle, duration).setOnUpdate((float val) =>
+        {
+            _cineCameraController.CinePOV.m_VerticalAxis.Value = val;
+        });
+    }
     public void SetRotateOnFinish(Action toDo)
     {
         _cineCameraRotateVertical.OnFinish = toDo;

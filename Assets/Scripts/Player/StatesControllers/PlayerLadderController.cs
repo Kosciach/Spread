@@ -4,19 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnimator;
 using IkLayers;
+using System;
 
 public class PlayerLadderController : MonoBehaviour
 {
     [Header("====References====")]
     [SerializeField] PlayerStateMachine _playerStateMachine;
 
-
-    private bool _isEnterTop;  public bool IsEnterTop { get { return _isEnterTop; } }
-    private bool _isExit;  public bool IsExit { get { return _isExit; } set { _isExit = value; } }
-
     private LadderController _currentLadderController; public LadderController CurrentLadderController { get { return _currentLadderController; } }
-
-
+    private Action _enter; public Action Enter { get { return _enter; } }
+    private bool _isEnterTop; public bool IsEnterTop { get { return _isEnterTop; } }
+    private bool _isExit; public bool IsExit { get { return _isExit; } set { _isExit = value; } }
 
 
 
@@ -24,72 +22,62 @@ public class PlayerLadderController : MonoBehaviour
     {
         _isEnterTop = isEnterTop;
         _currentLadderController = currentLadderController;
+        _enter = isEnterTop ? EnterTop : EnterNormally;
         _playerStateMachine.SwitchController.SwitchTo.Ladder();
     }
 
-    public void RotatePlayerToLadder(float rotationDuration)
+    private void EnterNormally()
     {
-        float targetRotation = _currentLadderController.transform.rotation.eulerAngles.y + 90;
+        _playerStateMachine.CoreControllers.Collider.ToggleCollider(false);
+        _playerStateMachine.MovementControllers.VerticalVelocity.Gravity.ToggleApplyGravity(false);
+        _playerStateMachine.CameraControllers.HeadClippingCorrector.Toggle(false);
 
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, false, 0.3f);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, false, 0.3f);
+        _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, false, 0.3f);
+
+        Vector3 moveToPosition = FindClosestStep().position - _currentLadderController.transform.right;
+        _playerStateMachine.transform.LeanMove(moveToPosition, 0.5f).setEaseInOutCubic();
+
+        float targetPlayerRotationY = _currentLadderController.transform.eulerAngles.y + 90;
         _playerStateMachine.CameraControllers.Cine.ToggleCineInput(false);
-
-        LeanTween.value(_playerStateMachine.CameraControllers.Cine.CinePOV.m_HorizontalAxis.Value, targetRotation, rotationDuration).setOnUpdate((float val) =>
+        _playerStateMachine.CameraControllers.Cine.Vertical.RotateToAngleLT(-50, 0.3f);
+        LeanTween.value(_playerStateMachine.CameraControllers.Cine.CinePOV.m_HorizontalAxis.Value, targetPlayerRotationY, 0.4f).setEaseInOutCubic().setOnUpdate((float val) =>
         {
             _playerStateMachine.CameraControllers.Cine.CinePOV.m_HorizontalAxis.Value = val;
             _playerStateMachine.MovementControllers.Rotation.RotateToCanera();
         }).setOnComplete(() =>
         {
             _playerStateMachine.CameraControllers.Cine.Horizontal.ToggleWrap(false);
-            _playerStateMachine.CameraControllers.Cine.Horizontal.SetBorderValues(targetRotation - 30, targetRotation + 30);
-            this.Delay(0.1f, () => { _playerStateMachine.CameraControllers.Cine.ToggleCineInput(true); });
+            _playerStateMachine.CameraControllers.Cine.Horizontal.SetBorderValues(targetPlayerRotationY-45, targetPlayerRotationY+45);
+            _playerStateMachine.CameraControllers.Cine.Vertical.SetBorderValues(-70, 45);
+            _playerStateMachine.CameraControllers.Cine.ToggleCineInput(true);
         });
     }
-    public void RestoreCameraSettings()
+    private void EnterTop()
     {
-        _playerStateMachine.CameraControllers.Cine.Horizontal.SetBorderValues(-180, 180);
-        _playerStateMachine.CameraControllers.Cine.Horizontal.ToggleWrap(true);
+        
     }
 
-    public void MoveToLadderNormally()
-    {
-        Vector3 pos = _currentLadderController.transform.GetChild(1).position;
-        pos.y = _playerStateMachine.transform.position.y + 1;
 
-        _playerStateMachine.transform.LeanMove(pos, 0.3f);
-    }
-    public void MoveToLadderFromTop()
-    {
-        Vector3 pos = _currentLadderController.transform.GetChild(1).position;
 
-        _playerStateMachine.transform.LeanMove(pos, 0.2f);
-    }
-
-    public void CheckExit()
+    private Transform FindClosestStep()
     {
-        if (_playerStateMachine.CoreControllers.Input.MovementInputVectorNormalized.z > 0 && _playerStateMachine.transform.position.y >= _currentLadderController.transform.GetChild(2).position.y)
+        Transform closestStep = _currentLadderController.Parts.Steps[0];
+        float smallestStepDiffrence = 1000;
+
+        for(int i=0; i<_currentLadderController.Parts.Steps.Count; i++)
         {
-            _isExit = true;
+            Transform currentStep = _currentLadderController.Parts.Steps[i];
+            float currentStepDiff = Vector3.Distance(_playerStateMachine.transform.position, currentStep.position);
 
-            _playerStateMachine.MovementControllers.Movement.Ladder.ToggleMovement(false);
-            _playerStateMachine.AnimatingControllers.Animator.ToggleLayer(LayersEnum.TopBodyStabilizer, false, 0.1f);
-            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.SpineLock, false, 0.1f);
-            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, false, 0.1f);
-            _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, false, 0.1f);
-
-
-            _playerStateMachine.AnimatingControllers.Animator.SetTrigger("LadderExitTop", false);
-            _playerStateMachine.transform.LeanMove(_currentLadderController.transform.GetChild(3).position, 1).setOnComplete(() =>
+            if(currentStepDiff < smallestStepDiffrence)
             {
-                _playerStateMachine.MovementControllers.Movement.Ladder.ToggleMovement(true);
-                _playerStateMachine.SwitchController.SwitchTo.Idle();
-            });
+                closestStep = currentStep;
+                smallestStepDiffrence = currentStepDiff;
+            }
         }
-        else if (_playerStateMachine.CoreControllers.Input.MovementInputVectorNormalized.z < 0 && _playerStateMachine.MovementControllers.VerticalVelocity.Gravity.IsGrounded)
-        {
-            _isExit = true;
 
-            _playerStateMachine.AnimatingControllers.Animator.SetTrigger("LadderExitNormal", false);
-            _playerStateMachine.SwitchController.SwitchTo.Idle();
-        }
+        return closestStep;
     }
 }

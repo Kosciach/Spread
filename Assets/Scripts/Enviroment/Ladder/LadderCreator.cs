@@ -6,26 +6,27 @@ using UnityEngine;
 public class LadderCreator : MonoBehaviour
 {
     [Header("====References====")]
-    [SerializeField] LadderParts _parts;
-    [SerializeField] BoxCollider _collider;
-    [SerializeField] Transform _stepsParent;
+    [SerializeField] protected LadderParts _parts;
+    [SerializeField] protected BoxCollider _collider;
+    [SerializeField] protected Transform _stepsParent;
 
 
 
 
     [Space(20)]
     [Header("====Settings====")]
-    [SerializeField] Transform _stepPrefab;
+    [SerializeField] protected Transform _stepPrefab;
     [Space(5)]
-    [SerializeField] Transform _ladderTop;
-    [SerializeField] Transform _armsSpacing;
-    [SerializeField] Transform _firstStep;
+    [SerializeField] protected Transform _ladderOrigin;
+    [SerializeField] protected Transform _ladderTop;
+    [SerializeField] protected Transform _armsSpacing;
+    [SerializeField] protected Transform _firstStep;
     [Range(0.1f, 2)]
-    [SerializeField] float _stepsSpacing;
+    [SerializeField] protected float _stepsSpacing;
 
 
-    private float _ladderHeight;
-    private float _halfLadderWidth;
+    protected float _ladderHeight;
+    protected float _halfLadderWidth;
 
 
 
@@ -40,12 +41,13 @@ public class LadderCreator : MonoBehaviour
 
 
 
-    private void Start()
+    protected void Awake()
     {
         SetLadderHeight();
         SetArmsSpacing();
         HandleSteps();
         HandleCollider();
+        DisableMeshes();
     }
 
 
@@ -86,6 +88,8 @@ public class LadderCreator : MonoBehaviour
             Transform newStep = Instantiate(_stepPrefab, _stepsParent);
             newStep.position = _firstStep.position + Vector3.up * (_stepsSpacing * i);
             newStep.localScale = new Vector3(0.1f, _halfLadderWidth, 0.1f);
+
+            _parts.Steps.Add(newStep);
         }
     }
     private void HandleCollider()
@@ -98,5 +102,12 @@ public class LadderCreator : MonoBehaviour
         Vector3 center = _collider.center;
         center.y = size.y / 2;
         _collider.center = center;
+    }
+    private void DisableMeshes()
+    {
+        _ladderOrigin.localScale = Vector3.zero;
+        _ladderTop.localScale = Vector3.zero;
+        _armsSpacing.localScale = Vector3.zero;
+        _firstStep.localScale = Vector3.zero;
     }
 }
