@@ -17,7 +17,7 @@ public class PlayerLadderState : PlayerBaseState
     }
     public override void StateUpdate()
     {
-
+        _ctx.MovementControllers.Movement.Ladder.Movement();
     }
     public override void StateFixedUpdate()
     {

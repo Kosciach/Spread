@@ -1,3 +1,4 @@
+using SimpleMan.CoroutineExtensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,23 +9,15 @@ public class PlayerMovement_Ladder : MonoBehaviour
     [SerializeField] PlayerMovementController _movementController;
 
 
-
     [Space(20)]
     [Header("====Debugs====")]
-    [Range(0, 1)]
-    [SerializeField] int _movementToggle;
-
+    [SerializeField] bool _isMoving;
 
 
     [Space(20)]
     [Header("====Settings====")]
-    [Range(0, 10)]
-    [SerializeField] float _speed;
-    [Space(5)]
-    [Range(0, 10)]
-    [SerializeField] float _accelarationSpeed;
-
-
+    [Range(0, 1)]
+    [SerializeField] float _climbDuration;
 
 
     private Vector3 _currentMovementVector; public Vector3 CurrentMovementVector { get { return _currentMovementVector; } }
@@ -33,27 +26,26 @@ public class PlayerMovement_Ladder : MonoBehaviour
 
     public void Movement()
     {
-        Vector3 inputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVectorNormalized;
-        Vector3 desiredLadderMovementVector = new Vector3(0f, inputVector.z * _speed * _movementToggle, 0f);
+        if ((int)_movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVector.z == 0) return;
 
-        _currentMovementVector = Vector3.Lerp(_currentMovementVector, desiredLadderMovementVector, _accelarationSpeed * Time.deltaTime);
-        _movementController.CharacterController.Move(_currentMovementVector * Time.deltaTime);
-
-        AnimatorMovement();
-    }
-    private void AnimatorMovement()
-    {
-        Vector3 inputVector = _movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVector;
-        Vector3 animatorMovementVector = inputVector * 2 * _movementToggle;
-
-        _movementController.PlayerStateMachine.AnimatingControllers.Animator.SetFloat("LadderVelocity", animatorMovementVector.z, 0.1f);
-    }
+        if (_isMoving) return;
+        _isMoving = true;
 
 
+        List<Transform> ladderSteps = _movementController.PlayerStateMachine.StateControllers.Ladder.CurrentLadderController.Parts.Steps;
 
+        _movementController.PlayerStateMachine.StateControllers.Ladder.CurrentStepIndex += (int)_movementController.PlayerStateMachine.CoreControllers.Input.MovementInputVector.z;
+        if (_movementController.PlayerStateMachine.StateControllers.Ladder.CurrentStepIndex < 0 || _movementController.PlayerStateMachine.StateControllers.Ladder.CurrentStepIndex >= ladderSteps.Count)
+        {
+            _movementController.PlayerStateMachine.StateControllers.Ladder.CurrentStepIndex = Mathf.Clamp(_movementController.PlayerStateMachine.StateControllers.Ladder.CurrentStepIndex, 0, ladderSteps.Count - 1);
+            _isMoving = false;
+            return;
+        }
 
-    public void ToggleMovement(bool enable)
-    {
-        _movementToggle = enable ? 1 : 0;
+        Vector3 moveToPosition = ladderSteps[_movementController.PlayerStateMachine.StateControllers.Ladder.CurrentStepIndex].position - _movementController.PlayerStateMachine.StateControllers.Ladder.CurrentLadderController.transform.right;
+        _movementController.PlayerStateMachine.transform.LeanMove(moveToPosition, _climbDuration).setOnComplete(() =>
+        {
+            _isMoving = false;
+        });
     }
 }

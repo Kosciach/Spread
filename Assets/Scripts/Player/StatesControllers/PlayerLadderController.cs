@@ -11,10 +11,11 @@ public class PlayerLadderController : MonoBehaviour
     [Header("====References====")]
     [SerializeField] PlayerStateMachine _playerStateMachine;
 
-    private LadderController _currentLadderController; public LadderController CurrentLadderController { get { return _currentLadderController; } }
-    private Action _enter; public Action Enter { get { return _enter; } }
-    private bool _isEnterTop; public bool IsEnterTop { get { return _isEnterTop; } }
-    private bool _isExit; public bool IsExit { get { return _isExit; } set { _isExit = value; } }
+    private LadderController _currentLadderController;      public LadderController CurrentLadderController { get { return _currentLadderController; } }
+    private Action _enter;                                  public Action Enter { get { return _enter; } }
+    private bool _isEnterTop;                               public bool IsEnterTop { get { return _isEnterTop; } }
+    private bool _isExit;                                   public bool IsExit { get { return _isExit; } set { _isExit = value; } }
+    private int _currentStepIndex;                          public int CurrentStepIndex { get { return _currentStepIndex; } set { _currentStepIndex = value; } }
 
 
 
@@ -36,7 +37,8 @@ public class PlayerLadderController : MonoBehaviour
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Body, false, 0.3f);
         _playerStateMachine.AnimatingControllers.IkLayers.ToggleLayer(LayerEnum.Head, false, 0.3f);
 
-        Vector3 moveToPosition = FindClosestStep().position - _currentLadderController.transform.right;
+        _currentStepIndex = GetClosestStepIndex();
+        Vector3 moveToPosition = _currentLadderController.Parts.Steps[_currentStepIndex].position - _currentLadderController.transform.right;
         _playerStateMachine.transform.LeanMove(moveToPosition, 0.5f).setEaseInOutCubic();
 
         float targetPlayerRotationY = _currentLadderController.transform.eulerAngles.y + 90;
@@ -61,9 +63,9 @@ public class PlayerLadderController : MonoBehaviour
 
 
 
-    private Transform FindClosestStep()
+    private int GetClosestStepIndex()
     {
-        Transform closestStep = _currentLadderController.Parts.Steps[0];
+        int closestStepIndex = 0;
         float smallestStepDiffrence = 1000;
 
         for(int i=0; i<_currentLadderController.Parts.Steps.Count; i++)
@@ -73,11 +75,11 @@ public class PlayerLadderController : MonoBehaviour
 
             if(currentStepDiff < smallestStepDiffrence)
             {
-                closestStep = currentStep;
                 smallestStepDiffrence = currentStepDiff;
+                closestStepIndex = i;
             }
         }
 
-        return closestStep;
+        return closestStepIndex;
     }
 }
