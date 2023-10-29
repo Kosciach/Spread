@@ -3,26 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Vault
-  - LadderLowerEnter
-  - LadderHigherEnter
-  - LadderHigherExit
-  - Water
-  - Ground
-  - Bullet
-  - WeaponBarrelTarget
-  - Weapon
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Player
-  - Interactable
-  - Hands
+  - 
+  - 
+  - 
   - 
   - 
   - 
