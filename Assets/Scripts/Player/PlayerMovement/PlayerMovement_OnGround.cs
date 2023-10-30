@@ -7,6 +7,11 @@ namespace PlayerMovement
     {
         private PlayerMovementController _movementController;
 
+        [Header("---OtherSettings---")]
+        [SerializeField] bool _useRootMotionMovement; public bool UseRootMotionMovement { get { return _useRootMotionMovement; } }
+
+
+        [Space(20)]
         [Header("---Speed---")]
         [Range(0, 10)][SerializeField] float _currentSpeed;
         [Range(0, 10)][SerializeField] float _walkSpeed;
@@ -32,6 +37,11 @@ namespace PlayerMovement
         public void Movement()
         {
             Vector3 inputVector = _movementController.PlayerStateMachine.Input.MovementInputVector;
+
+            SetAnimationSpeeds(inputVector);
+            if (_useRootMotionMovement) return;
+
+
             Vector3 direction = _movementController.transform.right * inputVector.x + _movementController.transform.forward * inputVector.y;
             _targetVelocity = direction * _currentSpeed * Time.deltaTime;
 
@@ -44,7 +54,7 @@ namespace PlayerMovement
         }
         private void SetAnimationSpeeds(Vector3 inputVector)
         {
-            _movementController.PlayerStateMachine.Animator.SetFloat("MovementSpeed", _currentSpeed, 0.1f, Time.deltaTime);
+            _movementController.PlayerStateMachine.Animator.SetFloat("MovementSpeed", _currentSpeed, 0.2f, Time.deltaTime);
             _movementController.PlayerStateMachine.Animator.SetFloat("MovementX", inputVector.x, 0.15f, Time.deltaTime);
             _movementController.PlayerStateMachine.Animator.SetFloat("MovementY", inputVector.y, 0.15f, Time.deltaTime);
         }
