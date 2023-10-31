@@ -24,6 +24,8 @@ namespace PlayerStateMachineSystem
         public override void CheckStateChange()
         {
             if (_ctx.Input.IsWalk) ChangeState(_factory.Walk());
+            else if (!_ctx.VerticalVel.GroundCheck.IsGrounded) ChangeState(_factory.Fall());
+            else if (_ctx.VerticalVel.Jump.IsJump) ChangeState(_factory.Jump());
 
             _ctx.SetStateEmblem(StateEmblems.Idle);
         }

@@ -24,6 +24,7 @@ namespace PlayerMovement
         [Header("---Velocity---")]
         [SerializeField] Vector3 _targetVelocity;
         [SerializeField] Vector3 _currentVelocity;
+        [SerializeField] Vector3 _rootMotionVelocity;
         private Vector3 _currentVelocityRef;
 
 
@@ -39,7 +40,13 @@ namespace PlayerMovement
             Vector3 inputVector = _movementController.PlayerStateMachine.Input.MovementInputVector;
 
             SetAnimationSpeeds(inputVector);
-            if (_useRootMotionMovement) return;
+            if (_useRootMotionMovement)
+            {
+                CalculateRootMotionVelocity();
+                SynchronizeVelocity(Vector3.zero);
+                _movementController.InAir.SynchronizeVelocity(_rootMotionVelocity);
+                return;
+            }
 
 
             Vector3 direction = _movementController.transform.right * inputVector.x + _movementController.transform.forward * inputVector.y;
@@ -52,12 +59,17 @@ namespace PlayerMovement
 
             _movementController.InAir.SynchronizeVelocity(_currentVelocity);
         }
+        private void CalculateRootMotionVelocity()
+        {
+            _rootMotionVelocity = (_movementController.PlayerStateMachine.Animator.deltaPosition / Time.deltaTime / 100) * 0.8f;
+        }
         private void SetAnimationSpeeds(Vector3 inputVector)
         {
             _movementController.PlayerStateMachine.Animator.SetFloat("MovementSpeed", _currentSpeed, 0.2f, Time.deltaTime);
             _movementController.PlayerStateMachine.Animator.SetFloat("MovementX", inputVector.x, 0.15f, Time.deltaTime);
             _movementController.PlayerStateMachine.Animator.SetFloat("MovementY", inputVector.y, 0.15f, Time.deltaTime);
         }
+
 
         public void SynchronizeVelocity(Vector3 velocity)
         {
@@ -66,17 +78,23 @@ namespace PlayerMovement
             _currentVelocityRef = velocity;
         }
 
+
+
+
         public void SetIdleSpeed()
         {
             _currentSpeed = 0;
+            _movementController.InAir.SetSpeed(_walkSpeed);
         }
         public void SetWalkSpeed()
         {
             _currentSpeed = _walkSpeed;
+            _movementController.InAir.SetSpeed(_walkSpeed);
         }
         public void SetRunSpeed()
         {
             _currentSpeed = _runSpeed;
+            _movementController.InAir.SetSpeed(_runSpeed);
         }
     }
 }

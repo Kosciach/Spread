@@ -1,6 +1,7 @@
 using UnityEngine;
 using PlayerMovement;
 using PlayerCamera;
+using PlayerVerticalVel;
 
 namespace PlayerStateMachineSystem
 {
@@ -22,8 +23,10 @@ namespace PlayerStateMachineSystem
         [Space(20)]
         [Header("---Scripts---")]
         [SerializeField] PlayerInputController _input; public PlayerInputController Input { get { return _input; } }
+        [SerializeField] PlayerVelocityCalculator _velocity; public PlayerVelocityCalculator Velocity { get { return _velocity; } }
         [SerializeField] PlayerMovementController _movement; public PlayerMovementController Movement { get { return _movement; } }
         [SerializeField] PlayerCameraController _camera; public PlayerCameraController Camera { get { return _camera; } }
+        [SerializeField] PlayerVerticalVelController _verticalVel; public PlayerVerticalVelController VerticalVel { get { return _verticalVel; } }
 
 
 
@@ -61,6 +64,7 @@ namespace PlayerStateMachineSystem
 
     public enum StateEmblems
     {
-        Idle, Walk, Run
+        Idle, Walk, Run,
+        Jump, Fall, Land, HardLanding
     }
 }
