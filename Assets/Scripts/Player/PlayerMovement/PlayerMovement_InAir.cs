@@ -34,7 +34,7 @@ namespace PlayerMovement
             Vector3 inputVector = _movementController.PlayerStateMachine.Input.MovementInputVector;
             Vector3 direction = _movementController.transform.right * inputVector.x + _movementController.transform.forward * inputVector.y;
 
-            _targetVelocity = direction * 5 * Time.deltaTime;
+            _targetVelocity = direction * 5 * Time.fixedDeltaTime /2;
             _currentVelocity = Vector3.SmoothDamp(_currentVelocity, _targetVelocity, ref _currentVelocityRef, _currentSmoothTime);
 
             _movementController.PlayerStateMachine.CharacterController.Move(_currentVelocity);
