@@ -20,8 +20,6 @@ namespace PlayerStateMachineSystem
         {
             _ctx.Movement.InAir.Movement();
 
-            UpdateMovementSpeed();
-
             _fallingVelocity += Time.deltaTime;
         }
         public override void LateUpdate()
@@ -42,16 +40,6 @@ namespace PlayerStateMachineSystem
         {
             _ctx.Animator.SetFloat("FallingVelocity", _fallingVelocity * 10);
             _ctx.Animator.SetFloat("FallingForwardVelocity", Mathf.Abs(Vector3.Dot(_ctx.Velocity.CurrentVelocity, _ctx.transform.forward)));
-        }
-
-
-
-
-
-        private void UpdateMovementSpeed()
-        {
-            float movementSpeedFromForwardVelocity = Mathf.Round(Mathf.Abs(Vector3.Dot(_ctx.Velocity.CurrentVelocity, _ctx.transform.forward)) / 3) * 3;
-            _ctx.Animator.SetFloat("MovementSpeed", movementSpeedFromForwardVelocity);
         }
     }
 }

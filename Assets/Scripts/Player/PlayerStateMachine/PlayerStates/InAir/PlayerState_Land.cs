@@ -14,13 +14,14 @@ namespace PlayerStateMachineSystem
         {
             _ctx.Animator.applyRootMotion = false;
             _ctx.Animator.SetTrigger("Land");
+
             _ctx.Movement.InAir.SetLandSmoothTime();
         }
         public override void Update()
         {
             _ctx.Movement.InAir.Movement();
             _ctx.Animator.SetFloat("FallingForwardVelocity", Mathf.Abs(Vector3.Dot(_ctx.Velocity.CurrentVelocity, _ctx.transform.forward)), 0.1f, Time.deltaTime);
-            UpdateMovementSpeed();
+
         }
         public override void LateUpdate()
         {
@@ -31,15 +32,6 @@ namespace PlayerStateMachineSystem
             if (_landAnimatorBehaviour.HandLandEnded) ChangeState(_factory.Idle());
 
             _ctx.SetStateEmblem(StateEmblems.Land);
-        }
-
-
-
-
-        private void UpdateMovementSpeed()
-        {
-            float movementSpeedFromForwardVelocity = Mathf.Round(Mathf.Abs(Vector3.Dot(_ctx.Velocity.CurrentVelocity, _ctx.transform.forward)) / 3) * 3;
-            _ctx.Animator.SetFloat("MovementSpeed", movementSpeedFromForwardVelocity);
         }
     }
 }

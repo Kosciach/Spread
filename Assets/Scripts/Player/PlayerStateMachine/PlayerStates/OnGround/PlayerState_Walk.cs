@@ -10,7 +10,6 @@ namespace PlayerStateMachineSystem
 
         public override void Enter()
         {
-            _ctx.Movement.OnGround.SetWalkSpeed();
             _ctx.Animator.applyRootMotion = _ctx.Movement.OnGround.UseRootMotionMovement;
         }
         public override void Update()

@@ -3471,10 +3471,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerStateMachine: {fileID: 5326871639833821273}
   _onGround:
-    _useRootMotionMovement: 1
+    _useRootMotionMovement: 0
     _currentSpeed: 0
-    _walkSpeed: 3
-    _runSpeed: 6
+    _walkSpeed: 2
+    _runSpeed: 5
     _smoothTime: 0.1
     _targetVelocity: {x: 0, y: 0, z: 0}
     _currentVelocity: {x: 0, y: 0, z: 0}
@@ -3625,7 +3625,7 @@ MonoBehaviour:
   _playerStateMachine: {fileID: 5326871639833821273}
   _groundCheck:
     _originOffset: {x: 0, y: 0.03, z: 0}
-    _range: 0.3
+    _range: 0.1
     _radius: 0.33
     _precision: 10
     _mask:

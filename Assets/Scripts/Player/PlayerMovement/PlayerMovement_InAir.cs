@@ -7,14 +7,12 @@ namespace PlayerMovement
     {
         private PlayerMovementController _movementController;
 
-        [Header("---Speed---")]
-        [Range(0, 10)][SerializeField] float _speed;
+        [Header("---SmoothTime---")]
         [Range(0, 5)][SerializeField] float _currentSmoothTime;
         [Range(0, 5)][SerializeField] float _jumpSmoothTime;
         [Range(0, 5)][SerializeField] float _fallSmoothTime;
         [Range(0, 5)][SerializeField] float _landSmoothTime;
         [Range(0, 5)][SerializeField] float _hardLandingSmoothTime;
-
 
         [Space(20)]
         [Header("---Velocity---")]
@@ -36,14 +34,14 @@ namespace PlayerMovement
             Vector3 inputVector = _movementController.PlayerStateMachine.Input.MovementInputVector;
             Vector3 direction = _movementController.transform.right * inputVector.x + _movementController.transform.forward * inputVector.y;
 
-            _targetVelocity = direction * _speed * Time.deltaTime;
+            _targetVelocity = direction * 5 * Time.deltaTime;
             _currentVelocity = Vector3.SmoothDamp(_currentVelocity, _targetVelocity, ref _currentVelocityRef, _currentSmoothTime);
 
             _movementController.PlayerStateMachine.CharacterController.Move(_currentVelocity);
 
             _movementController.OnGround.SynchronizeVelocity(_currentVelocity);
+            _movementController.OnGround.CalculateMovementSpeeds();
         }
-
         public void SynchronizeVelocity(Vector3 velocity)
         {
             _targetVelocity = velocity;
@@ -51,10 +49,7 @@ namespace PlayerMovement
             _currentVelocityRef = velocity;
         }
 
-        public void SetSpeed(float speed)
-        {
-            _speed = speed;
-        }
+
         public void SetJumpSmoothTime()
         {
             _currentSmoothTime = _jumpSmoothTime;
