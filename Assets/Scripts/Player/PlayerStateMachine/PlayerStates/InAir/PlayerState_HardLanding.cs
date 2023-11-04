@@ -17,7 +17,9 @@ namespace PlayerStateMachineSystem
         }
         public override void Update()
         {
-
+            _ctx.Movement.OnGround.CalculateMovementSpeeds();
+            _ctx.Movement.OnGround.SynchronizeVelocity(Vector3.zero);
+            _ctx.Movement.InAir.SynchronizeVelocity(Vector3.zero);
         }
         public override void LateUpdate()
         {

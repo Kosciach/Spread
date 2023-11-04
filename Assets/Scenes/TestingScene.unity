@@ -539,8 +539,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484232650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4126887, y: 1.5, z: 0.036}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalPosition: {x: 3.4126887, y: 3, z: 0.036}
+  m_LocalScale: {x: 3, y: 6, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2398,7 +2398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461178319237562516}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.49, y: 0, z: 10.4}
+  m_LocalPosition: {x: 3.49, y: 6, z: -0.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3472,6 +3472,7 @@ MonoBehaviour:
   _playerStateMachine: {fileID: 5326871639833821273}
   _onGround:
     _useRootMotionMovement: 0
+    _animatorMovementSpeed: 0
     _currentSpeed: 0
     _walkSpeed: 2
     _runSpeed: 5
@@ -3480,7 +3481,6 @@ MonoBehaviour:
     _currentVelocity: {x: 0, y: 0, z: 0}
     _rootMotionVelocity: {x: 0, y: 0, z: 0}
   _inAir:
-    _speed: 3
     _currentSmoothTime: 0
     _jumpSmoothTime: 1
     _fallSmoothTime: 1
