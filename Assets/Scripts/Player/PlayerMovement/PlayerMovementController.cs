@@ -13,6 +13,7 @@ namespace PlayerMovement
         [Header("---MovementTypes---")]
         [SerializeField] PlayerMovement_OnGround _onGround; public PlayerMovement_OnGround OnGround { get { return _onGround; } }
         [SerializeField] PlayerMovement_InAir _inAir; public PlayerMovement_InAir InAir { get { return _inAir; } }
+        [SerializeField] PlayerMovement_Crouch _crouch; public PlayerMovement_Crouch Crouch { get { return _crouch; } }
 
 
 
@@ -21,6 +22,15 @@ namespace PlayerMovement
         {
             _onGround.OnAwake(this);
             _inAir.OnAwake(this);
+            _crouch.OnAwake(this);
+        }
+        private void OnEnable()
+        {
+            _crouch.OnEnable();
+        }
+        private void OnDisable()
+        {
+            _crouch.OnDisable();
         }
     }
 }

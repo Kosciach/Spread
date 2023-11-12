@@ -7,11 +7,6 @@ namespace PlayerMovement
     {
         private PlayerMovementController _movementController;
 
-        [Header("---OtherSettings---")]
-        [SerializeField] bool _useRootMotionMovement; public bool UseRootMotionMovement { get { return _useRootMotionMovement; } }
-
-
-        [Space(20)]
         [Header("---Speed---")]
         [Range(0, 2)][SerializeField] int _animatorMovementSpeed;
         [Range(0, 10)][SerializeField] float _currentSpeed;
@@ -25,7 +20,6 @@ namespace PlayerMovement
         [Header("---Velocity---")]
         [SerializeField] Vector3 _targetVelocity;
         [SerializeField] Vector3 _currentVelocity;
-        [SerializeField] Vector3 _rootMotionVelocity;
         private Vector3 _currentVelocityRef;
 
 
@@ -41,28 +35,16 @@ namespace PlayerMovement
             Vector3 inputVector = _movementController.PlayerStateMachine.Input.MovementInputVector;
 
             CalculateMovementSpeeds();
-            if (_useRootMotionMovement)
-            {
-                CalculateRootMotionVelocity();
-                SynchronizeVelocity(Vector3.zero);
-                _movementController.InAir.SynchronizeVelocity(_rootMotionVelocity);
-                return;
-            }
-
 
             Vector3 direction = _movementController.transform.right * inputVector.x + _movementController.transform.forward * inputVector.y;
-            _targetVelocity = direction * _currentSpeed * Time.fixedDeltaTime / 2;
+            _targetVelocity = direction * _currentSpeed * Time.deltaTime;
 
             _currentVelocity = Vector3.SmoothDamp(_currentVelocity, _targetVelocity, ref _currentVelocityRef, _smoothTime);
             _movementController.PlayerStateMachine.CharacterController.Move(_currentVelocity);
 
             _movementController.InAir.SynchronizeVelocity(_currentVelocity);
+            _movementController.Crouch.SynchronizeVelocity(_currentVelocity);
         }
-        private void CalculateRootMotionVelocity()
-        {
-            _rootMotionVelocity = (_movementController.PlayerStateMachine.Animator.deltaPosition / Time.deltaTime / 100) * 0.8f;
-        }
-
 
         public void CalculateMovementSpeeds()
         {
@@ -81,11 +63,9 @@ namespace PlayerMovement
         }
         private void SetAnimationSpeeds(Vector3 inputVector)
         {
-            float movementSpeedDampTime = _useRootMotionMovement ? 0.2f : 0.25f;
-            float movementXYDampTyime = _useRootMotionMovement ? 0.15f : 0.25f;
-            _movementController.PlayerStateMachine.Animator.SetFloat("MovementSpeed", _animatorMovementSpeed, movementSpeedDampTime, Time.deltaTime);
-            _movementController.PlayerStateMachine.Animator.SetFloat("MovementX", inputVector.x, movementXYDampTyime, Time.deltaTime);
-            _movementController.PlayerStateMachine.Animator.SetFloat("MovementY", inputVector.y, movementXYDampTyime, Time.deltaTime);
+            _movementController.PlayerStateMachine.Animator.SetFloat("MovementSpeed", _animatorMovementSpeed, 0.25f, Time.deltaTime);
+            _movementController.PlayerStateMachine.Animator.SetFloat("MovementX", inputVector.x, 0.25f, Time.deltaTime);
+            _movementController.PlayerStateMachine.Animator.SetFloat("MovementY", inputVector.y, 0.25f, Time.deltaTime);
         }
         public void SynchronizeVelocity(Vector3 velocity)
         {

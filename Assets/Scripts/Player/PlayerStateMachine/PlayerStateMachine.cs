@@ -23,6 +23,7 @@ namespace PlayerStateMachineSystem
         [Space(20)]
         [Header("---Scripts---")]
         [SerializeField] PlayerInputController _input; public PlayerInputController Input { get { return _input; } }
+        [SerializeField] PlayerColliderController _collider; public PlayerColliderController Collider { get { return _collider; } }
         [SerializeField] PlayerVelocityCalculator _velocity; public PlayerVelocityCalculator Velocity { get { return _velocity; } }
         [SerializeField] PlayerMovementController _movement; public PlayerMovementController Movement { get { return _movement; } }
         [SerializeField] PlayerCameraController _camera; public PlayerCameraController Camera { get { return _camera; } }
@@ -65,6 +66,7 @@ namespace PlayerStateMachineSystem
     public enum StateEmblems
     {
         Idle, Walk, Run,
-        Jump, Fall, Land, HardLanding
+        Jump, Fall, Land, HardLanding,
+        Crouch
     }
 }

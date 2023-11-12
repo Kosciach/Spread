@@ -7,6 +7,7 @@ public class PlayerInputController : MonoBehaviour
 {
     private PlayerInputs _playerInputs;
     public static Action OnJump;
+    public static Action OnCrouch;
 
 
     [Header("---Movement----")]
@@ -29,6 +30,7 @@ public class PlayerInputController : MonoBehaviour
         SetIsWalk();
         SetIsRun();
         TriggerJump();
+        TriggerCrouch();
 
         SetMouseInputVector();
     }
@@ -53,6 +55,10 @@ public class PlayerInputController : MonoBehaviour
     private void TriggerJump()
     {
         _playerInputs.Movement.Jump.performed += ctx => OnJump?.Invoke();
+    }
+    private void TriggerCrouch()
+    {
+        _playerInputs.Movement.Crouch.performed += ctx => OnCrouch?.Invoke();
     }
     #endregion
 
