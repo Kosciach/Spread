@@ -42,5 +42,11 @@ namespace PlayerStateMachineSystem
         {
             return new PlayerState_HardLanding(_playerStateMachine, this);
         }
+
+
+        public PlayerBaseState Crouch()
+        {
+            return new PlayerState_Crouch(_playerStateMachine, this);
+        }
     }
 }

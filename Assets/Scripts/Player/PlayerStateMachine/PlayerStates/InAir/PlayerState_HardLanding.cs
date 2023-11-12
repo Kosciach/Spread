@@ -31,5 +31,9 @@ namespace PlayerStateMachineSystem
 
             _ctx.SetStateEmblem(StateEmblems.HardLanding);
         }
+        public override void Exit()
+        {
+            _ctx.Movement.Crouch.DisableIsCrouch();
+        }
     }
 }

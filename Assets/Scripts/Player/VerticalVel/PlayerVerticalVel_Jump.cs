@@ -10,7 +10,7 @@ namespace PlayerVerticalVel
         private PlayerVerticalVelController _verticalVelController;
 
         [Header("---Settings---")]
-        [Range(0, 20)][SerializeField] float _jumpForce;
+        [Range(3, 20)][SerializeField] float _jumpForce;
 
 
         [Space(20)]
@@ -29,12 +29,13 @@ namespace PlayerVerticalVel
         private void SetIsJump()
         {
             if (!_verticalVelController.GroundCheck.IsGrounded) return;
+
             _isJump = true;
             _verticalVelController.StartCoroutine(ResetIsJump());
         }
         private IEnumerator ResetIsJump()
         {
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
             _isJump = false;
         }
         public void ApplyJumpForce()

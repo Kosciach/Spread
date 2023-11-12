@@ -7,11 +7,6 @@ namespace PlayerStateMachineSystem
         public PlayerState_Walk(PlayerStateMachine ctx, PlayerStateFactory factory) : base(ctx, factory) { }
 
 
-
-        public override void Enter()
-        {
-            _ctx.Animator.applyRootMotion = _ctx.Movement.OnGround.UseRootMotionMovement;
-        }
         public override void Update()
         {
             _ctx.Movement.OnGround.Movement();
@@ -26,6 +21,7 @@ namespace PlayerStateMachineSystem
             else if (_ctx.Input.IsRun && _ctx.Input.MovementInputVector.y > 0) ChangeState(_factory.Run());
             else if (!_ctx.VerticalVel.GroundCheck.IsGrounded) ChangeState(_factory.Fall());
             else if (_ctx.VerticalVel.Jump.IsJump) ChangeState(_factory.Jump());
+            else if (_ctx.Movement.Crouch.IsCrouch) ChangeState(_factory.Crouch());
 
             _ctx.SetStateEmblem(StateEmblems.Walk);
         }
