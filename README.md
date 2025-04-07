@@ -7,7 +7,7 @@ Right now, I’m working on polishing the ladder climbing system using IK.
 ---
 
 ### Most recent video:
-[![YouTube](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=v82jUoOpVp4)
+[![YouTube](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/qnsD58RJhdU)
 
 ### One of the previous version:
 [![YouTube](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=v82jUoOpVp4)
