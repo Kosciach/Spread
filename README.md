@@ -11,3 +11,15 @@ Right now, I’m working on polishing the ladder climbing system using IK.
 
 ### One of the previous versions:
 [![YouTube](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=v82jUoOpVp4)
+
+---
+
+## Current Features:
+- `Idle, Walk, Jog, Run movement based on root motion`
+- `Jump, Fall, Land in air movement`
+- `Interactable system`
+- `Slope support and slope slide`
+- `Slide`
+- `Crouch, crawl`
+- `Roof detection`
+- `Ik based ladder climbing`
