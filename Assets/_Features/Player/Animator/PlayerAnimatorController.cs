@@ -18,6 +18,10 @@ namespace Spread.Player.Animating
         [BoxGroup("References"), SerializeField] private PlayerAnimatorController_AnimatorMove _animatorMove;
         internal PlayerAnimatorController_AnimatorMove AnimatorMove => _animatorMove;
 
+        [BoxGroup("Settings"), SerializeField] private float _movementTypeBlendTime = 0.3f;
+        [BoxGroup("Settings"), SerializeField] private float _movementBlendTime = 0.5f;
+        [BoxGroup("Settings"), SerializeField] private float _turnBlendTime = 0.05f;
+        
         private Dictionary<int, string> _currentStateName; internal Dictionary<int, string> CurrentStateName => _currentStateName;
         private Dictionary<int, string> _previousStateName; internal Dictionary<int, string> PreviousStateName => _previousStateName;
         public Action<int, string> OnStateChange;
@@ -105,7 +109,7 @@ namespace Spread.Player.Animating
         #region Idle
         internal void SetTurn(float p_turnDir)
         {
-            _animator.SetFloat("TurnDir", p_turnDir, 0.05f, Time.deltaTime);
+            _animator.SetFloat("TurnDir", p_turnDir, _turnBlendTime, Time.deltaTime);
         }
 
         internal void SetIdleType(IdleTypes p_idleType)
@@ -128,13 +132,13 @@ namespace Spread.Player.Animating
 
         internal void SetMovementTypeF(MovementTypes p_movementType)
         {
-            _animator.SetFloat("MovementTypeF", (int)p_movementType, 0.3f, Time.deltaTime);
+            _animator.SetFloat("MovementTypeF", (int)p_movementType, _movementTypeBlendTime, Time.deltaTime);
         }
 
         internal void SetMovement(float p_movementX, float p_movementZ)
         {
-            _animator.SetFloat("MovementX", p_movementX, 0.2f, Time.deltaTime);
-            _animator.SetFloat("MovementZ", p_movementZ, 0.2f, Time.deltaTime);
+            _animator.SetFloat("MovementX", p_movementX, _movementBlendTime, Time.deltaTime);
+            _animator.SetFloat("MovementZ", p_movementZ, _movementBlendTime, Time.deltaTime);
         }
         #endregion
 
