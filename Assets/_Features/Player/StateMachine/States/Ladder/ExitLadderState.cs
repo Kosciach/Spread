@@ -6,7 +6,7 @@ namespace Spread.Player.StateMachine
     {
         protected override void OnEnter()
         {
-            _ctx.LadderController.ExitLadder();
+
         }
 
         protected override void OnUpdate()
@@ -20,12 +20,7 @@ namespace Spread.Player.StateMachine
         }
 
         internal override Type GetNextState()
-        {
-            if (_ctx.LadderController.CurrentLadder == null)
-            {
-                return typeof(IdleState);
-            }
-
+        { 
             return GetType();
         }
     }

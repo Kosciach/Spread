@@ -38,11 +38,6 @@ namespace Spread.Player.StateMachine
                 return typeof(SlopeSlideState);
             }
 
-            if (_ctx.LadderController.CurrentLadder != null)
-            {
-                return typeof(EnterLadderState);
-            }
-
             switch (_ctx.MovementController.MovementType)
             {
                 case Movement.MovementTypes.Idle:
