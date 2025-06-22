@@ -1519,7 +1519,7 @@ BlendTree:
     m_Motion: {fileID: -203655887218126122, guid: 0422bfb9355f7b442a5c7d62674aefb3,
       type: 3}
     m_Threshold: 0.5714286
-    m_Position: {x: 0.707, y: 0.707}
+    m_Position: {x: 0.7, y: 0.7}
     m_TimeScale: 1.1
     m_CycleOffset: 0.5
     m_DirectBlendParameter: TurnDir
@@ -1528,7 +1528,7 @@ BlendTree:
     m_Motion: {fileID: -203655887218126122, guid: 6826c2e57739403499ee8e88630a0e17,
       type: 3}
     m_Threshold: 0.71428573
-    m_Position: {x: 0.707, y: -0.707}
+    m_Position: {x: 0.7, y: -0.7}
     m_TimeScale: 1.1
     m_CycleOffset: 0.5
     m_DirectBlendParameter: TurnDir
@@ -1537,7 +1537,7 @@ BlendTree:
     m_Motion: {fileID: -203655887218126122, guid: 6826c2e57739403499ee8e88630a0e17,
       type: 3}
     m_Threshold: 0.85714287
-    m_Position: {x: -0.707, y: -0.707}
+    m_Position: {x: -0.7, y: -0.7}
     m_TimeScale: 1.1
     m_CycleOffset: 0
     m_DirectBlendParameter: TurnDir
@@ -1546,7 +1546,7 @@ BlendTree:
     m_Motion: {fileID: -203655887218126122, guid: 0422bfb9355f7b442a5c7d62674aefb3,
       type: 3}
     m_Threshold: 1
-    m_Position: {x: -0.707, y: 0.707}
+    m_Position: {x: -0.7, y: 0.7}
     m_TimeScale: 1.1
     m_CycleOffset: 0
     m_DirectBlendParameter: TurnDir
@@ -1557,7 +1557,7 @@ BlendTree:
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
-  m_BlendType: 3
+  m_BlendType: 1
 --- !u!206 &-4748009096946242775
 BlendTree:
   m_ObjectHideFlags: 1
