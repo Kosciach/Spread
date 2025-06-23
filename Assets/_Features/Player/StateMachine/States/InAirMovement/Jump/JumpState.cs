@@ -31,6 +31,7 @@ namespace Spread.Player.StateMachine
         {
             _ctx.CameraController.MoveCamera();
             _ctx.MovementController.InAirMovement();
+            _ctx.InteractionsController.CheckInteractables();
         }
 
         protected override void OnExit()

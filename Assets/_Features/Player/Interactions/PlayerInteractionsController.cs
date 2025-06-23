@@ -33,12 +33,7 @@ namespace Spread.Player.Interactions
             OnInteractableChange = null;
             OnInteract = null;
         }
-
-        private void Update()
-        {
-            //CheckInteractables();
-        }
-
+        
         internal void CheckInteractables()
         {
             Vector3 start = _detector.transform.position;
