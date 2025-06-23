@@ -28909,6 +28909,26 @@ PrefabInstance:
       propertyPath: _handlesOffsetFromBottom
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2848188138223221871, guid: 93ecb312059e21345971fc473c0c7e71,
+        type: 3}
+      propertyPath: _topPromptPos.y
+      value: 4.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 2848188138223221871, guid: 93ecb312059e21345971fc473c0c7e71,
+        type: 3}
+      propertyPath: _topPromptPos.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2848188138223221871, guid: 93ecb312059e21345971fc473c0c7e71,
+        type: 3}
+      propertyPath: _bottomPromptPos.y
+      value: 1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 2848188138223221871, guid: 93ecb312059e21345971fc473c0c7e71,
+        type: 3}
+      propertyPath: _bottomPromptPos.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3119419637131465133, guid: 93ecb312059e21345971fc473c0c7e71,
         type: 3}
       propertyPath: m_LocalPosition.x
