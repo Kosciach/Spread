@@ -1,14 +1,13 @@
 using System;
 using System.Linq;
-using NaughtyAttributes;
-using Nenn.InspectorEnhancements.Runtime.Attributes;
+using SaintsField;
 using UnityEngine;
 
 namespace Spread.Player.StateMachine
 {
     public class PlayerStateMachine : MonoBehaviour
     {
-        [BoxGroup("Context"), SerializeField, InlineProperty] private PlayerStateMachineContext _context;
+        [SerializeField, SaintsRow(inline: true)] private PlayerStateMachineContext _context;
         public PlayerStateMachineContext Ctx => _context;
 
         private void Awake()

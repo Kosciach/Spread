@@ -1,6 +1,8 @@
+using SaintsField;
+using SaintsField.Playa;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using NaughtyAttributes;
+
 
 namespace Spread.Player.Movement
 {
@@ -10,12 +12,14 @@ namespace Spread.Player.Movement
     {
         private PlayerStateMachineContext _ctx;
 
-        [BoxGroup("Settings"), SerializeField] private float _crawlSpeed;
+        [LayoutStart("Settings", ELayout.TitleBox)]
+        [SerializeField] private float _crawlSpeed;
 
-        [Foldout("Debug"), SerializeField, ReadOnly] private Vector3 _moveInput;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isCrouchInput; internal bool IsCrouchInput => _isCrouchInput;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isCrawlArea; internal bool IsCrawlArea => _isCrawlArea;
-        [Foldout("Debug"), SerializeField, ReadOnly] private Vector3 _crawlVelocity;
+        [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
+        [SerializeField, ReadOnly] private Vector3 _moveInput;
+        [SerializeField, ReadOnly] private bool _isCrouchInput; internal bool IsCrouchInput => _isCrouchInput;
+        [SerializeField, ReadOnly] private bool _isCrawlArea; internal bool IsCrawlArea => _isCrawlArea;
+        [SerializeField, ReadOnly] private Vector3 _crawlVelocity;
 
         internal void Setup(PlayerStateMachineContext p_ctx)
         {

@@ -1,17 +1,16 @@
 using UnityEngine;
 using QuickOutline;
-using NaughtyAttributes;
 using System;
 
 namespace Spread.Interactions
 {
     public abstract class Interactable : MonoBehaviour
     {
-        [BoxGroup("Interactable_Ref"), SerializeField] private Outline _outline;
-        [BoxGroup("Interactable_Ref"), SerializeField] protected Transform _promptPosRef;
+        [SerializeField] private Outline _outline;
+        [SerializeField] protected Transform _promptPosRef;
         public Transform PromptWorldRef => _promptPosRef;
 
-        [BoxGroup("Interactable_Data"), SerializeField] public InteractableData InteractableData;
+        [SerializeField] public InteractableData InteractableData;
 
         private float _outlineWidth;
         public Action<Interaction> OnInteraction;

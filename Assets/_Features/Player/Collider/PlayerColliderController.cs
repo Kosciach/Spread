@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using NaughtyAttributes;
+using SaintsField;
+using SaintsField.Playa;
+
 using AYellowpaper.SerializedCollections;
 
 namespace Spread.Player.Collisions
@@ -12,10 +14,13 @@ namespace Spread.Player.Collisions
     {
         private PlayerStateMachineContext _ctx;
 
-        [BoxGroup("References"), SerializeField] private CharacterController _characterController;
+        
+        [LayoutStart("References", ELayout.TitleBox)]
+        [SerializeField] private CharacterController _characterController;
 
-        [BoxGroup("Settings"), SerializeField, SerializedDictionary("State", "ColliderSize")] private SerializedDictionary<string, ColliderSize> _colliderSizes;
-        [BoxGroup("Settings"), SerializeField, SerializedDictionary("State", "ColliderSize")] private Vector3 _centerOffset;
+        [LayoutStart("Settings", ELayout.TitleBox)]
+        [SerializeField, SerializedDictionary("State", "ColliderSize")] private SerializedDictionary<string, ColliderSize> _colliderSizes;
+        [SerializeField, SerializedDictionary("State", "ColliderSize")] private Vector3 _centerOffset;
 
         private Vector3 _center;
 

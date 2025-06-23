@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
+using SaintsField;
+using SaintsField.Playa;
 using DG.Tweening;
 
 namespace Spread.Player.StateMachine
@@ -18,17 +19,17 @@ namespace Spread.Player.StateMachine
     [System.Serializable]
     public class PlayerStateMachineContext
     {
-        [HorizontalLine(color: EColor.Gray)]
-
+        [LayoutStart("Context", ELayout.TitleBox | ELayout.Vertical)]
+        [LayoutStart("Context/States", ELayout.TitleBox)]
         [SerializeField, ReadOnly] internal PlayerBaseState LastState;
         [SerializeField, ReadOnly] internal PlayerBaseState CurrentState;
-        [SerializeField] internal List<PlayerBaseState> States;
-        [Header("References"), HorizontalLine(color: EColor.Gray)]
-
+        [SerializeField, ReadOnly] internal List<PlayerBaseState> States;
+        
+        [LayoutStart("Context/References", ELayout.TitleBox)]
         [SerializeField] internal Transform Transform;
         [SerializeField] internal CharacterController CharacterController;
-        [Header("Controllers"), HorizontalLine(color: EColor.Gray)]
-
+        
+        [LayoutStart("Context/Components", ELayout.TitleBox)]
         [SerializeField] public PlayerInputController InputController;
         [SerializeField] public PlayerCameraController CameraController;
         [SerializeField] public PlayerAnimatorController AnimatorController;
@@ -40,7 +41,6 @@ namespace Spread.Player.StateMachine
         [SerializeField] public PlayerColliderController ColliderController;
         [SerializeField] public PlayerInteractionsController InteractionsController;
         [SerializeField] public PlayerLadderController LadderController;
-        [Header("Other"), HorizontalLine(color: EColor.Gray)]
 
         private Dictionary<Type, PlayerBaseState> _statesKey = new Dictionary<Type, PlayerBaseState>();
         private Tween _moveTween;

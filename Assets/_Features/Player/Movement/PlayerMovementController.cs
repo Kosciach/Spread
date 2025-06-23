@@ -1,6 +1,8 @@
+using SaintsField;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using NaughtyAttributes;
+using SaintsField.Playa;
+
 
 namespace Spread.Player.Movement
 {
@@ -10,27 +12,29 @@ namespace Spread.Player.Movement
     {
         private PlayerStateMachineContext _ctx;
 
-        [BoxGroup("References"), SerializeField] private Animator _animator;
+        [LayoutStart("References", ELayout.TitleBox)]
+        [SerializeField] private Animator _animator;
 
-        [BoxGroup("Settings"), SerializeField] private bool _jogOnStart = true;
-        [BoxGroup("Settings"), SerializeField, Range(0, 1)] private float _isMovingTime;
+        [LayoutStart("Settings", ELayout.TitleBox)]
+        [SerializeField] private bool _jogOnStart = true;
+        [SerializeField, Range(0, 1)] private float _isMovingTime;
         [Header("InAir")]
-        [BoxGroup("Settings"), SerializeField, Range(0, 10)] private float _inAirWalkSpeed;
-        [BoxGroup("Settings"), SerializeField, Range(0, 10)] private float _inAirJogSpeed;
-        [BoxGroup("Settings"), SerializeField, Range(0, 10)] private float _inAirRunSpeed;
+        [SerializeField, Range(0, 10)] private float _inAirWalkSpeed;
+        [SerializeField, Range(0, 10)] private float _inAirJogSpeed;
+        [SerializeField, Range(0, 10)] private float _inAirRunSpeed;
 
-        [Header("MovementTypes")]
-        [Foldout("Debug"), SerializeField, ReadOnly] private IdleTypes _idleType; internal IdleTypes IdleType => _idleType;
-        [Foldout("Debug"), SerializeField, ReadOnly] private MovementTypes _movementType; internal MovementTypes MovementType => _movementType;
-        [Header("Velocity")]
-        [Foldout("Debug"), SerializeField, ReadOnly] private Vector3 _inAirVelocity;
-        [Header("Input")]
-        [Foldout("Debug"), SerializeField, ReadOnly] private Vector3 _moveInput; internal Vector3 MoveInputVector => _moveInput;
-        [Foldout("Debug"), SerializeField, Range(0, 1), ReadOnly] private float _isMovingTimer;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isJogInput; public bool IsJogInput => _isJogInput;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isRunInput; public bool IsRunInput => _isRunInput;
-
-        public bool RootMotionMove = true;
+        [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
+        [LayoutStart("./MovementTypes", ELayout.TitleOut)]
+        [SerializeField, ReadOnly] private IdleTypes _idleType; internal IdleTypes IdleType => _idleType;
+        [SerializeField, ReadOnly] private MovementTypes _movementType; internal MovementTypes MovementType => _movementType;
+        [LayoutStart("./Velocity", ELayout.TitleOut)]
+        [SerializeField, ReadOnly] private Vector3 _inAirVelocity;
+        [LayoutStart("./Input", ELayout.TitleOut)]
+        [SerializeField, ReadOnly] private Vector3 _moveInput; internal Vector3 MoveInputVector => _moveInput;
+        [SerializeField, Range(0, 1), ReadOnly] private float _isMovingTimer;
+        [SerializeField, ReadOnly] private bool _isJogInput; public bool IsJogInput => _isJogInput;
+        [SerializeField, ReadOnly] private bool _isRunInput; public bool IsRunInput => _isRunInput;
+        [SerializeField, ReadOnly] public bool RootMotionMove = true;
 
 
         internal void Setup(PlayerStateMachineContext p_ctx)

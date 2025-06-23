@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using DG.Tweening;
-using NaughtyAttributes;
 using FischlWorks;
+using SaintsField.Playa;
 
 namespace Spread.Player.Animating
 {
@@ -12,15 +12,17 @@ namespace Spread.Player.Animating
 
     public class PlayerAnimatorController : MonoBehaviour
     {
-        [BoxGroup("References"), SerializeField] private Animator _animator;
-        [BoxGroup("References"), SerializeField] private csHomebrewIK _footIk;
-        [BoxGroup("References"), SerializeField] private Rig _ladderRig;
-        [BoxGroup("References"), SerializeField] private PlayerAnimatorController_AnimatorMove _animatorMove;
+        [LayoutStart("References", ELayout.TitleBox)]
+        [SerializeField] private Animator _animator;
+        [SerializeField] private csHomebrewIK _footIk;
+        [SerializeField] private Rig _ladderRig;
+        [SerializeField] private PlayerAnimatorController_AnimatorMove _animatorMove;
         internal PlayerAnimatorController_AnimatorMove AnimatorMove => _animatorMove;
 
-        [BoxGroup("Settings"), SerializeField] private float _movementTypeBlendTime = 0.3f;
-        [BoxGroup("Settings"), SerializeField] private float _movementBlendTime = 0.5f;
-        [BoxGroup("Settings"), SerializeField] private float _turnBlendTime = 0.05f;
+        [LayoutStart("Settings", ELayout.TitleBox)]
+        [SerializeField] private float _movementTypeBlendTime = 0.3f;
+        [SerializeField] private float _movementBlendTime = 0.5f;
+        [SerializeField] private float _turnBlendTime = 0.05f;
         
         private Dictionary<int, string> _currentStateName; internal Dictionary<int, string> CurrentStateName => _currentStateName;
         private Dictionary<int, string> _previousStateName; internal Dictionary<int, string> PreviousStateName => _previousStateName;

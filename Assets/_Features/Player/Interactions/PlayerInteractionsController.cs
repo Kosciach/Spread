@@ -1,7 +1,8 @@
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using SaintsField;
+using SaintsField.Playa;
 
 namespace Spread.Player.Interactions
 {
@@ -12,7 +13,8 @@ namespace Spread.Player.Interactions
     {
         private PlayerStateMachineContext _ctx;
 
-        [BoxGroup("References"), SerializeField] private CapsuleCollider _detector;
+        [LayoutStart("References", ELayout.TitleBox)]
+        [SerializeField] private CapsuleCollider _detector;
 
         public Interactable CurrentInteractable {  get; private set; }
 

@@ -1,5 +1,6 @@
-using NaughtyAttributes;
 using UnityEngine;
+using SaintsField;
+using SaintsField.Playa;
 
 namespace Spread.Player.Movement
 {
@@ -9,16 +10,18 @@ namespace Spread.Player.Movement
     {
         private PlayerStateMachineContext _ctx;
 
-        [BoxGroup("Settings"), SerializeField] private float _startSlopeSlideAngle;
-        [BoxGroup("Settings"), SerializeField] private float _stopSlopeSlideAngle;
+        [LayoutStart("Settings", ELayout.TitleBox)]
+        [SerializeField] private float _startSlopeSlideAngle;
+        [SerializeField] private float _stopSlopeSlideAngle;
         [Space(10)]
-        [BoxGroup("Settings"), SerializeField] private float _slopeSlideStartSpeed;
-        [BoxGroup("Settings"), SerializeField] private float _slopeSlideStopSpeed;
+        [SerializeField] private float _slopeSlideStartSpeed;
+        [SerializeField] private float _slopeSlideStopSpeed;
         [Space(10)]
-        [BoxGroup("Settings"), SerializeField] private float _slopeSlideMaxSpeedScale;
+        [SerializeField] private float _slopeSlideMaxSpeedScale;
 
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isSlopeSlide; internal bool IsSlopeSlide => _isSlopeSlide;
-        [Foldout("Debug"), SerializeField, ReadOnly] private Vector3 _slopeSlideVelocity;
+        [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
+        [SerializeField, ReadOnly] private bool _isSlopeSlide; internal bool IsSlopeSlide => _isSlopeSlide;
+        [SerializeField, ReadOnly] private Vector3 _slopeSlideVelocity;
 
         internal void Setup(PlayerStateMachineContext p_ctx)
         {

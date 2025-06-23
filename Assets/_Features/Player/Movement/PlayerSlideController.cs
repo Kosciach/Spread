@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using NaughtyAttributes;
+using SaintsField.Playa;
 
 namespace Spread.Player.Movement
 {
@@ -10,13 +10,15 @@ namespace Spread.Player.Movement
     {
         private PlayerStateMachineContext _ctx;
 
-        [BoxGroup("Settings"), SerializeField] private float _startSpeed;
-        [BoxGroup("Settings"), SerializeField] private float _inSlideDrag;
-        [BoxGroup("Settings"), SerializeField] private float _outOfSlideDrag;
-        [BoxGroup("Settings"), SerializeField] private float _stoppingSpeed;
+        [LayoutStart("Settings", ELayout.TitleBox)]
+        [SerializeField] private float _startSpeed;
+        [SerializeField] private float _inSlideDrag;
+        [SerializeField] private float _outOfSlideDrag;
+        [SerializeField] private float _stoppingSpeed;
 
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isSlide; internal bool IsSlide => _isSlide;
-        [Foldout("Debug"), SerializeField, ReadOnly] private Vector3 _slideVelocity;
+        [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
+        [SerializeField] private bool _isSlide; internal bool IsSlide => _isSlide;
+        [SerializeField] private Vector3 _slideVelocity;
 
 
         internal void Setup(PlayerStateMachineContext p_ctx)

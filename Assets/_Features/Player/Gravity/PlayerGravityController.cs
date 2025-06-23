@@ -1,6 +1,7 @@
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using SaintsField;
+using SaintsField.Playa;
 
 namespace Spread.Player.Gravity
 {
@@ -10,32 +11,35 @@ namespace Spread.Player.Gravity
     {
         private PlayerStateMachineContext _ctx;
 
-        [BoxGroup("References"), SerializeField] private Transform _camera;
+        [LayoutStart("References", ELayout.TitleBox)]
+        [SerializeField] private Transform _camera;
 
-        [BoxGroup("Settings"), SerializeField] private float _gravityForce;
-        [Header("Grounded")]
-        [BoxGroup("Settings"), SerializeField] private Vector3 _groundCheckOffset;
-        [BoxGroup("Settings"), SerializeField] private float _groundCheckRadius;
-        [BoxGroup("Settings"), SerializeField] private float _groundedGravityForce;
-        [BoxGroup("Settings"), SerializeField] private LayerMask _ignoreMask;
-        [Header("Ceiling")]
-        [BoxGroup("Settings"), SerializeField] private Vector3 _ceilingCheckOffset;
-        [BoxGroup("Settings"), SerializeField] private float _ceilingCheckRange;
-        [BoxGroup("Settings"), SerializeField] private float _ceilingCheckRadius;
-        [Header("JumpState")]
-        [BoxGroup("Settings"), SerializeField] private float _jumpForce;
-        [Header("FallState")]
-        [BoxGroup("Settings"), SerializeField] private float _gravityForFall;
+        [LayoutStart("Settings", ELayout.TitleBox)]
+        [SerializeField] private float _gravityForce;
+        [LayoutStart("./Grounded", ELayout.TitleOut)]
+        [SerializeField] private Vector3 _groundCheckOffset;
+        [SerializeField] private float _groundCheckRadius;
+        [SerializeField] private float _groundedGravityForce;
+        [SerializeField] private LayerMask _ignoreMask;
+        [LayoutStart("./Ceiling", ELayout.TitleOut)]
+        [SerializeField] private Vector3 _ceilingCheckOffset;
+        [SerializeField] private float _ceilingCheckRange;
+        [SerializeField] private float _ceilingCheckRadius;
+        [LayoutStart("./JumpState", ELayout.TitleOut)]
+        [SerializeField] private float _jumpForce;
+        [LayoutStart("./FallStart", ELayout.TitleOut)]
+        [SerializeField] private float _gravityForFall;
 
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _gizmos;
-        [Foldout("Debug"), SerializeField, ReadOnly] private float _currentGravityForce; internal float CurrentGravityForce => _currentGravityForce;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isGrounded; internal bool IsGrounded => _isGrounded;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isCeiling; internal bool IsCeiling => _isCeiling;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _useGravity;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _useIkCrouch;
-        [Header("Actions")]
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isJump; internal bool IsJump => _isJump;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _isFalling; internal bool IsFalling => _isFalling;
+        [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
+        [SerializeField, ReadOnly] private bool _gizmos;
+        [SerializeField, ReadOnly] private float _currentGravityForce; internal float CurrentGravityForce => _currentGravityForce;
+        [SerializeField, ReadOnly] private bool _isGrounded; internal bool IsGrounded => _isGrounded;
+        [SerializeField, ReadOnly] private bool _isCeiling; internal bool IsCeiling => _isCeiling;
+        [SerializeField, ReadOnly] private bool _useGravity;
+        [SerializeField, ReadOnly] private bool _useIkCrouch;
+        [LayoutStart("./Actions", ELayout.TitleOut)]
+        [SerializeField, ReadOnly] private bool _isJump; internal bool IsJump => _isJump;
+        [SerializeField, ReadOnly] private bool _isFalling; internal bool IsFalling => _isFalling;
 
         private Vector3 _ceilingSpherePos;
 

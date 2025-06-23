@@ -1,5 +1,6 @@
 using Cinemachine;
-using NaughtyAttributes;
+using SaintsField;
+using SaintsField.Playa;
 using UnityEngine;
 
 namespace Spread.Player.Camera
@@ -12,23 +13,26 @@ namespace Spread.Player.Camera
         private PlayerStateMachineContext _ctx;
         public UnityEngine.Camera Main { get; private set; }
 
-        [BoxGroup("References"), SerializeField] private Animator _animator;
-        [BoxGroup("References"), SerializeField] private UnityEngine.Camera _camera;
-        [BoxGroup("References"), SerializeField] private CinemachineVirtualCamera _cineCamera;
-        [BoxGroup("References"), SerializeField] private CinemachineInputProvider _cineInput;
+        [LayoutStart("References", ELayout.TitleBox)]
+        [SerializeField] private Animator _animator;
+        [SerializeField] private UnityEngine.Camera _camera;
+        [SerializeField] private CinemachineVirtualCamera _cineCamera;
+        [SerializeField] private CinemachineInputProvider _cineInput;
         private CinemachinePOV _cinePov;
 
-        [BoxGroup("Settings"), SerializeField] private bool _clampRot;
-        [BoxGroup("Settings"), SerializeField, Range(0, 180), ShowIf(nameof(_clampRot))] private float _clampRotAngle;
-        [BoxGroup("Settings"), SerializeField, Range(0, 180)] private float _overTurnStart = 100;
-        [BoxGroup("Settings"), SerializeField, Range(0, 180)] private float _overTurnEnd = 5;
-        [BoxGroup("Settings"), SerializeField, Range(0, 10)] private float _moveRotSpeed = 5;
-
-        [Foldout("Debug"), SerializeField, Range(0, 360), ReadOnly] private float _yPlayerRot;
-        [Foldout("Debug"), SerializeField, Range(0, 360), ReadOnly] private float _yCameraRot;
-        [Foldout("Debug"), SerializeField, Range(0, 180), ReadOnly] private float _yPlayerCameraAngle;
-        [Foldout("Debug"), SerializeField, Range(-1, 1), ReadOnly] private int _rotDir;
-        [Foldout("Debug"), SerializeField, ReadOnly] private bool _overTurn;
+        [LayoutStart("Settings", ELayout.TitleBox)]
+        [SerializeField] private bool _clampRot;
+        [SerializeField, Range(0, 180)] private float _clampRotAngle;
+        [SerializeField, Range(0, 180)] private float _overTurnStart = 100;
+        [SerializeField, Range(0, 180)] private float _overTurnEnd = 5;
+        [SerializeField, Range(0, 10)] private float _moveRotSpeed = 5;
+        
+        [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
+        [SerializeField, Range(0, 360), ReadOnly] private float _yPlayerRot;
+        [SerializeField, Range(0, 360), ReadOnly] private float _yCameraRot;
+        [SerializeField, Range(0, 180), ReadOnly] private float _yPlayerCameraAngle;
+        [SerializeField, Range(-1, 1), ReadOnly] private int _rotDir;
+        [SerializeField, ReadOnly] private bool _overTurn;
 
         private Tween _rotTweenXAxis;
         private Tween _rotTweenYAxis;
