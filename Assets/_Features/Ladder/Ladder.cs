@@ -20,11 +20,6 @@ namespace Spread.Ladder
             SetPromptPos(p_player.position);
         }
 
-        protected override void OnUnSelect()
-        {
-            
-        }
-
         private void SetPromptPos(Vector3 p_playerPos)
         {
             _promptPosRef.localPosition = IsPlayerTop(p_playerPos)
@@ -39,16 +34,5 @@ namespace Spread.Ladder
 
             return playerDistanceToTopPrompt < playerDistanceToBottomPrompt;
         }
-
-#if UNITY_EDITOR
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.white;
-            Gizmos.DrawSphere(transform.TransformPoint(_topPromptPos), 0.1f);
-            
-            Gizmos.color = Color.gray;
-            Gizmos.DrawSphere(transform.TransformPoint(_bottomPromptPos), 0.1f);
-        }
-#endif
     }
 }

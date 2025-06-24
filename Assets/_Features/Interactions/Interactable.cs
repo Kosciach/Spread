@@ -8,10 +8,13 @@ namespace Spread.Interactions
 {
     public abstract class Interactable : MonoBehaviour
     {
-        [LayoutStart("References", ELayout.TitleBox)]
+        [LayoutStart("Interactable", ELayout.TitleBox | ELayout.Vertical)]
+        [LayoutStart("Interactable/References", ELayout.TitleBox)]
         [SerializeField] private Outline _outline;
         [SerializeField] protected Transform _promptPosRef;
         public Transform PromptWorldRef => _promptPosRef;
+        
+        [LayoutStart("Interactable/Settings", ELayout.TitleBox)]
         [SerializeField, SaintsRow(inline: true)] public InteractableData InteractableData;
 
         private float _outlineWidth;
@@ -48,7 +51,6 @@ namespace Spread.Interactions
     [System.Serializable]
     public class InteractableData
     {
-        [LayoutStart("./Interactions", ELayout.TitleBox)]
         public string Name;
         public Interaction[] Interactions;
     }
