@@ -40,8 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7237463833624597754}
-  - component: {fileID: 3985317024500205557}
   - component: {fileID: 5701909912799997385}
+  - component: {fileID: 3985317024500205557}
   - component: {fileID: 2848188138223221871}
   - component: {fileID: 1859820440100910737}
   - component: {fileID: 7361261489059338376}
@@ -69,27 +69,6 @@ Transform:
   - {fileID: 5581377352745737499}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!65 &3985317024500205557
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1034855679132726241}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.6, y: 4.53, z: 0.2}
-  m_Center: {x: 0, y: 2.265, z: 0}
 --- !u!65 &5701909912799997385
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,6 +90,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6, y: 1, z: 0.2}
   m_Center: {x: 0, y: 5.03, z: 0}
+--- !u!65 &3985317024500205557
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034855679132726241}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6, y: 4.53, z: 0.2}
+  m_Center: {x: 0, y: 2.265, z: 0}
 --- !u!114 &2848188138223221871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,12 +143,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a96d0af0894b9847ab52c8cc9341c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _topCollider: {fileID: 5701909912799997385}
+  _bottomCollider: {fileID: 3985317024500205557}
   _rungsParent: {fileID: 7241596014809128184}
   _railsParent: {fileID: 8999637429573554999}
-  _rungPrefab: {fileID: 0}
-  _railPrefab: {fileID: 0}
+  _rungPrefab: {fileID: 6652867499854666584, guid: 374cb616918b2ab43819aa780e198c24,
+    type: 3}
+  _railPrefab: {fileID: 6652867499854666584, guid: cb5a75be0b37a9546ae56d96055cdcab,
+    type: 3}
+  _drawGizmos: 0
   _sizeColor: {r: 0, g: 0.9033842, b: 1, a: 0.7490196}
-  _size: {x: 0.59, y: 4.54}
+  _size: {x: 0.6, y: 4.54, z: 0.2}
   _rungsColor: {r: 1, g: 0.97083807, b: 0, a: 1}
   _rungsSpacing: 0.194
   _rungsTopOffset: 0

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6652867499854666584}
   m_Layer: 0
-  m_Name: Ladder_Leg
+  m_Name: LadderRail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

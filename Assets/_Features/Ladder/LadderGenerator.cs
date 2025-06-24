@@ -2,11 +2,16 @@ using SaintsField.Playa;
 using UnityEngine;
 using SaintsField;
 using SaintsField.Playa;
+using UnityEditor;
 
 namespace Spread.Ladder
 {
     public class LadderGenerator : MonoBehaviour
     {
+        [LayoutStart("Colliders", ELayout.TitleBox)]
+        [SerializeField] private BoxCollider _topCollider;
+        [SerializeField] private BoxCollider _bottomCollider;
+        
         [LayoutStart("Parents", ELayout.TitleBox)]
         [SerializeField] private Transform _rungsParent;
         [SerializeField] private Transform _railsParent;
@@ -16,25 +21,27 @@ namespace Spread.Ladder
         [SerializeField] private Transform _railPrefab;
 
         [LayoutStart("Settings", ELayout.TitleBox)]
+        [SerializeField] private bool _drawGizmos;
+        [LayoutStart("Settings/Size", ELayout.TitleBox| ELayout.Foldout)]
         [SerializeField] private Color _sizeColor;
-        [SerializeField] private Vector2 _size;
-        [LayoutStart("Settings/Rungs", ELayout.TitleBox)]
+        [SerializeField] private Vector3 _size;
+        [LayoutStart("Settings/Rungs", ELayout.TitleBox| ELayout.Foldout)]
         [SerializeField] private Color _rungsColor;
         [SerializeField, PropRange(0.05f, nameof(_maxRugsSpacing))] private float _rungsSpacing;
         [SerializeField, PropRange(0, nameof(_maxRugsOffset))] private float _rungsTopOffset;
         [SerializeField, PropRange(0, nameof(_maxRugsOffset))] private float _rungsBottomOffset;
-        [LayoutStart("Settings/EnterPoints", ELayout.TitleBox)]
+        [LayoutStart("Settings/EnterPoints", ELayout.TitleBox| ELayout.Foldout)]
         [SerializeField] private Color _enterPointsColor;
         [SerializeField, PropRange(0, nameof(_maxEnterPointIndexOffset))] private int _topEnterPointIndexOffset;
         [SerializeField, PropRange(0, nameof(_maxEnterPointIndexOffset))] private int _bottomEnterPointIndexOffset;
-        [LayoutStart("Settings/ExitPoints", ELayout.TitleBox)]
+        [LayoutStart("Settings/ExitPoints", ELayout.TitleBox| ELayout.Foldout)]
         [SerializeField] private Color _exitPointsColor;
         [SerializeField] private Vector3 _topExitPointOffset;
         [SerializeField] private Vector3 _bottomExitPointOffset;
-        [LayoutStart("Settings/AttachPoints", ELayout.TitleBox)]
+        [LayoutStart("Settings/AttachPoints", ELayout.TitleBox| ELayout.Foldout)]
         [SerializeField] private Color _attachPointsColor;
         [SerializeField] private Vector3 _attachPointsOffset;
-        [LayoutStart("Settings/Prompts", ELayout.TitleBox)]
+        [LayoutStart("Settings/Prompts", ELayout.TitleBox| ELayout.Foldout)]
         [SerializeField] private Color _promptPointsColor;
         [SerializeField] private Vector3 _topPromptPoint;
         [SerializeField] private Vector3 _bottomPromptPoint;
@@ -44,7 +51,7 @@ namespace Spread.Ladder
         private float _maxRugsOffset => _size.y / 2f;
         private float _maxEnterPointIndexOffset;
         
-        [LayoutStart("Buttons", ELayout.TitleBox | ELayout.Foldout)]
+        [LayoutStart("Buttons", ELayout.TitleBox)]
         [Button]
         private void Generate()
         {
@@ -52,6 +59,7 @@ namespace Spread.Ladder
 
             CreateRungs();
             CreateRails();
+            AlignColliders();
         }
 
         private void Clear()
@@ -69,23 +77,48 @@ namespace Spread.Ladder
 
         private void CreateRungs()
         {
-            
+
         }
         
         private void CreateRails()
         {
+            Transform leftRail = PrefabUtility.InstantiatePrefab(_railPrefab, _railsParent) as Transform;
+            leftRail.name = "LeftRail";
+            leftRail.GetChild(0).localScale = new Vector3(_size.z, 1, _size.z);
+            leftRail.localPosition = new Vector3((-_size.x / 2) + (_size.z / 2), 0 ,0);
+            leftRail.localScale = new Vector3(1, _size.y / 2, 1);
             
+            Transform rightRail = PrefabUtility.InstantiatePrefab(_railPrefab, _railsParent) as Transform;
+            leftRail.name = "RightRail";
+            rightRail.GetChild(0).localScale = leftRail.GetChild(0).localScale;
+            rightRail.localPosition = -leftRail.localPosition;
+            rightRail.localScale = leftRail.localScale;
+        }
+
+        private void AlignColliders()
+        {
+            //TopCollider
+            Vector3 topColliderSize = _topCollider.size;
+            topColliderSize.z = _size.z;
+            _topCollider.size = topColliderSize;
+            _topCollider.center = new Vector3(0, (_topCollider.size.y / 2) + _size.y, 0);
+            
+            //BottomCollider
+            _bottomCollider.size = _size + new Vector3(0, 0, 0.05f);
+            _bottomCollider.center = new Vector3(0, (_size.y / 2), 0);
         }
         
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
+            if (!_drawGizmos) return;
+            
             Vector3 halfSize = _size / 2f;
             Gizmos.matrix = Matrix4x4.TRS(transform.position + (Vector3.up * halfSize.y), transform.rotation, transform.localScale);
 
 //Draw Size
             Gizmos.color = _sizeColor;
-            Gizmos.DrawCube(Vector3.zero, new Vector3(_size.x, _size.y, 0.2f));
+            Gizmos.DrawCube(Vector3.zero, _size);
 
 //Draw Rungs
             float rungsStartPos = -halfSize.y + _rungsBottomOffset;
