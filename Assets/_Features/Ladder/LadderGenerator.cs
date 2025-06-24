@@ -1,3 +1,4 @@
+using System;
 using SaintsField.Playa;
 using UnityEngine;
 using SaintsField;
@@ -8,6 +9,7 @@ namespace Spread.Ladder
 {
     public class LadderGenerator : MonoBehaviour
     {
+#if UNITY_EDITOR
         [LayoutStart("Colliders", ELayout.TitleBox)]
         [SerializeField] private BoxCollider _topCollider;
         [SerializeField] private BoxCollider _bottomCollider;
@@ -62,6 +64,8 @@ namespace Spread.Ladder
             AlignColliders();
         }
 
+        [LayoutStart("Buttons", ELayout.TitleBox)]
+        [Button]
         private void Clear()
         {
             for (int i = _rungsParent.childCount - 1; i >= 0; i--)
@@ -77,7 +81,24 @@ namespace Spread.Ladder
 
         private void CreateRungs()
         {
+            Vector3 halfSize = _size / 2f;
+            _rungsParent.localPosition = new Vector3(0, halfSize.y, 0);
+            
+            float rungsStartPos = -halfSize.y + _rungsBottomOffset;
+            float rungsEndPos = halfSize.y - _rungsTopOffset;
+            
+            float rungsAreaHeight = rungsEndPos - rungsStartPos;
+            int rungsCount = Mathf.RoundToInt(rungsAreaHeight / _rungsSpacing);
+            float exactSpacing = rungsAreaHeight / (rungsCount - 1);
+            
+            for (int i = 0; i < rungsCount; i++)
+            {
+                float rungYPos = rungsStartPos + i * exactSpacing;
 
+                Transform rung = PrefabUtility.InstantiatePrefab(_rungPrefab, _rungsParent) as Transform;
+                rung.localPosition = new Vector3(0, rungYPos, 0f);
+                rung.localScale = new Vector3(halfSize.x, 1, 1);
+            }
         }
         
         private void CreateRails()
@@ -108,7 +129,6 @@ namespace Spread.Ladder
             _bottomCollider.center = new Vector3(0, (_size.y / 2), 0);
         }
         
-#if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             if (!_drawGizmos) return;
