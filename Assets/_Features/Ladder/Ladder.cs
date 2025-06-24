@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using SaintsField;
 using SaintsField.Playa;
+using UnityEditor;
 
 namespace Spread.Ladder
 {
@@ -10,9 +11,19 @@ namespace Spread.Ladder
 
     public class Ladder : Interactable
     {
-        [LayoutStart("Settings", ELayout.TitleBox)]
-        [SerializeField] private Vector3 _topPromptPos;
-        [SerializeField] private Vector3 _bottomPromptPos;
+        [LayoutStart("Parents", ELayout.TitleBox)]
+        [SerializeField] private Transform _rungsParent;
+        [SerializeField] private Transform _railsParent;
+        
+        [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
+        [SerializeField, ReadOnly] private Vector3 _topPromptPoint;
+        [SerializeField, ReadOnly] private Vector3 _bottomPromptPoint;
+        [SerializeField, ReadOnly] private List<Vector3> _rungs;
+        [SerializeField, ReadOnly] private List<Vector3> _attachPoints;
+        [SerializeField, ReadOnly] private Vector3 _topExitPoint;
+        [SerializeField, ReadOnly] private Vector3 _bottomExitPoint;
+        [SerializeField, ReadOnly] private int _topEnterPointIndexOffset;
+        [SerializeField, ReadOnly] private int _bottomEnterPointIndexOffset;
         
         
         protected override void OnSelect(Transform p_player)
@@ -23,16 +34,39 @@ namespace Spread.Ladder
         private void SetPromptPos(Vector3 p_playerPos)
         {
             _promptPosRef.localPosition = IsPlayerTop(p_playerPos)
-                ? _topPromptPos
-                : _bottomPromptPos;
+                ? _topPromptPoint
+                : _bottomPromptPoint;
         }
 
         private bool IsPlayerTop(Vector3 p_playerPos)
         {
-            float playerDistanceToTopPrompt = Vector3.Distance(p_playerPos, _topPromptPos);
-            float playerDistanceToBottomPrompt = Vector3.Distance(p_playerPos, _bottomPromptPos);
+            float playerDistanceToTopPrompt = Vector3.Distance(p_playerPos, _topPromptPoint);
+            float playerDistanceToBottomPrompt = Vector3.Distance(p_playerPos, _bottomPromptPoint);
 
             return playerDistanceToTopPrompt < playerDistanceToBottomPrompt;
         }
+        
+        
+#if UNITY_EDITOR
+        internal void SetupLadderData(Vector3 p_topPromptPoint, Vector3 p_bottomPromptPoint, 
+            List<Vector3> p_rungs, List<Vector3> p_attachPoints,
+            Vector3 p_topExitPoint, Vector3 p_bottomExitPoint,
+            int p_topEnterPointIndexOffset, int p_bottomEnterPointIndexOffset)
+        {
+            _topPromptPoint = p_topPromptPoint;
+            _bottomPromptPoint = p_bottomPromptPoint;
+
+            _rungs = p_rungs;
+            _attachPoints = p_attachPoints;
+
+            _topExitPoint = p_topExitPoint;
+            _bottomExitPoint = p_bottomExitPoint;
+            
+            _topEnterPointIndexOffset = p_topEnterPointIndexOffset;
+            _bottomEnterPointIndexOffset = p_bottomEnterPointIndexOffset;
+            
+            EditorUtility.SetDirty(this);
+        }
+#endif
     }
 }
