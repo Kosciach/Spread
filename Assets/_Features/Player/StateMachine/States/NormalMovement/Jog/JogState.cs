@@ -23,6 +23,11 @@ namespace Spread.Player.StateMachine
 
         internal override Type GetNextState()
         {
+            if (_ctx.LadderController.CurrentLadder != null)
+            {
+                return typeof(EnterLadderState);
+            }
+            
             if (_ctx.GravityController.IsFalling)
             {
                 return typeof(FallState);

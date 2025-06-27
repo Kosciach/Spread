@@ -24,6 +24,9 @@ namespace Spread.Ladder
         [SerializeField, ReadOnly] private Vector3 _bottomExitPoint;
         [SerializeField, ReadOnly] private int _topEnterPointIndexOffset;
         [SerializeField, ReadOnly] private int _bottomEnterPointIndexOffset;
+
+        public IReadOnlyList<Vector3> Rungs => _rungs;
+        public IReadOnlyList<Vector3> AttachPoints => _attachPoints;
         
         
         protected override void OnSelect(Transform p_player)
@@ -45,7 +48,20 @@ namespace Spread.Ladder
 
             return playerDistanceToTopPrompt < playerDistanceToBottomPrompt;
         }
-        
+
+        public int GetClosestRungIndex(Vector3 p_pos)
+        {
+            for (int i = 0; i < _rungs.Count; i++)
+            {
+                Vector3 rung = _rungs[i];
+                if (rung.y > p_pos.y)
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
         
 #if UNITY_EDITOR
         internal void SetupLadderData(Vector3 p_topPromptPoint, Vector3 p_bottomPromptPoint, 
