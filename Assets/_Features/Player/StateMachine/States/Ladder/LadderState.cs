@@ -27,6 +27,9 @@ namespace Spread.Player.StateMachine
 
         protected override void OnUpdate()
         {
+            //Update IK
+            _ctx.LadderController.UpdateIk();
+            
             //Check if climb anim is happening
             if (_climbTween != null) return;
             
@@ -40,6 +43,9 @@ namespace Spread.Player.StateMachine
             _climbTween = _ctx.Transform.DOMove(_currentLadder.AttachPoints[CurrentRangIndex], _climbDuration);
             _climbTween.SetEase(Ease.Linear);
             _climbTween.OnComplete(() => { _climbTween = null; });
+            
+            //Set IK
+            _ctx.LadderController.SetIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
         }
 
         protected override void OnExit()

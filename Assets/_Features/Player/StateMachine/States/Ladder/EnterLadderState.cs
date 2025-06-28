@@ -18,7 +18,9 @@ namespace Spread.Player.StateMachine
             
             //Transition to ladder anims
             _ctx.AnimatorController.LadderEnter(false);
+            _ctx.AnimatorController.ToggleFootIk(false);
             _ctx.AnimatorController.SetInAirLayer(0);
+            _ctx.AnimatorController.SetLadderRig(1);
             
             //Root motion - off
             _ctx.AnimatorController.ToggleRootMotion(false);
@@ -45,6 +47,9 @@ namespace Spread.Player.StateMachine
             //Set Camera MinMax
             _ctx.CameraController.SetMinMax(ladder.transform.eulerAngles.y, 75);
             _ctx.CameraController.ToggleWrap(false);
+            
+            //Set IK
+            _ctx.LadderController.SetIkPos(closestRungIndex);
         }
 
         protected override void OnUpdate()
