@@ -6268,9 +6268,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
         type: 3}
+      propertyPath: _duration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
+        type: 3}
       propertyPath: _ladderState
       value: 
       objectReference: {fileID: 2116097934}
+    - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
+        type: 3}
+      propertyPath: _horizontalRotation
+      value: -25
+      objectReference: {fileID: 0}
     - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
         type: 3}
       propertyPath: _moveToRungDuration
@@ -6279,6 +6289,16 @@ PrefabInstance:
     - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
         type: 3}
       propertyPath: _rotateToLadderDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
+        type: 3}
+      propertyPath: _enableLadderRigDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
+        type: 3}
+      propertyPath: _rotateHorizontalDuration
       value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -10579,7 +10599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Effectors:
   - m_Transform: {fileID: 46616851}
     m_Style:

@@ -48,6 +48,11 @@ namespace Spread.Player.Collisions
             _characterController.center = center + _centerOffset;
         }
 
+        internal void ToggleCollision(bool p_enable)
+        {
+            _characterController.detectCollisions = p_enable;
+        }
+
         [System.Serializable]
         private struct ColliderSize
         {

@@ -7,8 +7,8 @@ namespace Spread.Player.StateMachine
     public class EnterLadderState : PlayerBaseState
     {
         [SerializeField] private LadderState _ladderState;
-        [SerializeField] private float _moveToRungDuration;
-        [SerializeField] private float _rotateToLadderDuration;
+        [SerializeField] private float _horizontalRotation;
+        [SerializeField] private float _duration;
 
         private bool _readyToClimb;
         
@@ -20,7 +20,7 @@ namespace Spread.Player.StateMachine
             _ctx.AnimatorController.LadderEnter(false);
             _ctx.AnimatorController.ToggleFootIk(false);
             _ctx.AnimatorController.SetInAirLayer(0);
-            _ctx.AnimatorController.SetLadderRig(1);
+            _ctx.AnimatorController.SetLadderRig(1, _duration);
             
             //Root motion - off
             _ctx.AnimatorController.ToggleRootMotion(false);
@@ -28,6 +28,7 @@ namespace Spread.Player.StateMachine
             
             //Gravity - off
             _ctx.GravityController.ToggleGravity(false);
+            _ctx.ColliderController.ToggleCollision(false);
             
             //Unselect ladder
             _ctx.InteractionsController.SetInteractable(null);
@@ -37,12 +38,13 @@ namespace Spread.Player.StateMachine
             //Move to rung
             int closestRungIndex = ladder.GetClosestRungIndex(_ctx.Transform.position);
             Vector3 attachPoint = ladder.AttachPoints[closestRungIndex];
-            _ctx.Transform.DOMove(attachPoint, _moveToRungDuration);
+            _ctx.Transform.DOMove(attachPoint, _duration);
             _ladderState.CurrentRangIndex = closestRungIndex;
             
             //Rotate to Ladder
-            _ctx.CameraController.RotToYAxis(ladder.transform.eulerAngles.y, _rotateToLadderDuration);
-            _ctx.RotToYAxis(ladder.transform.eulerAngles.y, _rotateToLadderDuration, () => { _readyToClimb = true; });
+            _ctx.CameraController.RotToXAxis(_horizontalRotation, _duration);
+            _ctx.CameraController.RotToYAxis(ladder.transform.eulerAngles.y, _duration);
+            _ctx.RotToYAxis(ladder.transform.eulerAngles.y, _duration, () => { _readyToClimb = true; });
             
             //Set Camera MinMax
             _ctx.CameraController.SetMinMax(ladder.transform.eulerAngles.y, 75);
