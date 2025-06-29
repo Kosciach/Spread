@@ -6444,12 +6444,32 @@ PrefabInstance:
       objectReference: {fileID: 2116097934}
     - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
         type: 3}
+      propertyPath: _rotateXDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
+        type: 3}
+      propertyPath: _rotateYDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
+        type: 3}
       propertyPath: _horizontalRotation
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
         type: 3}
       propertyPath: _moveToRungDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
+        type: 3}
+      propertyPath: _moveToLadderDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
+        type: 3}
+      propertyPath: _setLadderRigDuration
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,

@@ -1,14 +1,24 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using SaintsField;
+using SaintsField.Playa;
+using Spread.Tools;
 
 namespace Spread.Player.StateMachine
 {
     public class EnterLadderState : PlayerBaseState
     {
+        [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private LadderState _ladderState;
+        
+        [LayoutStart("Settings", ELayout.TitleBox)]
         [SerializeField] private float _horizontalRotation;
-        [SerializeField] private float _duration;
+        [LayoutStart("Settings/Durations", ELayout.TitleBox)]
+        [SerializeField] private float _setLadderRigDuration;
+        [SerializeField] private float _moveToLadderDuration;
+        [SerializeField] private float _rotateXDuration;
+        [SerializeField] private float _rotateYDuration;
 
         private bool _readyToClimb;
         
@@ -20,7 +30,10 @@ namespace Spread.Player.StateMachine
             _ctx.AnimatorController.LadderEnter(false);
             _ctx.AnimatorController.ToggleFootIk(false);
             _ctx.AnimatorController.SetInAirLayer(0);
-            _ctx.AnimatorController.SetLadderRig(1, _duration);
+            Helpers.SimpleTimer(_rotateYDuration, () =>
+            {
+                _ctx.AnimatorController.SetLadderRig(1, _setLadderRigDuration);
+            });
             
             //Root motion - off
             _ctx.AnimatorController.ToggleRootMotion(false);
@@ -32,26 +45,27 @@ namespace Spread.Player.StateMachine
             
             //Unselect ladder
             _ctx.InteractionsController.SetInteractable(null);
-
-            Spread.Ladder.Ladder ladder = _ctx.LadderController.CurrentLadder;
             
-            //Move to rung
+            //Prep values
+            Spread.Ladder.Ladder ladder = _ctx.LadderController.CurrentLadder;
             int closestRungIndex = ladder.GetClosestRungIndex(_ctx.Transform.position);
+            
+            //Set IK
+            _ctx.LadderController.SetStartIkPos(closestRungIndex);
+            
+            //Move to ladder
             Vector3 attachPoint = ladder.AttachPoints[closestRungIndex];
-            _ctx.Transform.DOMove(attachPoint, _duration);
+            _ctx.Transform.DOMove(attachPoint, _moveToLadderDuration);
             _ladderState.CurrentRangIndex = closestRungIndex;
             
             //Rotate to Ladder
-            _ctx.CameraController.RotToXAxis(_horizontalRotation, _duration);
-            _ctx.CameraController.RotToYAxis(ladder.transform.eulerAngles.y, _duration);
-            _ctx.RotToYAxis(ladder.transform.eulerAngles.y, _duration, () => { _readyToClimb = true; });
+            _ctx.CameraController.RotToXAxis(_horizontalRotation, _rotateXDuration);
+            _ctx.CameraController.RotToYAxis(ladder.transform.eulerAngles.y, _rotateYDuration);
+            _ctx.RotToYAxis(ladder.transform.eulerAngles.y, _rotateYDuration, () => { _readyToClimb = true; });
             
             //Set Camera MinMax
             _ctx.CameraController.SetMinMax(ladder.transform.eulerAngles.y, 75);
             _ctx.CameraController.ToggleWrap(false);
-            
-            //Set IK
-            _ctx.LadderController.SetStartIkPos(closestRungIndex);
         }
 
         protected override void OnUpdate()
