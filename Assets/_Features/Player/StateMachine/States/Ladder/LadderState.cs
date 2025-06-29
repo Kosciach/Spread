@@ -19,6 +19,7 @@ namespace Spread.Player.StateMachine
         
         protected override void OnEnter()
         {
+            _ctx.LadderController.IsMoving = false;
             _currentLadder = _ctx.LadderController.CurrentLadder;
             _climbDirection = 0;
             
@@ -48,6 +49,7 @@ namespace Spread.Player.StateMachine
             //Set IK
             _ctx.LadderController.SetLegIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
             _ctx.LadderController.SetArmIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
+            _ctx.LadderController.SpineSway(CurrentRangIndex, _climbDuration, _climbDirection);
         }
 
         protected override void OnExit()
@@ -69,6 +71,7 @@ namespace Spread.Player.StateMachine
         private void MoveInput(InputAction.CallbackContext p_ctx)
         {
             _climbDirection = (int)p_ctx.ReadValue<Vector2>().y;
+            _ctx.LadderController.IsMoving = _climbDirection != 0;
         }
     }
 }

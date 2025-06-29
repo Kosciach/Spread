@@ -27,6 +27,9 @@ namespace Spread.Player.Ladder
         [LayoutStart("Thumbs", ELayout.TitleBox)]
         [SerializeField] private Transform _leftThumb;
         [SerializeField] private Transform _rightThumb;
+        
+        [LayoutStart("SpineSway", ELayout.TitleBox)]
+        [SerializeField] private MultiRotationConstraint _spineSway;
 
         [LayoutStart("Settings", ELayout.TitleBox)]
         [SerializeField] private bool _lockUpdateIK;
@@ -45,6 +48,8 @@ namespace Spread.Player.Ladder
         [LayoutStart("Settings/Thumbs", ELayout.TitleBox)]
         [SerializeField] private Vector3 _leftThumbOffset;
         [SerializeField] private Vector3 _rightThumbOffset;
+        [LayoutStart("Settings/SpineSway", ELayout.TitleBox)]
+        [SerializeField] private float _maxSway;
 
         private Vector3 _leftLegPos;
         private Vector3 _rightLegPos;
@@ -54,6 +59,10 @@ namespace Spread.Player.Ladder
         
         private Ladder _currentLadder;
         internal Ladder CurrentLadder => _currentLadder;
+
+        private Tween _swayTween;
+
+        internal bool IsMoving;
         
         
         internal void Setup(PlayerStateMachineContext p_ctx)
@@ -84,8 +93,8 @@ namespace Spread.Player.Ladder
             _rightLegPos += _currentLadder.transform.TransformDirection(_rightLegOffset);
             
             //Arms
-            _leftArmPos = _currentLadder.Rungs[p_rungIndex];
-            _rightArmPos = _currentLadder.Rungs[p_rungIndex + 1];
+            _leftArmPos = _currentLadder.Rungs[p_rungIndex + 1];
+            _rightArmPos = _currentLadder.Rungs[p_rungIndex];
 
             if (p_rungIndex % 2 == 0)
                 (_leftArmPos, _rightArmPos) = (_rightArmPos, _leftArmPos);
@@ -153,7 +162,7 @@ namespace Spread.Player.Ladder
             Vector3 arcDir = Vector3.Lerp(-_ctx.Transform.forward, _ctx.Transform.right, 0.5f);
             Vector3 currentPos = _rightArmPos;
             
-            bool leftArm = p_climbDirection == -1
+            bool leftArm = p_climbDirection != -1
                 ? p_rungIndex % 2 != 0
                 : p_rungIndex % 2 == 0;
             
@@ -189,6 +198,37 @@ namespace Spread.Player.Ladder
 
             }, 1f, duration).SetEase(Ease.InOutQuad);
         }
+
+        internal void SpineSway(int p_rungIndex, float p_climbDuration, int p_climbDirection)
+        {
+            float swayTarget = p_rungIndex % 2 == 0
+                ? -_maxSway
+                : _maxSway;
+
+            if (p_climbDirection == -1)
+                swayTarget *= -1;
+
+            _swayTween?.Kill();
+            
+            _swayTween = DOTween.To(() => _spineSway.data.offset.z, x =>
+            {
+                if (_swayTween.ElapsedPercentage() >= 0.5f && !IsMoving)
+                {
+                    _swayTween.Kill();
+                    
+                    _swayTween = DOTween.To(() => _spineSway.data.offset.z, y =>
+                    {
+                        _spineSway.data.offset = new Vector3(0, 0, y);
+
+                    }, 0, p_climbDuration*2).SetEase(Ease.OutQuad);
+                    
+                    return;
+                }
+
+                _spineSway.data.offset = new Vector3(0, 0, x);
+
+            }, swayTarget, p_climbDuration).SetEase(Ease.InOutQuad);
+        }
         
         internal void UpdateIk()
         {
@@ -200,13 +240,9 @@ namespace Spread.Player.Ladder
             _leftArm.position = _leftArmPos;
             _rightArm.position = _rightArmPos;
             
-            UpdateThumbs();
-        }
-
-        private void UpdateThumbs()
-        {
             _leftThumb.position = _leftArmPos + _currentLadder.transform.TransformDirection(_leftThumbOffset);
             _rightThumb.position = _rightArmPos + _currentLadder.transform.TransformDirection(_rightThumbOffset);
         }
+        
     }
 }
