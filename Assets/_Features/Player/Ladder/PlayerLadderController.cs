@@ -17,19 +17,40 @@ namespace Spread.Player.Ladder
         private PlayerStateMachineContext _ctx;
 
         [LayoutStart("Legs", ELayout.TitleBox)]
-        [LayoutStart("Legs/Left", ELayout.TitleBox)]
-        [SerializeField, SaintsRow(inline: true)] private LadderIk _leftLeg;
-        [LayoutStart("Legs/Right", ELayout.TitleBox)]
-        [SerializeField, SaintsRow(inline: true)] private LadderIk _rightLeg;
+        [SerializeField] private Transform _leftLeg;
+        [SerializeField] private Transform _rightLeg;
         
+        [LayoutStart("Arms", ELayout.TitleBox)]
+        [SerializeField] private Transform _leftArm;
+        [SerializeField] private Transform _rightArm;
+        
+        [LayoutStart("Thumbs", ELayout.TitleBox)]
+        [SerializeField] private Transform _leftThumb;
+        [SerializeField] private Transform _rightThumb;
+
         [LayoutStart("Settings", ELayout.TitleBox)]
-        [SerializeField] private bool _useCustomClimbDuration;
-        [SerializeField, ShowIf(nameof(_useCustomClimbDuration))] private float _customClimbDuration;
+        [SerializeField] private bool _lockUpdateIK;
+        [LayoutStart("Settings/Legs", ELayout.TitleBox)]
+        [SerializeField] private bool _useCustomLegsDuration;
+        [SerializeField, ShowIf(nameof(_useCustomLegsDuration))] private float _customLegsDuration;
+        [SerializeField] private float _legArcHeight;
         [SerializeField] private Vector3 _leftLegOffset;
         [SerializeField] private Vector3 _rightLegOffset;
+        [LayoutStart("Settings/Arms", ELayout.TitleBox)]
+        [SerializeField] private bool _useCustomArmsDuration;
+        [SerializeField, ShowIf(nameof(_useCustomArmsDuration))] private float _customArmsDuration;
+        [SerializeField] private float _armArcHeight;
+        [SerializeField] private float _armsHeightOffset;
+        [SerializeField] private Vector3 _rightArmOffset;
+        [LayoutStart("Settings/Thumbs", ELayout.TitleBox)]
+        [SerializeField] private Vector3 _leftThumbOffset;
+        [SerializeField] private Vector3 _rightThumbOffset;
 
         private Vector3 _leftLegPos;
         private Vector3 _rightLegPos;
+        
+        private Vector3 _leftArmPos;
+        private Vector3 _rightArmPos;
         
         private Ladder _currentLadder;
         internal Ladder CurrentLadder => _currentLadder;
@@ -50,8 +71,9 @@ namespace Spread.Player.Ladder
             }
         }
         
-        internal void SetIkPos(int p_rungIndex)
-        { 
+        internal void SetStartIkPos(int p_rungIndex)
+        {
+            //Legs
             _leftLegPos = _currentLadder.Rungs[p_rungIndex];
             _rightLegPos = _currentLadder.Rungs[p_rungIndex + 1];
 
@@ -61,10 +83,24 @@ namespace Spread.Player.Ladder
             _leftLegPos += _currentLadder.transform.TransformDirection(_leftLegOffset);
             _rightLegPos += _currentLadder.transform.TransformDirection(_rightLegOffset);
             
+            //Arms
+            _leftArmPos = _currentLadder.Rungs[p_rungIndex];
+            _rightArmPos = _currentLadder.Rungs[p_rungIndex + 1];
+
+            if (p_rungIndex % 2 == 0)
+                (_leftArmPos, _rightArmPos) = (_rightArmPos, _leftArmPos);
+                
+            Vector3 rightArmOffset = new Vector3(_currentLadder.Size.x / 2 + _currentLadder.Size.z / 2, _armsHeightOffset, 0) + _rightArmOffset;
+            Vector3 leftArmOffset = rightArmOffset;
+            leftArmOffset.x *= -1;
+            _leftArmPos += _currentLadder.transform.TransformDirection(leftArmOffset);
+            _rightArmPos += _currentLadder.transform.TransformDirection(rightArmOffset);
+            
+            //Update IK
             UpdateIk();
         }
         
-        internal void SetIkPos(int p_rungIndex, float p_climbDuration, int p_climbDirection)
+        internal void SetLegIkPos(int p_rungIndex, float p_climbDuration, int p_climbDirection)
         {
             //Set initial values
             Vector3 offset = _rightLegOffset;
@@ -82,25 +118,24 @@ namespace Spread.Player.Ladder
             }
             
             //Calculate target
-            Vector3 legTarget = p_climbDirection == -1
+            Vector3 target = p_climbDirection == -1
                 ? _currentLadder.Rungs[p_rungIndex]
                 : _currentLadder.Rungs[p_rungIndex + 1];
-            legTarget += _currentLadder.transform.TransformDirection(offset);
+            target += _currentLadder.transform.TransformDirection(offset);
             
             //Setup arc
             Vector3 arcDir = -_currentLadder.transform.forward;
-            float arcHeight = 0.1f;
 
             //Lerp pos
-            float duration = _useCustomClimbDuration
-                ? _customClimbDuration
+            float duration = _useCustomLegsDuration
+                ? _customLegsDuration
                 : p_climbDuration;
             DOTween.To(() => 0f, x =>
             {
-                Vector3 newPos = Vector3.Lerp(currentPos, legTarget, x);
+                Vector3 newPos = Vector3.Lerp(currentPos, target, x);
                 
                 //Add arc
-                float arcOffset = Mathf.Sin(x * Mathf.PI) * arcHeight;
+                float arcOffset = Mathf.Sin(x * Mathf.PI) * _legArcHeight;
                 newPos += arcDir * arcOffset;
 
                 //Apply to leg pos
@@ -112,29 +147,66 @@ namespace Spread.Player.Ladder
             }, 1f, duration).SetEase(Ease.InOutQuad);
         }
         
+        internal void SetArmIkPos(int p_rungIndex, float p_climbDuration, int p_climbDirection)
+        {
+            Vector3 offset = new Vector3(_currentLadder.Size.x / 2 + _currentLadder.Size.z / 2, _armsHeightOffset, 0) + _rightArmOffset;
+            Vector3 arcDir = Vector3.Lerp(-_ctx.Transform.forward, _ctx.Transform.right, 0.5f);
+            Vector3 currentPos = _rightArmPos;
+            
+            bool leftArm = p_climbDirection == -1
+                ? p_rungIndex % 2 != 0
+                : p_rungIndex % 2 == 0;
+            
+            if (leftArm)
+            {
+                offset.x *= -1;
+                arcDir = Vector3.Lerp(-_ctx.Transform.forward, -_ctx.Transform.right, 0.5f);
+                currentPos = _leftArmPos;
+            }
+            
+            Vector3 target = p_climbDirection == -1
+                ? _currentLadder.Rungs[p_rungIndex]
+                : _currentLadder.Rungs[p_rungIndex + 1];
+            target += _currentLadder.transform.TransformDirection(offset);
+            
+            //Lerp pos
+            float duration = _useCustomArmsDuration
+                ? _customArmsDuration
+                : p_climbDuration;
+            DOTween.To(() => 0f, x =>
+            {
+                Vector3 newPos = Vector3.Lerp(currentPos, target, x);
+                
+                //Add arc
+                float arcOffset = Mathf.Sin(x * Mathf.PI) * _armArcHeight;
+                newPos += arcDir * arcOffset;
+
+                //Apply to leg pos
+                if (leftArm)
+                    _leftArmPos = newPos;
+                else
+                    _rightArmPos = newPos;
+
+            }, 1f, duration).SetEase(Ease.InOutQuad);
+        }
+        
         internal void UpdateIk()
         {
-            _leftLeg.Target.position = _leftLegPos;
-            _rightLeg.Target.position = _rightLegPos;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawSphere(_leftLegPos, 0.1f);
+            if (_lockUpdateIK) return;
             
-            Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(_rightLegPos, 0.1f);
+            _leftLeg.position = _leftLegPos;
+            _rightLeg.position = _rightLegPos;
+            
+            _leftArm.position = _leftArmPos;
+            _rightArm.position = _rightArmPos;
+            
+            UpdateThumbs();
         }
-    }
 
-    [System.Serializable]
-    public class LadderIk
-    {
-        [SerializeField] private Transform _target;
-        [SerializeField] private Transform _hint;
-
-        public Transform Target => _target;
-        public Transform Hint => _hint;
+        private void UpdateThumbs()
+        {
+            _leftThumb.position = _leftArmPos + _currentLadder.transform.TransformDirection(_leftThumbOffset);
+            _rightThumb.position = _rightArmPos + _currentLadder.transform.TransformDirection(_rightThumbOffset);
+        }
     }
 }

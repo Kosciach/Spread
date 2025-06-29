@@ -51,7 +51,7 @@ namespace Spread.Player.StateMachine
             _ctx.CameraController.ToggleWrap(false);
             
             //Set IK
-            _ctx.LadderController.SetIkPos(closestRungIndex);
+            _ctx.LadderController.SetStartIkPos(closestRungIndex);
         }
 
         protected override void OnUpdate()

@@ -45,7 +45,8 @@ namespace Spread.Player.StateMachine
             _climbTween.OnComplete(() => { _climbTween = null; });
             
             //Set IK
-            _ctx.LadderController.SetIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
+            _ctx.LadderController.SetLegIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
+            _ctx.LadderController.SetArmIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
         }
 
         protected override void OnExit()

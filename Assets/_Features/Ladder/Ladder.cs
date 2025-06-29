@@ -16,6 +16,8 @@ namespace Spread.Ladder
         [SerializeField] private Transform _railsParent;
         
         [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
+        [SerializeField, ReadOnly] private Vector3 _size;
+        [SerializeField, ReadOnly] private float _rungsSpacing;
         [SerializeField, ReadOnly] private Vector3 _topPromptPoint;
         [SerializeField, ReadOnly] private Vector3 _bottomPromptPoint;
         [SerializeField, ReadOnly] private List<Vector3> _rungs;
@@ -25,6 +27,8 @@ namespace Spread.Ladder
         [SerializeField, ReadOnly] private int _topEnterPointIndexOffset;
         [SerializeField, ReadOnly] private int _bottomEnterPointIndexOffset;
 
+        public Vector3 Size => _size;
+        public float RungsSpacing => _rungsSpacing;
         public IReadOnlyList<Vector3> Rungs => _rungs;
         public IReadOnlyList<Vector3> AttachPoints => _attachPoints;
         
@@ -64,11 +68,15 @@ namespace Spread.Ladder
         }
         
 #if UNITY_EDITOR
-        internal void SetupLadderData(Vector3 p_topPromptPoint, Vector3 p_bottomPromptPoint, 
+        internal void SetupLadderData(Vector3 p_size, float p_rungsSpacing,
+            Vector3 p_topPromptPoint, Vector3 p_bottomPromptPoint, 
             List<Vector3> p_rungs, List<Vector3> p_attachPoints,
             Vector3 p_topExitPoint, Vector3 p_bottomExitPoint,
             int p_topEnterPointIndexOffset, int p_bottomEnterPointIndexOffset)
         {
+            _size = p_size;
+            _rungsSpacing = p_rungsSpacing;
+            
             _topPromptPoint = p_topPromptPoint;
             _bottomPromptPoint = p_bottomPromptPoint;
 
