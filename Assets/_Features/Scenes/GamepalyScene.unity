@@ -29964,6 +29964,11 @@ PrefabInstance:
       propertyPath: _climbDuration
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 8152338443999648118, guid: e7533b1f95ec29049b3dc8f6284ff638,
+        type: 3}
+      propertyPath: _maxRungIndexOffset
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8293074513531019226, guid: e7533b1f95ec29049b3dc8f6284ff638,
         type: 3}
       propertyPath: m_Name

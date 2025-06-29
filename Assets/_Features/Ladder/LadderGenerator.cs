@@ -168,7 +168,7 @@ namespace Spread.Ladder
             Vector3 topExitPoint = transform.TransformPoint((Vector3.up * _size.y) + _topExitPointOffset);
             Vector3 bottomExitPoint = transform.TransformPoint(_bottomExitPointOffset);
 
-            _ladder.SetupLadderData(_size, _rungsSpacing,
+            _ladder.SetupLadderData(_size,
                 topPromptPoint, bottomPromptPoint,
                 p_rungs, p_attachPoints,
                 topExitPoint, bottomExitPoint,

@@ -10,6 +10,7 @@ namespace Spread.Player.StateMachine
     public class LadderState : PlayerBaseState
     {
         [SerializeField] private float _climbDuration;
+        [SerializeField] private int _maxRungIndexOffset;
         
         internal int CurrentRangIndex;
         private int _climbDirection;
@@ -35,7 +36,7 @@ namespace Spread.Player.StateMachine
             
             //Check next rang
             int nextRang = CurrentRangIndex + _climbDirection;
-            nextRang = Mathf.Clamp(nextRang, 0, _currentLadder.AttachPoints.Count - 1);
+            nextRang = Mathf.Clamp(nextRang, 0, _currentLadder.AttachPoints.Count - 1 - _maxRungIndexOffset);
             if (nextRang == CurrentRangIndex) return;
 
             //Move to next rang if possible
