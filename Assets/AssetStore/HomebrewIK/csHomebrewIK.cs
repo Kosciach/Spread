@@ -115,7 +115,7 @@ namespace FischlWorks
         private bool enableIKRotating = true;
         [SerializeField]
         [Range(0, 1)]
-        private float globalWeight = 1;
+        public float globalWeight = 1;
         [SerializeField]
         [Range(0, 1)]
         private float leftFootWeight = 1;

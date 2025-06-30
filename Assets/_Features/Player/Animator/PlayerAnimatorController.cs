@@ -83,7 +83,7 @@ namespace Spread.Player.Animating
 
         internal void ToggleFootIk(bool p_enable)
         {
-            _footIk.enabled = p_enable;
+            _footIk.globalWeight = p_enable ? 1 : 0;
         }
 
         internal void SetIkCrouch(float p_value)

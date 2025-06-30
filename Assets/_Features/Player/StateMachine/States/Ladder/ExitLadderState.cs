@@ -53,7 +53,7 @@ namespace Spread.Player.StateMachine
                 //Gravity - on
                 _ctx.GravityController.ToggleGravity(true);
                 _ctx.ColliderController.ToggleCollision(true);
-
+                
                 //Feet Ik - on
                 _ctx.AnimatorController.ToggleFootIk(true);
                 

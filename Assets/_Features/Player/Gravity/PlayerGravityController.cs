@@ -59,8 +59,13 @@ namespace Spread.Player.Gravity
             Gravity();
             CheckIsCeiling();
 
+            //Cleanup Later
             _isFalling = !_isGrounded && _currentGravityForce < -_gravityForFall;
             _isJump = !_isJump ? false : !(_isFalling || (_isGrounded && _currentGravityForce <= _groundedGravityForce));
+            if (_ctx.LadderController.CurrentLadder != null)
+            {
+                _isJump = false;
+            }
         }
 
         private void OnDestroy()
