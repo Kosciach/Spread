@@ -64,6 +64,11 @@ namespace Spread.Player.StateMachine
             {
                 return typeof(JumpState);
             }
+
+            if (CurrentRangIndex == 0 && _climbDirection == -1)
+            {
+                return typeof(ExitLadderState);
+            }
             
             return GetType();
         }

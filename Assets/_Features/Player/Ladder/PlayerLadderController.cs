@@ -79,6 +79,11 @@ namespace Spread.Player.Ladder
                 _currentLadder = ladder;
             }
         }
+
+        internal void Clear()
+        {
+            _currentLadder = null;
+        }
         
         internal void SetStartIkPos(int p_rungIndex)
         {

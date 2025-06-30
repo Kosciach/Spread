@@ -13,9 +13,9 @@ namespace Spread.Player.StateMachine
         [SerializeField] private LadderState _ladderState;
         
         [LayoutStart("Settings", ELayout.TitleBox)]
-        [SerializeField] private float _horizontalRotation;
+        [SerializeField] private float _verticalRotation;
         [LayoutStart("Settings/Durations", ELayout.TitleBox)]
-        [SerializeField] private float _setLadderRigDuration;
+        [SerializeField] private float _enableLadderRigDuration;
         [SerializeField] private float _moveToLadderDuration;
         [SerializeField] private float _rotateXDuration;
         [SerializeField] private float _rotateYDuration;
@@ -32,15 +32,16 @@ namespace Spread.Player.StateMachine
             _ctx.AnimatorController.SetInAirLayer(0);
             Helpers.SimpleTimer(_rotateYDuration, () =>
             {
-                _ctx.AnimatorController.SetLadderRig(1, _setLadderRigDuration);
+                _ctx.AnimatorController.SetLadderRig(1, _enableLadderRigDuration);
             });
             
             //Root motion - off
             _ctx.AnimatorController.ToggleRootMotion(false);
-            _ctx.MovementController.RootMotionMove = true;
+            _ctx.MovementController.RootMotionMove = false;
             
             //Gravity - off
             _ctx.GravityController.ToggleGravity(false);
+            _ctx.GravityController.ToggleIkCrouch(false);
             _ctx.ColliderController.ToggleCollision(false);
             
             //Unselect ladder
@@ -59,7 +60,7 @@ namespace Spread.Player.StateMachine
             _ladderState.CurrentRangIndex = closestRungIndex;
             
             //Rotate to Ladder
-            _ctx.CameraController.RotToXAxis(_horizontalRotation, _rotateXDuration);
+            _ctx.CameraController.RotToXAxis(_verticalRotation, _rotateXDuration);
             _ctx.CameraController.RotToYAxis(ladder.transform.eulerAngles.y, _rotateYDuration);
             _ctx.RotToYAxis(ladder.transform.eulerAngles.y, _rotateYDuration, () => { _readyToClimb = true; });
             

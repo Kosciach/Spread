@@ -5040,6 +5040,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 379759844}
     m_Modifications:
+    - target: {fileID: 5673825924153842487, guid: a28dad64aacf25048bca423a5ff274ea,
+        type: 3}
+      propertyPath: _rotateXDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673825924153842487, guid: a28dad64aacf25048bca423a5ff274ea,
+        type: 3}
+      propertyPath: _rotateYDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673825924153842487, guid: a28dad64aacf25048bca423a5ff274ea,
+        type: 3}
+      propertyPath: _moveToExitPointDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673825924153842487, guid: a28dad64aacf25048bca423a5ff274ea,
+        type: 3}
+      propertyPath: _disableLadderRigDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8293074513531019226, guid: a28dad64aacf25048bca423a5ff274ea,
         type: 3}
       propertyPath: m_Name
@@ -6451,6 +6471,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _rotateYDuration
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
+        type: 3}
+      propertyPath: _verticalRotation
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9126934937749792366, guid: 3332fb45a19590f4aa3f3b34decce9fd,
         type: 3}
@@ -42482,7 +42507,7 @@ MonoBehaviour:
   _rightArmOffset: {x: -0.08, y: 0, z: -0.08}
   _leftThumbOffset: {x: 0.05, y: 0.2, z: 0.05}
   _rightThumbOffset: {x: -0.05, y: 0.2, z: 0.05}
-  _maxSway: 5
+  _maxSway: 2
 --- !u!1 &9180796527010458919
 GameObject:
   m_ObjectHideFlags: 0

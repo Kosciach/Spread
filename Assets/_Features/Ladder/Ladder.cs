@@ -29,6 +29,7 @@ namespace Spread.Ladder
         public Vector3 Size => _size;
         public IReadOnlyList<Vector3> Rungs => _rungs;
         public IReadOnlyList<Vector3> AttachPoints => _attachPoints;
+        public Vector3 BottomExitPoint => _bottomExitPoint;
         
         
         protected override void OnSelect(Transform p_player)
