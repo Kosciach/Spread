@@ -110,9 +110,9 @@ namespace FischlWorks
         [BigHeader("IK Properties")]
 
         [SerializeField]
-        private bool enableIKPositioning = true;
+        public bool enableIKPositioning = true;
         [SerializeField]
-        private bool enableIKRotating = true;
+        public bool enableIKRotating = true;
         [SerializeField]
         [Range(0, 1)]
         public float globalWeight = 1;

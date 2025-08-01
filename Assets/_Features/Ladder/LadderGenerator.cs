@@ -36,10 +36,6 @@ namespace Spread.Ladder
         [SerializeField, PropRange(0.05f, nameof(_maxRugsSpacing))] private float _rungsSpacing;
         [SerializeField, PropRange(0, nameof(_maxRugsOffset))] private float _rungsTopOffset;
         [SerializeField, PropRange(0, nameof(_maxRugsOffset))] private float _rungsBottomOffset;
-        [LayoutStart("Settings/EnterPoints", ELayout.TitleBox)]
-        [SerializeField] private Color _enterPointsColor;
-        [SerializeField, PropRange(0, nameof(_maxEnterPointIndexOffset))] private int _topEnterPointIndexOffset;
-        [SerializeField, PropRange(0, nameof(_maxEnterPointIndexOffset))] private int _bottomEnterPointIndexOffset;
         [LayoutStart("Settings/ExitPoints", ELayout.TitleBox)]
         [SerializeField] private Color _exitPointsColor;
         [SerializeField] private Vector3 _topExitPointOffset;
@@ -57,18 +53,30 @@ namespace Spread.Ladder
         private float _maxRugsOffset => _size.y / 2f;
         private float _maxEnterPointIndexOffset;
         
+        //Ladder elements
+        private List<Vector3> _rungs;
+        private List<Vector3> _attachPoints;
 
+
+        private void Awake()
+        {
+            if (_rungs == null || _attachPoints == null)
+                ReassignRungsAndAttachPoints();
+            
+            PassPointsToLadder(_rungs, _attachPoints);
+        }
+        
         [LayoutStart("Buttons", ELayout.TitleBox)]
         [Button]
         private void Generate()
         {
             Clear();
 
-            (List<Vector3> rungs, List<Vector3> attachPoints) = CreateRungs();
+            CreateRungs();
             CreateRails();
             AlignColliders();
-
-            PassPointsToLadder(rungs, attachPoints);
+            
+            EditorUtility.SetDirty(this);
         }
 
         [LayoutStart("Buttons", ELayout.TitleBox)]
@@ -86,10 +94,10 @@ namespace Spread.Ladder
             }
         }
 
-        private (List<Vector3>, List<Vector3>) CreateRungs()
+        private void CreateRungs()
         {
-            List<Vector3> rungs = new();
-            List<Vector3> attachPoints = new();
+            _rungs = new();
+            _attachPoints = new();
             
             Vector3 halfSize = _size / 2f;
             _rungsParent.localPosition = new Vector3(0, halfSize.y, 0);
@@ -109,11 +117,9 @@ namespace Spread.Ladder
                 rung.localPosition = new Vector3(0, rungYPos, 0f);
                 rung.localScale = new Vector3(halfSize.x, 1, 1);
                 
-                rungs.Add(rung.localPosition);
-                attachPoints.Add(rung.localPosition + _attachPointsOffset);
+                _rungs.Add(rung.localPosition);
+                _attachPoints.Add(rung.localPosition + _attachPointsOffset);
             }
-
-            return (rungs, attachPoints);
         }
         
         private void CreateRails()
@@ -144,6 +150,20 @@ namespace Spread.Ladder
             _bottomCollider.center = new Vector3(0, (_size.y / 2), 0);
         }
 
+        private void ReassignRungsAndAttachPoints()
+        {
+            _rungs = new();
+            _attachPoints = new();
+
+            for (int i = 0; i < _rungsParent.childCount; i++)
+            {
+                Transform rung = _rungsParent.GetChild(i);
+                
+                _rungs.Add(rung.localPosition);
+                _attachPoints.Add(rung.localPosition + _attachPointsOffset);
+            } 
+        }
+        
         private void PassPointsToLadder(List<Vector3> p_rungs, List<Vector3> p_attachPoints)
         {
             //Prompts
@@ -171,8 +191,7 @@ namespace Spread.Ladder
             _ladder.SetupLadderData(_size,
                 topPromptPoint, bottomPromptPoint,
                 p_rungs, p_attachPoints,
-                topExitPoint, bottomExitPoint,
-                _topEnterPointIndexOffset, _bottomEnterPointIndexOffset);
+                topExitPoint, bottomExitPoint);
         }
         
         private void OnDrawGizmosSelected()
@@ -207,15 +226,6 @@ namespace Spread.Ladder
                 Vector3 right = new Vector3(halfSize.x, rungYPos, 0f);
                 Gizmos.DrawLine(left, right);
             }
-            
-            //Draw Enter Points
-            Gizmos.color = _enterPointsColor;
-            
-            float topEnterPointYPos = rungsStartPos + (rungsCount - _topEnterPointIndexOffset - 1) * exactSpacing;
-            Gizmos.DrawSphere(new Vector3(0, topEnterPointYPos, 0), 0.1f);
-            
-            float bottomEnterPointYPos = rungsStartPos + _bottomEnterPointIndexOffset * exactSpacing;
-            Gizmos.DrawSphere(new Vector3(0, bottomEnterPointYPos, 0), 0.1f);
             
             //Draw Exit Points
             Gizmos.color = _exitPointsColor;

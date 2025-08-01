@@ -67,11 +67,12 @@ namespace Spread.Player.StateMachine
             LadderController.Setup(this);
         }
 
-        internal PlayerBaseState GetStateByType(Type p_type)
+        internal T GetStateByType<T>() where T : PlayerBaseState
         {
-            if (!_statesKey.ContainsKey(p_type))
+            Type type = typeof(T);
+            if (!_statesKey.ContainsKey(type))
                 return null;
-            return _statesKey[p_type];
+            return _statesKey[type] as T;
         }
 
         internal void RotToYAxis(float p_rot, float p_duration, Action p_onComplete = null)

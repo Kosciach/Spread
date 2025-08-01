@@ -23,12 +23,11 @@ namespace Spread.Ladder
         [SerializeField, ReadOnly] private List<Vector3> _attachPoints;
         [SerializeField, ReadOnly] private Vector3 _topExitPoint;
         [SerializeField, ReadOnly] private Vector3 _bottomExitPoint;
-        [SerializeField, ReadOnly] private int _topEnterPointIndexOffset;
-        [SerializeField, ReadOnly] private int _bottomEnterPointIndexOffset;
 
         public Vector3 Size => _size;
         public IReadOnlyList<Vector3> Rungs => _rungs;
         public IReadOnlyList<Vector3> AttachPoints => _attachPoints;
+        public Vector3 TopExitPoint => _topExitPoint;
         public Vector3 BottomExitPoint => _bottomExitPoint;
         
         
@@ -44,7 +43,7 @@ namespace Spread.Ladder
                 : _bottomPromptPoint;
         }
 
-        private bool IsPlayerTop(Vector3 p_playerPos)
+        public bool IsPlayerTop(Vector3 p_playerPos)
         {
             float playerDistanceToTopPrompt = Vector3.Distance(p_playerPos, _topPromptPoint);
             float playerDistanceToBottomPrompt = Vector3.Distance(p_playerPos, _bottomPromptPoint);
@@ -52,26 +51,33 @@ namespace Spread.Ladder
             return playerDistanceToTopPrompt < playerDistanceToBottomPrompt;
         }
 
-        public int GetClosestRungIndex(Vector3 p_pos)
+        public int GetClosestRungIndex(Vector3 p_pos, int p_topEnterIndexOffset)
         {
-            for (int i = 0; i < _rungs.Count; i++)
+            int left = 0;
+            int right = _rungs.Count - p_topEnterIndexOffset - 1;
+            int result = right;
+
+            while (left <= right)
             {
-                Vector3 rung = _rungs[i];
-                if (rung.y > p_pos.y)
+                int mid = (left + right) / 2;
+                if (_rungs[mid].y > p_pos.y)
                 {
-                    return i;
+                    result = mid;
+                    right = mid - 1;
+                }
+                else
+                {
+                    left = mid + 1;
                 }
             }
 
-            return 0;
+            return result;
         }
         
-#if UNITY_EDITOR
         internal void SetupLadderData(Vector3 p_size,
             Vector3 p_topPromptPoint, Vector3 p_bottomPromptPoint, 
             List<Vector3> p_rungs, List<Vector3> p_attachPoints,
-            Vector3 p_topExitPoint, Vector3 p_bottomExitPoint,
-            int p_topEnterPointIndexOffset, int p_bottomEnterPointIndexOffset)
+            Vector3 p_topExitPoint, Vector3 p_bottomExitPoint)
         {
             _size = p_size;
             _topPromptPoint = p_topPromptPoint;
@@ -82,12 +88,6 @@ namespace Spread.Ladder
 
             _topExitPoint = p_topExitPoint;
             _bottomExitPoint = p_bottomExitPoint;
-            
-            _topEnterPointIndexOffset = p_topEnterPointIndexOffset;
-            _bottomEnterPointIndexOffset = p_bottomEnterPointIndexOffset;
-            
-            EditorUtility.SetDirty(this);
         }
-#endif
     }
 }

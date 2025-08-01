@@ -115,7 +115,7 @@ namespace Spread.Player.Movement
         {
             _movementType = MovementTypes.Idle;
             _idleType = IdleTypes.Normal;
-
+            
             _ctx.AnimatorController.SetMovementType(_movementType);
             _ctx.AnimatorController.SetTurn(0);
             _ctx.AnimatorController.SetCrouchWeight(false);

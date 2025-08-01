@@ -16,6 +16,7 @@ namespace Spread.Player.Animating
         [SerializeField] private Animator _animator;
         [SerializeField] private csHomebrewIK _footIk;
         [SerializeField] private Rig _ladderRig;
+        [SerializeField] private Rig _ladderSlideRig;
         [SerializeField] private PlayerAnimatorController_AnimatorMove _animatorMove;
         internal PlayerAnimatorController_AnimatorMove AnimatorMove => _animatorMove;
 
@@ -32,6 +33,7 @@ namespace Spread.Player.Animating
         private Tween _crawlLayerTween;
         private Tween _slideLayerTween;
         private Tween _ladderRigTween;
+        private Tween _ladderSlideRigTween;
         private Tween _ikCrouchTween;
 
         internal bool TransitioningToCrawl => _crawlLayerTween != null;
@@ -84,6 +86,8 @@ namespace Spread.Player.Animating
         internal void ToggleFootIk(bool p_enable)
         {
             _footIk.globalWeight = p_enable ? 1 : 0;
+            _footIk.enableIKPositioning = p_enable;
+            _footIk.enableIKRotating = p_enable;
         }
 
         internal void SetIkCrouch(float p_value)
@@ -240,6 +244,23 @@ namespace Spread.Player.Animating
             {
                 _ladderRigTween.onComplete = null;
                 _ladderRigTween = null;
+            };
+        }
+        
+        internal void SetLadderSlideRig(float p_weight, float p_duration = 0.5f)
+        {
+            if (_ladderSlideRigTween != null)
+            {
+                _ladderSlideRigTween.Kill();
+                _ladderSlideRigTween.onComplete = null;
+                _ladderSlideRigTween = null;
+            }
+
+            _ladderSlideRigTween = DOTween.To(() => _ladderSlideRig.weight, x => _ladderSlideRig.weight = x, p_weight, p_duration);
+            _ladderSlideRigTween.onComplete += () =>
+            {
+                _ladderSlideRigTween.onComplete = null;
+                _ladderSlideRigTween = null;
             };
         }
         #endregion

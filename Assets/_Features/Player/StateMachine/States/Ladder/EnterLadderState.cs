@@ -1,7 +1,7 @@
 using System;
 using DG.Tweening;
-using UnityEngine;
 using SaintsField;
+using UnityEngine;
 using SaintsField.Playa;
 using Spread.Tools;
 
@@ -14,25 +14,33 @@ namespace Spread.Player.StateMachine
         
         [LayoutStart("Settings", ELayout.TitleBox)]
         [SerializeField] private float _verticalRotation;
+        [SerializeField] private float _horizontalRotationRange = 75;
         [LayoutStart("Settings/Durations", ELayout.TitleBox)]
-        [SerializeField] private float _enableLadderRigDuration;
-        [SerializeField] private float _moveToLadderDuration;
-        [SerializeField] private float _rotateXDuration;
-        [SerializeField] private float _rotateYDuration;
+        [LayoutStart("Settings/Durations/Top", ELayout.TitleBox | ELayout.Foldout), SaintsRow(inline: true)]
+        [SerializeField] private EnterLadderDurations _topDurations;
+        [LayoutStart("Settings/Durations/Bottom", ELayout.TitleBox | ELayout.Foldout), SaintsRow(inline: true)]
+        [SerializeField] private EnterLadderDurations _bottomDurations;
 
         private bool _readyToClimb;
         
         protected override void OnEnter()
         {
+            //Prep values
+            Spread.Ladder.Ladder ladder = _ctx.LadderController.CurrentLadder;
+            int closestRungIndex = ladder.GetClosestRungIndex(_ctx.Transform.position, _ladderState.MaxRungIndexOffset);
             _readyToClimb = false;
+
+            EnterLadderDurations durations = ladder.IsPlayerTop(_ctx.Transform.position)
+                ? _topDurations
+                : _bottomDurations;
             
             //Transition to ladder anims
             _ctx.AnimatorController.LadderEnter(false);
             _ctx.AnimatorController.ToggleFootIk(false);
             _ctx.AnimatorController.SetInAirLayer(0);
-            Helpers.SimpleTimer(_rotateYDuration, () =>
+            Helpers.SimpleTimer(durations.RotateY, () =>
             {
-                _ctx.AnimatorController.SetLadderRig(1, _enableLadderRigDuration);
+                _ctx.AnimatorController.SetLadderRig(1, durations.EnableLadderRig);
             });
             
             //Root motion - off
@@ -47,26 +55,25 @@ namespace Spread.Player.StateMachine
             //Unselect ladder
             _ctx.InteractionsController.SetInteractable(null);
             
-            //Prep values
-            Spread.Ladder.Ladder ladder = _ctx.LadderController.CurrentLadder;
-            int closestRungIndex = ladder.GetClosestRungIndex(_ctx.Transform.position);
-            
             //Set IK
             _ctx.LadderController.SetStartIkPos(closestRungIndex);
             
             //Move to ladder
             Vector3 attachPoint = ladder.AttachPoints[closestRungIndex];
-            _ctx.Transform.DOMove(attachPoint, _moveToLadderDuration);
+            _ctx.Transform.DOMove(attachPoint, durations.MoveToLadder);
             _ladderState.CurrentRangIndex = closestRungIndex;
             
             //Rotate to Ladder
-            _ctx.CameraController.RotToXAxis(_verticalRotation, _rotateXDuration);
-            _ctx.CameraController.RotToYAxis(ladder.transform.eulerAngles.y, _rotateYDuration);
-            _ctx.RotToYAxis(ladder.transform.eulerAngles.y, _rotateYDuration, () => { _readyToClimb = true; });
+            _ctx.CameraController.RotToXAxis(_verticalRotation, durations.RotateX);
+            _ctx.CameraController.RotToYAxis(ladder.transform.eulerAngles.y, durations.RotateY);
+            _ctx.RotToYAxis(ladder.transform.eulerAngles.y, durations.RotateY, () =>
+            {
+                //Set Camera MinMax
+                _ctx.CameraController.ToggleWrap(false);
+                _ctx.CameraController.SetMinMax(ladder.transform.eulerAngles.y, _horizontalRotationRange);
             
-            //Set Camera MinMax
-            _ctx.CameraController.SetMinMax(ladder.transform.eulerAngles.y, 75);
-            _ctx.CameraController.ToggleWrap(false);
+                _readyToClimb = true;
+            });
         }
 
         protected override void OnUpdate()
@@ -76,7 +83,7 @@ namespace Spread.Player.StateMachine
 
         protected override void OnExit()
         {
-
+            _readyToClimb = false;
         }
 
         internal override Type GetNextState()
@@ -88,5 +95,19 @@ namespace Spread.Player.StateMachine
             
             return GetType();
         }
+    }
+    
+    [System.Serializable]
+    internal class EnterLadderDurations
+    {
+        [SerializeField] private float _enableLadderRig;
+        [SerializeField] private float _moveToLadder;
+        [SerializeField] private float _rotateX;
+        [SerializeField] private float _rotateY;
+
+        internal float EnableLadderRig => _enableLadderRig;
+        internal float MoveToLadder => _moveToLadder;
+        internal float RotateX => _rotateX;
+        internal float RotateY => _rotateY;
     }
 }

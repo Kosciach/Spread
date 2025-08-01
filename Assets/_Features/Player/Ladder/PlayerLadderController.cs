@@ -12,7 +12,7 @@ namespace Spread.Player.Ladder
     using Spread.Interactions;
     using Spread.Ladder;
 
-    public class PlayerLadderController : MonoBehaviour
+    public class  PlayerLadderController : MonoBehaviour
     {
         private PlayerStateMachineContext _ctx;
 
@@ -51,6 +51,10 @@ namespace Spread.Player.Ladder
         [LayoutStart("Settings/SpineSway", ELayout.TitleBox)]
         [SerializeField] private float _maxSway;
 
+        [LayoutStart("Extentions", ELayout.TitleBox)]
+        [SaintsRow(inline: true)]
+        [SerializeField] private PlayerLadderController_Slide _slide;
+
         private Vector3 _leftLegPos;
         private Vector3 _rightLegPos;
         
@@ -84,6 +88,8 @@ namespace Spread.Player.Ladder
         {
             _currentLadder = null;
         }
+
+        internal void SetSlideIk() => _slide.SetupIK(_currentLadder, _ctx.Transform.position);
         
         internal void SetStartIkPos(int p_rungIndex)
         {
@@ -248,6 +254,5 @@ namespace Spread.Player.Ladder
             _leftThumb.position = _leftArmPos + _currentLadder.transform.TransformDirection(_leftThumbOffset);
             _rightThumb.position = _rightArmPos + _currentLadder.transform.TransformDirection(_rightThumbOffset);
         }
-        
     }
 }

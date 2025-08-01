@@ -157,7 +157,7 @@ namespace Spread.Player.Camera
             float currentRot = _cinePov.m_HorizontalAxis.Value;
             float shortestRotation = Mathf.DeltaAngle(currentRot, p_rot);
             float targetRot = currentRot + shortestRotation;
-
+            
             _rotTweenYAxis = DOTween.To(() => currentRot, x => currentRot = x, targetRot, p_duration);
             _rotTweenYAxis.OnUpdate(() => _cinePov.m_HorizontalAxis.Value = currentRot);
             _rotTweenYAxis.OnComplete(() => { _rotTweenYAxis = null; });
@@ -173,6 +173,7 @@ namespace Spread.Player.Camera
         {
             _cinePov.m_HorizontalAxis.m_MinValue = p_base - p_minMax;
             _cinePov.m_HorizontalAxis.m_MaxValue = p_base + p_minMax;
+            _cinePov.m_HorizontalAxis.Value = p_base;
         }
 
         internal void ResetMinMax()
