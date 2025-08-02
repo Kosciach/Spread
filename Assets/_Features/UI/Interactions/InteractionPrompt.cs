@@ -3,36 +3,36 @@ using UnityEngine;
 
 namespace Spread.UI.Interactions
 {
-    using Player.StateMachine;
     using Spread.Interactions;
+    using Spread.Player.Interactions;
 
     public class InteractionPrompt : MonoBehaviour
     {
-        private UnityEngine.Camera _camera;
-        private PlayerStateMachine _player;
+        private Camera _camera;
+        private PlayerInteractionsController _playerInteractionsController;
 
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private UIInteraction[] _uiInteractions;
 
         private void Awake()
         {
-            _camera = UnityEngine.Camera.main;
-            _player = FindFirstObjectByType<PlayerStateMachine>();
+            _camera = Camera.main;
+            _playerInteractionsController = FindFirstObjectByType<PlayerInteractionsController>();
 
             Hide();
 
-            _player.Ctx.InteractionsController.OnInteractableChange += InteractableChange;
+            _playerInteractionsController.OnInteractableChange += InteractableChange;
         }
 
         private void Update()
         {
-            Interactable interactable = _player.Ctx.InteractionsController.CurrentInteractable;
+            Interactable interactable = _playerInteractionsController.CurrentInteractable;
             transform.position = _camera.WorldToScreenPoint(interactable.PromptWorldRef.position);
         }
 
         private void Show()
         {
-            Interactable interactable = _player.Ctx.InteractionsController.CurrentInteractable;
+            Interactable interactable = _playerInteractionsController.CurrentInteractable;
             transform.position = _camera.WorldToScreenPoint(interactable.PromptWorldRef.position);
 
             _name.text = interactable.InteractableData.Name;
@@ -60,7 +60,7 @@ namespace Spread.UI.Interactions
 
         private void InteractableChange()
         {
-            if (_player.Ctx.InteractionsController.CurrentInteractable != null)
+            if (_playerInteractionsController.CurrentInteractable != null)
             {
                 Show();
                 return;

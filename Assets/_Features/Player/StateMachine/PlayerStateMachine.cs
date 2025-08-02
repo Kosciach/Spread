@@ -13,9 +13,10 @@ namespace Spread.Player.StateMachine
         private void Awake()
         {
             //Prep Context
+            _context.GetStatesAndControllers();
             foreach (var state in _context.States)
                 state.Setup(_context);
-            _context.Awake();
+            _context.Setup();
 
             //Init First State
             ChangeState(_context.States[0], true);
@@ -33,6 +34,7 @@ namespace Spread.Player.StateMachine
 
             CheckNextState();
             _context.CurrentState.UpdateState();
+            _context.Update();
         }
 
         private void CheckNextState()

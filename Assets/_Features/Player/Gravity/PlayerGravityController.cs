@@ -2,15 +2,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using SaintsField;
 using SaintsField.Playa;
+using Spread.Player.Animating;
+using Spread.Player.Input;
+using Spread.Player.Ladder;
 
 namespace Spread.Player.Gravity
 {
     using StateMachine;
 
-    public class PlayerGravityController : MonoBehaviour
+    public class PlayerGravityController : PlayerControllerBase
     {
-        private PlayerStateMachineContext _ctx;
-
+        private PlayerInputController _inputController;
+        private PlayerLadderController _ladderController;
+        private PlayerAnimatorController _animatorController;
+        
         [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private Transform _camera;
 
@@ -43,17 +48,19 @@ namespace Spread.Player.Gravity
 
         private Vector3 _ceilingSpherePos;
 
-        internal void Setup(PlayerStateMachineContext p_ctx)
+        protected override void OnSetup()
         {
-            _ctx = p_ctx;
-
             ToggleGravity(true);
             ToggleIkCrouch(true);
 
-            _ctx.InputController.Inputs.Keyboard.Jump.performed += SetIsJump;
+            _inputController = _ctx.GetController<PlayerInputController>();
+            _ladderController = _ctx.GetController<PlayerLadderController>();
+            _animatorController = _ctx.GetController<PlayerAnimatorController>();
+            
+            _inputController.Inputs.Keyboard.Jump.performed += SetIsJump;
         }
-
-        private void Update()
+        
+        protected override void OnTick()
         {
             CheckIsGrounded();
             Gravity();
@@ -62,15 +69,15 @@ namespace Spread.Player.Gravity
             //Cleanup Later
             _isFalling = !_isGrounded && _currentGravityForce < -_gravityForFall;
             _isJump = !_isJump ? false : !(_isFalling || (_isGrounded && _currentGravityForce <= _groundedGravityForce));
-            if (_ctx.LadderController.CurrentLadder != null)
+            if (_ladderController.CurrentLadder != null)
             {
                 _isJump = false;
             }
         }
 
-        private void OnDestroy()
+        protected override void OnDispose()
         {
-            _ctx.InputController.Inputs.Keyboard.Jump.performed -= SetIsJump;
+            _inputController.Inputs.Keyboard.Jump.performed -= SetIsJump;
         }
 
         private void SetIsJump(InputAction.CallbackContext p_ctx)
@@ -86,7 +93,7 @@ namespace Spread.Player.Gravity
 
             if (_useIkCrouch && isGrounded && !_isGrounded)
             {
-                _ctx.AnimatorController.SetIkCrouch(_currentGravityForce / 3);
+                _animatorController.SetIkCrouch(_currentGravityForce / 3);
             }
 
             _isGrounded = isGrounded;
@@ -96,13 +103,13 @@ namespace Spread.Player.Gravity
         {
             if (!_useGravity)
             {
-                _ctx.AnimatorController.SetGravityForce(0);
+                _animatorController.SetGravityForce(0);
                 return;
             }
 
             _currentGravityForce = _isGrounded && !_isJump ? -_groundedGravityForce : _currentGravityForce - _gravityForce * Time.deltaTime;
             _ctx.CharacterController.Move(new Vector3(0, _currentGravityForce, 0) * Time.deltaTime);
-            _ctx.AnimatorController.SetGravityForce(-_currentGravityForce);
+            _animatorController.SetGravityForce(-_currentGravityForce);
         }
 
         private void CheckIsCeiling()

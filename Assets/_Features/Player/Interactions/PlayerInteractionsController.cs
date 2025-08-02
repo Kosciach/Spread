@@ -1,18 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
-using SaintsField;
 using SaintsField.Playa;
 
 namespace Spread.Player.Interactions
 {
-    using Player.StateMachine;
+    using Input;
     using Spread.Interactions;
 
-    public class PlayerInteractionsController : MonoBehaviour
+    public class PlayerInteractionsController : PlayerControllerBase
     {
-        private PlayerStateMachineContext _ctx;
-
+        private PlayerInputController _inputController;
+        
         [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private CapsuleCollider _detector;
 
@@ -21,14 +20,13 @@ namespace Spread.Player.Interactions
         public Action OnInteractableChange;
         public Action<Interactable> OnInteract;
 
-        internal void Setup(PlayerStateMachineContext p_ctx)
+        protected override void OnSetup()
         {
-            _ctx = p_ctx;
-
-            _ctx.InputController.Inputs.Interactions.Use.performed += UseInteraction;
+            _inputController = _ctx.GetController<PlayerInputController>();
+            _inputController.Inputs.Interactions.Use.performed += UseInteraction;
         }
 
-        private void OnDestroy()
+        protected override void OnDispose()
         {
             OnInteractableChange = null;
             OnInteract = null;

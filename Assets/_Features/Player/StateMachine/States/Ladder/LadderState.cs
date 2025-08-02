@@ -3,13 +3,28 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using SaintsField.Playa;
+using Spread.Player.Input;
 
 namespace Spread.Player.StateMachine
 {
+    using Ladder;
+    using Animating;
+    using Camera;
+    using Movement;
+    using Gravity;
+    using Collisions;
     using Spread.Ladder;
     
     public class LadderState : PlayerBaseState
     {
+        private PlayerInputController _inputController;
+        private PlayerLadderController _ladderController;
+        private PlayerAnimatorController _animatorController;
+        private PlayerCameraController _cameraController;
+        private PlayerMovementController _movementController;
+        private PlayerGravityController _gravityController;
+        private PlayerColliderController _colliderController;
+        
         [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private ExitLadderState _exitLadderState;
         
@@ -34,34 +49,45 @@ namespace Spread.Player.StateMachine
         private bool _normalExit;
         private bool _interactionExit;
         
+        protected override void OnSetup()
+        {
+            _inputController = _ctx.GetController<PlayerInputController>();
+            _ladderController = _ctx.GetController<PlayerLadderController>();
+            _animatorController = _ctx.GetController<PlayerAnimatorController>();
+            _cameraController = _ctx.GetController<PlayerCameraController>();
+            _movementController = _ctx.GetController<PlayerMovementController>();
+            _gravityController = _ctx.GetController<PlayerGravityController>();
+            _colliderController = _ctx.GetController<PlayerColliderController>();
+        }
+        
         protected override void OnEnter()
         {
-            _ctx.LadderController.IsMoving = false;
-            _currentLadder = _ctx.LadderController.CurrentLadder;
+            _ladderController.IsMoving = false;
+            _currentLadder = _ladderController.CurrentLadder;
             _climbDirection = 0;
             _normalExit = false;
             _interactionExit = false;
             _isRunInput = false;
             _wasSliding = false;
             
-            _ctx.LadderController.SetSlideIk();
+            _ladderController.SetSlideIk();
             
-            _ctx.InputController.Inputs.Keyboard.Move.performed += MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Move.canceled += MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Run.performed += RunInput;
-            _ctx.InputController.Inputs.Keyboard.Run.canceled += RunInput;
-            _ctx.InputController.Inputs.Interactions.Use.performed += InteractInput;
+            _inputController.Inputs.Keyboard.Move.performed += MoveInput;
+            _inputController.Inputs.Keyboard.Move.canceled += MoveInput;
+            _inputController.Inputs.Keyboard.Run.performed += RunInput;
+            _inputController.Inputs.Keyboard.Run.canceled += RunInput;
+            _inputController.Inputs.Interactions.Use.performed += InteractInput;
             
             //Check climb direction
-            Vector2 moveInput = _ctx.InputController.Inputs.Keyboard.Move.ReadValue<Vector2>();
+            Vector2 moveInput = _inputController.Inputs.Keyboard.Move.ReadValue<Vector2>();
             _climbDirection = (int)moveInput.y;
-            _ctx.LadderController.IsMoving = _climbDirection != 0;
+            _ladderController.IsMoving = _climbDirection != 0;
         }
 
         protected override void OnUpdate()
         {
             //Prevent player from moving weirdly after exiting ladder
-            _ctx.AnimatorController.SetMovement(0, 0);
+            _animatorController.SetMovement(0, 0);
             
             //Sliding Down
             if (_isRunInput && _climbDirection == -1)
@@ -69,8 +95,8 @@ namespace Spread.Player.StateMachine
                 if (!_wasSliding)
                 {
                     _wasSliding = true;
-                    _ctx.AnimatorController.SetLadderSlideRig(1, 0.1f);
-                    _ctx.LadderController.SetSlideIk();
+                    _animatorController.SetLadderSlideRig(1, 0.1f);
+                    _ladderController.SetSlideIk();
                 }
 
                 Vector3 nextPosition = _ctx.Transform.position + Vector3.up * -_slidingDownSpeed * Time.deltaTime;
@@ -80,7 +106,7 @@ namespace Spread.Player.StateMachine
                 nextPosition.y = Mathf.Clamp(nextPosition.y, minPos.y - 0.1f, maxPos.y);
                 _ctx.Transform.position = nextPosition;
                 
-                CurrentRangIndex = _ctx.LadderController.CurrentLadder.GetClosestRungIndex(_ctx.Transform.position, _maxRungIndexOffset);
+                CurrentRangIndex = _ladderController.CurrentLadder.GetClosestRungIndex(_ctx.Transform.position, _maxRungIndexOffset);
                 _normalExit = CurrentRangIndex == 0;
                 return;
             }
@@ -88,14 +114,14 @@ namespace Spread.Player.StateMachine
             if (_wasSliding)
             {
                 _wasSliding = false;
-                _ctx.AnimatorController.SetLadderSlideRig(0, 0.1f);
+                _animatorController.SetLadderSlideRig(0, 0.1f);
                 
                 //Set IK
-                _ctx.LadderController.SetStartIkPos(CurrentRangIndex);
+                _ladderController.SetStartIkPos(CurrentRangIndex);
             }
             
             //Update IK
-            _ctx.LadderController.UpdateIk();
+            _ladderController.UpdateIk();
 
             //Check if not moving
             if (_climbDirection == 0) return;
@@ -116,31 +142,31 @@ namespace Spread.Player.StateMachine
             _climbTween.OnComplete(() => { _climbTween = null; });
             
             //Set IK
-            _ctx.LadderController.SetLegIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
-            _ctx.LadderController.SetArmIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
-            _ctx.LadderController.SpineSway(CurrentRangIndex, _climbDuration, _climbDirection);
+            _ladderController.SetLegIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
+            _ladderController.SetArmIkPos(CurrentRangIndex, _climbDuration, _climbDirection);
+            _ladderController.SpineSway(CurrentRangIndex, _climbDuration, _climbDirection);
         }
 
         protected override void OnExit()
         {
-            _ctx.InputController.Inputs.Keyboard.Move.performed -= MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Move.canceled -= MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Run.performed -= RunInput;
-            _ctx.InputController.Inputs.Keyboard.Run.canceled -= RunInput;
-            _ctx.InputController.Inputs.Interactions.Use.performed -= InteractInput;
+            _inputController.Inputs.Keyboard.Move.performed -= MoveInput;
+            _inputController.Inputs.Keyboard.Move.canceled -= MoveInput;
+            _inputController.Inputs.Keyboard.Run.performed -= RunInput;
+            _inputController.Inputs.Keyboard.Run.canceled -= RunInput;
+            _inputController.Inputs.Interactions.Use.performed -= InteractInput;
 
-            _ctx.AnimatorController.SetLadderSlideRig(0, 0.1f);
+            _animatorController.SetLadderSlideRig(0, 0.1f);
             
             if (_interactionExit)
             {
                 QuickLadderExit(0.5f);
-                _ctx.GravityController.AddGravity(-_interactionExitGravity);
+                _gravityController.AddGravity(-_interactionExitGravity);
             }
         } 
 
         internal override Type GetNextState()
         {
-            if (_ctx.GravityController.IsJump)
+            if (_gravityController.IsJump)
             {
                 return typeof(JumpState);
             }
@@ -162,7 +188,7 @@ namespace Spread.Player.StateMachine
         private void MoveInput(InputAction.CallbackContext p_ctx)
         {
             _climbDirection = (int)p_ctx.ReadValue<Vector2>().y;
-            _ctx.LadderController.IsMoving = _climbDirection != 0;
+            _ladderController.IsMoving = _climbDirection != 0;
         }
         
         private void RunInput(InputAction.CallbackContext p_ctx)
@@ -181,27 +207,27 @@ namespace Spread.Player.StateMachine
         internal void QuickLadderExit(float p_disableLadderRigDuration)
         {
             //Disable ladder anims
-            _ctx.AnimatorController.LadderExit(false);
-            _ctx.AnimatorController.SetLadderRig(0, p_disableLadderRigDuration);
+            _animatorController.LadderExit(false);
+            _animatorController.SetLadderRig(0, p_disableLadderRigDuration);
             
             //Reset Camera MinMax
-            _ctx.CameraController.ResetMinMax();
-            _ctx.CameraController.ToggleWrap(true);
+            _cameraController.ResetMinMax();
+            _cameraController.ToggleWrap(true);
 
             //Root motion - on
-            _ctx.AnimatorController.ToggleRootMotion(true);
-            _ctx.MovementController.RootMotionMove = true;
+            _animatorController.ToggleRootMotion(true);
+            _movementController.RootMotionMove = true;
 
             //Gravity - on
-            _ctx.GravityController.ToggleGravity(true);
-            _ctx.GravityController.ToggleIkCrouch(true);
-            _ctx.ColliderController.ToggleCollision(true);
+            _gravityController.ToggleGravity(true);
+            _gravityController.ToggleIkCrouch(true);
+            _colliderController.ToggleCollision(true);
                 
             //Feet Ik - on
-            _ctx.AnimatorController.ToggleFootIk(true);
+            _animatorController.ToggleFootIk(true);
                 
             //Reset ladder reference
-            _ctx.LadderController.Clear();
+            _ladderController.Clear();
         }
     }
 }

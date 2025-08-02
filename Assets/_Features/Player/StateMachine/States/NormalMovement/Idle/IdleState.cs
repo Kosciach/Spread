@@ -1,53 +1,68 @@
 using System;
+using UnityEngine;
 
 namespace Spread.Player.StateMachine
 {
+    using Camera;
+    using Movement;
+    using Interactions;
+    using Gravity;
+    using Ladder;
+
     public class IdleState : PlayerBaseState
     {
-        protected override void OnEnter()
+        private PlayerCameraController _cameraController;
+        private PlayerMovementController _movementController;
+        private PlayerInteractionsController _interactionsController;
+        private PlayerGravityController _gravityController;
+        private PlayerSlopeController _slopeController;
+        private PlayerLadderController _ladderController;
+
+        protected override void OnSetup()
         {
-
+            _cameraController = _ctx.GetController<PlayerCameraController>();
+            _movementController = _ctx.GetController<PlayerMovementController>();
+            _interactionsController = _ctx.GetController<PlayerInteractionsController>();
+            _gravityController = _ctx.GetController<PlayerGravityController>();
+            _slopeController = _ctx.GetController<PlayerSlopeController>();
+            _ladderController = _ctx.GetController<PlayerLadderController>();
         }
-
+        
         protected override void OnUpdate()
         {
-            _ctx.CameraController.IdleCamera();
-            _ctx.MovementController.NormalMovement();
-            _ctx.InteractionsController.CheckInteractables();
+            _cameraController.IdleCamera();
+            _movementController.NormalMovement();
+            _interactionsController.CheckInteractables();
         }
-
-        protected override void OnExit()
-        {
-
-        }
-
+        
         internal override Type GetNextState()
         {
-            if (_ctx.LadderController.CurrentLadder != null)
+            if (_ladderController.CurrentLadder != null)
             {
                 return typeof(EnterLadderState);
             }
-            
-            if (_ctx.GravityController.IsFalling)
+
+            if (_gravityController.IsFalling)
             {
                 return typeof(FallState);
             }
 
-            if (_ctx.GravityController.IsJump)
+            if (_gravityController.IsJump)
             {
                 return typeof(JumpState);
             }
 
-            if (_ctx.SlopeController.IsSlopeSlide)
+            if (_slopeController.IsSlopeSlide)
             {
                 return typeof(SlopeSlideState);
             }
 
-            switch (_ctx.MovementController.MovementType)
+            switch (_movementController.MovementType)
             {
                 case Movement.MovementTypes.Idle:
-                    return _ctx.MovementController.IdleType is Movement.IdleTypes.Normal
-                        ? typeof(IdleState) : typeof(CrouchIdleState);
+                    return _movementController.IdleType == Movement.IdleTypes.Normal
+                        ? typeof(IdleState)
+                        : typeof(CrouchIdleState);
                 case Movement.MovementTypes.Crouch:
                     return typeof(CrouchWalkState);
                 case Movement.MovementTypes.Walk:
@@ -56,9 +71,9 @@ namespace Spread.Player.StateMachine
                     return typeof(JogState);
                 case Movement.MovementTypes.Run:
                     return typeof(RunState);
+                default:
+                    return GetType();
             }
-
-            return GetType();
         }
     }
 }

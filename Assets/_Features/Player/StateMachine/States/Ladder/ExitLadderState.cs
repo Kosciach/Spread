@@ -6,26 +6,52 @@ using SaintsField.Playa;
 
 namespace Spread.Player.StateMachine
 {
+    using Ladder;
+    using Animating;
+    using Camera;
+    using Movement;
+    using Gravity;
+    using Collisions;
+    
     public class ExitLadderState : PlayerBaseState
     {
+        private PlayerLadderController _ladderController;
+        private PlayerAnimatorController _animatorController;
+        private PlayerCameraController _cameraController;
+        private PlayerMovementController _movementController;
+        private PlayerGravityController _gravityController;
+        private PlayerColliderController _colliderController;
+        
         [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private LadderState _ladderState;
         
         [LayoutStart("Settings", ELayout.TitleBox)]
         [SerializeField] private float _verticalRotation;
+        
         [LayoutStart("Settings/Durations", ELayout.TitleBox)]
         [LayoutStart("Settings/Durations/Top", ELayout.TitleBox | ELayout.Foldout), SaintsRow(inline: true)]
         [SerializeField] private ExitLadderDurations _topDurations;
+        
         [LayoutStart("Settings/Durations/Bottom", ELayout.TitleBox | ELayout.Foldout), SaintsRow(inline: true)]
         [SerializeField] private ExitLadderDurations _bottomDurations;
 
         private bool _exitFinished;
         internal int ExitDirection;
-        
+
+        protected override void OnSetup()
+        {
+            _ladderController = _ctx.GetController<PlayerLadderController>();
+            _animatorController = _ctx.GetController<PlayerAnimatorController>();
+            _cameraController = _ctx.GetController<PlayerCameraController>();
+            _movementController = _ctx.GetController<PlayerMovementController>();
+            _gravityController = _ctx.GetController<PlayerGravityController>();
+            _colliderController = _ctx.GetController<PlayerColliderController>();
+        }
+
         protected override void OnEnter()
         {
-            //Prep values
-            Spread.Ladder.Ladder ladder = _ctx.LadderController.CurrentLadder;
+            // Prep values
+            Spread.Ladder.Ladder ladder = _ladderController.CurrentLadder;
             _exitFinished = false;
 
             ExitLadderDurations durations = _bottomDurations;
@@ -36,50 +62,50 @@ namespace Spread.Player.StateMachine
                 durations = _topDurations;
                 exitPoint = ladder.TopExitPoint;
             }
-            
-            //Disable ladder anims
-            _ctx.AnimatorController.LadderExit(false);
-            _ctx.AnimatorController.SetLadderRig(0, durations.DisableLadderRig);
-            
-            //Reset rotation
-            _ctx.CameraController.RotToXAxis(_verticalRotation, durations.RotateX);
-            _ctx.CameraController.RotToYAxis(ladder.transform.eulerAngles.y, durations.RotateY);
+
+            // Disable ladder anims
+            _animatorController.LadderExit(false);
+            _animatorController.SetLadderRig(0, durations.DisableLadderRig);
+
+            // Reset rotation
+            _cameraController.RotToXAxis(_verticalRotation, durations.RotateX);
+            _cameraController.RotToYAxis(ladder.transform.eulerAngles.y, durations.RotateY);
             _ctx.RotToYAxis(ladder.transform.eulerAngles.y, durations.RotateY);
 
-            //Move to exit point
+            // Move to exit point
             _ctx.Transform.DOMove(exitPoint, durations.MoveToExitPoint).OnComplete(() =>
             {
-                //Reset Camera MinMax
-                _ctx.CameraController.ResetMinMax();
-                _ctx.CameraController.ToggleWrap(true);
+                // Reset Camera MinMax
+                _cameraController.ResetMinMax();
+                _cameraController.ToggleWrap(true);
 
-                //Root motion - on
-                _ctx.AnimatorController.ToggleRootMotion(true);
-                _ctx.MovementController.RootMotionMove = true;
+                // Root motion - on
+                _animatorController.ToggleRootMotion(true);
+                _movementController.RootMotionMove = true;
 
-                //Gravity - on
-                _ctx.GravityController.ToggleGravity(true);
-                _ctx.ColliderController.ToggleCollision(true);
-                
-                //Feet Ik - on
-                _ctx.AnimatorController.ToggleFootIk(true);
-                
-                //Set exit
+                // Gravity - on
+                _gravityController.ToggleGravity(true);
+                _colliderController.ToggleCollision(true);
+
+                // Feet Ik - on
+                _animatorController.ToggleFootIk(true);
+
+                // Set exit
                 _exitFinished = true;
             });
-            
-            //Clear ladder controller
-            _ctx.LadderController.Clear();
+
+            // Clear ladder controller
+            _ladderController.Clear();
         }
 
         protected override void OnUpdate()
         {
-            _ctx.MovementController.RestrainNormalMovement();
+            _movementController.RestrainNormalMovement();
         }
 
         protected override void OnExit()
         {
-            _ctx.GravityController.ToggleIkCrouch(true);
+            _gravityController.ToggleIkCrouch(true);
             _exitFinished = true;
         }
 
@@ -89,7 +115,7 @@ namespace Spread.Player.StateMachine
             {
                 return typeof(IdleState);
             }
-            
+
             return GetType();
         }
     }

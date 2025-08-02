@@ -10,7 +10,7 @@ namespace Spread.Player.Animating
     using Movement;
     using UnityEngine.Animations.Rigging;
 
-    public class PlayerAnimatorController : MonoBehaviour
+    public class PlayerAnimatorController : PlayerControllerBase
     {
         [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private Animator _animator;
@@ -38,7 +38,7 @@ namespace Spread.Player.Animating
 
         internal bool TransitioningToCrawl => _crawlLayerTween != null;
 
-        private void Awake()
+        protected override void OnSetup()
         {
             _currentStateName = new Dictionary<int, string>();
             _previousStateName = new Dictionary<int, string>();
@@ -50,7 +50,7 @@ namespace Spread.Player.Animating
             }
         }
 
-        private void OnDestroy()
+        protected override void OnDispose()
         {
             OnStateChange = null;
         }

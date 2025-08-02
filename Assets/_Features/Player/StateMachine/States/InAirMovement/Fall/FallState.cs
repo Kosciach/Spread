@@ -2,39 +2,58 @@ using System;
 
 namespace Spread.Player.StateMachine
 {
+    using Movement;
+    using Animating;
+    using Interactions;
+    using Gravity;
+    using Ladder;
+    using Camera;
+
     public class FallState : PlayerBaseState
     {
+        private PlayerMovementController _movementController;
+        private PlayerAnimatorController _animatorController;
+        private PlayerInteractionsController _interactionsController;
+        private PlayerGravityController _gravityController;
+        private PlayerLadderController _ladderController;
+        private PlayerCameraController _cameraController;
+
+        protected override void OnSetup()
+        {
+            _movementController = _ctx.GetController<PlayerMovementController>();
+            _animatorController = _ctx.GetController<PlayerAnimatorController>();
+            _interactionsController = _ctx.GetController<PlayerInteractionsController>();
+            _gravityController = _ctx.GetController<PlayerGravityController>();
+            _ladderController = _ctx.GetController<PlayerLadderController>();
+            _cameraController = _ctx.GetController<PlayerCameraController>();
+        }
+
         protected override void OnEnter()
         {
             if (_ctx.LastState.GetType() != typeof(JumpState))
             {
-                _ctx.AnimatorController.SetInAirLayer(1);
-                _ctx.AnimatorController.Fall();
+                _animatorController.SetInAirLayer(1);
+                _animatorController.Fall();
             }
 
-            _ctx.InteractionsController.SetInteractable(null);
+            _interactionsController.SetInteractable(null);
         }
 
         protected override void OnUpdate()
         {
-            _ctx.CameraController.MoveCamera();
-            _ctx.MovementController.InAirMovement();
-            _ctx.InteractionsController.CheckInteractables();
-        }
-
-        protected override void OnExit()
-        {
-
+            _cameraController.MoveCamera();
+            _movementController.InAirMovement();
+            _interactionsController.CheckInteractables();
         }
 
         internal override Type GetNextState()
         {
-            if (_ctx.LadderController.CurrentLadder != null)
+            if (_ladderController.CurrentLadder != null)
             {
                 return typeof(EnterLadderState);
             }
-            
-            if (!_ctx.GravityController.IsFalling)
+
+            if (!_gravityController.IsFalling)
             {
                 return typeof(LandState);
             }
@@ -42,4 +61,5 @@ namespace Spread.Player.StateMachine
             return GetType();
         }
     }
+
 }

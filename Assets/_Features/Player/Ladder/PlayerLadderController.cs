@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using SaintsField;
 using SaintsField.Playa;
+using Spread.Player.Interactions;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
@@ -12,10 +13,10 @@ namespace Spread.Player.Ladder
     using Spread.Interactions;
     using Spread.Ladder;
 
-    public class  PlayerLadderController : MonoBehaviour
+    public class  PlayerLadderController : PlayerControllerBase
     {
-        private PlayerStateMachineContext _ctx;
-
+        private PlayerInteractionsController _interactionsController;
+        
         [LayoutStart("Legs", ELayout.TitleBox)]
         [SerializeField] private Transform _leftLeg;
         [SerializeField] private Transform _rightLeg;
@@ -69,11 +70,15 @@ namespace Spread.Player.Ladder
         internal bool IsMoving;
         
         
-        internal void Setup(PlayerStateMachineContext p_ctx)
+        protected override void OnSetup()
         {
-            _ctx = p_ctx;
+            _interactionsController = _ctx.GetController<PlayerInteractionsController>();
+            _interactionsController.OnInteract += Interaction;
+        }
 
-            _ctx.InteractionsController.OnInteract += Interaction;
+        protected override void OnDispose()
+        {
+            _interactionsController.OnInteract -= Interaction;
         }
         
         private void Interaction(Interactable p_interactable)

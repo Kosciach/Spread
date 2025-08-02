@@ -1,5 +1,8 @@
 using SaintsField;
 using SaintsField.Playa;
+using Spread.Player.Animating;
+using Spread.Player.Gravity;
+using Spread.Player.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,10 +11,14 @@ namespace Spread.Player.Movement
 {
     using StateMachine;
 
-    public class PlayerCrouchController : MonoBehaviour
+    public class PlayerCrouchController : PlayerControllerBase
     {
-        private PlayerStateMachineContext _ctx;
-
+        private PlayerInputController _inputController;
+        private PlayerMovementController _movementController;
+        private PlayerAnimatorController _animatorController;
+        private PlayerGravityController _gravityController;
+        private PlayerSlopeController _slopeController;
+        
         [LayoutStart("Settings", ELayout.TitleBox)]
         [SerializeField] private float _crawlSpeed;
 
@@ -21,33 +28,41 @@ namespace Spread.Player.Movement
         [SerializeField, ReadOnly] private bool _isCrawlArea; internal bool IsCrawlArea => _isCrawlArea;
         [SerializeField, ReadOnly] private Vector3 _crawlVelocity;
 
+        protected override void OnSetup()
+        {
+            _inputController = _ctx.GetController<PlayerInputController>();
+            _movementController = _ctx.GetController<PlayerMovementController>();
+            _animatorController = _ctx.GetController<PlayerAnimatorController>();
+            _gravityController = _ctx.GetController<PlayerGravityController>();
+            _slopeController = _ctx.GetController<PlayerSlopeController>();
+        }
         internal void Setup(PlayerStateMachineContext p_ctx)
         {
             _ctx = p_ctx;
 
             _isCrouchInput = false;
 
-            _ctx.InputController.Inputs.Keyboard.Move.performed += MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Move.canceled += MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Crouch.performed += CrouchInput;
+            _inputController.Inputs.Keyboard.Move.performed += MoveInput;
+            _inputController.Inputs.Keyboard.Move.canceled += MoveInput;
+            _inputController.Inputs.Keyboard.Crouch.performed += CrouchInput;
         }
 
         private void OnDestroy()
         {
-            _ctx.InputController.Inputs.Keyboard.Move.performed -= MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Move.canceled -= MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Crouch.performed -= CrouchInput;
+            _inputController.Inputs.Keyboard.Move.performed -= MoveInput;
+            _inputController.Inputs.Keyboard.Move.canceled -= MoveInput;
+            _inputController.Inputs.Keyboard.Crouch.performed -= CrouchInput;
         }
 
         internal void CheckCrouch()
         {
-            _isCrouchInput = _ctx.MovementController.IsRunInput || !_ctx.GravityController.IsGrounded || _ctx.SlopeController.IsSlopeSlide ? false : _isCrouchInput;
-            _ctx.AnimatorController.SetCrouchWeight(_ctx.CurrentState.IsCrouchState);
+            _isCrouchInput = _movementController.IsRunInput || !_gravityController.IsGrounded || _slopeController.IsSlopeSlide ? false : _isCrouchInput;
+            _animatorController.SetCrouchWeight(_ctx.CurrentState.IsCrouchState);
         }
 
         internal void CrawlMovement()
         {
-            _ctx.MovementController.NormalMovement();
+            _movementController.NormalMovement();
 
             Vector3 inputNormalized = _moveInput.normalized;
             Vector3 dir = (transform.forward * inputNormalized.z) + (transform.right * inputNormalized.x);
@@ -67,7 +82,7 @@ namespace Spread.Player.Movement
 
         private void CrouchInput(InputAction.CallbackContext p_ctx)
         {
-            if (_isCrouchInput && _ctx.GravityController.IsCeiling) return;
+            if (_isCrouchInput && _gravityController.IsCeiling) return;
 
             _isCrouchInput = !_isCrouchInput;
         }

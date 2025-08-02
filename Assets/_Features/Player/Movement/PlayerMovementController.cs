@@ -2,16 +2,23 @@ using SaintsField;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using SaintsField.Playa;
+using Spread.Player.Animating;
+using Spread.Player.Gravity;
+using Spread.Player.Input;
 
 
 namespace Spread.Player.Movement
 {
     using StateMachine;
 
-    public class PlayerMovementController : MonoBehaviour
+    public class PlayerMovementController : PlayerControllerBase
     {
-        private PlayerStateMachineContext _ctx;
-
+        private PlayerInputController _inputController;
+        private PlayerAnimatorController _animatorController;
+        private PlayerCrouchController _crouchController;
+        private PlayerGravityController _gravityController;
+        private PlayerSlopeController _slopeController;
+        
         [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private Animator _animator;
 
@@ -37,19 +44,23 @@ namespace Spread.Player.Movement
         [SerializeField, ReadOnly] public bool RootMotionMove = true;
 
 
-        internal void Setup(PlayerStateMachineContext p_ctx)
+        protected override void OnSetup()
         {
-            _ctx = p_ctx;
-
+            _inputController = _ctx.GetController<PlayerInputController>();
+            _animatorController = _ctx.GetController<PlayerAnimatorController>();
+            _crouchController = _ctx.GetController<PlayerCrouchController>();
+            _gravityController = _ctx.GetController<PlayerGravityController>();
+            _slopeController = _ctx.GetController<PlayerSlopeController>();
+            
             _isJogInput = _jogOnStart;
 
-            _ctx.InputController.Inputs.Keyboard.Move.performed += MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Move.canceled += MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Jog.performed += JogInput;
-            _ctx.InputController.Inputs.Keyboard.Run.performed += RunInput;
-            _ctx.InputController.Inputs.Keyboard.Run.canceled += RunInput;
+            _inputController.Inputs.Keyboard.Move.performed += MoveInput;
+            _inputController.Inputs.Keyboard.Move.canceled += MoveInput;
+            _inputController.Inputs.Keyboard.Jog.performed += JogInput;
+            _inputController.Inputs.Keyboard.Run.performed += RunInput;
+            _inputController.Inputs.Keyboard.Run.canceled += RunInput;
 
-            _ctx.AnimatorController.AnimatorMove.OnAnimatorMoveEvent += AnimatorMove;
+            _animatorController.AnimatorMove.OnAnimatorMoveEvent += AnimatorMove;
         }
 
         private void Update()
@@ -61,19 +72,19 @@ namespace Spread.Player.Movement
 
         private void OnDestroy()
         {
-            _ctx.InputController.Inputs.Keyboard.Move.performed -= MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Move.canceled -= MoveInput;
-            _ctx.InputController.Inputs.Keyboard.Jog.performed -= JogInput;
-            _ctx.InputController.Inputs.Keyboard.Run.performed -= RunInput;
-            _ctx.InputController.Inputs.Keyboard.Run.canceled -= RunInput;
+            _inputController.Inputs.Keyboard.Move.performed -= MoveInput;
+            _inputController.Inputs.Keyboard.Move.canceled -= MoveInput;
+            _inputController.Inputs.Keyboard.Jog.performed -= JogInput;
+            _inputController.Inputs.Keyboard.Run.performed -= RunInput;
+            _inputController.Inputs.Keyboard.Run.canceled -= RunInput;
 
-            _ctx.AnimatorController.AnimatorMove.OnAnimatorMoveEvent -= AnimatorMove;
+            _animatorController.AnimatorMove.OnAnimatorMoveEvent -= AnimatorMove;
         }
 
         private void SetMovementTypes()
         {
-            _ctx.CrouchController.CheckCrouch();
-            _idleType = _ctx.CrouchController.IsCrouchInput ? IdleTypes.Crouch : IdleTypes.Normal;
+            _crouchController.CheckCrouch();
+            _idleType = _crouchController.IsCrouchInput ? IdleTypes.Crouch : IdleTypes.Normal;
 
             if (_isMovingTimer <= 0)
             {
@@ -81,7 +92,7 @@ namespace Spread.Player.Movement
                 return;
             }
 
-            if(_ctx.CrouchController.IsCrouchInput)
+            if(_crouchController.IsCrouchInput)
             {
                 _movementType = MovementTypes.Crouch;
                 return;
@@ -100,14 +111,14 @@ namespace Spread.Player.Movement
         {
             SetMovementTypes();
 
-            _ctx.AnimatorController.SetMovementType(_movementType);
-            _ctx.AnimatorController.SetCrouchWeight(_ctx.CurrentState.IsCrouchState);
+            _animatorController.SetMovementType(_movementType);
+            _animatorController.SetCrouchWeight(_ctx.CurrentState.IsCrouchState);
 
             if (_movementType is not MovementTypes.Idle)
             {
                 Vector3 inputNormalized = _moveInput.normalized;
-                _ctx.AnimatorController.SetMovement(inputNormalized.x, inputNormalized.z);
-                _ctx.AnimatorController.SetMovementTypeF(_movementType);
+                _animatorController.SetMovement(inputNormalized.x, inputNormalized.z);
+                _animatorController.SetMovementTypeF(_movementType);
             }
         }
 
@@ -116,9 +127,9 @@ namespace Spread.Player.Movement
             _movementType = MovementTypes.Idle;
             _idleType = IdleTypes.Normal;
             
-            _ctx.AnimatorController.SetMovementType(_movementType);
-            _ctx.AnimatorController.SetTurn(0);
-            _ctx.AnimatorController.SetCrouchWeight(false);
+            _animatorController.SetMovementType(_movementType);
+            _animatorController.SetTurn(0);
+            _animatorController.SetCrouchWeight(false);
         }
 
         internal void InAirMovement()
@@ -152,15 +163,15 @@ namespace Spread.Player.Movement
             Vector3 velocity = _animator.deltaPosition;
             velocity.y = 0;
 
-            if (_ctx.GravityController.IsFalling
-                || _ctx.GravityController.IsJump
+            if (_gravityController.IsFalling
+                || _gravityController.IsJump
                 || velocity.magnitude == 0) return;
 
-            velocity = _ctx.SlopeController.GetSlopeVelocity(velocity);
+            velocity = _slopeController.GetSlopeVelocity(velocity);
 
             _ctx.CharacterController.Move(velocity);
 
-            if (_ctx.GravityController.IsGrounded)
+            if (_gravityController.IsGrounded)
             {
                 float speed = _isMovingTimer <= 0
                     ? 0 : _isRunInput
@@ -188,7 +199,7 @@ namespace Spread.Player.Movement
 
         private void RunInput(InputAction.CallbackContext p_ctx)
         {
-            if ((_ctx.CrouchController.IsCrouchInput && _ctx.GravityController.IsCeiling) || _ctx.CurrentState.GetType() == typeof(CrawlState)) return;
+            if ((_crouchController.IsCrouchInput && _gravityController.IsCeiling) || _ctx.CurrentState.GetType() == typeof(CrawlState)) return;
 
             _isRunInput = p_ctx.ReadValue<float>() > 0.5f;
         }

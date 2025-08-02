@@ -21,7 +21,7 @@ namespace Spread.Player.StateMachine
 
         internal void Dispose()
         {
-
+            OnDispose();
         }
 
         internal void EnterState()
@@ -42,6 +42,7 @@ namespace Spread.Player.StateMachine
         }
 
         protected virtual void OnSetup() { }
+        protected virtual void OnDispose() { }
         protected virtual void OnEnter() { }
         protected virtual void OnUpdate() { }
         protected virtual void OnExit() { }

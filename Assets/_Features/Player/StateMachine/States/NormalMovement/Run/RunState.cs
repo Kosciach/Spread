@@ -2,59 +2,72 @@ using System;
 
 namespace Spread.Player.StateMachine
 {
+    using Camera;
+    using Movement;
+    using Interactions;
+    using Gravity;
+
     public class RunState : PlayerBaseState
     {
-        protected override void OnEnter()
+        private PlayerCameraController _cameraController;
+        private PlayerMovementController _movementController;
+        private PlayerInteractionsController _interactionsController;
+        private PlayerGravityController _gravityController;
+        private PlayerSlideController _slideController;
+        private PlayerSlopeController _slopeController;
+
+        protected override void OnSetup()
         {
-
+            _cameraController = _ctx.GetController<PlayerCameraController>();
+            _movementController = _ctx.GetController<PlayerMovementController>();
+            _interactionsController = _ctx.GetController<PlayerInteractionsController>();
+            _gravityController = _ctx.GetController<PlayerGravityController>();
+            _slideController = _ctx.GetController<PlayerSlideController>();
+            _slopeController = _ctx.GetController<PlayerSlopeController>();
         }
-
+        
         protected override void OnUpdate()
         {
-            _ctx.CameraController.MoveCamera();
-            _ctx.MovementController.NormalMovement();
-            _ctx.InteractionsController.CheckInteractables();
-        }
-
-        protected override void OnExit()
-        {
-
+            _cameraController.MoveCamera();
+            _movementController.NormalMovement();
+            _interactionsController.CheckInteractables();
         }
 
         internal override Type GetNextState()
         {
-            if (_ctx.GravityController.IsFalling)
+            if (_gravityController.IsFalling)
             {
                 return typeof(FallState);
             }
 
-            if (_ctx.GravityController.IsJump)
+            if (_gravityController.IsJump)
             {
                 return typeof(JumpState);
             }
 
-            if (_ctx.SlideController.IsSlide)
+            if (_slideController.IsSlide)
             {
                 return typeof(SlideState);
             }
 
-            if (_ctx.SlopeController.IsSlopeSlide)
+            if (_slopeController.IsSlopeSlide)
             {
                 return typeof(SlopeSlideState);
             }
-            
-            switch (_ctx.MovementController.MovementType)
+
+            switch (_movementController.MovementType)
             {
-                case Movement.MovementTypes.Idle:
-                    return _ctx.MovementController.IdleType is Movement.IdleTypes.Normal
-                        ? typeof(IdleState) : typeof(CrouchIdleState);
-                case Movement.MovementTypes.Crouch:
+                case MovementTypes.Idle:
+                    return _movementController.IdleType == IdleTypes.Normal
+                        ? typeof(IdleState)
+                        : typeof(CrouchIdleState);
+                case MovementTypes.Crouch:
                     return typeof(CrouchWalkState);
-                case Movement.MovementTypes.Walk:
+                case MovementTypes.Walk:
                     return typeof(WalkState);
-                case Movement.MovementTypes.Jog:
+                case MovementTypes.Jog:
                     return typeof(JogState);
-                case Movement.MovementTypes.Run:
+                case MovementTypes.Run:
                     return typeof(RunState);
             }
 

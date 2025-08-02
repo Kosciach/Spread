@@ -1,6 +1,7 @@
 using Cinemachine;
 using SaintsField;
 using SaintsField.Playa;
+using Spread.Player.Animating;
 using UnityEngine;
 
 namespace Spread.Player.Camera
@@ -8,9 +9,9 @@ namespace Spread.Player.Camera
     using DG.Tweening;
     using StateMachine;
 
-    public class PlayerCameraController : MonoBehaviour
+    public class PlayerCameraController : PlayerControllerBase
     {
-        private PlayerStateMachineContext _ctx;
+        private PlayerAnimatorController _animatorController;
         public UnityEngine.Camera Main { get; private set; }
 
         [LayoutStart("References", ELayout.TitleBox)]
@@ -38,17 +39,17 @@ namespace Spread.Player.Camera
         private Tween _rotTweenYAxis;
         public bool EnableInput = true;
 
-        internal void Setup(PlayerStateMachineContext p_ctx)
+        protected override void OnSetup()
         {
-            _ctx = p_ctx;
             Main = UnityEngine.Camera.main;
             _cinePov = _cineCamera.GetCinemachineComponent<CinemachinePOV>();
 
+            _animatorController = _ctx.GetController<PlayerAnimatorController>();
             ToggleCursor(false);
             Toggle(true);
         }
 
-        private void Update()
+        protected override void OnTick()
         {
             _cineInput.enabled = EnableInput && _rotTweenXAxis == null && _rotTweenYAxis == null;
         }
@@ -100,7 +101,7 @@ namespace Spread.Player.Camera
             if (Mathf.Abs(_cinePov.m_HorizontalAxis.m_InputAxisValue) > 5 && _overTurn)
                 additionalRot = Quaternion.Euler(new Vector3(0, _cinePov.m_HorizontalAxis.m_InputAxisValue / 10, 0));
 
-            _ctx.AnimatorController.SetTurn(_rotDir * Mathf.Max(1, Mathf.Abs(_cinePov.m_HorizontalAxis.m_InputAxisValue) / 5));
+            _animatorController.SetTurn(_rotDir * Mathf.Max(1, Mathf.Abs(_cinePov.m_HorizontalAxis.m_InputAxisValue) / 5));
             transform.rotation *= _animator.deltaRotation * additionalRot;
 
             ClampHorizontal();

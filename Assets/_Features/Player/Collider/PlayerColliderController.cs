@@ -1,20 +1,15 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using SaintsField;
 using SaintsField.Playa;
-
 using AYellowpaper.SerializedCollections;
 
 namespace Spread.Player.Collisions
 {
     using StateMachine;
 
-    public class PlayerColliderController : MonoBehaviour
+    public class PlayerColliderController : PlayerControllerBase
     {
-        private PlayerStateMachineContext _ctx;
-
-        
         [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private CharacterController _characterController;
 
@@ -24,13 +19,12 @@ namespace Spread.Player.Collisions
 
         private Vector3 _center;
 
-        internal void Setup(PlayerStateMachineContext p_ctx)
+        protected override void OnSetup()
         {
-            _ctx = p_ctx;
-            _ctx.OnStateTransition += StateTransiton;
-
             _center = _characterController.center;
             StateTransiton((null, typeof(IdleState)));
+            
+            _ctx.OnStateTransition += StateTransiton;
         }
 
         private void StateTransiton((Type OldState, Type NewState) p_transition)
@@ -53,7 +47,7 @@ namespace Spread.Player.Collisions
             _characterController.detectCollisions = p_enable;
         }
 
-        [System.Serializable]
+        [Serializable]
         private struct ColliderSize
         {
             public float Height;

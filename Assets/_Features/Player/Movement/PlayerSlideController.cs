@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using SaintsField.Playa;
+using Spread.Player.Input;
 
 namespace Spread.Player.Movement
 {
     using StateMachine;
 
-    public class PlayerSlideController : MonoBehaviour
+    public class PlayerSlideController : PlayerControllerBase
     {
-        private PlayerStateMachineContext _ctx;
-
+        private PlayerInputController _inputController;
+        
         [LayoutStart("Settings", ELayout.TitleBox)]
         [SerializeField] private float _startSpeed;
         [SerializeField] private float _inSlideDrag;
@@ -21,19 +22,18 @@ namespace Spread.Player.Movement
         [SerializeField] private Vector3 _slideVelocity;
 
 
-        internal void Setup(PlayerStateMachineContext p_ctx)
+        protected override void OnSetup()
         {
-            _ctx = p_ctx;
-
-            _ctx.InputController.Inputs.Keyboard.Slide.performed += SlideInput;
+            _inputController = _ctx.GetController<PlayerInputController>();
+            _inputController.Inputs.Keyboard.Slide.performed += SlideInput;
         }
 
-        private void OnDestroy()
+        protected override void OnDispose()
         {
-            _ctx.InputController.Inputs.Keyboard.Slide.performed -= SlideInput;
+            _inputController.Inputs.Keyboard.Slide.performed -= SlideInput;
         }
 
-        private void Update()
+        protected override void OnTick()
         {
             float drag = _isSlide ? _inSlideDrag : _outOfSlideDrag;
             _slideVelocity = Vector3.Lerp(_slideVelocity, Vector3.zero, drag * Time.deltaTime);

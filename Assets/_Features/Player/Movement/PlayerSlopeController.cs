@@ -4,12 +4,8 @@ using SaintsField.Playa;
 
 namespace Spread.Player.Movement
 {
-    using StateMachine;
-
-    public class PlayerSlopeController : MonoBehaviour
+    public class PlayerSlopeController : PlayerControllerBase
     {
-        private PlayerStateMachineContext _ctx;
-
         [LayoutStart("Settings", ELayout.TitleBox)]
         [SerializeField] private float _startSlopeSlideAngle;
         [SerializeField] private float _stopSlopeSlideAngle;
@@ -22,13 +18,8 @@ namespace Spread.Player.Movement
         [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
         [SerializeField, ReadOnly] private bool _isSlopeSlide; internal bool IsSlopeSlide => _isSlopeSlide;
         [SerializeField, ReadOnly] private Vector3 _slopeSlideVelocity;
-
-        internal void Setup(PlayerStateMachineContext p_ctx)
-        {
-            _ctx = p_ctx;
-        }
-
-        private void Update()
+        
+        protected override void OnTick()
         {
             SlopeSlide();
         }

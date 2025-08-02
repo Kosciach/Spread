@@ -1,13 +1,11 @@
-using UnityEngine;
-
 namespace Spread.Player.Input
 {
-    public class PlayerInputController : MonoBehaviour
+    public class PlayerInputController : PlayerControllerBase
     {
         private PlayerInputs _inputs;
         internal PlayerInputs Inputs => _inputs;
 
-        internal void Setup()
+        protected override void OnSetup()
         {
             _inputs = new PlayerInputs();
             ToggleInput(true);

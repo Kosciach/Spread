@@ -2,51 +2,72 @@ using System;
 
 namespace Spread.Player.StateMachine
 {
+    using Animating;
+    using Interactions;
+    using Movement;
+    using Gravity;
+    using Camera;
+
     public class CrouchWalkState : PlayerBaseState
     {
+        private PlayerAnimatorController _animatorController;
+        private PlayerInteractionsController _interactionsController;
+        private PlayerMovementController _movementController;
+        private PlayerGravityController _gravityController;
+        private PlayerSlopeController _slopeController;
+        private PlayerCrouchController _crouchController;
+        private PlayerCameraController _cameraController;
+
+        protected override void OnSetup()
+        {
+            _animatorController = _ctx.GetController<PlayerAnimatorController>();
+            _interactionsController = _ctx.GetController<PlayerInteractionsController>();
+            _movementController = _ctx.GetController<PlayerMovementController>();
+            _gravityController = _ctx.GetController<PlayerGravityController>();
+            _slopeController = _ctx.GetController<PlayerSlopeController>();
+            _crouchController = _ctx.GetController<PlayerCrouchController>();
+            _cameraController = _ctx.GetController<PlayerCameraController>();
+        }
+
         protected override void OnEnter()
         {
-            _ctx.InteractionsController.SetInteractable(null);
+            _interactionsController.SetInteractable(null);
         }
 
         protected override void OnUpdate()
         {
-            _ctx.CameraController.MoveCamera();
-            _ctx.MovementController.NormalMovement();
+            _cameraController.MoveCamera();
+            _movementController.NormalMovement();
         }
-
-        protected override void OnExit()
-        {
-
-        }
-
+        
         internal override Type GetNextState()
         {
-            if (_ctx.GravityController.IsFalling)
+            if (_gravityController.IsFalling)
             {
                 return typeof(FallState);
             }
 
-            if (_ctx.GravityController.IsJump)
+            if (_gravityController.IsJump)
             {
                 return typeof(JumpState);
             }
 
-            if (_ctx.SlopeController.IsSlopeSlide)
+            if (_slopeController.IsSlopeSlide)
             {
                 return typeof(SlopeSlideState);
             }
 
-            if(_ctx.CrouchController.IsCrawlArea && !_ctx.AnimatorController.TransitioningToCrawl)
+            if (_crouchController.IsCrawlArea && !_animatorController.TransitioningToCrawl)
             {
                 return typeof(CrawlState);
             }
 
-            switch (_ctx.MovementController.MovementType)
+            switch (_movementController.MovementType)
             {
                 case Movement.MovementTypes.Idle:
-                    return _ctx.MovementController.IdleType is Movement.IdleTypes.Normal
-                        ? typeof(IdleState) : typeof(CrouchIdleState);
+                    return _movementController.IdleType == Movement.IdleTypes.Normal
+                        ? typeof(IdleState)
+                        : typeof(CrouchIdleState);
                 case Movement.MovementTypes.Crouch:
                     return typeof(CrouchWalkState);
                 case Movement.MovementTypes.Walk:
@@ -55,9 +76,9 @@ namespace Spread.Player.StateMachine
                     return typeof(JogState);
                 case Movement.MovementTypes.Run:
                     return typeof(RunState);
+                default:
+                    return GetType();
             }
-
-            return GetType();
         }
     }
 }
