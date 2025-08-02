@@ -1,14 +1,13 @@
+using UnityEngine;
 using Cinemachine;
 using SaintsField;
 using SaintsField.Playa;
-using Spread.Player.Animating;
-using UnityEngine;
+using DG.Tweening;
 
 namespace Spread.Player.Camera
 {
-    using DG.Tweening;
-    using StateMachine;
-
+    using Animating;
+    
     public class PlayerCameraController : PlayerControllerBase
     {
         private PlayerAnimatorController _animatorController;

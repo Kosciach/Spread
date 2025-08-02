@@ -1,15 +1,12 @@
-using System;
+using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using DG.Tweening;
 using SaintsField;
 using SaintsField.Playa;
-using Spread.Player.Interactions;
-using UnityEngine;
-using UnityEngine.Animations.Rigging;
-using UnityEngine.InputSystem;
 
 namespace Spread.Player.Ladder
 {
-    using Player.StateMachine;
+    using Interactions;
     using Spread.Interactions;
     using Spread.Ladder;
 

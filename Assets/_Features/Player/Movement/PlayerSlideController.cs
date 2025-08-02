@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using SaintsField.Playa;
-using Spread.Player.Input;
 
 namespace Spread.Player.Movement
 {
     using StateMachine;
+    using Input;
 
     public class PlayerSlideController : PlayerControllerBase
     {

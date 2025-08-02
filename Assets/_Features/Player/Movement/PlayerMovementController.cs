@@ -1,15 +1,14 @@
-using SaintsField;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using SaintsField;
 using SaintsField.Playa;
-using Spread.Player.Animating;
-using Spread.Player.Gravity;
-using Spread.Player.Input;
-
 
 namespace Spread.Player.Movement
 {
     using StateMachine;
+    using Input;
+    using Animating;
+    using Gravity;
 
     public class PlayerMovementController : PlayerControllerBase
     {

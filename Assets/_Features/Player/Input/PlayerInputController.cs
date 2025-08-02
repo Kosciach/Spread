@@ -24,8 +24,7 @@ namespace Spread.Player.Input
             if(p_enable) _inputs.Mouse.Look.Enable();
             else _inputs.Mouse.Look.Disable();
         }
-
-
+        
         private void OnEnable() => ToggleInput(true);
         private void OnDisable() => ToggleInput(false);
     }

@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using SaintsField;
 using SaintsField.Playa;
-using Spread.Player.Animating;
-using Spread.Player.Input;
-using Spread.Player.Ladder;
 
 namespace Spread.Player.Gravity
 {
     using StateMachine;
+    using Input;
+    using Ladder;
+    using Animating;
 
     public class PlayerGravityController : PlayerControllerBase
     {

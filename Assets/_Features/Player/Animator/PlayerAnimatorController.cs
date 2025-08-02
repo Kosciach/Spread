@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using FischlWorks;
@@ -6,9 +8,7 @@ using SaintsField.Playa;
 
 namespace Spread.Player.Animating
 {
-    using System;
     using Movement;
-    using UnityEngine.Animations.Rigging;
 
     public class PlayerAnimatorController : PlayerControllerBase
     {
