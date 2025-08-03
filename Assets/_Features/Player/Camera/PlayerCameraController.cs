@@ -11,7 +11,8 @@ namespace Spread.Player.Camera
     public class PlayerCameraController : PlayerControllerBase
     {
         private PlayerAnimatorController _animatorController;
-        public UnityEngine.Camera Main { get; private set; }
+        public UnityEngine.Camera _mainCamera;
+        public UnityEngine.Camera MainCamera => _mainCamera;
 
         [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private Animator _animator;
@@ -40,11 +41,10 @@ namespace Spread.Player.Camera
 
         protected override void OnSetup()
         {
-            Main = UnityEngine.Camera.main;
+            _mainCamera = UnityEngine.Camera.main;
             _cinePov = _cineCamera.GetCinemachineComponent<CinemachinePOV>();
 
             _animatorController = _ctx.GetController<PlayerAnimatorController>();
-            ToggleCursor(false);
             Toggle(true);
         }
 
@@ -53,6 +53,35 @@ namespace Spread.Player.Camera
             _cineInput.enabled = EnableInput && _rotTweenXAxis == null && _rotTweenYAxis == null;
         }
 
+        internal void IdleCamera()
+        {
+            CalculateRotHelpers();
+
+            _overTurn = _yPlayerCameraAngle > (_overTurn ? _overTurnEnd : _overTurnStart);
+
+            float yRotDiff = (_yPlayerRot - _yCameraRot) % 360;
+            yRotDiff = yRotDiff < 0 ? yRotDiff + 360 : yRotDiff;
+            _rotDir = _overTurn ? yRotDiff > 180 ? 1 : yRotDiff < 180 ? -1 : 0 : 0;
+
+            Quaternion additionalRot = Quaternion.Euler(Vector3.zero);
+            if (Mathf.Abs(_cinePov.m_HorizontalAxis.m_InputAxisValue) > 5 && _overTurn)
+                additionalRot = Quaternion.Euler(new Vector3(0, _cinePov.m_HorizontalAxis.m_InputAxisValue / 10, 0));
+
+            _animatorController.SetTurn(_rotDir * Mathf.Max(1, Mathf.Abs(_cinePov.m_HorizontalAxis.m_InputAxisValue) / 5));
+            transform.rotation *= _animator.deltaRotation * additionalRot;
+
+            ClampHorizontal();
+        }
+
+        internal void MoveCamera()
+        {
+            ClampHorizontal();
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, _yCameraRot, 0), _moveRotSpeed * Time.deltaTime);
+
+            CalculateRotHelpers();
+        }
+        
         private void CalculateRotHelpers()
         {
             _yPlayerRot = transform.eulerAngles.y;
@@ -84,41 +113,6 @@ namespace Spread.Player.Camera
                 float targetValue = Mathf.Clamp(_cinePov.m_HorizontalAxis.Value, min + floor, max + floor);
                 _cinePov.m_HorizontalAxis.Value = Mathf.Lerp(_cinePov.m_HorizontalAxis.Value, targetValue, 5 * Time.deltaTime);
             }
-        }
-
-        internal void IdleCamera()
-        {
-            CalculateRotHelpers();
-
-            _overTurn = _yPlayerCameraAngle > (_overTurn ? _overTurnEnd : _overTurnStart);
-
-            float yRotDiff = (_yPlayerRot - _yCameraRot) % 360;
-            yRotDiff = yRotDiff < 0 ? yRotDiff + 360 : yRotDiff;
-            _rotDir = _overTurn ? yRotDiff > 180 ? 1 : yRotDiff < 180 ? -1 : 0 : 0;
-
-            Quaternion additionalRot = Quaternion.Euler(Vector3.zero);
-            if (Mathf.Abs(_cinePov.m_HorizontalAxis.m_InputAxisValue) > 5 && _overTurn)
-                additionalRot = Quaternion.Euler(new Vector3(0, _cinePov.m_HorizontalAxis.m_InputAxisValue / 10, 0));
-
-            _animatorController.SetTurn(_rotDir * Mathf.Max(1, Mathf.Abs(_cinePov.m_HorizontalAxis.m_InputAxisValue) / 5));
-            transform.rotation *= _animator.deltaRotation * additionalRot;
-
-            ClampHorizontal();
-        }
-
-        internal void MoveCamera()
-        {
-            ClampHorizontal();
-
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, _yCameraRot, 0), _moveRotSpeed * Time.deltaTime);
-
-            CalculateRotHelpers();
-        }
-
-        internal void ToggleCursor(bool p_show)
-        {
-            Cursor.visible = p_show;
-            Cursor.lockState = p_show ? CursorLockMode.None : CursorLockMode.Locked;
         }
 
         internal void Toggle(bool p_toggle)

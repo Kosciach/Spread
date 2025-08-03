@@ -73,7 +73,7 @@ namespace Spread.Player.StateMachine
             ladderState.QuickLadderExit(0.1f);
 
             // Calculate jump direction
-            Transform cameraTransform = _cameraController.Main.transform;
+            Transform cameraTransform = _cameraController.MainCamera.transform;
             Vector3 xzVelocity = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
             _movementController.PushInAir(xzVelocity * _xzLadderJumpForce);
 
