@@ -42261,7 +42261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf03f1bb0767ad4295fddc74372389b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 0}
+  _mainCamera: {fileID: 753650306262945821}
   _animator: {fileID: 8044541286723645548}
   _camera: {fileID: 753650306262945821}
   _cineCamera: {fileID: 3367964900951549052}
@@ -52824,6 +52824,25 @@ MonoBehaviour:
   _movementTypeBlendTime: 0.3
   _movementBlendTime: 0.3
   _turnBlendTime: 0.1
+  _layers:
+    _serializedList:
+    - Key: 0
+      Value:
+        _index: 2
+    - Key: 1
+      Value:
+        _index: 3
+    - Key: 2
+      Value:
+        _index: 4
+  _rigs:
+    _serializedList:
+    - Key: 0
+      Value:
+        _rig: {fileID: 731334424}
+    - Key: 1
+      Value:
+        _rig: {fileID: 334234073}
 --- !u!33 &8026129824934899876
 MeshFilter:
   m_ObjectHideFlags: 0

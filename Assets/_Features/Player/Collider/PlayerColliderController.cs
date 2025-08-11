@@ -15,7 +15,7 @@ namespace Spread.Player.Collisions
 
         [LayoutStart("Settings", ELayout.TitleBox)]
         [SerializeField, SerializedDictionary("State", "ColliderSize")] private SerializedDictionary<string, ColliderSize> _colliderSizes;
-        [SerializeField, SerializedDictionary("State", "ColliderSize")] private Vector3 _centerOffset;
+        [SerializeField] private Vector3 _centerOffset;
 
         private Vector3 _center;
 

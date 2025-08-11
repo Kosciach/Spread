@@ -40,7 +40,7 @@ namespace Spread.Player.StateMachine
 
         protected override void OnExit()
         {
-            _animatorController.SetInAirLayer(0);
+            _animatorController.SetAnimatorLayerWeight(AnimatorLayer.InAir, 0f);
         }
 
         internal override Type GetNextState()

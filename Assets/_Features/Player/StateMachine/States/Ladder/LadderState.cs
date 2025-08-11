@@ -95,7 +95,7 @@ namespace Spread.Player.StateMachine
                 if (!_wasSliding)
                 {
                     _wasSliding = true;
-                    _animatorController.SetLadderSlideRig(1, 0.1f);
+                    _animatorController.SetAnimatorIkRigWeight(AnimatorIkRig.LadderSlide, 1, 0.1f);
                     _ladderController.SetSlideIk();
                 }
 
@@ -114,7 +114,7 @@ namespace Spread.Player.StateMachine
             if (_wasSliding)
             {
                 _wasSliding = false;
-                _animatorController.SetLadderSlideRig(0, 0.1f);
+                _animatorController.SetAnimatorIkRigWeight(AnimatorIkRig.LadderSlide, 0, 0.1f);
                 
                 //Set IK
                 _ladderController.SetStartIkPos(CurrentRangIndex);
@@ -154,8 +154,8 @@ namespace Spread.Player.StateMachine
             _inputController.Inputs.Keyboard.Run.performed -= RunInput;
             _inputController.Inputs.Keyboard.Run.canceled -= RunInput;
             _inputController.Inputs.Interactions.Use.performed -= InteractInput;
-
-            _animatorController.SetLadderSlideRig(0, 0.1f);
+            
+            _animatorController.SetAnimatorIkRigWeight(AnimatorIkRig.LadderSlide, 0, 0.1f);
             
             if (_interactionExit)
             {
@@ -208,7 +208,7 @@ namespace Spread.Player.StateMachine
         {
             //Disable ladder anims
             _animatorController.LadderExit(false);
-            _animatorController.SetLadderRig(0, p_disableLadderRigDuration);
+            _animatorController.SetAnimatorIkRigWeight(AnimatorIkRig.Ladder, 0, p_disableLadderRigDuration);
             
             //Reset Camera MinMax
             _cameraController.ResetMinMax();

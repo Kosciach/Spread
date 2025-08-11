@@ -65,7 +65,7 @@ namespace Spread.Player.StateMachine
 
             // Disable ladder anims
             _animatorController.LadderExit(false);
-            _animatorController.SetLadderRig(0, durations.DisableLadderRig);
+            _animatorController.SetAnimatorIkRigWeight(AnimatorIkRig.Ladder, 0, durations.DisableLadderRig);
 
             // Reset rotation
             _cameraController.RotToXAxis(_verticalRotation, durations.RotateX);

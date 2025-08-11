@@ -32,7 +32,7 @@ namespace Spread.Player.StateMachine
         {
             if (_ctx.LastState.GetType() != typeof(JumpState))
             {
-                _animatorController.SetInAirLayer(1);
+                _animatorController.SetAnimatorLayerWeight(AnimatorLayer.InAir, 1f);
                 _animatorController.Fall();
             }
 

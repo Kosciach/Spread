@@ -27,7 +27,7 @@ namespace Spread.Player.StateMachine
         protected override void OnEnter()
         {
             _slideController.StartSlide();
-            _animatorController.SetSlideLayer(1);
+            _animatorController.SetAnimatorLayerWeight(AnimatorLayer.Slide, 1f);
             _interactionsController.SetInteractable(null);
         }
 
@@ -39,7 +39,7 @@ namespace Spread.Player.StateMachine
         protected override void OnExit()
         {
             _slideController.StopSlide();
-            _animatorController.SetSlideLayer(0);
+            _animatorController.SetAnimatorLayerWeight(AnimatorLayer.Slide, 0f);
         }
 
         internal override Type GetNextState()

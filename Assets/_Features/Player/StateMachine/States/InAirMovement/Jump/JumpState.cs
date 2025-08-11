@@ -35,7 +35,7 @@ namespace Spread.Player.StateMachine
         protected override void OnEnter()
         {
             _gravityController.AddJumpForce();
-            _animatorController.SetInAirLayer(1);
+            _animatorController.SetAnimatorLayerWeight(AnimatorLayer.InAir, 1f);
             _animatorController.Jump();
             _interactionsController.SetInteractable(null);
 

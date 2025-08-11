@@ -64,10 +64,10 @@ namespace Spread.Player.StateMachine
             //Transition to ladder anims
             _animatorController.LadderEnter(false);
             _animatorController.ToggleFootIk(false);
-            _animatorController.SetInAirLayer(0);
+            _animatorController.SetAnimatorLayerWeight(AnimatorLayer.InAir, 0f);
             Helpers.SimpleTimer(durations.RotateY, () =>
             {
-                _animatorController.SetLadderRig(1, durations.EnableLadderRig);
+                _animatorController.SetAnimatorIkRigWeight(AnimatorIkRig.Ladder, 1, durations.EnableLadderRig);
             });
             
             //Root motion - off

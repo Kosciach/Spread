@@ -32,7 +32,7 @@ namespace Spread.Player.StateMachine
             Vector3 dir = (_ctx.Transform.forward * inputNormalized.z) + (_ctx.Transform.right * inputNormalized.x);
             _ctx.Transform.DOMove(_ctx.Transform.position + dir, 0.5f);
 
-            _animatorController.SetCrawlLayer(1);
+            _animatorController.SetAnimatorLayerWeight(AnimatorLayer.Crawl, 1f);
             _animatorController.ToggleRootMotion(false);
             _animatorController.ToggleFootIk(false);
 
@@ -51,7 +51,7 @@ namespace Spread.Player.StateMachine
             Vector3 dir = (_ctx.Transform.forward * inputNormalized.z) + (_ctx.Transform.right * inputNormalized.x);
             _ctx.Transform.DOMove(_ctx.Transform.position + dir, 0.5f);
 
-            _animatorController.SetCrawlLayer(0);
+            _animatorController.SetAnimatorLayerWeight(AnimatorLayer.Crawl, 0f);
             _animatorController.ToggleRootMotion(true);
             _animatorController.ToggleFootIk(true);
         }

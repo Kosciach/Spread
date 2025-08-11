@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using System;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using DG.Tweening;
 using FischlWorks;
 using SaintsField.Playa;
@@ -25,18 +26,19 @@ namespace Spread.Player.Animating
         [SerializeField] private float _movementBlendTime = 0.5f;
         [SerializeField] private float _turnBlendTime = 0.05f;
         
+        [LayoutStart("Layers&Tweens", ELayout.TitleBox)]
+        [SerializeField, SerializedDictionary("Layer", "LayerData")]
+        private SerializedDictionary<AnimatorLayer, AnimatorLayerData> _layers = new();
+        [SerializeField, SerializedDictionary("Rig", "RigData")]
+        private SerializedDictionary<AnimatorIkRig, AnimatorIkRigData> _rigs = new();
+        
         private Dictionary<int, string> _currentStateName; internal Dictionary<int, string> CurrentStateName => _currentStateName;
         private Dictionary<int, string> _previousStateName; internal Dictionary<int, string> PreviousStateName => _previousStateName;
         public Action<int, string> OnStateChange;
-
-        private Tween _inAirLayerTween;
-        private Tween _crawlLayerTween;
-        private Tween _slideLayerTween;
-        private Tween _ladderRigTween;
-        private Tween _ladderSlideRigTween;
+        
         private Tween _ikCrouchTween;
-
-        internal bool TransitioningToCrawl => _crawlLayerTween != null;
+        
+        internal bool TransitioningToCrawl => _layers[AnimatorLayer.Crawl].Tween != null;
 
         protected override void OnSetup()
         {
@@ -55,6 +57,27 @@ namespace Spread.Player.Animating
             OnStateChange = null;
         }
 
+        internal void SetIkCrouch(float p_value)
+        {
+            if (_ikCrouchTween != null)
+            {
+                _ikCrouchTween.Kill();
+                _ikCrouchTween.onComplete = null;
+                _ikCrouchTween = null;
+            }
+
+            _ikCrouchTween = _animator.transform.DOLocalMoveY(Mathf.Clamp(p_value, -0.33f, 0), 0.2f);
+            _ikCrouchTween.onComplete += () =>
+            {
+                _ikCrouchTween = _animator.transform.DOLocalMoveY(0, 0.5f);
+                _ikCrouchTween.onComplete += () =>
+                {
+                    _ikCrouchTween.onComplete = null;
+                    _ikCrouchTween = null;
+                };
+            };
+        }
+        
         #region States
         internal void StateEnter(int p_layerIndex, string p_stateName)
         {
@@ -88,27 +111,6 @@ namespace Spread.Player.Animating
             _footIk.globalWeight = p_enable ? 1 : 0;
             _footIk.enableIKPositioning = p_enable;
             _footIk.enableIKRotating = p_enable;
-        }
-
-        internal void SetIkCrouch(float p_value)
-        {
-            if (_ikCrouchTween != null)
-            {
-                _ikCrouchTween.Kill();
-                _ikCrouchTween.onComplete = null;
-                _ikCrouchTween = null;
-            }
-
-            _ikCrouchTween = _animator.transform.DOLocalMoveY(Mathf.Clamp(p_value, -0.33f, 0), 0.2f);
-            _ikCrouchTween.onComplete += () =>
-            {
-                _ikCrouchTween = _animator.transform.DOLocalMoveY(0, 0.5f);
-                _ikCrouchTween.onComplete += () =>
-                {
-                    _ikCrouchTween.onComplete = null;
-                    _ikCrouchTween = null;
-                };
-            };
         }
         #endregion
 
@@ -154,114 +156,57 @@ namespace Spread.Player.Animating
         }
 
         #region Layers
-        internal void SetInAirLayer(float p_weight)
+        internal void SetAnimatorLayerWeight(AnimatorLayer p_layer, float p_weight, float p_duration = 0.5f)
         {
-            if (_inAirLayerTween != null)
+            AnimatorLayerData data = _layers[p_layer];
+            
+            if (data.Tween != null)
             {
-                _inAirLayerTween.Kill();
-                _inAirLayerTween.onUpdate = null;
-                _inAirLayerTween = null;
+                data.Tween.Kill();
+                data.Tween.onUpdate = null;
+                data.Tween.onComplete = null;
+                data.Tween = null;
             }
 
-            float weight = _animator.GetLayerWeight(2);
-            _inAirLayerTween = DOTween.To(() => weight, x => weight = x, p_weight, 0.5f);
-            _inAirLayerTween.onUpdate += () =>
+            float weight = _animator.GetLayerWeight(data.Index);
+            data.Tween = DOTween.To(() => weight, x => weight = x, p_weight, p_duration);
+            data.Tween.onUpdate += () =>
             {
-                _animator.SetLayerWeight(2, weight);
+                _animator.SetLayerWeight(data.Index, weight);
             };
-            _inAirLayerTween.onComplete += () =>
+            data.Tween.onComplete += () =>
             {
-                _inAirLayerTween.onUpdate = null;
-                _inAirLayerTween.onComplete = null;
-                _inAirLayerTween = null;
-            };
-        }
-
-        internal void SetCrouchWeight(bool p_crouch)
-        {
-            float targetWeight = p_crouch ? 1.0f : 0.0f;
-            _animator.SetFloat("CrouchWeight", targetWeight, 0.2f, Time.deltaTime);
-            _animator.SetLayerWeight(1, _animator.GetFloat("CrouchWeight"));
-        }
-
-        internal void SetCrawlLayer(float p_weight)
-        {
-            if (_crawlLayerTween != null)
-            {
-                _crawlLayerTween.Kill();
-                _crawlLayerTween.onUpdate = null;
-                _crawlLayerTween = null;
-            }
-
-            float weight = _animator.GetLayerWeight(3);
-            _crawlLayerTween = DOTween.To(() => weight, x => weight = x, p_weight, 0.5f);
-            _crawlLayerTween.onUpdate += () =>
-            {
-                _animator.SetLayerWeight(3, weight);
-            };
-            _crawlLayerTween.onComplete += () =>
-            {
-                _crawlLayerTween.onUpdate = null;
-                _crawlLayerTween.onComplete = null;
-                _crawlLayerTween = null;
-            };
-        }
-
-        internal void SetSlideLayer(float p_weight)
-        {
-            if (_slideLayerTween != null)
-            {
-                _slideLayerTween.Kill();
-                _slideLayerTween.onUpdate = null;
-                _slideLayerTween = null;
-            }
-
-            float weight = _animator.GetLayerWeight(4);
-            _slideLayerTween = DOTween.To(() => weight, x => weight = x, p_weight, 0.5f);
-            _slideLayerTween.onUpdate += () =>
-            {
-                _animator.SetLayerWeight(4, weight);
-            };
-            _slideLayerTween.onComplete += () =>
-            {
-                _slideLayerTween.onUpdate = null;
-                _slideLayerTween.onComplete = null;
-                _slideLayerTween = null;
-            };
-        }
-
-        internal void SetLadderRig(float p_weight, float p_duration = 0.5f)
-        {
-            if (_ladderRigTween != null)
-            {
-                _ladderRigTween.Kill();
-                _ladderRigTween.onComplete = null;
-                _ladderRigTween = null;
-            }
-
-            _ladderRigTween = DOTween.To(() => _ladderRig.weight, x => _ladderRig.weight = x, p_weight, p_duration);
-            _ladderRigTween.onComplete += () =>
-            {
-                _ladderRigTween.onComplete = null;
-                _ladderRigTween = null;
+                data.Tween.onComplete = null;
+                data.Tween = null;
             };
         }
         
-        internal void SetLadderSlideRig(float p_weight, float p_duration = 0.5f)
+        internal void SetAnimatorIkRigWeight(AnimatorIkRig p_rig, float p_weight, float p_duration = 0.5f)
         {
-            if (_ladderSlideRigTween != null)
+            AnimatorIkRigData data = _rigs[p_rig];
+            
+            if (data.Tween != null)
             {
-                _ladderSlideRigTween.Kill();
-                _ladderSlideRigTween.onComplete = null;
-                _ladderSlideRigTween = null;
+                data.Tween.Kill();
+                data.Tween.onComplete = null;
+                data.Tween = null;
             }
 
-            _ladderSlideRigTween = DOTween.To(() => _ladderSlideRig.weight, x => _ladderSlideRig.weight = x, p_weight, p_duration);
-            _ladderSlideRigTween.onComplete += () =>
+            data.Tween = DOTween.To(() => data.Rig.weight, x => data.Rig.weight = x, p_weight, p_duration);
+            data.Tween.onComplete += () =>
             {
-                _ladderSlideRigTween.onComplete = null;
-                _ladderSlideRigTween = null;
+                data.Tween.onComplete = null;
+                data.Tween = null;
             };
+        }
+        
+        internal void SetCrouchWeight(bool p_crouch)
+        {
+            int layerIndex = _animator.GetLayerIndex("CrouchHandsLayer");
+            float targetWeight = p_crouch ? 1.0f : 0.0f;
+            
+            _animator.SetFloat("CrouchWeight", targetWeight, 0.2f, Time.deltaTime);
+            _animator.SetLayerWeight(layerIndex, _animator.GetFloat("CrouchWeight"));
         }
         #endregion
 
