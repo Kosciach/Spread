@@ -51718,7 +51718,7 @@ MonoBehaviour:
   _ceilingCheckRange: 1.73
   _ceilingCheckRadius: 0.15
   _jumpForce: 2
-  _gravityForFall: 3
+  _gravityForFall: -3
   _gizmos: 0
   _currentGravityForce: 0
   _isGrounded: 0
