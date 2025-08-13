@@ -21,18 +21,18 @@ namespace Spread.Player.Gravity
 
         [LayoutStart("Settings", ELayout.TitleBox)]
         [SerializeField] private float _gravityForce;
-        [LayoutStart("./Grounded", ELayout.TitleOut)]
+        [LayoutStart("Settings/Grounded", ELayout.TitleBox)]
         [SerializeField] private Vector3 _groundCheckOffset;
         [SerializeField] private float _groundCheckRadius;
         [SerializeField] private float _groundedGravityForce;
         [SerializeField] private LayerMask _ignoreMask;
-        [LayoutStart("./Ceiling", ELayout.TitleOut)]
+        [LayoutStart("Settings/Ceiling", ELayout.TitleBox)]
         [SerializeField] private Vector3 _ceilingCheckOffset;
         [SerializeField] private float _ceilingCheckRange;
         [SerializeField] private float _ceilingCheckRadius;
-        [LayoutStart("./JumpState", ELayout.TitleOut)]
+        [LayoutStart("Settings/JumpState", ELayout.TitleBox)]
         [SerializeField] private float _jumpForce;
-        [LayoutStart("./FallStart", ELayout.TitleOut)]
+        [LayoutStart("Settings/FallStart", ELayout.TitleBox)]
         [SerializeField] private float _gravityForFall;
 
         [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
@@ -42,7 +42,7 @@ namespace Spread.Player.Gravity
         [SerializeField, ReadOnly] private bool _isCeiling; internal bool IsCeiling => _isCeiling;
         [SerializeField, ReadOnly] private bool _useGravity;
         [SerializeField, ReadOnly] private bool _useIkCrouch;
-        [LayoutStart("./Actions", ELayout.TitleOut)]
+        [LayoutStart("Debug/Actions", ELayout.TitleBox)]
         [SerializeField, ReadOnly] private bool _isJump; internal bool IsJump => _isJump;
         [SerializeField, ReadOnly] private bool _isFalling; internal bool IsFalling => _isFalling;
 
@@ -57,35 +57,24 @@ namespace Spread.Player.Gravity
             _ladderController = _ctx.GetController<PlayerLadderController>();
             _animatorController = _ctx.GetController<PlayerAnimatorController>();
             
-            _inputController.Inputs.Keyboard.Jump.performed += SetIsJump;
+            _inputController.Inputs.Keyboard.Jump.performed += JumpInput;
+        }
+
+        protected override void OnDispose()
+        {
+            _inputController.Inputs.Keyboard.Jump.performed -= JumpInput;
         }
         
         protected override void OnTick()
         {
             CheckIsGrounded();
-            Gravity();
+            HandleGravity();
             CheckIsCeiling();
-
-            //Cleanup Later
-            _isFalling = !_isGrounded && _currentGravityForce < -_gravityForFall;
-            _isJump = !_isJump ? false : !(_isFalling || (_isGrounded && _currentGravityForce <= _groundedGravityForce));
-            if (_ladderController.CurrentLadder != null)
-            {
-                _isJump = false;
-            }
+            CheckIsFalling();
+            CheckIsJump();
         }
 
-        protected override void OnDispose()
-        {
-            _inputController.Inputs.Keyboard.Jump.performed -= SetIsJump;
-        }
-
-        private void SetIsJump(InputAction.CallbackContext p_ctx)
-        {
-            if ((_isGrounded && !_isCeiling) || _ctx.CurrentState is LadderState)
-                _isJump = true;
-        }
-
+        // Tickables
         private void CheckIsGrounded()
         {
             Vector3 offset = transform.forward * _groundCheckOffset.z + Vector3.up * _groundCheckOffset.y;
@@ -99,19 +88,25 @@ namespace Spread.Player.Gravity
             _isGrounded = isGrounded;
         }
 
-        private void Gravity()
+        private void HandleGravity()
         {
+            // Cancel gravity use
             if (!_useGravity)
             {
                 _animatorController.SetGravityForce(0);
                 return;
             }
-
-            _currentGravityForce = _isGrounded && !_isJump ? -_groundedGravityForce : _currentGravityForce - _gravityForce * Time.deltaTime;
+            
+            // Calculate gravity
+            _currentGravityForce = _isGrounded && !_isJump
+                ? -_groundedGravityForce // Grounded gravity
+                : _currentGravityForce - _gravityForce * Time.deltaTime; // Normal gravity increase
+                
+            // Apply gravity
             _ctx.CharacterController.Move(new Vector3(0, _currentGravityForce, 0) * Time.deltaTime);
             _animatorController.SetGravityForce(-_currentGravityForce);
         }
-
+        
         private void CheckIsCeiling()
         {
             _ceilingSpherePos = transform.position + transform.rotation * _ctx.CharacterController.center + new Vector3(0, _ctx.CharacterController.height / 2, 0);
@@ -132,6 +127,26 @@ namespace Spread.Player.Gravity
             _isCeiling = isCeiling;
         }
 
+        private void CheckIsFalling()
+        {
+            _isFalling = !_isGrounded && _currentGravityForce < _gravityForFall;
+        }
+
+        private void CheckIsJump()
+        {
+            if (!_isJump)
+                return;
+
+            bool isFullyGrounded = _isGrounded && _currentGravityForce <= _groundedGravityForce;
+            bool isOnLadder = _ladderController.CurrentLadder != null;
+            bool canResetIsJump = _isFalling || isFullyGrounded || isOnLadder;
+            if (!canResetIsJump)
+                return;
+
+            _isJump = false;
+        }
+        
+        // Toggles
         internal void ToggleGravity(bool p_enable)
         {
             _useGravity = p_enable;
@@ -142,6 +157,7 @@ namespace Spread.Player.Gravity
             _useIkCrouch = p_enable;
         }
 
+        // Add force
         internal void AddJumpForce()
         {
             _currentGravityForce = Mathf.Sqrt(_jumpForce * 2f * _gravityForce);
@@ -152,6 +168,14 @@ namespace Spread.Player.Gravity
             _currentGravityForce += p_gravity;
         }
 
+        // Input
+        private void JumpInput(InputAction.CallbackContext p_ctx)
+        {
+            if ((_isGrounded && !_isCeiling) || _ctx.CurrentState is LadderState)
+                _isJump = true;
+        }
+
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if(!_gizmos) return;
@@ -163,6 +187,7 @@ namespace Spread.Player.Gravity
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position + _ceilingCheckOffset, _ceilingSpherePos);
             Gizmos.DrawSphere(_ceilingSpherePos, _ceilingCheckRadius);
-        }
+        } 
+#endif
     }
 }
