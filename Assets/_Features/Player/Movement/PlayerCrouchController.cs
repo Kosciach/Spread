@@ -29,24 +29,20 @@ namespace Spread.Player.Movement
 
         protected override void OnSetup()
         {
+            _isCrouchInput = false;
+            
             _inputController = _ctx.GetController<PlayerInputController>();
             _movementController = _ctx.GetController<PlayerMovementController>();
             _animatorController = _ctx.GetController<PlayerAnimatorController>();
             _gravityController = _ctx.GetController<PlayerGravityController>();
             _slopeController = _ctx.GetController<PlayerSlopeController>();
-        }
-        internal void Setup(PlayerStateMachineContext p_ctx)
-        {
-            _ctx = p_ctx;
-
-            _isCrouchInput = false;
-
+            
             _inputController.Inputs.Keyboard.Move.performed += MoveInput;
             _inputController.Inputs.Keyboard.Move.canceled += MoveInput;
             _inputController.Inputs.Keyboard.Crouch.performed += CrouchInput;
         }
-
-        private void OnDestroy()
+        
+        protected override void OnDispose()
         {
             _inputController.Inputs.Keyboard.Move.performed -= MoveInput;
             _inputController.Inputs.Keyboard.Move.canceled -= MoveInput;
@@ -55,7 +51,12 @@ namespace Spread.Player.Movement
 
         internal void CheckCrouch()
         {
-            _isCrouchInput = _movementController.IsRunInput || !_gravityController.IsGrounded || _slopeController.IsSlopeSlide ? false : _isCrouchInput;
+            bool canResetIsCrouchInput = _movementController.IsRunInput
+                                         || !_gravityController.IsGrounded
+                                         || _slopeController.IsSlopeSlide;
+            if (canResetIsCrouchInput)
+                _isCrouchInput = false;
+            
             _animatorController.SetCrouchWeight(_ctx.CurrentState.IsCrouchState);
         }
 
@@ -72,7 +73,7 @@ namespace Spread.Player.Movement
             _ctx.CharacterController.Move(_crawlVelocity * Time.deltaTime);
         }
 
-        #region Input
+        // Input
         private void MoveInput(InputAction.CallbackContext p_ctx)
         {
             Vector2 input = p_ctx.ReadValue<Vector2>();
@@ -85,8 +86,8 @@ namespace Spread.Player.Movement
 
             _isCrouchInput = !_isCrouchInput;
         }
-        #endregion
 
+        // Collision
         private void OnTriggerEnter(Collider other)
         {
             if (!other.gameObject.CompareTag("CrawlArea")) return;
