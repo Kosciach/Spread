@@ -29,10 +29,12 @@ namespace Spread.Player.Collisions
 
         private void StateTransiton((Type OldState, Type NewState) p_transition)
         {
-            if (p_transition.NewState == null) return;
+            if (p_transition.NewState == null)
+                return;
 
             string stateTypeString = p_transition.NewState.Name.Split(".").Last();
-            if (!_colliderSizes.ContainsKey(stateTypeString)) return;
+            if (!_colliderSizes.ContainsKey(stateTypeString))
+                return;
 
             float height = _colliderSizes[stateTypeString].Height;
             Vector3 center = _center;

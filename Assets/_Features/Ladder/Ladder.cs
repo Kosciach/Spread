@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 using System.Collections.Generic;
 using SaintsField;
 using SaintsField.Playa;
-using UnityEditor;
 
 namespace Spread.Ladder
 {

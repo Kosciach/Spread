@@ -114,7 +114,7 @@ namespace Spread.Player.Animating
         }
         #endregion
 
-        #region Idle
+        // Idles
         internal void SetTurn(float p_turnDir)
         {
             _animator.SetFloat("TurnDir", p_turnDir, _turnBlendTime, Time.deltaTime);
@@ -130,9 +130,8 @@ namespace Spread.Player.Animating
             _animator.SetFloat("IdleTypeF", (int)p_idleType, 0.2f, Time.deltaTime);
             _animator.SetLayerWeight(1, _animator.GetFloat("IdleTypeF"));
         }
-        #endregion
-
-        #region Movement
+        
+        // Grounded/Normal Movement
         internal void SetMovementType(MovementTypes p_movementType)
         {
             _animator.SetInteger("MovementType", (int)p_movementType);
@@ -148,14 +147,47 @@ namespace Spread.Player.Animating
             _animator.SetFloat("MovementX", p_movementX, _movementBlendTime, Time.deltaTime);
             _animator.SetFloat("MovementZ", p_movementZ, _movementBlendTime, Time.deltaTime);
         }
-        #endregion
+        
+        // In air
+        internal void Jump()
+        {
+            _animator.SetTrigger("Jump");
+        }
 
+        internal void Fall()
+        {
+            _animator.SetTrigger("Fall");
+        }
+
+        internal void Land()
+        {
+            _animator.SetFloat("LandF", _animator.GetFloat("GravityForce"));
+            _animator.SetTrigger("Land");
+        }
+        
         internal void SetGravityForce(float p_gravityForce)
         {
             _animator.SetFloat("GravityForce", p_gravityForce, 0.2f, Time.deltaTime);
         }
 
-        #region Layers
+        // Slide
+        internal void SlopeSlide(bool p_slopeSlide)
+        {
+            _animator.SetBool("SlopeSlide", p_slopeSlide);
+        }
+
+        // Ladder
+        internal void LadderEnter(bool p_fromTop)
+        {
+            _animator.SetTrigger(p_fromTop ? "LadderEnterTop" : "LadderEnterBottom");
+        }
+
+        internal void LadderExit(bool p_toTop)
+        {
+            _animator.SetTrigger(p_toTop ? "LadderExitTop" : "LadderExitBottom");
+        }
+        
+        // Layers
         internal void SetAnimatorLayerWeight(AnimatorLayer p_layer, float p_weight, float p_duration = 0.5f)
         {
             AnimatorLayerData data = _layers[p_layer];
@@ -208,39 +240,5 @@ namespace Spread.Player.Animating
             _animator.SetFloat("CrouchWeight", targetWeight, 0.2f, Time.deltaTime);
             _animator.SetLayerWeight(layerIndex, _animator.GetFloat("CrouchWeight"));
         }
-        #endregion
-
-        #region Toggles
-        internal void Jump()
-        {
-            _animator.SetTrigger("Jump");
-        }
-
-        internal void Fall()
-        {
-            _animator.SetTrigger("Fall");
-        }
-
-        internal void Land()
-        {
-            _animator.SetFloat("LandF", _animator.GetFloat("GravityForce"));
-            _animator.SetTrigger("Land");
-        }
-
-        internal void SlopeSlide(bool p_slopeSlide)
-        {
-            _animator.SetBool("SlopeSlide", p_slopeSlide);
-        }
-
-        internal void LadderEnter(bool p_fromTop)
-        {
-            _animator.SetTrigger(p_fromTop ? "LadderEnterTop" : "LadderEnterBottom");
-        }
-
-        internal void LadderExit(bool p_toTop)
-        {
-            _animator.SetTrigger(p_toTop ? "LadderExitTop" : "LadderExitBottom");
-        }
-        #endregion
     }
 }
