@@ -14,7 +14,7 @@ namespace Spread.Player.Collisions
         [SerializeField] private CharacterController _characterController;
 
         [LayoutStart("Settings", ELayout.TitleBox)]
-        [SerializeField, SerializedDictionary("State", "ColliderSize")] private SerializedDictionary<string, ColliderSize> _colliderSizes;
+        [SerializeField, SerializedDictionary("State", "ColliderSize")] private SerializedDictionary<string, float> _colliderSizes;
         [SerializeField] private Vector3 _centerOffset;
 
         private Vector3 _center;
@@ -22,12 +22,12 @@ namespace Spread.Player.Collisions
         protected override void OnSetup()
         {
             _center = _characterController.center;
-            StateTransiton((null, typeof(IdleState)));
+            MatchColliderToState((null, typeof(IdleState)));
             
-            _ctx.OnStateTransition += StateTransiton;
+            _ctx.OnStateTransition += MatchColliderToState;
         }
 
-        private void StateTransiton((Type OldState, Type NewState) p_transition)
+        private void MatchColliderToState((Type OldState, Type NewState) p_transition)
         {
             if (p_transition.NewState == null)
                 return;
@@ -36,7 +36,7 @@ namespace Spread.Player.Collisions
             if (!_colliderSizes.ContainsKey(stateTypeString))
                 return;
 
-            float height = _colliderSizes[stateTypeString].Height;
+            float height = _colliderSizes[stateTypeString];
             Vector3 center = _center;
             center.y = height / 2;
 
@@ -47,12 +47,6 @@ namespace Spread.Player.Collisions
         internal void ToggleCollision(bool p_enable)
         {
             _characterController.detectCollisions = p_enable;
-        }
-
-        [Serializable]
-        private struct ColliderSize
-        {
-            public float Height;
         }
     }
 }

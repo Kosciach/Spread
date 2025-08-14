@@ -44446,7 +44446,6 @@ MonoBehaviour:
   _isMovingTimer: 0
   _isJogInput: 0
   _isRunInput: 0
-  RootMotionMove: 1
 --- !u!1 &1845867784908627639
 GameObject:
   m_ObjectHideFlags: 0
@@ -54180,6 +54179,24 @@ MonoBehaviour:
     - Key: SlideState
       Value:
         Height: 0.5
+  _colliderSizes1:
+    _serializedList:
+    - Key: IdleState
+      Value: 1.73
+    - Key: WalkState
+      Value: 1.73
+    - Key: JogState
+      Value: 1.73
+    - Key: RunState
+      Value: 1.73
+    - Key: CrouchIdleState
+      Value: 1.1
+    - Key: CrouchWalkState
+      Value: 1.1
+    - Key: CrawlState
+      Value: 0.5
+    - Key: SlideState
+      Value: 0.5
   _centerOffset: {x: 0, y: 0.1, z: 0}
 --- !u!114 &9169719902030618946
 MonoBehaviour:

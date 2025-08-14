@@ -14,7 +14,7 @@ namespace Spread.Player.StateMachine
         [LayoutStart("Context/States", ELayout.TitleBox)]
         [SerializeField, ReadOnly] internal PlayerBaseState LastState;
         [SerializeField, ReadOnly] internal PlayerBaseState CurrentState;
-        [SerializeField, ReadOnly] internal List<PlayerBaseState> States;
+        [SerializeField] internal List<PlayerBaseState> States;
         
         [LayoutStart("Context/References", ELayout.TitleBox)]
         [SerializeField] internal Transform Transform;
