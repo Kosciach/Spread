@@ -81,7 +81,6 @@ namespace Spread.Player.StateMachine
 
                 // Root motion - on
                 _animatorController.ToggleRootMotion(true);
-                _movementController.RootMotionMove = true;
 
                 // Gravity - on
                 _gravityController.ToggleGravity(true);
@@ -97,12 +96,7 @@ namespace Spread.Player.StateMachine
             // Clear ladder controller
             _ladderController.Clear();
         }
-
-        protected override void OnUpdate()
-        {
-            _movementController.RestrainNormalMovement();
-        }
-
+        
         protected override void OnExit()
         {
             _gravityController.ToggleIkCrouch(true);

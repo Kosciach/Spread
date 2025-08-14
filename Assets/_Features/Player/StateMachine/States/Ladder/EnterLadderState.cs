@@ -72,7 +72,6 @@ namespace Spread.Player.StateMachine
             
             //Root motion - off
             _animatorController.ToggleRootMotion(false);
-            _movementController.RootMotionMove = false;
             
             //Gravity - off
             _gravityController.ToggleGravity(false);

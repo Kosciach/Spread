@@ -34,7 +34,6 @@ namespace Spread.Player.StateMachine
                 _animatorController.PreviousStateName[2] != "Landing_Hard")
             {
                 _cameraController.MoveCamera();
-                _movementController.NormalMovement();
             }
         }
 

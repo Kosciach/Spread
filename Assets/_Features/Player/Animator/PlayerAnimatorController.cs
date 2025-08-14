@@ -132,20 +132,12 @@ namespace Spread.Player.Animating
         }
         
         // Grounded/Normal Movement
-        internal void SetMovementType(MovementTypes p_movementType)
+        internal void SetMovementType(MovementTypes p_movementType, Vector3 p_moveVector)
         {
-            _animator.SetInteger("MovementType", (int)p_movementType);
-        }
-
-        internal void SetMovementTypeF(MovementTypes p_movementType)
-        {
-            _animator.SetFloat("MovementTypeF", (int)p_movementType, _movementTypeBlendTime, Time.deltaTime);
-        }
-
-        internal void SetMovement(float p_movementX, float p_movementZ)
-        {
-            _animator.SetFloat("MovementX", p_movementX, _movementBlendTime, Time.deltaTime);
-            _animator.SetFloat("MovementZ", p_movementZ, _movementBlendTime, Time.deltaTime);
+            _animator.SetFloat("MovementType", (int)p_movementType, _movementTypeBlendTime, Time.deltaTime);
+            _animator.SetBool("IsIdle", p_movementType == MovementTypes.Idle);
+            _animator.SetFloat("MovementX", p_moveVector.x, _movementBlendTime, Time.deltaTime);
+            _animator.SetFloat("MovementZ", p_moveVector.z, _movementBlendTime, Time.deltaTime);
         }
         
         // In air

@@ -30,12 +30,7 @@ namespace Spread.Player.StateMachine
             _animatorController.SetAnimatorLayerWeight(AnimatorLayer.Slide, 1f);
             _interactionsController.SetInteractable(null);
         }
-
-        protected override void OnUpdate()
-        {
-            _movementController.RestrainNormalMovement();
-        }
-
+        
         protected override void OnExit()
         {
             _slideController.StopSlide();

@@ -62,8 +62,6 @@ namespace Spread.Player.Movement
 
         internal void CrawlMovement()
         {
-            _movementController.NormalMovement();
-
             Vector3 inputNormalized = _moveInput.normalized;
             Vector3 dir = (transform.forward * inputNormalized.z) + (transform.right * inputNormalized.x);
             dir.y = 0;

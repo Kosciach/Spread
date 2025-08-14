@@ -30,7 +30,6 @@ namespace Spread.Player.StateMachine
         protected override void OnUpdate()
         {
             _cameraController.MoveCamera();
-            _movementController.NormalMovement();
             _interactionsController.CheckInteractables();
         }
         
@@ -56,23 +55,7 @@ namespace Spread.Player.StateMachine
                 return typeof(SlopeSlideState);
             }
 
-            switch (_movementController.MovementType)
-            {
-                case MovementTypes.Idle:
-                    return _movementController.IdleType == IdleTypes.Normal
-                        ? typeof(IdleState)
-                        : typeof(CrouchIdleState);
-                case MovementTypes.Crouch:
-                    return typeof(CrouchWalkState);
-                case MovementTypes.Walk:
-                    return typeof(WalkState);
-                case MovementTypes.Jog:
-                    return typeof(JogState);
-                case MovementTypes.Run:
-                    return typeof(RunState);
-            }
-
-            return GetType();
+            return _movementController.NextMovementState;
         }
     }
 }

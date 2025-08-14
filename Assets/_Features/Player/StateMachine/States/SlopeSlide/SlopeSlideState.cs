@@ -59,22 +59,7 @@ namespace Spread.Player.StateMachine
                 return typeof(SlopeSlideState);
             }
 
-            switch (_movementController.MovementType)
-            {
-                case Movement.MovementTypes.Idle:
-                    return _movementController.IdleType is Movement.IdleTypes.Normal
-                        ? typeof(IdleState) : typeof(CrouchIdleState);
-                case Movement.MovementTypes.Crouch:
-                    return typeof(CrouchWalkState);
-                case Movement.MovementTypes.Walk:
-                    return typeof(WalkState);
-                case Movement.MovementTypes.Jog:
-                    return typeof(JogState);
-                case Movement.MovementTypes.Run:
-                    return typeof(RunState);
-            }
-
-            return GetType();
+            return _movementController.NextMovementState;
         }
     }
 }

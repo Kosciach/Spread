@@ -37,7 +37,6 @@ namespace Spread.Player.StateMachine
         protected override void OnUpdate()
         {
             _cameraController.MoveCamera();
-            _movementController.NormalMovement();
         }
         
         internal override Type GetNextState()
@@ -62,23 +61,7 @@ namespace Spread.Player.StateMachine
                 return typeof(CrawlState);
             }
 
-            switch (_movementController.MovementType)
-            {
-                case Movement.MovementTypes.Idle:
-                    return _movementController.IdleType == Movement.IdleTypes.Normal
-                        ? typeof(IdleState)
-                        : typeof(CrouchIdleState);
-                case Movement.MovementTypes.Crouch:
-                    return typeof(CrouchWalkState);
-                case Movement.MovementTypes.Walk:
-                    return typeof(WalkState);
-                case Movement.MovementTypes.Jog:
-                    return typeof(JogState);
-                case Movement.MovementTypes.Run:
-                    return typeof(RunState);
-                default:
-                    return GetType();
-            }
+            return _movementController.NextMovementState;
         }
     }
 }

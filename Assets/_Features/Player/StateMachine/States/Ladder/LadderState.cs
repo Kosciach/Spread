@@ -86,9 +86,6 @@ namespace Spread.Player.StateMachine
 
         protected override void OnUpdate()
         {
-            //Prevent player from moving weirdly after exiting ladder
-            _animatorController.SetMovement(0, 0);
-            
             //Sliding Down
             if (_isRunInput && _climbDirection == -1)
             {
@@ -216,7 +213,6 @@ namespace Spread.Player.StateMachine
 
             //Root motion - on
             _animatorController.ToggleRootMotion(true);
-            _movementController.RootMotionMove = true;
 
             //Gravity - on
             _gravityController.ToggleGravity(true);
