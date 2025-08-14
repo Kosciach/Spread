@@ -35,6 +35,7 @@ namespace Spread.Player.StateMachine
         protected override void OnUpdate()
         {
             _cameraController.MoveCamera();
+            _slopeController.SlopeSlide();
         }
 
         protected override void OnExit()
@@ -54,12 +55,10 @@ namespace Spread.Player.StateMachine
                 return typeof(JumpState);
             }
 
-            if (_slopeController.IsSlopeSlide)
-            {
-                return typeof(SlopeSlideState);
-            }
+            if (!_slopeController.IsSlopeSlide)
+                return _movementController.NextMovementState;
 
-            return _movementController.NextMovementState;
+            return GetType();
         }
     }
 }

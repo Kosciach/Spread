@@ -32,6 +32,7 @@ namespace Spread.Player.StateMachine
         protected override void OnUpdate()
         {
             _cameraController.IdleCamera();
+            _slopeController.SlopeSlide();
         }
         
         internal override Type GetNextState()

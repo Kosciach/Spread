@@ -30,6 +30,7 @@ namespace Spread.Player.StateMachine
         protected override void OnUpdate()
         {
             _cameraController.MoveCamera();
+            _slopeController.SlopeSlide();
             _interactionsController.CheckInteractables();
         }
         

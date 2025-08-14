@@ -7,37 +7,32 @@ namespace Spread.Player.Movement
     public class PlayerSlopeController : PlayerControllerBase
     {
         [LayoutStart("Settings", ELayout.TitleBox)]
+        [LayoutStart("Settings/Angle", ELayout.TitleBox)]
         [SerializeField] private float _startSlopeSlideAngle;
         [SerializeField] private float _stopSlopeSlideAngle;
-        [Space(10)]
+        [LayoutStart("Settings/Speed", ELayout.TitleBox)]
         [SerializeField] private float _slopeSlideStartSpeed;
         [SerializeField] private float _slopeSlideStopSpeed;
-        [Space(10)]
         [SerializeField] private float _slopeSlideMaxSpeedScale;
 
         [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
         [SerializeField, ReadOnly] private bool _isSlopeSlide; internal bool IsSlopeSlide => _isSlopeSlide;
         [SerializeField, ReadOnly] private Vector3 _slopeSlideVelocity;
         
-        protected override void OnTick()
-        {
-            SlopeSlide();
-        }
-
-        private void SlopeSlide()
+        
+        internal void SlopeSlide()
         {
             Vector3 targetSlopeSlideVel = Vector3.zero;
-            float angle = 0;
             float speed = _slopeSlideStopSpeed;
             _isSlopeSlide = false;
 
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, ~LayerMask.GetMask("Player")))
             {
-                angle = Vector3.Angle(Vector3.up, hit.normal);
+                float angle = Vector3.Angle(Vector3.up, hit.normal);
                 if (angle >= _startSlopeSlideAngle)
                 {
                     targetSlopeSlideVel = Vector3.ProjectOnPlane(Vector3.down, hit.normal).normalized;
-                    targetSlopeSlideVel = targetSlopeSlideVel * (angle / 90f);
+                    targetSlopeSlideVel *= (angle / 90f);
                     speed = _slopeSlideStartSpeed;
                     _isSlopeSlide = true;
                 }
@@ -48,11 +43,12 @@ namespace Spread.Player.Movement
                     _isSlopeSlide = false;
                 }
             }
-
+            
             _slopeSlideVelocity = Vector3.Lerp(_slopeSlideVelocity, targetSlopeSlideVel * _slopeSlideMaxSpeedScale, speed * Time.deltaTime);
             _ctx.CharacterController.Move(_slopeSlideVelocity * Time.deltaTime);
         }
 
+        // Go down faster, Go up slower
         internal Vector3 GetSlopeVelocity(Vector3 p_velocity)
         {
             Vector3 velocity = p_velocity;

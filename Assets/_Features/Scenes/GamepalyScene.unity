@@ -54156,32 +54156,6 @@ MonoBehaviour:
   _colliderSizes:
     _serializedList:
     - Key: IdleState
-      Value:
-        Height: 1.73
-    - Key: WalkState
-      Value:
-        Height: 1.73
-    - Key: JogState
-      Value:
-        Height: 1.73
-    - Key: RunState
-      Value:
-        Height: 1.73
-    - Key: CrouchIdleState
-      Value:
-        Height: 1.1
-    - Key: CrouchWalkState
-      Value:
-        Height: 1.1
-    - Key: CrawlState
-      Value:
-        Height: 0.5
-    - Key: SlideState
-      Value:
-        Height: 0.5
-  _colliderSizes1:
-    _serializedList:
-    - Key: IdleState
       Value: 1.73
     - Key: WalkState
       Value: 1.73
