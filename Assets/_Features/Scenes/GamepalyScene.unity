@@ -54454,7 +54454,7 @@ MonoBehaviour:
   _obstacleCheckSpacing: 0.1
   _rotToSlopeSpeed: 5
   _isSlide: 0
-  _slideVelocity: {x: -1.9740497, y: 0, z: -1.3313998}
+  _slideVelocity: {x: -4.4714017e-11, y: 0, z: -3.015743e-11}
   _startDownSlopeVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &9169719902030618950
 MonoBehaviour:
