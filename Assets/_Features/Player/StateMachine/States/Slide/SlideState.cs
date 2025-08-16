@@ -12,29 +12,35 @@ namespace Spread.Player.StateMachine
         private PlayerSlideController _slideController;
         private PlayerAnimatorController _animatorController;
         private PlayerInteractionsController _interactionsController;
-        private PlayerMovementController _movementController;
         private PlayerGravityController _gravityController;
 
         protected override void OnSetup()
         {
             _slideController = _ctx.GetController<PlayerSlideController>();
-            _animatorController = _ctx.GetController<PlayerAnimatorController>();;
-            _interactionsController = _ctx.GetController<PlayerInteractionsController>();;
-            _movementController = _ctx.GetController<PlayerMovementController>();;
-            _gravityController = _ctx.GetController<PlayerGravityController>();;
+            _animatorController = _ctx.GetController<PlayerAnimatorController>();
+            _interactionsController = _ctx.GetController<PlayerInteractionsController>();
+            _gravityController = _ctx.GetController<PlayerGravityController>();
         }
 
         protected override void OnEnter()
         {
             _slideController.StartSlide();
             _animatorController.SetAnimatorLayerWeight(AnimatorLayer.Slide, 1f);
+             _animatorController.ToggleFootIk(false);
+            _gravityController.ToggleIkCrouch(false);
             _interactionsController.SetInteractable(null);
         }
         
         protected override void OnExit()
         {
-            _slideController.StopSlide();
             _animatorController.SetAnimatorLayerWeight(AnimatorLayer.Slide, 0f);
+            _animatorController.ToggleFootIk(true);
+            _gravityController.ToggleIkCrouch(true);
+        }
+
+        protected override void OnUpdate()
+        {
+            _slideController.Slide(true);
         }
 
         internal override Type GetNextState()

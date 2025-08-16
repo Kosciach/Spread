@@ -16,6 +16,7 @@ namespace Spread.Player.StateMachine
         private PlayerCameraController _cameraController;
         private PlayerLadderController _ladderController;
         private PlayerSlopeController _slopeController;
+        private PlayerSlideController _slideController;
 
         protected override void OnSetup()
         {
@@ -25,12 +26,14 @@ namespace Spread.Player.StateMachine
             _cameraController = _ctx.GetController<PlayerCameraController>();
             _ladderController = _ctx.GetController<PlayerLadderController>();
             _slopeController = _ctx.GetController<PlayerSlopeController>();
+            _slideController = _ctx.GetController<PlayerSlideController>();
         }
         
         protected override void OnUpdate()
         {
             _cameraController.MoveCamera();
             _slopeController.SlopeSlide();
+            _slideController.Slide(false);
             _interactionsController.CheckInteractables();
         }
         

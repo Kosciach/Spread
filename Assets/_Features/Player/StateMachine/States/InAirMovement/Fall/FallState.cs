@@ -17,6 +17,7 @@ namespace Spread.Player.StateMachine
         private PlayerGravityController _gravityController;
         private PlayerLadderController _ladderController;
         private PlayerCameraController _cameraController;
+        private PlayerSlideController _slideController;
 
         protected override void OnSetup()
         {
@@ -26,10 +27,13 @@ namespace Spread.Player.StateMachine
             _gravityController = _ctx.GetController<PlayerGravityController>();
             _ladderController = _ctx.GetController<PlayerLadderController>();
             _cameraController = _ctx.GetController<PlayerCameraController>();
+            _slideController = _ctx.GetController<PlayerSlideController>();
         }
 
         protected override void OnEnter()
         {
+            _slideController.ResetSlide();
+            
             if (_ctx.LastState.GetType() != typeof(JumpState))
             {
                 _animatorController.SetAnimatorLayerWeight(AnimatorLayer.InAir, 1f);

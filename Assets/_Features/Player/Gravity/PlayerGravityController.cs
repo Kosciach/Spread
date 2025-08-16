@@ -37,14 +37,21 @@ namespace Spread.Player.Gravity
 
         [LayoutStart("Debug", ELayout.TitleBox | ELayout.Foldout)]
         [SerializeField, ReadOnly] private bool _gizmos;
-        [SerializeField, ReadOnly] private float _currentGravityForce; internal float CurrentGravityForce => _currentGravityForce;
-        [SerializeField, ReadOnly] private bool _isGrounded; internal bool IsGrounded => _isGrounded;
-        [SerializeField, ReadOnly] private bool _isCeiling; internal bool IsCeiling => _isCeiling;
+        [SerializeField, ReadOnly] private float _currentGravityForce;
+        [SerializeField, ReadOnly] private bool _isGrounded;
+        [SerializeField, ReadOnly] private bool _isCeiling;
         [SerializeField, ReadOnly] private bool _useGravity;
         [SerializeField, ReadOnly] private bool _useIkCrouch;
         [LayoutStart("Debug/Actions", ELayout.TitleBox)]
-        [SerializeField, ReadOnly] private bool _isJump; internal bool IsJump => _isJump;
-        [SerializeField, ReadOnly] private bool _isFalling; internal bool IsFalling => _isFalling;
+        [SerializeField, ReadOnly] private bool _isJump;
+        [SerializeField, ReadOnly] private bool _isFalling;
+        
+        internal float CurrentGravityForce => _currentGravityForce;
+        internal bool IsGrounded => _isGrounded;
+        internal bool IsCeiling => _isCeiling;
+        
+        internal bool IsJump => _isJump;
+        internal bool IsFalling => _isFalling;
 
         private Vector3 _ceilingSpherePos;
 

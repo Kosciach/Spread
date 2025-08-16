@@ -19,6 +19,7 @@ namespace Spread.Player.Movement
         private PlayerCrouchController _crouchController;
         private PlayerGravityController _gravityController;
         private PlayerSlopeController _slopeController;
+        private PlayerSlideController _slideController;
         
         [LayoutStart("References", ELayout.TitleBox)]
         [SerializeField] private Animator _animator;
@@ -72,6 +73,7 @@ namespace Spread.Player.Movement
             _crouchController = _ctx.GetController<PlayerCrouchController>();
             _gravityController = _ctx.GetController<PlayerGravityController>();
             _slopeController = _ctx.GetController<PlayerSlopeController>();
+            _slideController = _ctx.GetController<PlayerSlideController>();
 
             _inputController.Inputs.Keyboard.Move.performed += MoveInput;
             _inputController.Inputs.Keyboard.Move.canceled += MoveInput;
@@ -174,6 +176,12 @@ namespace Spread.Player.Movement
                 Vector3 inputNormalized = _moveInput.normalized;
                 Vector3 dir = (transform.forward * inputNormalized.z) + (transform.right * inputNormalized.x);
                 _inAirVelocity = dir * speed;
+                _inAirVelocity.y = 0;
+            }
+
+            if (_slideController.IsSlide)
+            {
+                _inAirVelocity = _slideController.SlideVelocity;
                 _inAirVelocity.y = 0;
             }
         }

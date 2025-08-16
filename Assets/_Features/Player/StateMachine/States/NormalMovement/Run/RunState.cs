@@ -24,12 +24,14 @@ namespace Spread.Player.StateMachine
             _gravityController = _ctx.GetController<PlayerGravityController>();
             _slideController = _ctx.GetController<PlayerSlideController>();
             _slopeController = _ctx.GetController<PlayerSlopeController>();
+            _slideController = _ctx.GetController<PlayerSlideController>();
         }
         
         protected override void OnUpdate()
         {
             _cameraController.MoveCamera();
             _slopeController.SlopeSlide();
+            _slideController.Slide(false);
             _interactionsController.CheckInteractables();
         }
 
